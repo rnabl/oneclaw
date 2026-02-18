@@ -1,0 +1,11 @@
+# Task ID: 18
+# Title: Create Sub-Agent Executor Manifest
+# Status: pending
+# Dependencies: 17
+# Priority: medium
+# Description: Define executor schema, pricing, and rate limits for sub-agent spawning
+# Details:
+Create `executors/llm_subagents.json` with JSON schema defining: input parameters (agents array, timeout), output format, pricing ($0.01 base + $0.005/agent), rate limits, and safety constraints.
+
+# Test Strategy:
+Validate JSON schema is valid, pricing structure matches PRD requirements ($0.01 + $0.005/agent), rate limits are reasonable

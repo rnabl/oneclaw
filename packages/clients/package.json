@@ -1,0 +1,21 @@
+{
+  "name": "@oneclaw/clients",
+  "version": "0.1.0",
+  "description": "API clients for external services (DataForSEO, Perplexity, OpenAI, etc.)",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
+    "lint": "eslint src/"
+  },
+  "dependencies": {
+    "openai": "^4.0.0",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.3.0"
+  }
+}

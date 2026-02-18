@@ -1,0 +1,226 @@
+# Billing & Payments Rules
+
+## Core Principles
+
+1. **Never lose money** - If in doubt, fail the operation. Don't guess.
+2. **Idempotency everywhere** - Same request twice = same result, not double charge.
+3. **Full audit trail** - Every cent movement is logged with timestamp and context.
+4. **Test without real payments** - Stripe CLI, mock stores, seed scripts.
+
+## Transaction Model
+
+```typescript
+export const TransactionSchema = z.object({
+  id: z.string().uuid(),
+  walletId: z.string().uuid(),
+  type: z.enum(['credit', 'debit', 'refund', 'adjustment']),
+  amountCents: z.number().int(), // Positive for credit, negative for debit
+  balanceAfterCents: z.number().int(),
+  idempotencyKey: z.string(), // UNIQUE - prevents duplicates
+  source: z.enum(['stripe', 'admin', 'workflow', 'refund', 'promo']),
+  sourceId: z.string().nullable(), // Stripe event ID, workflow run ID, etc.
+  description: z.string(),
+  metadata: z.record(z.unknown()).optional(),
+  createdAt: z.date(),
+});
+```
+
+## Idempotency
+
+Every operation that changes money MUST have an idempotency key:
+
+```typescript
+// Stripe webhook
+const idempotencyKey = `stripe_${event.id}`;
+
+// Workflow charge
+const idempotencyKey = `workflow_${workflowRunId}`;
+
+// Admin credit
+const idempotencyKey = `admin_${adminId}_${timestamp}`;
+```
+
+The store MUST reject duplicates:
+
+```typescript
+async credit(userId, cents, idempotencyKey) {
+  // Check if already processed
+  const existing = await this.findByIdempotencyKey(idempotencyKey);
+  if (existing) {
+    console.log(`[billing] Duplicate idempotency key: ${idempotencyKey}`);
+    return existing; // Return existing transaction, don't create new
+  }
+  
+  // Process new transaction
+  ...
+}
+```
+
+## Balance Calculation
+
+Balance is stored AND derived:
+
+```typescript
+// Stored (fast reads)
+wallet.balanceCents = 500;
+
+// Derived (source of truth)
+SELECT SUM(amount_cents) FROM transactions WHERE wallet_id = ?
+
+// Reconciliation (run periodically or on mismatch)
+if (stored !== derived) {
+  alert('Balance mismatch!', { userId, stored, derived });
+  // Fix it
+  wallet.balanceCents = derived;
+}
+```
+
+## Stripe Webhook Handling
+
+```typescript
+async function handleStripeWebhook(event: Stripe.Event) {
+  // 1. Verify signature (NEVER skip this in production)
+  const isValid = stripe.webhooks.constructEvent(body, sig, secret);
+  if (!isValid) throw new Error('Invalid signature');
+  
+  // 2. Idempotency check
+  const idempotencyKey = `stripe_${event.id}`;
+  const existing = await stores.transaction.findByIdempotencyKey(idempotencyKey);
+  if (existing) {
+    console.log(`[stripe] Already processed: ${event.id}`);
+    return { success: true, duplicate: true };
+  }
+  
+  // 3. Parse client_reference_id
+  // Format: topup_{userId}_{cents} OR sub_{userId}_{plan}
+  const { userId, type, amount } = parseClientReferenceId(event);
+  
+  // 4. Credit wallet
+  const txn = await stores.wallet.credit(userId, amount, idempotencyKey);
+  
+  // 5. Log for audit
+  console.log(`[stripe] Credited ${amount} to ${userId}`, { eventId: event.id });
+  
+  return { success: true, transactionId: txn.id };
+}
+```
+
+## Testing Strategy
+
+### 1. Unit Tests (No External Services)
+
+```typescript
+import { InMemoryWalletStore } from '@iclaw/harness';
+
+test('credit increases balance', async () => {
+  const store = new InMemoryWalletStore();
+  const wallet = await store.create('user_123');
+  
+  await store.credit('user_123', 500, 'test_key_1');
+  
+  const updated = await store.getByUserId('user_123');
+  expect(updated.balanceCents).toBe(500);
+});
+
+test('duplicate idempotency key does not double credit', async () => {
+  const store = new InMemoryWalletStore();
+  await store.create('user_123');
+  
+  await store.credit('user_123', 500, 'same_key');
+  await store.credit('user_123', 500, 'same_key'); // Duplicate
+  
+  const wallet = await store.getByUserId('user_123');
+  expect(wallet.balanceCents).toBe(500); // Not 1000
+});
+```
+
+### 2. Integration Tests (Stripe CLI)
+
+```bash
+# Terminal 1: Forward webhooks to local
+stripe listen --forward-to localhost:3000/webhook/stripe
+
+# Terminal 2: Trigger test event
+stripe trigger checkout.session.completed
+```
+
+### 3. Seed Scripts (Debug Without Paying)
+
+```typescript
+// scripts/seed-wallet.ts
+import { initStores, getStores } from '@iclaw/harness';
+import { SupabaseWalletStore } from '../apps/api/stores';
+
+async function seedWallet(userId: string, cents: number) {
+  const stores = getStores();
+  await stores.wallet.credit(userId, cents, `seed_${Date.now()}`);
+  console.log(`Seeded ${cents} cents to ${userId}`);
+}
+
+// Usage: npx tsx scripts/seed-wallet.ts 397102686660591616 1500
+```
+
+### 4. Admin Endpoints (Protected)
+
+```typescript
+// POST /admin/wallet/credit (requires admin auth)
+app.post('/admin/wallet/credit', adminAuth, async (c) => {
+  const { userId, cents, reason } = await c.req.json();
+  const idempotencyKey = `admin_${adminId}_${Date.now()}`;
+  
+  const txn = await stores.wallet.credit(userId, cents, idempotencyKey);
+  
+  auditLog('admin_credit', { adminId, userId, cents, reason });
+  
+  return c.json({ success: true, transaction: txn });
+});
+```
+
+## Error Handling
+
+```typescript
+// ❌ BAD - Silent failure
+try {
+  await creditWallet(userId, amount);
+} catch (e) {
+  console.error(e);
+  return { balance: 0 }; // User sees wrong balance!
+}
+
+// ✅ GOOD - Fail loudly
+try {
+  await creditWallet(userId, amount);
+} catch (e) {
+  console.error('[billing] Credit failed', { userId, amount, error: e });
+  throw new BillingError('Failed to credit wallet', { userId, amount });
+}
+```
+
+## Self-Hosted Considerations
+
+When user self-hosts:
+
+1. **They provide their own Stripe keys** - Payments go to them
+2. **They provide their own database** - SQLite, Turso, Postgres
+3. **Harness works identically** - Just different store implementations
+4. **They get admin access** - Can credit wallets, view transactions
+
+```typescript
+// Self-hosted config
+{
+  "billing": {
+    "stripe_secret_key": "sk_live_...", // Their key
+    "stripe_webhook_secret": "whsec_...", // Their webhook
+  },
+  "database": {
+    "type": "sqlite",
+    "path": "./data/oneclaw.db"
+  }
+}
+```
+
+## Related Rules
+
+- [harness.mdc](mdc:.cursor/rules/harness.mdc) - Harness architecture
+- [identity.mdc](mdc:.cursor/rules/identity.mdc) - User identity
+- [testing.mdc](mdc:.cursor/rules/testing.mdc) - Testing strategy

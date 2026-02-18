@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OneClaw Node - Receipts</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-content">
+      <h1 class="nav-title">🦞 OneClaw Node</h1>
+      <div class="nav-links">
+        <a href="/">Dashboard</a>
+        <a href="/setup.html">Setup</a>
+        <a href="/receipts.html" class="active">Receipts</a>
+      </div>
+    </div>
+  </nav>
+  
+  <main class="container">
+    <div class="card">
+      <h2>Workflow Receipts</h2>
+      
+      <div id="loading" class="loading">
+        <div class="spinner"></div>
+        <p>Loading receipts...</p>
+      </div>
+      
+      <div id="empty" class="empty hidden">
+        <p>No receipts yet. Run a workflow to see execution traces here.</p>
+      </div>
+      
+      <ul id="receipt-list" class="receipt-list hidden"></ul>
+    </div>
+  </main>
+  
+  <script type="module" src="/static/receipts.js"></script>
+</body>
+</html>

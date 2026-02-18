@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OneClaw Node - Dashboard</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-content">
+      <h1 class="nav-title">🦞 OneClaw Node</h1>
+      <div class="nav-links">
+        <a href="/" class="active">Dashboard</a>
+        <a href="/setup.html">Setup</a>
+        <a href="/receipts.html">Receipts</a>
+      </div>
+    </div>
+  </nav>
+  
+  <main class="container">
+    <div id="loading" class="loading">
+      <div class="spinner"></div>
+      <p>Loading...</p>
+    </div>
+    
+    <div id="error" class="error hidden"></div>
+    
+    <div id="content" class="card hidden">
+      <h2>Node Status</h2>
+      
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="label">Node ID</span>
+          <p class="value mono" id="node-id"></p>
+        </div>
+        
+        <div class="info-item">
+          <span class="label">Name</span>
+          <p class="value" id="node-name"></p>
+        </div>
+        
+        <div class="info-item">
+          <span class="label">Environment</span>
+          <p class="value capitalize" id="node-env"></p>
+        </div>
+        
+        <div class="info-item">
+          <span class="label">LLM</span>
+          <p class="value" id="node-llm"></p>
+        </div>
+        
+        <div class="info-item">
+          <span class="label">Security Mode</span>
+          <p class="value capitalize" id="node-security"></p>
+        </div>
+        
+        <div class="info-item">
+          <span class="label">Allowed Domains</span>
+          <ul class="domain-list" id="node-domains"></ul>
+        </div>
+      </div>
+      
+      <div class="actions">
+        <a href="/setup.html" class="btn btn-primary">Configure Node</a>
+      </div>
+    </div>
+  </main>
+  
+  <script type="module" src="/static/dashboard.js"></script>
+</body>
+</html>

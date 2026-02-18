@@ -1,0 +1,11 @@
+# Task ID: 32
+# Title: Implement Token Budget Monitoring
+# Status: pending
+# Dependencies: 31
+# Priority: low
+# Description: Add monitoring and alerts for Agent OS token usage
+# Details:
+Track token usage for each .md file injection, warn when approaching budget limits, provide usage statistics in UI. Help users optimize their Agent OS files for cost efficiency.
+
+# Test Strategy:
+Test with large MEMORY.md file, verify token counting is accurate, warnings appear when approaching limits

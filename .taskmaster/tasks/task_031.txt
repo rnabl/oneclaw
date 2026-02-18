@@ -1,0 +1,11 @@
+# Task ID: 31
+# Title: Create Agent OS Configuration
+# Status: pending
+# Dependencies: 30
+# Priority: low
+# Description: Add Agent OS settings to Node configuration file
+# Details:
+Update `oneclaw-node/config.yaml` to add `agent_os` section with: token budgets for each file, compression thresholds, versioning settings, snapshot retention policy.
+
+# Test Strategy:
+Verify config file parses correctly, Agent OS module reads configuration values, defaults work when config missing

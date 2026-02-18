@@ -1,0 +1,27 @@
+{
+  "name": "@oneclaw/cli",
+  "version": "0.1.0",
+  "description": "OneClaw CLI - oneclaw onboard, run, and manage",
+  "type": "module",
+  "bin": {
+    "oneclaw": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch"
+  },
+  "dependencies": {
+    "@oneclaw/node-runtime": "workspace:*",
+    "@hono/node-server": "^1.14.0",
+    "commander": "^12.1.0",
+    "@inquirer/prompts": "^7.2.0",
+    "chalk": "^5.4.1",
+    "open": "^10.1.0",
+    "yaml": "^2.6.1",
+    "nanoid": "^5.0.9"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2"
+  }
+}

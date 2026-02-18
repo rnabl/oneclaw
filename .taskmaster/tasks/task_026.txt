@@ -1,0 +1,11 @@
+# Task ID: 26
+# Title: Create Agent OS UI Badge
+# Status: pending
+# Dependencies: 25
+# Priority: low
+# Description: Add Agent OS version badge to Node UI header
+# Details:
+Update `oneclaw-node/src/ui/index.html` to show "Agent OS v1.X" badge in header. Badge should link to `/agent-os` page for management interface.
+
+# Test Strategy:
+Verify badge appears in UI header, shows correct version number, links to agent-os page

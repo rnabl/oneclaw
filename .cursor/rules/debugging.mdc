@@ -1,0 +1,262 @@
+# Debugging Rules
+
+## Core Principle
+
+**Debug without spending money.** Every debugging scenario has a free solution.
+
+## Common Debugging Scenarios
+
+### 1. "Did Stripe webhook fire?"
+
+DON'T pay again. Check logs instead:
+
+```bash
+# On droplet
+ssh root@104.131.111.116
+pm2 logs oneclaw-api --lines 100 | grep -i stripe
+```
+
+Or use Stripe CLI to replay:
+
+```bash
+# Local - replay the event
+stripe events resend evt_1234567890
+
+# The webhook will hit your endpoint again
+```
+
+### 2. "Is my wallet balance correct?"
+
+Use the seed script instead of paying:
+
+```bash
+# From project root
+npx tsx scripts/seed-wallet.ts 397102686660591616 1500
+```
+
+Or query directly:
+
+```bash
+# Supabase SQL Editor or CLI
+SELECT * FROM wallets WHERE user_id = '397102686660591616';
+SELECT * FROM transactions WHERE user_id = '397102686660591616' ORDER BY created_at DESC;
+```
+
+### 3. "Did the user get created?"
+
+```sql
+-- Check identity table
+SELECT * FROM identities WHERE provider = 'discord' AND provider_id = '397102686660591616';
+
+-- Check user record
+SELECT u.* FROM users u
+JOIN identities i ON i.user_id = u.id
+WHERE i.provider = 'discord' AND i.provider_id = '397102686660591616';
+```
+
+### 4. "Why isn't the bot responding?"
+
+```bash
+# Check if the API is up
+curl https://oneclaw.chat/health
+
+# Check PM2 status
+ssh root@104.131.111.116
+pm2 status
+pm2 logs oneclaw-api --lines 50
+
+# Check Discord interaction logs
+pm2 logs oneclaw-api | grep -i discord
+```
+
+### 5. "Did the workflow charge the user?"
+
+```sql
+-- Find workflow transactions
+SELECT * FROM transactions 
+WHERE source = 'workflow' 
+AND user_id = '397102686660591616'
+ORDER BY created_at DESC;
+```
+
+## Stripe CLI Setup
+
+Install once, use forever:
+
+```bash
+# Install
+brew install stripe/stripe-cli/stripe
+
+# Login (once)
+stripe login
+
+# Forward webhooks to local dev
+stripe listen --forward-to localhost:4001/webhook/stripe
+
+# Forward to production (for debugging)
+stripe listen --forward-to https://oneclaw.chat/webhook/stripe --latest
+
+# Trigger test events
+stripe trigger checkout.session.completed
+
+# Replay a specific event
+stripe events resend evt_1234567890
+```
+
+## Log Levels
+
+Set in `.env.local`:
+
+```bash
+# Development - verbose
+LOG_LEVEL=debug
+
+# Production - errors and warnings
+LOG_LEVEL=warn
+```
+
+Log what matters:
+
+```typescript
+// ✅ GOOD - Actionable logs
+console.log('[stripe] Webhook received', { eventId: event.id, type: event.type });
+console.log('[stripe] Credit success', { userId, amount, newBalance });
+console.error('[stripe] Credit failed', { userId, error: e.message });
+
+// ❌ BAD - Noise
+console.log('handling...');
+console.log(JSON.stringify(event, null, 2)); // Too verbose
+```
+
+## Admin Endpoints
+
+Protected endpoints for debugging in production:
+
+```typescript
+// GET /admin/wallet/:discordId
+// Returns wallet + recent transactions
+
+// POST /admin/wallet/:discordId/credit
+// { amountCents: 500, reason: "Testing" }
+// Credits wallet without Stripe
+
+// GET /admin/health/deep
+// Tests database connection, Stripe, Discord
+```
+
+## Database Queries
+
+Quick queries for common checks:
+
+```sql
+-- All wallets with balance
+SELECT user_id, balance_cents, tier, created_at 
+FROM wallets 
+ORDER BY balance_cents DESC;
+
+-- Recent transactions
+SELECT * FROM transactions 
+ORDER BY created_at DESC 
+LIMIT 20;
+
+-- Failed transactions (if we track them)
+SELECT * FROM transactions 
+WHERE status = 'failed'
+ORDER BY created_at DESC;
+
+-- Users with multiple providers linked
+SELECT user_id, COUNT(*) as providers
+FROM identities
+GROUP BY user_id
+HAVING COUNT(*) > 1;
+```
+
+## Testing Webhooks
+
+### Method 1: Stripe CLI (Recommended)
+
+```bash
+stripe trigger checkout.session.completed \
+  --add checkout_session:client_reference_id=discord_397102686660591616 \
+  --add checkout_session:amount_total=500
+```
+
+### Method 2: Manual curl
+
+```bash
+# Get a real event payload from Stripe Dashboard
+# Then POST it locally (won't have valid signature - use only for format testing)
+curl -X POST http://localhost:4001/webhook/stripe \
+  -H "Content-Type: application/json" \
+  -d @test-event.json
+```
+
+### Method 3: Integration Test
+
+```typescript
+import { handleStripeWebhook } from '../routes/stripe';
+
+test('webhook credits wallet', async () => {
+  initInMemoryStores();
+  
+  const event = {
+    id: 'evt_test_123',
+    type: 'checkout.session.completed',
+    data: {
+      object: {
+        client_reference_id: 'discord_123456789',
+        amount_total: 500,
+        payment_status: 'paid',
+      },
+    },
+  };
+
+  await handleStripeWebhook(event);
+
+  const stores = getStores();
+  const user = await resolveUser('discord', '123456789');
+  const wallet = await stores.wallet.getByUserId(user.id);
+  
+  expect(wallet.balanceCents).toBe(500);
+});
+```
+
+## Production Debugging Checklist
+
+When something breaks in production:
+
+1. **Check API health**: `curl https://oneclaw.chat/health`
+2. **Check PM2 status**: `ssh root@... && pm2 status`
+3. **Check recent logs**: `pm2 logs oneclaw-api --lines 100`
+4. **Check error logs**: `pm2 logs oneclaw-api --err --lines 50`
+5. **Check database**: Query Supabase directly
+6. **Check Stripe**: Look at Stripe Dashboard > Webhooks > Recent events
+
+## Anti-Patterns
+
+```bash
+# ❌ BAD - Pay to test
+"Let me make another $5 payment to test..."
+
+# ✅ GOOD - Use seed script or Stripe CLI
+npx tsx scripts/seed-wallet.ts <id> 500
+
+# ❌ BAD - Deploy to test
+"Let me push this change to see if it works..."
+
+# ✅ GOOD - Test locally first
+pnpm dev
+stripe listen --forward-to localhost:4001/webhook/stripe
+
+# ❌ BAD - Restart and hope
+pm2 restart oneclaw-api
+
+# ✅ GOOD - Check logs first
+pm2 logs oneclaw-api --lines 100
+# Then fix the actual issue
+```
+
+## Related Rules
+
+- [testing.mdc](mdc:.cursor/rules/testing.mdc) - Testing strategy
+- [billing.mdc](mdc:.cursor/rules/billing.mdc) - Billing rules

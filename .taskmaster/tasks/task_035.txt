@@ -1,0 +1,11 @@
+# Task ID: 35
+# Title: Add Comprehensive Logging
+# Status: pending
+# Dependencies: 34
+# Priority: low
+# Description: Implement detailed logging for Agent OS operations and debugging
+# Details:
+Add logging throughout Agent OS modules: file loading, versioning, memory operations, sub-agent spawning. Use appropriate log levels (debug, info, warn, error) for troubleshooting.
+
+# Test Strategy:
+Review logs during normal operation, verify appropriate detail level, no sensitive information logged, errors are clearly identified

@@ -1,0 +1,11 @@
+# Task ID: 20
+# Title: Add Harness Billing Integration
+# Status: pending
+# Dependencies: 19
+# Priority: medium
+# Description: Create billing endpoint and integrate sub-agent usage reporting
+# Details:
+Add `POST /api/v1/billing/report` endpoint to harness API. After sub-agent spawn, report usage asynchronously (don't block). Calculate cost: $0.01 base + $0.005 per agent spawned.
+
+# Test Strategy:
+Test: Spawn 5 agents, verify wallet deducted $0.01 + 5×$0.005 = $0.035, billing report sent to harness successfully

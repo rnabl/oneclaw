@@ -1,0 +1,11 @@
+# Task ID: 14
+# Title: Test Smart Workflow Routing
+# Status: pending
+# Dependencies: 13
+# Priority: high
+# Description: Verify LLM uses SKILLS.md benchmarks to make intelligent workflow choices
+# Details:
+Test routing logic: "Find 100 businesses" should trigger LLM to reference Apify from SKILLS.md table. "Find 3 and analyze" should reference Browser or sub-agents. LLM must explicitly mention benchmarks in reasoning.
+
+# Test Strategy:
+Test queries: High-volume requests should reference Apify, detailed analysis should reference Browser, verify LLM explains choice using SKILLS.md data

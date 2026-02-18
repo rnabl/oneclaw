@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Config - OneClaw Node</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🦞 OneClaw Node</h1>
+            <div id="status" class="status">Connecting...</div>
+        </header>
+        
+        <nav>
+            <a href="/">Dashboard</a>
+            <a href="/receipts.html">Receipts</a>
+            <a href="/integrations.html">Integrations</a>
+            <a href="/setup.html" class="active">Config</a>
+        </nav>
+
+        <main>
+            <section class="card">
+                <h2>Current Configuration</h2>
+                <pre id="config">Loading...</pre>
+            </section>
+
+            <section class="card">
+                <h2>Preferences</h2>
+                <pre id="preferences">Loading...</pre>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        async function load() {
+            try {
+                const [configRes, prefsRes, healthRes] = await Promise.all([
+                    fetch('/config'),
+                    fetch('/memory/preferences'),
+                    fetch('/health')
+                ]);
+                document.getElementById('config').textContent = JSON.stringify(await configRes.json(), null, 2);
+                document.getElementById('preferences').textContent = JSON.stringify(await prefsRes.json(), null, 2);
+                document.getElementById('status').textContent = 'Online';
+                document.getElementById('status').className = 'status online';
+            } catch (e) {
+                document.getElementById('status').textContent = 'Offline';
+                document.getElementById('status').className = 'status offline';
+            }
+        }
+        load();
+    </script>
+</body>
+</html>

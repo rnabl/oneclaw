@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OneClaw Node</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🦞 OneClaw Node</h1>
+            <div id="status" class="status">Connecting...</div>
+        </header>
+        
+        <nav>
+            <a href="/" class="active">Dashboard</a>
+            <a href="/chat.html">Chat</a>
+            <a href="/receipts.html">Receipts</a>
+            <a href="/integrations.html">Integrations</a>
+            <a href="/setup.html">Config</a>
+        </nav>
+
+        <main>
+            <section class="card">
+                <h2>Node Info</h2>
+                <div id="node-info">Loading...</div>
+            </section>
+
+            <section class="card">
+                <h2>Quick Run</h2>
+                <form id="run-form">
+                    <label>Workflow ID:
+                        <input type="text" id="workflow-id" placeholder="e.g. wallet_check" required>
+                    </label>
+                    <label>Inputs (JSON):
+                        <textarea id="workflow-inputs" rows="4">{}</textarea>
+                    </label>
+                    <button type="submit">Run Workflow</button>
+                </form>
+                <div id="run-result"></div>
+            </section>
+
+            <section class="card">
+                <h2>Executors</h2>
+                <div id="executors">Loading...</div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        async function loadHealth() {
+            try {
+                const res = await fetch('/health');
+                const data = await res.json();
+                document.getElementById('status').textContent = 'Online';
+                document.getElementById('status').className = 'status online';
+                document.getElementById('node-info').innerHTML = `
+                    <p><strong>ID:</strong> ${data.node_id}</p>
+                    <p><strong>Name:</strong> ${data.node_name}</p>
+                    <p><strong>Status:</strong> ${data.status}</p>
+                `;
+            } catch (e) {
+                document.getElementById('status').textContent = 'Offline';
+                document.getElementById('status').className = 'status offline';
+            }
+        }
+
+        async function loadExecutors() {
+            try {
+                const res = await fetch('/executors');
+                const data = await res.json();
+                document.getElementById('executors').innerHTML = data.map(e => 
+                    `<div class="executor"><strong>${e.id}</strong> v${e.version} - ${e.description}</div>`
+                ).join('');
+            } catch (e) {
+                document.getElementById('executors').textContent = 'Failed to load';
+            }
+        }
+
+        document.getElementById('run-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const workflowId = document.getElementById('workflow-id').value;
+            const inputs = JSON.parse(document.getElementById('workflow-inputs').value || '{}');
+            
+            document.getElementById('run-result').innerHTML = '<p>Running...</p>';
+            
+            try {
+                const res = await fetch('/run', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ workflow_id: workflowId, inputs })
+                });
+                const data = await res.json();
+                document.getElementById('run-result').innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+            } catch (e) {
+                document.getElementById('run-result').innerHTML = `<p class="error">${e.message}</p>`;
+            }
+        });
+
+        loadHealth();
+        loadExecutors();
+    </script>
+</body>
+</html>

@@ -1,0 +1,190 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Create Discord Bot in Developer Portal",
+      "description": "Set up the iClaw Discord bot application in Discord Developer Portal",
+      "status": "pending",
+      "priority": "high",
+      "dependencies": [],
+      "details": "1. Go to https://discord.com/developers/applications\n2. Create new application named 'iClaw'\n3. Go to Bot section, create bot\n4. Enable MESSAGE CONTENT INTENT (required for reading messages)\n5. Enable SERVER MEMBERS INTENT\n6. Generate bot token and save to .env\n7. Generate OAuth2 invite URL with bot + applications.commands scopes\n8. Add bot to your test Discord server",
+      "testStrategy": "Bot appears in Discord server member list, shows as online"
+    },
+    {
+      "id": 2,
+      "title": "Install Orchestrator Framework on VPS",
+      "description": "Set up chosen orchestrator (OpenClaw initially) on VPS with Discord channel enabled, browser disabled. Architecture is framework-agnostic - can swap to ZeroClaw, IronClaw, or custom later.",
+      "status": "pending",
+      "priority": "high",
+      "dependencies": [1],
+      "details": "1. SSH to VPS (104.131.111.116)\n2. Install OpenClaw: npm install -g @anthropic-ai/openclaw\n3. Run openclaw init\n4. Configure ~/.openclaw/config.json:\n   - Set model to claude-sonnet-4-20250514\n   - Enable discord channel\n   - Disable browser service completely\n   - Set Discord bot token from task 1\n5. Start gateway: openclaw gateway start\n6. Verify gateway is listening\n\nNote: This is framework-agnostic. The same nabl integration (task 3-4) works with any orchestrator. Users can choose OpenClaw, ZeroClaw, IronClaw, LangGraph, CrewAI, or custom.",
+      "testStrategy": "Orchestrator gateway running, Discord channel connected, bot responds to messages"
+    },
+    {
+      "id": 3,
+      "title": "Create nabl Universal Workflow API",
+      "description": "Build the universal nabl API endpoint that any orchestrator framework can call. This is the key to being framework-agnostic.",
+      "status": "pending",
+      "priority": "high",
+      "dependencies": [],
+      "details": "1. Create POST /api/v1/workflow endpoint in nabl\n2. Universal interface that works with any framework:\n   {\n     \"workflow\": \"audit\" | \"discovery\" | \"book-golf\",\n     \"params\": { ... workflow-specific params },\n     \"iclaw_key\": \"user_api_key\"\n   }\n3. Validate iclaw_key against Supabase\n4. Route to appropriate workflow handler\n5. Return consistent response format:\n   {\n     \"status\": \"success\" | \"error\",\n     \"result\": { ... },\n     \"credits_used\": 10\n   }\n6. Support async mode with webhook callback (optional)\n7. Log usage for credit tracking\n\nThis single API works with OpenClaw, ZeroClaw, IronClaw, LangGraph, CrewAI, or any custom code.",
+      "testStrategy": "curl POST to /api/v1/workflow returns valid result. Test with different framework integrations."
+    },
+    {
+      "id": 4,
+      "title": "Implement Audit Workflow Handler",
+      "description": "Implement the audit workflow that the universal API routes to",
+      "status": "pending",
+      "priority": "high",
+      "dependencies": [3],
+      "details": "1. In nabl, create audit workflow handler\n2. Accept params: { url }\n3. Run existing audit logic (Playwright/Apify)\n4. Return structured result:\n   - score\n   - critical_issues count\n   - warnings count\n   - report_url (link to full report)\n5. Handle errors gracefully\n6. Return credits_used: 10",
+      "testStrategy": "POST /api/v1/workflow with workflow='audit' returns valid audit result within 60 seconds"
+    },
+    {
+      "id": 5,
+      "title": "Create Framework Integration for OpenClaw",
+      "description": "Build the nabl tool/skill for OpenClaw that calls the universal API",
+      "status": "pending",
+      "priority": "high",
+      "dependencies": [2, 3],
+      "details": "1. Research OpenClaw plugin/tool system\n2. Create nabl_workflow tool:\n   - Accepts workflow name and parameters\n   - Makes HTTP POST to nabl /api/v1/workflow\n   - Returns result to conversation\n3. Register tool with OpenClaw\n4. Include error handling and timeout logic\n\nThis same pattern can be replicated for other frameworks:\n- ZeroClaw: Rust skill calling same API\n- IronClaw: Rust tool calling same API\n- LangGraph: Python tool calling same API\n- CrewAI: Python tool calling same API",
+      "testStrategy": "User says 'audit example.com' in Discord → nabl receives request → result returned"
+    },
+    {
+      "id": 6,
+      "title": "End-to-End Demo Bot Test",
+      "description": "Test complete flow: Discord message → Orchestrator → nabl → response",
+      "status": "pending",
+      "priority": "high",
+      "dependencies": [4, 5],
+      "details": "1. Join test Discord server\n2. Send: @iClaw audit example.com\n3. Verify bot acknowledges request\n4. Verify nabl receives and processes audit\n5. Verify bot sends result back to Discord\n6. Test error cases:\n   - Invalid URL\n   - nabl timeout\n   - nabl error\n7. Measure latency end-to-end",
+      "testStrategy": "5 successful audit requests, all return results to Discord within 90 seconds"
+    },
+    {
+      "id": 7,
+      "title": "Add Help and Status Commands",
+      "description": "Implement basic bot commands for help and usage status",
+      "status": "pending",
+      "priority": "medium",
+      "dependencies": [2],
+      "details": "1. @iClaw help - shows available commands and examples\n2. @iClaw status - shows bot status, available credits (hardcoded for now)\n3. Format responses nicely for Discord (embeds if possible)\n4. Keep responses concise for chat readability",
+      "testStrategy": "Help command returns formatted list, status command shows info"
+    },
+    {
+      "id": 8,
+      "title": "Implement Onboarding DM Flow with Framework Selection",
+      "description": "Create DM-based onboarding with framework choice (OpenClaw, ZeroClaw, IronClaw, etc.)",
+      "status": "pending",
+      "priority": "medium",
+      "dependencies": [6],
+      "details": "1. @iClaw deploy triggers DM flow\n2. Bot DMs user with channel selection (Discord/Telegram/Slack)\n3. NEW: Framework selection:\n   - OpenClaw (TypeScript, recommended for beginners)\n   - ZeroClaw (Rust, lightweight)\n   - IronClaw (Rust, enterprise security)\n   - LangGraph (Python, complex workflows)\n   - CrewAI (Python, multi-agent)\n   - Custom (bring your own)\n4. For Discord: Generate invite URL, user adds bot to their server\n5. Bot confirms bot joined their server\n6. Show plan selection (Starter/Pro)\n7. Generate Stripe checkout link\n8. Track onboarding state in Supabase\n9. Handle timeouts and errors gracefully",
+      "testStrategy": "Complete onboarding flow from deploy command to Stripe checkout link"
+    },
+    {
+      "id": 9,
+      "title": "Stripe Webhook Handler",
+      "description": "Handle Stripe payment webhooks to trigger user provisioning",
+      "status": "pending",
+      "priority": "medium",
+      "dependencies": [8],
+      "details": "1. Create /api/stripe/webhook endpoint\n2. Verify webhook signature using STRIPE_WEBHOOK_SECRET\n3. Handle checkout.session.completed event\n4. Extract customer email, subscription ID, and selected framework\n5. Look up user in Supabase by email\n6. Update user subscription status\n7. Trigger Fly.io provisioning (task 10)\n8. Send confirmation DM to user",
+      "testStrategy": "Test webhook with Stripe CLI, user record updated in Supabase"
+    },
+    {
+      "id": 10,
+      "title": "Fly.io Auto-Provisioning with Framework Selection",
+      "description": "Provision user's Fly VM with their chosen orchestrator framework",
+      "status": "pending",
+      "priority": "medium",
+      "dependencies": [9, 11],
+      "details": "1. Use existing fly-provision.ts as base\n2. On payment confirmed, check user's framework choice\n3. Create Fly app: iclaw-{user_id}\n4. Deploy appropriate Docker image based on framework:\n   - OpenClaw: iclaw-openclaw:latest\n   - ZeroClaw: iclaw-zeroclaw:latest\n   - IronClaw: iclaw-ironclaw:latest\n   - LangGraph: iclaw-langgraph:latest\n   - CrewAI: iclaw-crewai:latest\n5. Configure env vars:\n   - DISCORD_TOKEN\n   - ICLAW_KEY (for nabl API)\n   - LLM provider credentials\n6. Wait for machine to be running\n7. Store machine ID and framework in Supabase\n8. Return machine URL to caller",
+      "testStrategy": "Trigger provisioning with different frameworks, all deploy successfully"
+    },
+    {
+      "id": 11,
+      "title": "Create Docker Images for Each Framework",
+      "description": "Build and publish Docker images for each supported orchestrator framework",
+      "status": "pending",
+      "priority": "medium",
+      "dependencies": [5],
+      "details": "1. Create Dockerfile for each framework:\n   - iclaw-openclaw: OpenClaw + nabl tool pre-installed\n   - iclaw-zeroclaw: ZeroClaw + nabl skill pre-installed\n   - iclaw-ironclaw: IronClaw + nabl tool pre-installed\n   - iclaw-langgraph: Python + LangGraph + nabl tool\n   - iclaw-crewai: Python + CrewAI + nabl tool\n2. Each image includes:\n   - Framework binary/runtime\n   - nabl integration pre-configured\n   - Health check endpoint\n   - Graceful shutdown handling\n3. Publish to Fly.io registry\n4. Test each image locally before publishing",
+      "testStrategy": "Each Docker image builds, runs, and responds to health checks"
+    },
+    {
+      "id": 12,
+      "title": "User Bot Activation",
+      "description": "Activate user's bot in their Discord server after provisioning",
+      "status": "pending",
+      "priority": "medium",
+      "dependencies": [10],
+      "details": "1. After Fly VM is running, connect to user's Discord server\n2. Send welcome message in their server\n3. Confirm bot is responding\n4. DM user with success message and next steps\n5. Include quick start guide:\n   - Available commands\n   - How to check status\n   - Their framework info\n   - Support channel link",
+      "testStrategy": "Bot posts welcome message in user's server, responds to test command"
+    },
+    {
+      "id": 13,
+      "title": "Credit System - Basic Tracking",
+      "description": "Track workflow usage and credit consumption per user",
+      "status": "pending",
+      "priority": "low",
+      "dependencies": [4],
+      "details": "1. Add credits column to users table in Supabase\n2. Initialize based on plan (Starter: 200, Pro: 600)\n3. After each nabl workflow call, deduct credits\n4. Credit costs:\n   - audit: 10 credits\n   - discovery: 20 credits\n5. Before workflow, check sufficient credits\n6. If insufficient, return error message with upgrade prompt\n7. Add /status command to show remaining credits",
+      "testStrategy": "Run 3 audits, credits decrease by 30, shows in status command"
+    },
+    {
+      "id": 14,
+      "title": "Error Handling and User Messaging",
+      "description": "Improve error handling with user-friendly messages",
+      "status": "pending",
+      "priority": "low",
+      "dependencies": [6],
+      "details": "1. Catch nabl API errors, return friendly message\n2. Catch timeout errors, suggest retry\n3. Catch invalid URL errors, ask for correction\n4. Catch rate limit errors, show wait time\n5. Catch insufficient credits, show upgrade link\n6. Log errors for debugging\n7. Never show stack traces to users",
+      "testStrategy": "Trigger each error type, verify user-friendly message appears"
+    },
+    {
+      "id": 15,
+      "title": "Invite Community for Beta Testing",
+      "description": "Invite Discord community members to test the demo bot",
+      "status": "pending",
+      "priority": "low",
+      "dependencies": [6, 7],
+      "details": "1. Announce in Discord server that bot is ready for testing\n2. Explain available commands\n3. Ask for feedback on:\n   - Response quality\n   - Speed\n   - Any errors encountered\n4. Collect feature requests\n5. Document common issues\n6. Iterate based on feedback",
+      "testStrategy": "5+ community members successfully use bot, feedback collected"
+    },
+    {
+      "id": 16,
+      "title": "Add Discovery Workflow",
+      "description": "Add lead discovery workflow to nabl universal API",
+      "status": "pending",
+      "priority": "low",
+      "dependencies": [6],
+      "details": "1. Add discovery handler to /api/v1/workflow\n2. Accept { niche, location, limit }\n3. Run existing discovery logic\n4. Return businesses array with name, website, phone\n5. credits_used: 20\n6. Format results nicely for chat\n7. For large results, return summary + link to full list",
+      "testStrategy": "User says 'find HVAC leads in Denver', returns list of businesses"
+    },
+    {
+      "id": 17,
+      "title": "Create Framework Integration Templates",
+      "description": "Create template code for integrating nabl with each supported framework",
+      "status": "pending",
+      "priority": "low",
+      "dependencies": [5],
+      "details": "1. Create templates/ directory with examples:\n   - templates/openclaw/nabl-tool.ts\n   - templates/zeroclaw/nabl-skill.rs\n   - templates/ironclaw/nabl-tool.rs\n   - templates/langgraph/nabl-tool.py\n   - templates/crewai/nabl-tool.py\n2. Each template includes:\n   - Full nabl integration code\n   - Environment variable setup\n   - Error handling\n   - Example usage\n3. Publish as part of docs for custom deployments",
+      "testStrategy": "Each template compiles/runs and successfully calls nabl API"
+    },
+    {
+      "id": 18,
+      "title": "Documentation and README",
+      "description": "Create documentation for setup, usage, and framework integration",
+      "status": "pending",
+      "priority": "low",
+      "dependencies": [6],
+      "details": "1. Update README.md with:\n   - Project overview\n   - Framework-agnostic architecture explanation\n   - Quick start guide\n   - Environment variables\n   - Deployment instructions\n2. Create docs/FRAMEWORKS.md explaining each supported framework\n3. Create docs/NABL-API.md documenting the universal API\n4. Create CONTRIBUTING.md for future contributors\n5. Add troubleshooting section",
+      "testStrategy": "New developer can set up project following README with chosen framework"
+    }
+  ],
+  "metadata": {
+    "projectName": "iClaw",
+    "version": "0.1.0",
+    "createdAt": "2026-02-15T15:00:00Z",
+    "lastUpdated": "2026-02-15T15:00:00Z"
+  }
+}

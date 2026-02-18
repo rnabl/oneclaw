@@ -1,0 +1,11 @@
+# Task ID: 3
+# Title: Implement Agent OS File Loading Module
+# Status: pending
+# Dependencies: 2
+# Priority: high
+# Description: Create core module for loading and hashing Agent OS markdown files
+# Details:
+Create `src/agent_os.rs` with functions: `load_md(path: &str) -> Result<String>` to read markdown files, and `hash_file(path: &str) -> String` using SHA2 for versioning. Add error handling for missing files and invalid UTF-8.
+
+# Test Strategy:
+Unit tests: load_md returns correct content for existing files, returns error for missing files, hash_file produces consistent SHA2 hashes for same content

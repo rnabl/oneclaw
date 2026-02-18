@@ -1,0 +1,11 @@
+# Task ID: 10
+# Title: Implement Memory Compression
+# Status: pending
+# Dependencies: 9
+# Priority: low
+# Description: Add logic to compress MEMORY.md when it exceeds token limits
+# Details:
+Implement `compress()` function in memory.rs to summarize MEMORY.md when it exceeds 3k tokens. Use LLM to compress old memories while preserving important user preferences and facts.
+
+# Test Strategy:
+Create large MEMORY.md file (>3k tokens), trigger compression, verify output is shorter but preserves key user preferences

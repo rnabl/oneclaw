@@ -1,0 +1,19 @@
+version: "1.0"
+id: http_test
+name: HTTP Test
+description: Simple HTTP GET to verify executor works
+
+inputs:
+  url:
+    type: string
+    required: false
+    default: "https://httpbin.org/get"
+
+steps:
+  - id: fetch
+    executor: http.request
+    input:
+      method: GET
+      url: "${inputs.url}"
+
+outputs: {}

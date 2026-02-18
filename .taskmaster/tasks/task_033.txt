@@ -1,0 +1,11 @@
+# Task ID: 33
+# Title: Add Error Handling for Missing Files
+# Status: pending
+# Dependencies: 32
+# Priority: medium
+# Description: Implement graceful fallbacks when Agent OS files are missing or corrupted
+# Details:
+Add error handling in agent_os.rs for missing files, corrupted files, permission issues. Fall back to default templates or continue without injection rather than crashing.
+
+# Test Strategy:
+Test with missing SOUL.md, corrupted MEMORY.md, permission denied scenarios - verify graceful degradation without crashes

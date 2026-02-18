@@ -1,0 +1,11 @@
+# Task ID: 36
+# Title: Create Agent OS Documentation
+# Status: pending
+# Dependencies: 35
+# Priority: medium
+# Description: Write comprehensive documentation for Agent OS features and usage
+# Details:
+Create `AGENT_OS.md` documentation covering: file structure, injection rules, versioning system, UI usage, best practices for writing effective .md files, troubleshooting guide.
+
+# Test Strategy:
+Review documentation for completeness, accuracy, clarity. Test following documentation as new user to verify instructions work

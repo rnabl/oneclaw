@@ -1,0 +1,45 @@
+# IronClaw Docker Image
+# Rust-based enterprise agent orchestrator with PostgreSQL
+
+FROM rust:slim-bookworm AS builder
+
+# Install build dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    pkg-config \
+    libssl-dev \
+    libpq-dev \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+# Clone and build IronClaw
+RUN git clone https://github.com/example/ironclaw.git /ironclaw
+WORKDIR /ironclaw
+RUN cargo build --release
+
+# Runtime image
+FROM debian:bookworm-slim
+
+# Install runtime dependencies
+RUN apt-get update && apt-get install -y \
+    ca-certificates \
+    curl \
+    libpq5 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy binary
+COPY --from=builder /ironclaw/target/release/ironclaw /usr/local/bin/ironclaw
+
+# Create config directory
+RUN mkdir -p /root/.ironclaw
+
+# Copy default config
+COPY integrations/ironclaw/config.toml /root/.ironclaw/config.toml
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
+    CMD curl -f http://localhost:9000/health || exit 1
+
+EXPOSE 9000
+
+CMD ["ironclaw", "serve"]

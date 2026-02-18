@@ -1,0 +1,11 @@
+# Task ID: 29
+# Title: Implement Rollback Backend
+# Status: pending
+# Dependencies: 28
+# Priority: medium
+# Description: Add API endpoint for rolling back to previous Agent OS versions
+# Details:
+Add `POST /agent-os/rollback?version=1.0.0` endpoint to daemon.rs. Extract specified snapshot, replace current .md files, update version tracking. Handle errors gracefully.
+
+# Test Strategy:
+Test rollback: Create v1.2.0, rollback to v1.1.0, verify files restored correctly and version updated

@@ -1,0 +1,11 @@
+# Task ID: 23
+# Title: Implement File Versioning System
+# Status: pending
+# Dependencies: 22
+# Priority: medium
+# Description: Add versioning for Agent OS markdown files with hash-based change detection
+# Details:
+Add `version_files()` function to agent_os.rs that hashes all 5 .md files, compares with previous hashes, bumps version if changed. Use semantic versioning (1.0.0 → 1.1.0 for changes).
+
+# Test Strategy:
+Test: Edit SOUL.md, verify version bumps from 1.0.0 to 1.1.0, unchanged files don't trigger version bump

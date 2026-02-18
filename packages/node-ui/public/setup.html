@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OneClaw Node - Setup</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-content">
+      <h1 class="nav-title">🦞 OneClaw Node</h1>
+      <div class="nav-links">
+        <a href="/">Dashboard</a>
+        <a href="/setup.html" class="active">Setup</a>
+        <a href="/receipts.html">Receipts</a>
+      </div>
+    </div>
+  </nav>
+  
+  <main class="container">
+    <div class="card">
+      <div class="steps">
+        <div class="step" data-step="1">
+          <div class="step-number">1</div>
+        </div>
+        <div class="step-line"></div>
+        <div class="step" data-step="2">
+          <div class="step-number">2</div>
+        </div>
+        <div class="step-line"></div>
+        <div class="step" data-step="3">
+          <div class="step-number">3</div>
+        </div>
+        <div class="step-line"></div>
+        <div class="step" data-step="4">
+          <div class="step-number">4</div>
+        </div>
+      </div>
+      
+      <h2 id="step-title">Welcome to OneClaw</h2>
+      
+      <!-- Step 1 -->
+      <div id="step-1" class="step-content">
+        <p>OneClaw runs workflows on your own hardware for maximum privacy and control. This wizard will help you set up your node.</p>
+        
+        <div class="info-box">
+          <p class="info-title">✅ Your node is configured!</p>
+          <p class="info-text">Config location: ~/.oneclaw/node.yaml</p>
+        </div>
+        
+        <button class="btn btn-primary" onclick="nextStep()">Continue →</button>
+      </div>
+      
+      <!-- Step 2 -->
+      <div id="step-2" class="step-content hidden">
+        <p>Enable additional executors for more capabilities.</p>
+        
+        <div class="executor-list">
+          <label class="executor-item">
+            <input type="checkbox" checked disabled>
+            <div>
+              <p class="executor-name">HTTP Executor</p>
+              <p class="executor-desc">Make API calls and fetch data</p>
+            </div>
+          </label>
+          
+          <label class="executor-item">
+            <input type="checkbox">
+            <div>
+              <p class="executor-name">Browser Executor</p>
+              <p class="executor-desc">Automate web browsing with Playwright</p>
+            </div>
+          </label>
+          
+          <label class="executor-item">
+            <input type="checkbox">
+            <div>
+              <p class="executor-name">LLM Executor</p>
+              <p class="executor-desc">Generate text with language models</p>
+            </div>
+          </label>
+        </div>
+        
+        <button class="btn btn-primary" onclick="nextStep()">Continue →</button>
+      </div>
+      
+      <!-- Step 3 -->
+      <div id="step-3" class="step-content hidden">
+        <p>Link your node to OneClaw cloud to receive workflow dispatch requests.</p>
+        
+        <div id="pairing-section">
+          <button class="btn btn-primary" onclick="generatePairingCode()">Generate Pairing Code</button>
+        </div>
+        
+        <div id="pairing-code" class="pairing-code hidden">
+          <p class="label">Your pairing code:</p>
+          <p class="code" id="code-display">ABC-DEF-GHI</p>
+          <p class="label">Enter this code at <strong>app.oneclaw.com/nodes</strong></p>
+          <button class="btn btn-primary" onclick="nextStep()">I've paired my node →</button>
+        </div>
+      </div>
+      
+      <!-- Step 4 -->
+      <div id="step-4" class="step-content hidden">
+        <p>Run a test workflow to verify everything works.</p>
+        
+        <div class="success-box">
+          <p class="success-title">✅ Node is ready!</p>
+          <p class="success-text">You can now dispatch workflows to this node.</p>
+        </div>
+        
+        <a href="/" class="btn btn-primary">Go to Dashboard</a>
+      </div>
+    </div>
+  </main>
+  
+  <script type="module" src="/static/setup.js"></script>
+</body>
+</html>

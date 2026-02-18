@@ -1,0 +1,11 @@
+# Task ID: 4
+# Title: Add SHA2 and File System Dependencies
+# Status: pending
+# Dependencies: 3
+# Priority: medium
+# Description: Add required Rust dependencies for file hashing and compression
+# Details:
+Add to Cargo.toml: sha2 = "0.10" for file hashing, tar = "0.4" for snapshots, flate2 = "1.0" for gzip compression. Update imports in agent_os.rs module.
+
+# Test Strategy:
+Verify cargo build succeeds, dependencies resolve correctly, and hash functions are available in agent_os module

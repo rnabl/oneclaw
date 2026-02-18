@@ -1,0 +1,11 @@
+# Task ID: 22
+# Title: Test 4-Turn Progressive Workflow
+# Status: pending
+# Dependencies: 21
+# Priority: high
+# Description: Verify complete progressive workflow with caching and no redundant API calls
+# Details:
+Test full flow: Turn 1 "Find 100 HVAC in Denver" → calls Apify, stores in state. Turn 2 "Who would you analyze?" → filters cached list. Turn 3 "Which best for me?" → ranks cached. Turn 4 "Run audits" → spawns sub-agents on top 10. No redundant API calls.
+
+# Test Strategy:
+Manual test: Complete 4-turn workflow, verify no duplicate API calls, user can steer each step, cached data is used appropriately

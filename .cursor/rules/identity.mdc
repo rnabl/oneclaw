@@ -1,0 +1,242 @@
+# Identity & Authentication Rules
+
+## Core Principle
+
+**One user = One identity = One wallet**
+
+A user can connect from Discord, Telegram, phone, or OAuth. All are the same user.
+
+## Identity Model
+
+```typescript
+// User - the core identity
+export const UserSchema = z.object({
+  id: z.string().uuid(),
+  email: z.string().email().nullable(), // For notifications/recovery
+  name: z.string().nullable(),
+  avatarUrl: z.string().url().nullable(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+});
+
+// Identity - links external providers to user
+export const IdentitySchema = z.object({
+  id: z.string().uuid(),
+  userId: z.string().uuid(),
+  provider: z.enum([
+    'discord',
+    'telegram', 
+    'phone',
+    'google',
+    'apple',
+    'github',
+    'email',
+  ]),
+  providerId: z.string(), // External ID (Discord user ID, phone number, etc.)
+  providerEmail: z.string().email().nullable(),
+  providerName: z.string().nullable(),
+  providerAvatar: z.string().url().nullable(),
+  accessToken: z.string().nullable(), // Encrypted, for APIs that need it
+  refreshToken: z.string().nullable(), // Encrypted
+  tokenExpiresAt: z.date().nullable(),
+  verifiedAt: z.date().nullable(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+});
+
+// Constraint: UNIQUE(provider, providerId)
+// One Discord account can only link to one user
+```
+
+## Identity Resolution Flow
+
+```typescript
+async function resolveUser(provider: string, providerId: string): Promise<User> {
+  // 1. Look for existing identity
+  const identity = await stores.identity.findByProvider(provider, providerId);
+  
+  if (identity) {
+    // Known user - return their user record
+    return await stores.user.getById(identity.userId);
+  }
+  
+  // 2. New user - create user + identity
+  const user = await stores.user.create({
+    email: null,
+    name: null,
+  });
+  
+  await stores.identity.create({
+    userId: user.id,
+    provider,
+    providerId,
+  });
+  
+  // 3. Create their wallet
+  await stores.wallet.create(user.id);
+  
+  return user;
+}
+```
+
+## Channel Handler Pattern
+
+Every channel (Discord, Telegram, etc.) uses the same pattern:
+
+```typescript
+// Discord handler
+async function handleDiscordMessage(discordUserId: string, message: string) {
+  // Resolve to internal user
+  const user = await resolveUser('discord', discordUserId);
+  
+  // Now use user.id for everything
+  const wallet = await stores.wallet.getByUserId(user.id);
+  const canRun = wallet.balanceCents >= workflowCost;
+  
+  // ...
+}
+
+// Telegram handler (same pattern)
+async function handleTelegramMessage(telegramUserId: string, message: string) {
+  const user = await resolveUser('telegram', telegramUserId);
+  const wallet = await stores.wallet.getByUserId(user.id);
+  // ...
+}
+```
+
+## Linking Accounts
+
+User can link multiple providers to same identity:
+
+```typescript
+// User is logged in via Discord, wants to link Google
+async function linkGoogle(userId: string, googleAuth: GoogleAuthResult) {
+  // Check if Google account already linked to another user
+  const existing = await stores.identity.findByProvider('google', googleAuth.id);
+  
+  if (existing && existing.userId !== userId) {
+    throw new Error('This Google account is already linked to another user');
+  }
+  
+  if (existing) {
+    // Already linked to this user
+    return;
+  }
+  
+  // Create new identity link
+  await stores.identity.create({
+    userId,
+    provider: 'google',
+    providerId: googleAuth.id,
+    providerEmail: googleAuth.email,
+    providerName: googleAuth.name,
+    accessToken: encrypt(googleAuth.accessToken),
+    refreshToken: encrypt(googleAuth.refreshToken),
+  });
+}
+```
+
+## Merging Accounts
+
+If user has two separate accounts they want to merge:
+
+```typescript
+async function mergeAccounts(keepUserId: string, mergeUserId: string) {
+  // 1. Move all identities to keep user
+  await stores.identity.updateMany(
+    { userId: mergeUserId },
+    { userId: keepUserId }
+  );
+  
+  // 2. Merge wallets (sum balances)
+  const keepWallet = await stores.wallet.getByUserId(keepUserId);
+  const mergeWallet = await stores.wallet.getByUserId(mergeUserId);
+  
+  if (mergeWallet.balanceCents > 0) {
+    await stores.wallet.credit(
+      keepUserId,
+      mergeWallet.balanceCents,
+      `merge_${mergeUserId}_${Date.now()}`
+    );
+  }
+  
+  // 3. Delete merged user's wallet and user record
+  await stores.wallet.delete(mergeUserId);
+  await stores.user.delete(mergeUserId);
+  
+  // 4. Audit log
+  auditLog('account_merge', { keepUserId, mergeUserId });
+}
+```
+
+## Provider-Specific ID Formats
+
+```typescript
+// Normalize provider IDs for consistency
+function normalizeProviderId(provider: string, rawId: string): string {
+  switch (provider) {
+    case 'phone':
+      // Always E.164 format: +15551234567
+      return normalizePhoneNumber(rawId);
+    case 'email':
+      // Always lowercase
+      return rawId.toLowerCase().trim();
+    case 'discord':
+    case 'telegram':
+    case 'google':
+    case 'github':
+      // Keep as-is (these are stable IDs)
+      return rawId;
+    default:
+      return rawId;
+  }
+}
+```
+
+## Stripe Integration
+
+When payment completes, we need to credit the right user:
+
+```typescript
+// client_reference_id format in Stripe
+// For Discord: discord_397102686660591616
+// For phone: phone_+15551234567
+// For existing user: user_uuid-here
+
+function parseClientReferenceId(refId: string): { provider: string; providerId: string } | { userId: string } {
+  if (refId.startsWith('user_')) {
+    return { userId: refId.replace('user_', '') };
+  }
+  
+  const [provider, ...rest] = refId.split('_');
+  return { provider, providerId: rest.join('_') };
+}
+
+async function creditFromStripe(clientRefId: string, cents: number, stripeEventId: string) {
+  const parsed = parseClientReferenceId(clientRefId);
+  
+  let userId: string;
+  
+  if ('userId' in parsed) {
+    userId = parsed.userId;
+  } else {
+    // Resolve provider to user
+    const user = await resolveUser(parsed.provider, parsed.providerId);
+    userId = user.id;
+  }
+  
+  await stores.wallet.credit(userId, cents, `stripe_${stripeEventId}`);
+}
+```
+
+## Security Considerations
+
+1. **Provider IDs are not secrets** - Discord IDs are public. Don't rely on them for auth.
+2. **Verify ownership** - When linking OAuth, verify the user actually owns that account.
+3. **Rate limit identity creation** - Prevent spam account creation.
+4. **Encrypt tokens** - OAuth access/refresh tokens are encrypted at rest.
+
+## Related Rules
+
+- [harness.mdc](mdc:.cursor/rules/harness.mdc) - Harness architecture
+- [billing.mdc](mdc:.cursor/rules/billing.mdc) - Billing rules

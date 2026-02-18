@@ -1,0 +1,347 @@
+# Self-Hosted Deployment Rules
+
+## Overview
+
+OneClaw supports two deployment modes:
+
+1. **OneClaw Cloud** - We host, users pay us
+2. **Self-Hosted** - User deploys on their own infrastructure (Fly.io)
+
+Harness must work identically in both modes. Only the store implementations differ.
+
+## Architecture
+
+```
+OneClaw Cloud                       Self-Hosted (Fly.io)
+┌─────────────────────┐            ┌─────────────────────┐
+│  apps/api           │            │  user's deploy      │
+│  ├── Supabase Store │            │  ├── SQLite Store   │
+│  ├── Our Stripe     │            │  ├── Their Stripe   │
+│  └── Our secrets    │            │  └── Their secrets  │
+└─────────────────────┘            └─────────────────────┘
+          │                                  │
+          └────────────┬─────────────────────┘
+                       │
+          ┌────────────▼────────────┐
+          │  @iclaw/harness         │
+          │  (same code, injected   │
+          │   implementations)      │
+          └─────────────────────────┘
+```
+
+## Self-Hosted Configuration
+
+User provides their own config:
+
+```typescript
+// config.ts (user's deploy)
+export const config = {
+  // Database
+  database: {
+    type: 'sqlite', // or 'turso', 'postgres'
+    path: './data/oneclaw.db',
+    // Or for Turso:
+    // url: process.env.TURSO_DATABASE_URL,
+    // authToken: process.env.TURSO_AUTH_TOKEN,
+  },
+
+  // Payments (their Stripe)
+  stripe: {
+    secretKey: process.env.STRIPE_SECRET_KEY,
+    webhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
+  },
+
+  // Discord (their bot)
+  discord: {
+    applicationId: process.env.DISCORD_APPLICATION_ID,
+    publicKey: process.env.DISCORD_PUBLIC_KEY,
+    token: process.env.DISCORD_BOT_TOKEN,
+  },
+
+  // AI (their API keys)
+  ai: {
+    openaiKey: process.env.OPENAI_API_KEY,
+    anthropicKey: process.env.ANTHROPIC_API_KEY,
+  },
+};
+```
+
+## Store Factory Pattern
+
+```typescript
+// packages/harness/src/stores/factory.ts
+import type { Stores } from './types';
+import type { Config } from '../config';
+
+export async function createStores(config: Config['database']): Promise<Stores> {
+  switch (config.type) {
+    case 'memory':
+      const { createInMemoryStores } = await import('./memory');
+      return createInMemoryStores();
+
+    case 'sqlite':
+      const { createSQLiteStores } = await import('./sqlite');
+      return createSQLiteStores(config.path);
+
+    case 'turso':
+      const { createTursoStores } = await import('./turso');
+      return createTursoStores(config.url, config.authToken);
+
+    case 'supabase':
+      const { createSupabaseStores } = await import('./supabase');
+      return createSupabaseStores(config.url, config.serviceKey);
+
+    case 'postgres':
+      const { createPostgresStores } = await import('./postgres');
+      return createPostgresStores(config.connectionString);
+
+    default:
+      throw new Error(`Unknown database type: ${config.type}`);
+  }
+}
+```
+
+## SQLite Store Implementation
+
+```typescript
+// packages/harness/src/stores/sqlite.ts
+import Database from 'better-sqlite3';
+import { randomUUID } from 'crypto';
+import type { WalletStore } from './types';
+
+export class SQLiteWalletStore implements WalletStore {
+  private db: Database.Database;
+
+  constructor(db: Database.Database) {
+    this.db = db;
+    this.initTables();
+  }
+
+  private initTables() {
+    this.db.exec(`
+      CREATE TABLE IF NOT EXISTS wallets (
+        id TEXT PRIMARY KEY,
+        user_id TEXT UNIQUE NOT NULL,
+        balance_cents INTEGER NOT NULL DEFAULT 0,
+        tier TEXT NOT NULL DEFAULT 'free',
+        lifetime_topup_cents INTEGER NOT NULL DEFAULT 0,
+        lifetime_spent_cents INTEGER NOT NULL DEFAULT 0,
+        created_at TEXT NOT NULL,
+        updated_at TEXT NOT NULL
+      );
+
+      CREATE TABLE IF NOT EXISTS transactions (
+        id TEXT PRIMARY KEY,
+        wallet_id TEXT NOT NULL,
+        type TEXT NOT NULL,
+        amount_cents INTEGER NOT NULL,
+        balance_after_cents INTEGER NOT NULL,
+        idempotency_key TEXT UNIQUE NOT NULL,
+        source TEXT NOT NULL,
+        source_id TEXT,
+        description TEXT NOT NULL,
+        metadata TEXT,
+        created_at TEXT NOT NULL,
+        FOREIGN KEY (wallet_id) REFERENCES wallets(id)
+      );
+    `);
+  }
+
+  async getByUserId(userId: string): Promise<Wallet> {
+    const row = this.db.prepare(
+      'SELECT * FROM wallets WHERE user_id = ?'
+    ).get(userId);
+    
+    if (!row) throw new NotFoundError('Wallet', userId);
+    return this.rowToWallet(row);
+  }
+
+  async credit(
+    userId: string,
+    amountCents: number,
+    idempotencyKey: string,
+    source: string,
+    sourceId?: string,
+    description?: string
+  ): Promise<Transaction> {
+    // Check for duplicate
+    const existing = this.db.prepare(
+      'SELECT * FROM transactions WHERE idempotency_key = ?'
+    ).get(idempotencyKey);
+    
+    if (existing) {
+      return this.rowToTransaction(existing);
+    }
+
+    // Update wallet and create transaction atomically
+    const txn = this.db.transaction(() => {
+      const wallet = this.db.prepare(
+        'SELECT * FROM wallets WHERE user_id = ?'
+      ).get(userId);
+      
+      if (!wallet) throw new NotFoundError('Wallet', userId);
+
+      const newBalance = wallet.balance_cents + amountCents;
+      const now = new Date().toISOString();
+      const txnId = randomUUID();
+
+      // Update wallet
+      this.db.prepare(`
+        UPDATE wallets 
+        SET balance_cents = ?, lifetime_topup_cents = lifetime_topup_cents + ?, updated_at = ?
+        WHERE user_id = ?
+      `).run(newBalance, amountCents, now, userId);
+
+      // Insert transaction
+      this.db.prepare(`
+        INSERT INTO transactions 
+        (id, wallet_id, type, amount_cents, balance_after_cents, idempotency_key, source, source_id, description, created_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `).run(txnId, wallet.id, 'credit', amountCents, newBalance, idempotencyKey, source, sourceId, description || `Credit ${amountCents} cents`, now);
+
+      return { id: txnId, balance: newBalance };
+    });
+
+    return txn();
+  }
+}
+```
+
+## Fly.io Deployment
+
+Self-hosted users deploy via Fly.io:
+
+```toml
+# fly.toml
+app = "my-oneclaw"
+primary_region = "sjc"
+
+[build]
+  image = "oneclaw/runtime:latest"
+
+[env]
+  DATABASE_TYPE = "sqlite"
+  DATABASE_PATH = "/data/oneclaw.db"
+
+[mounts]
+  source = "oneclaw_data"
+  destination = "/data"
+
+[[services]]
+  internal_port = 3000
+  protocol = "tcp"
+
+  [[services.ports]]
+    port = 443
+    handlers = ["tls", "http"]
+```
+
+## Migration Support
+
+Each store implementation handles its own migrations:
+
+```typescript
+// packages/harness/src/stores/sqlite.ts
+const MIGRATIONS = [
+  {
+    version: 1,
+    sql: `
+      CREATE TABLE users (...);
+      CREATE TABLE identities (...);
+      CREATE TABLE wallets (...);
+      CREATE TABLE transactions (...);
+    `,
+  },
+  {
+    version: 2,
+    sql: `
+      ALTER TABLE wallets ADD COLUMN tier TEXT DEFAULT 'free';
+    `,
+  },
+];
+
+export function runMigrations(db: Database.Database) {
+  // Create migrations table
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS _migrations (
+      version INTEGER PRIMARY KEY,
+      applied_at TEXT NOT NULL
+    );
+  `);
+
+  const applied = db.prepare('SELECT version FROM _migrations').all();
+  const appliedVersions = new Set(applied.map(r => r.version));
+
+  for (const migration of MIGRATIONS) {
+    if (!appliedVersions.has(migration.version)) {
+      db.exec(migration.sql);
+      db.prepare('INSERT INTO _migrations (version, applied_at) VALUES (?, ?)').run(
+        migration.version,
+        new Date().toISOString()
+      );
+      console.log(`[migration] Applied v${migration.version}`);
+    }
+  }
+}
+```
+
+## Feature Parity
+
+Self-hosted must support everything OneClaw Cloud does:
+
+| Feature | Cloud | Self-Hosted |
+|---------|-------|-------------|
+| Discord bot | ✅ | ✅ |
+| Telegram bot | ✅ | ✅ |
+| iMessage | ✅ | ❌ (requires our infra) |
+| Stripe payments | ✅ (our Stripe) | ✅ (their Stripe) |
+| Workflows | ✅ | ✅ |
+| Web UI | ✅ | ✅ |
+| Admin panel | ✅ | ✅ |
+
+## Self-Hosted Admin CLI
+
+Users can manage their instance via CLI:
+
+```bash
+# Seed wallet
+oneclaw wallet:credit --discord-id=123456789 --amount=1000
+
+# View transactions
+oneclaw wallet:history --discord-id=123456789
+
+# Run migrations
+oneclaw db:migrate
+
+# View stats
+oneclaw stats
+```
+
+## Anti-Patterns
+
+```typescript
+// ❌ BAD - Hardcoded Supabase
+import { createClient } from '@supabase/supabase-js';
+const supabase = createClient(process.env.SUPABASE_URL, ...);
+
+// ✅ GOOD - Use injected stores
+import { getStores } from '@iclaw/harness';
+const stores = getStores();
+
+// ❌ BAD - Assumes our Stripe
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+// ✅ GOOD - Config-driven
+const stripe = new Stripe(config.stripe.secretKey);
+
+// ❌ BAD - Assumes cloud-specific features
+if (process.env.SUPABASE_URL) { ... }
+
+// ✅ GOOD - Feature flags
+if (config.features.realtimeSync) { ... }
+```
+
+## Related Rules
+
+- [harness.mdc](mdc:.cursor/rules/harness.mdc) - Harness architecture
+- [billing.mdc](mdc:.cursor/rules/billing.mdc) - Billing rules

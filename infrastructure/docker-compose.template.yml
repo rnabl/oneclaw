@@ -1,0 +1,29 @@
+# Template for per-user OpenClaw container
+# This gets copied and customized for each new user
+
+version: '3.8'
+
+services:
+  openclaw-${USER_ID}:
+    image: node:22-slim
+    container_name: openclaw-${USER_ID}
+    restart: unless-stopped
+    ports:
+      - "${PORT}:18789"
+    volumes:
+      - ./users/${USER_ID}/data:/root/.openclaw
+      - ./users/${USER_ID}/workspace:/workspace
+    environment:
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - OPENROUTER_MODEL=${OPENROUTER_MODEL:-minimax/minimax-01}
+    working_dir: /app
+    command: >
+      sh -c "
+        npm install -g openclaw@latest &&
+        openclaw gateway
+      "
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:18789/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3

@@ -1,0 +1,56 @@
+# DigitalOcean App Platform spec
+name: iclaw
+
+services:
+  - name: api
+    github:
+      repo: your-username/iclaw  # UPDATE THIS
+      branch: main
+      deploy_on_push: true
+    dockerfile_path: apps/api/Dockerfile
+    http_port: 3000
+    instance_count: 1
+    instance_size_slug: basic-xxs
+    routes:
+      - path: /
+    envs:
+      - key: NODE_ENV
+        value: production
+      - key: SUPABASE_URL
+        type: SECRET
+      - key: SUPABASE_ANON_KEY
+        type: SECRET
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        type: SECRET
+      - key: BLUEBUBBLES_SERVER_URL
+        type: SECRET
+      - key: BLUEBUBBLES_PASSWORD
+        type: SECRET
+      - key: ANTHROPIC_API_KEY
+        type: SECRET
+      - key: GOOGLE_CLIENT_ID
+        type: SECRET
+      - key: GOOGLE_CLIENT_SECRET
+        type: SECRET
+      - key: GOOGLE_REDIRECT_URI
+        type: SECRET
+      - key: API_BASE_URL
+        type: SECRET
+      - key: STRIPE_SECRET_KEY
+        type: SECRET
+      - key: STRIPE_WEBHOOK_SECRET
+        type: SECRET
+
+  - name: web
+    github:
+      repo: your-username/iclaw  # UPDATE THIS
+      branch: main
+      deploy_on_push: true
+    build_command: cd apps/web && npm install && npm run build
+    environment_slug: node-js
+    http_port: 3000
+    instance_count: 1
+    instance_size_slug: basic-xxs
+    routes:
+      - path: /
+    run_command: npx serve apps/web/dist -l 3000

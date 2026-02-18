@@ -1,0 +1,11 @@
+# Task ID: 1
+# Title: Test Gmail OAuth Integration on Localhost
+# Status: pending
+# Dependencies: None
+# Priority: high
+# Description: Verify Gmail OAuth flow works correctly between API and Node services before implementing Agent OS features
+# Details:
+Run API service on port 3000 with `pnpm --filter @oneclaw/api dev` and Node daemon on port 8787 with `cargo run -- daemon`. Test OAuth flow at http://localhost:8787/integrations.html by connecting Gmail and verifying callback works. This is a critical gate - OAuth must work before continuing.
+
+# Test Strategy:
+Manual test: Navigate to integrations page, click Connect Gmail, complete OAuth flow, verify callback returns successfully and tokens are stored

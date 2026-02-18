@@ -1,0 +1,11 @@
+# Task ID: 8
+# Title: Initialize User Memory System
+# Status: pending
+# Dependencies: 7
+# Priority: medium
+# Description: Create empty MEMORY.md file and directory structure for user-specific memory storage
+# Details:
+Create `~/.oneclaw/` directory structure on first run. Initialize empty `MEMORY.md` file. Create `src/memory.rs` module with `init_memory_file()` function to set up user directory and empty memory file if they don't exist.
+
+# Test Strategy:
+Verify ~/.oneclaw/ directory is created, MEMORY.md file exists and is initially empty, memory.rs module compiles successfully

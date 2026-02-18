@@ -1,0 +1,43 @@
+# ZeroClaw Docker Image
+# Rust-based lightweight agent orchestrator
+
+FROM rust:slim-bookworm AS builder
+
+# Install build dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    pkg-config \
+    libssl-dev \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+# Clone and build ZeroClaw
+RUN git clone https://github.com/theonlyhennygod/zeroclaw.git /zeroclaw
+WORKDIR /zeroclaw
+RUN cargo build --release
+
+# Runtime image
+FROM debian:bookworm-slim
+
+# Install runtime dependencies
+RUN apt-get update && apt-get install -y \
+    ca-certificates \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy binary
+COPY --from=builder /zeroclaw/target/release/zeroclaw /usr/local/bin/zeroclaw
+
+# Create config directory
+RUN mkdir -p /root/.zeroclaw
+
+# Copy default config with nabl integration
+COPY integrations/zeroclaw/config.toml /root/.zeroclaw/config.toml
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
+    CMD curl -f http://localhost:8080/health || exit 1
+
+EXPOSE 8080
+
+CMD ["zeroclaw", "serve"]

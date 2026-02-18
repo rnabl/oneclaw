@@ -1,0 +1,11 @@
+# Task ID: 17
+# Title: Create Sub-Agent Executor Module
+# Status: pending
+# Dependencies: 16
+# Priority: high
+# Description: Implement Rust executor for spawning parallel LLM sub-agents
+# Details:
+Create `src/executors/llm_subagents.rs` with executor that parses params (agents array, timeout), spawns tokio tasks for parallel execution, each calling LLM with isolated context. Return format: {results: [...], succeeded: N, failed: M}.
+
+# Test Strategy:
+Unit test: Spawn 3 sub-agents with simple tasks, verify parallel execution completes in <20s vs 30s+ serial execution

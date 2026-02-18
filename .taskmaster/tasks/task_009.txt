@@ -1,0 +1,11 @@
+# Task ID: 9
+# Title: Implement Memory Append Logic
+# Status: pending
+# Dependencies: 8
+# Priority: medium
+# Description: Add functionality to append learned facts to MEMORY.md after each conversation
+# Details:
+Implement `append(fact: &str)` function in memory.rs to append timestamped facts to MEMORY.md. After each chat interaction, prompt LLM to generate "what to remember about this user" and append to memory file with timestamp.
+
+# Test Strategy:
+Test conversation where user states preference (e.g., "I prefer bullet points"), verify fact is appended to MEMORY.md with timestamp

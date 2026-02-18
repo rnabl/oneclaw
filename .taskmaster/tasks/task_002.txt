@@ -1,0 +1,11 @@
+# Task ID: 2
+# Title: Create SOUL.md Template
+# Status: pending
+# Dependencies: 1
+# Priority: high
+# Description: Create the foundational personality template that defines the agent's purpose, principles, and tone
+# Details:
+Create `oneclaw-node/templates/SOUL.md` with 400 tokens containing: North Star section (purpose), core principles, and communication tone. Structure should be markdown with clear sections that LLM can easily parse and inject into system prompts.
+
+# Test Strategy:
+Verify file exists, token count is ~400, and content includes purpose, principles, and tone sections in valid markdown format

@@ -1,0 +1,11 @@
+# Task ID: 7
+# Title: Inject IDENTITY.md into Chat System
+# Status: pending
+# Dependencies: 6
+# Priority: medium
+# Description: Add IDENTITY.md injection to chat prompts for consistent agent persona
+# Details:
+Update conversation.rs to also load and inject IDENTITY.md into chat prompts (not workflow/heartbeat). Combine with SOUL.md injection. Agent should introduce itself with the specified name and use defined communication style.
+
+# Test Strategy:
+Test chat interaction: Agent should introduce itself with correct name from IDENTITY.md and use specified emojis/style consistently

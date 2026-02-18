@@ -1,0 +1,69 @@
+version: '1.0'
+id: hvac_search_local
+name: Find Local HVAC Services
+description: Search for HVAC contractors in a user's area and return contact info
+
+inputs:
+  zip_code:
+    type: string
+    description: User's ZIP code
+    required: true
+    validation:
+      pattern: '^\d{5}$'
+  
+  service_type:
+    type: string
+    description: Type of service needed (repair, installation, maintenance)
+    required: false
+    default: repair
+
+outputs:
+  contractors:
+    type: array
+    description: List of HVAC contractors with contact info
+  
+  search_url:
+    type: string
+    description: Google search URL used
+
+metadata:
+  author: OneClaw
+  tags:
+    - hvac
+    - local-search
+    - home-services
+  category: home-automation
+
+steps:
+  - id: search_google
+    name: Search Google for HVAC contractors
+    executor: http.request
+    input:
+      method: GET
+      url: https://www.google.com/search
+      headers:
+        User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
+    uses:
+      q: inputs.zip_code + ' HVAC ' + inputs.service_type
+  
+  - id: parse_results
+    name: Extract contractor listings from HTML
+    executor: data.transform
+    input:
+      type: html_parse
+      selectors:
+        name: .business-name
+        phone: .phone-number
+        address: .address
+        rating: .rating
+    uses:
+      html: steps.search_google.result.body
+  
+  - id: format_output
+    name: Format contractor list
+    executor: data.transform
+    input:
+      type: json_map
+      template:
+        contractors: "{{ parse_results.result }}"
+        search_url: "{{ search_google.result.url }}"

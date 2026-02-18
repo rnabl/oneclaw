@@ -1,0 +1,11 @@
+# Task ID: 21
+# Title: Add Conversation State Persistence
+# Status: pending
+# Dependencies: 20
+# Priority: high
+# Description: Implement state management for progressive multi-turn workflows
+# Details:
+Update `conversation.rs` to add `state: HashMap<String, Value>` to ConversationContext. After Turn 1, store results in context.state["businesses"]. Enable LLM to reference cached data in subsequent turns.
+
+# Test Strategy:
+Test multi-turn: Turn 1 stores data in state, Turn 2 references cached data without re-fetching, verify state persists across turns

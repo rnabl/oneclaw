@@ -1,0 +1,11 @@
+# Task ID: 28
+# Title: Add Version History UI
+# Status: pending
+# Dependencies: 27
+# Priority: medium
+# Description: Create interface for viewing version history and rollback functionality
+# Details:
+Add to agent-os.html: "Version History" dropdown showing available snapshots, "Rollback to vX" button. Display version dates and change summaries if available.
+
+# Test Strategy:
+Test UI: View version history, select previous version, verify rollback button appears and is functional

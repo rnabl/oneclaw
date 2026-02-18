@@ -1,0 +1,11 @@
+# Task ID: 27
+# Title: Create Agent OS Management UI
+# Status: pending
+# Dependencies: 26
+# Priority: medium
+# Description: Build web interface for viewing and editing Agent OS files
+# Details:
+Create `/agent-os.html` page showing: current version, list of all .md files with edit buttons, file content in modals with textarea for editing, save functionality that triggers versioning.
+
+# Test Strategy:
+Test UI: View current files, edit SOUL.md in modal, save changes, verify version increments and new snapshot created

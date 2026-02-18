@@ -1,0 +1,11 @@
+# Task ID: 34
+# Title: Implement Template Initialization
+# Status: pending
+# Dependencies: 33
+# Priority: medium
+# Description: Auto-create default Agent OS files from templates on first run
+# Details:
+On first daemon startup, copy template files from `templates/` to `~/.oneclaw/` if they don't exist. Initialize with default content that users can customize.
+
+# Test Strategy:
+Test fresh installation: Verify all template files are copied to user directory, default content is appropriate, versioning starts at 1.0.0

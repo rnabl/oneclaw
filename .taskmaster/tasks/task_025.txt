@@ -1,0 +1,11 @@
+# Task ID: 25
+# Title: Add Version Logging to Receipts
+# Status: pending
+# Dependencies: 24
+# Priority: medium
+# Description: Include Agent OS version and file hashes in workflow receipts for audit trail
+# Details:
+Update `workflow.rs` to add `agent_os_version` and file hashes to receipt JSON. This provides audit trail of which Agent OS version was used for each workflow execution.
+
+# Test Strategy:
+Execute workflow, verify receipt includes agent_os_version field and file hashes, version matches current Agent OS state

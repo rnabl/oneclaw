@@ -1,0 +1,21 @@
+version: "1.0"
+id: wallet_check
+name: Check Wallet Balance
+description: Fetch Solana wallet balance via public RPC
+
+inputs:
+  wallet_address:
+    type: string
+    required: true
+
+steps:
+  - id: fetch_balance
+    executor: http.request
+    input:
+      method: POST
+      url: "https://api.mainnet-beta.solana.com"
+      headers:
+        Content-Type: application/json
+      body: '{"jsonrpc":"2.0","id":1,"method":"getBalance","params":["${inputs.wallet_address}"]}'
+
+outputs: {}

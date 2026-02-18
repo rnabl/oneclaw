@@ -1,0 +1,11 @@
+# Task ID: 11
+# Title: Test Memory Persistence Across Sessions
+# Status: pending
+# Dependencies: 10
+# Priority: high
+# Description: Verify memory system works across different conversation sessions
+# Details:
+Test multi-session flow: Session 1 - user states "I prefer bullet points", verify appended to MEMORY. Session 2 - ask question, verify agent uses bullet points by reading from MEMORY.md. This is a critical gate for memory functionality.
+
+# Test Strategy:
+Manual test: Two separate conversation sessions, verify preferences from session 1 are remembered and applied in session 2

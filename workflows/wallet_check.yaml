@@ -1,0 +1,38 @@
+version: '1.0'
+id: wallet_check
+name: Check Wallet Balance
+description: Simple test workflow to check OneClaw wallet balance
+
+inputs:
+  user_id:
+    type: string
+    description: Discord user ID
+    required: true
+
+outputs:
+  balance:
+    type: number
+    description: Current wallet balance in credits
+  
+  status:
+    type: string
+    description: Wallet status
+
+metadata:
+  author: OneClaw
+  tags:
+    - wallet
+    - test
+  category: internal
+
+steps:
+  - id: get_balance
+    name: Fetch wallet balance from API
+    executor: http.request
+    input:
+      method: GET
+      url: http://104.131.111.116:3000/api/v1/wallet
+      headers:
+        Content-Type: application/json
+    uses:
+      user_id: inputs.user_id

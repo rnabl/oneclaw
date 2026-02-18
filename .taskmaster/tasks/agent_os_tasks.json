@@ -1,0 +1,522 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Test Gmail OAuth Integration on Localhost",
+      "description": "Verify Gmail OAuth flow works correctly between API and Node services before implementing Agent OS features",
+      "details": "Run API service on port 3000 with `pnpm --filter @oneclaw/api dev` and Node daemon on port 8787 with `cargo run -- daemon`. Test OAuth flow at http://localhost:8787/integrations.html by connecting Gmail and verifying callback works. This is a critical gate - OAuth must work before continuing.",
+      "testStrategy": "Manual test: Navigate to integrations page, click Connect Gmail, complete OAuth flow, verify callback returns successfully and tokens are stored",
+      "priority": "high",
+      "dependencies": [],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 2,
+      "title": "Create SOUL.md Template",
+      "description": "Create the foundational personality template that defines the agent's purpose, principles, and tone",
+      "details": "Create `oneclaw-node/templates/SOUL.md` with 400 tokens containing: North Star section (purpose), core principles, and communication tone. Structure should be markdown with clear sections that LLM can easily parse and inject into system prompts.",
+      "testStrategy": "Verify file exists, token count is ~400, and content includes purpose, principles, and tone sections in valid markdown format",
+      "priority": "high",
+      "dependencies": [
+        1
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 3,
+      "title": "Implement Agent OS File Loading Module",
+      "description": "Create core module for loading and hashing Agent OS markdown files",
+      "details": "Create `src/agent_os.rs` with functions: `load_md(path: &str) -> Result<String>` to read markdown files, and `hash_file(path: &str) -> String` using SHA2 for versioning. Add error handling for missing files and invalid UTF-8.",
+      "testStrategy": "Unit tests: load_md returns correct content for existing files, returns error for missing files, hash_file produces consistent SHA2 hashes for same content",
+      "priority": "high",
+      "dependencies": [
+        2
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 4,
+      "title": "Add SHA2 and File System Dependencies",
+      "description": "Add required Rust dependencies for file hashing and compression",
+      "details": "Add to Cargo.toml: sha2 = \"0.10\" for file hashing, tar = \"0.4\" for snapshots, flate2 = \"1.0\" for gzip compression. Update imports in agent_os.rs module.",
+      "testStrategy": "Verify cargo build succeeds, dependencies resolve correctly, and hash functions are available in agent_os module",
+      "priority": "medium",
+      "dependencies": [
+        3
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 5,
+      "title": "Inject SOUL.md into Chat Prompts",
+      "description": "Modify conversation system to inject SOUL.md content into system prompts for personality consistency",
+      "details": "Update `src/conversation.rs` to load SOUL.md content and prepend to system prompt. Add lazy loading to avoid reading file on every request. Inject only into chat prompts, not workflow or heartbeat prompts initially.",
+      "testStrategy": "A/B test: Compare chat responses without SOUL.md vs with SOUL.md - personality and tone should be noticeably different and consistent with SOUL.md content",
+      "priority": "high",
+      "dependencies": [
+        4
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 6,
+      "title": "Create IDENTITY.md Template",
+      "description": "Create agent identity template with name, role, and communication style",
+      "details": "Create `oneclaw-node/templates/IDENTITY.md` with 150 tokens containing: agent name (e.g., \"Monica\"), specific role description, emoji usage guidelines, and communication style preferences. Keep concise but distinctive.",
+      "testStrategy": "Verify file exists, token count is ~150, contains name/role/style sections, and uses appropriate emojis",
+      "priority": "medium",
+      "dependencies": [
+        5
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 7,
+      "title": "Inject IDENTITY.md into Chat System",
+      "description": "Add IDENTITY.md injection to chat prompts for consistent agent persona",
+      "details": "Update conversation.rs to also load and inject IDENTITY.md into chat prompts (not workflow/heartbeat). Combine with SOUL.md injection. Agent should introduce itself with the specified name and use defined communication style.",
+      "testStrategy": "Test chat interaction: Agent should introduce itself with correct name from IDENTITY.md and use specified emojis/style consistently",
+      "priority": "medium",
+      "dependencies": [
+        6
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 8,
+      "title": "Initialize User Memory System",
+      "description": "Create empty MEMORY.md file and directory structure for user-specific memory storage",
+      "details": "Create `~/.oneclaw/` directory structure on first run. Initialize empty `MEMORY.md` file. Create `src/memory.rs` module with `init_memory_file()` function to set up user directory and empty memory file if they don't exist.",
+      "testStrategy": "Verify ~/.oneclaw/ directory is created, MEMORY.md file exists and is initially empty, memory.rs module compiles successfully",
+      "priority": "medium",
+      "dependencies": [
+        7
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 9,
+      "title": "Implement Memory Append Logic",
+      "description": "Add functionality to append learned facts to MEMORY.md after each conversation",
+      "details": "Implement `append(fact: &str)` function in memory.rs to append timestamped facts to MEMORY.md. After each chat interaction, prompt LLM to generate \"what to remember about this user\" and append to memory file with timestamp.",
+      "testStrategy": "Test conversation where user states preference (e.g., \"I prefer bullet points\"), verify fact is appended to MEMORY.md with timestamp",
+      "priority": "medium",
+      "dependencies": [
+        8
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 10,
+      "title": "Implement Memory Compression",
+      "description": "Add logic to compress MEMORY.md when it exceeds token limits",
+      "details": "Implement `compress()` function in memory.rs to summarize MEMORY.md when it exceeds 3k tokens. Use LLM to compress old memories while preserving important user preferences and facts.",
+      "testStrategy": "Create large MEMORY.md file (>3k tokens), trigger compression, verify output is shorter but preserves key user preferences",
+      "priority": "low",
+      "dependencies": [
+        9
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 11,
+      "title": "Test Memory Persistence Across Sessions",
+      "description": "Verify memory system works across different conversation sessions",
+      "details": "Test multi-session flow: Session 1 - user states \"I prefer bullet points\", verify appended to MEMORY. Session 2 - ask question, verify agent uses bullet points by reading from MEMORY.md. This is a critical gate for memory functionality.",
+      "testStrategy": "Manual test: Two separate conversation sessions, verify preferences from session 1 are remembered and applied in session 2",
+      "priority": "high",
+      "dependencies": [
+        10
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 12,
+      "title": "Create SKILLS.md Template with Benchmarks",
+      "description": "Create skills catalog with workflow benchmarks table for smart routing decisions",
+      "details": "Create `templates/SKILLS.md` with markdown table containing: Workflow name, Time, Cost, Quality, Max capacity, Use cases. Include workflows like apify_gmaps (30s, $0.05, High, 10k, Volume >50), browser (2m, $0.10, Med, 50, Deep analysis), etc.",
+      "testStrategy": "Verify SKILLS.md contains properly formatted markdown table with all required columns and realistic benchmark data",
+      "priority": "high",
+      "dependencies": [
+        11
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 13,
+      "title": "Implement Lazy Loading for Skills",
+      "description": "Add conditional loading of SKILLS.md sections based on message content",
+      "details": "Update agent_os.rs to implement lazy loading: if message contains \"email\" keywords, load only email section from SKILLS.md. If contains \"research\", load research section. This optimizes token usage.",
+      "testStrategy": "Test with different message types: \"email\" messages should load email skills only, \"research\" messages should load research skills only",
+      "priority": "medium",
+      "dependencies": [
+        12
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 14,
+      "title": "Test Smart Workflow Routing",
+      "description": "Verify LLM uses SKILLS.md benchmarks to make intelligent workflow choices",
+      "details": "Test routing logic: \"Find 100 businesses\" should trigger LLM to reference Apify from SKILLS.md table. \"Find 3 and analyze\" should reference Browser or sub-agents. LLM must explicitly mention benchmarks in reasoning.",
+      "testStrategy": "Test queries: High-volume requests should reference Apify, detailed analysis should reference Browser, verify LLM explains choice using SKILLS.md data",
+      "priority": "high",
+      "dependencies": [
+        13
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 15,
+      "title": "Create PLAYBOOKS.md Template",
+      "description": "Create comprehensive playbooks with task strategies and progressive workflow patterns",
+      "details": "Create `templates/PLAYBOOKS.md` with 800 tokens containing: Progressive Research pattern (multi-turn workflow), Email Triage strategies, task decomposition approaches. Include proactive section for heartbeat prompts.",
+      "testStrategy": "Verify PLAYBOOKS.md contains progressive workflow patterns, email strategies, and clear proactive section for heartbeat integration",
+      "priority": "medium",
+      "dependencies": [
+        14
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 16,
+      "title": "Inject PLAYBOOKS.md into Prompts",
+      "description": "Add PLAYBOOKS.md injection to chat and heartbeat prompts with different sections",
+      "details": "Update conversation.rs to inject full PLAYBOOKS.md into chat prompts and only proactive section into heartbeat prompts. Test that \"Research businesses\" query follows multi-turn pattern from PLAYBOOKS.",
+      "testStrategy": "Test research query: LLM should follow progressive workflow pattern from PLAYBOOKS.md, suggesting multi-turn approach",
+      "priority": "medium",
+      "dependencies": [
+        15
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 17,
+      "title": "Create Sub-Agent Executor Module",
+      "description": "Implement Rust executor for spawning parallel LLM sub-agents",
+      "details": "Create `src/executors/llm_subagents.rs` with executor that parses params (agents array, timeout), spawns tokio tasks for parallel execution, each calling LLM with isolated context. Return format: {results: [...], succeeded: N, failed: M}.",
+      "testStrategy": "Unit test: Spawn 3 sub-agents with simple tasks, verify parallel execution completes in <20s vs 30s+ serial execution",
+      "priority": "high",
+      "dependencies": [
+        16
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 18,
+      "title": "Create Sub-Agent Executor Manifest",
+      "description": "Define executor schema, pricing, and rate limits for sub-agent spawning",
+      "details": "Create `executors/llm_subagents.json` with JSON schema defining: input parameters (agents array, timeout), output format, pricing ($0.01 base + $0.005/agent), rate limits, and safety constraints.",
+      "testStrategy": "Validate JSON schema is valid, pricing structure matches PRD requirements ($0.01 + $0.005/agent), rate limits are reasonable",
+      "priority": "medium",
+      "dependencies": [
+        17
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 19,
+      "title": "Test Parallel Sub-Agent Execution",
+      "description": "Verify sub-agents execute in parallel and provide expected performance benefits",
+      "details": "Test spawning 3 agents with simple tasks, measure execution time. Must complete in <20s vs 30s+ serial. This is a critical gate - if sub-agents aren't faster, pivot approach.",
+      "testStrategy": "Performance test: Spawn 3 sub-agents, measure total execution time, verify 2-3x speedup over serial execution",
+      "priority": "high",
+      "dependencies": [
+        18
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 20,
+      "title": "Add Harness Billing Integration",
+      "description": "Create billing endpoint and integrate sub-agent usage reporting",
+      "details": "Add `POST /api/v1/billing/report` endpoint to harness API. After sub-agent spawn, report usage asynchronously (don't block). Calculate cost: $0.01 base + $0.005 per agent spawned.",
+      "testStrategy": "Test: Spawn 5 agents, verify wallet deducted $0.01 + 5×$0.005 = $0.035, billing report sent to harness successfully",
+      "priority": "medium",
+      "dependencies": [
+        19
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 21,
+      "title": "Add Conversation State Persistence",
+      "description": "Implement state management for progressive multi-turn workflows",
+      "details": "Update `conversation.rs` to add `state: HashMap<String, Value>` to ConversationContext. After Turn 1, store results in context.state[\"businesses\"]. Enable LLM to reference cached data in subsequent turns.",
+      "testStrategy": "Test multi-turn: Turn 1 stores data in state, Turn 2 references cached data without re-fetching, verify state persists across turns",
+      "priority": "high",
+      "dependencies": [
+        20
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 22,
+      "title": "Test 4-Turn Progressive Workflow",
+      "description": "Verify complete progressive workflow with caching and no redundant API calls",
+      "details": "Test full flow: Turn 1 \"Find 100 HVAC in Denver\" → calls Apify, stores in state. Turn 2 \"Who would you analyze?\" → filters cached list. Turn 3 \"Which best for me?\" → ranks cached. Turn 4 \"Run audits\" → spawns sub-agents on top 10. No redundant API calls.",
+      "testStrategy": "Manual test: Complete 4-turn workflow, verify no duplicate API calls, user can steer each step, cached data is used appropriately",
+      "priority": "high",
+      "dependencies": [
+        21
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 23,
+      "title": "Implement File Versioning System",
+      "description": "Add versioning for Agent OS markdown files with hash-based change detection",
+      "details": "Add `version_files()` function to agent_os.rs that hashes all 5 .md files, compares with previous hashes, bumps version if changed. Use semantic versioning (1.0.0 → 1.1.0 for changes).",
+      "testStrategy": "Test: Edit SOUL.md, verify version bumps from 1.0.0 to 1.1.0, unchanged files don't trigger version bump",
+      "priority": "medium",
+      "dependencies": [
+        22
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 24,
+      "title": "Implement Snapshot Creation",
+      "description": "Create compressed snapshots of Agent OS files when versions change",
+      "details": "On version change, create snapshot `~/.oneclaw/snapshots/v{version}.tar.gz` containing all 5 .md files. Use tar and flate2 crates for compression. Store snapshots for rollback functionality.",
+      "testStrategy": "Test: Edit file, verify snapshot created in correct location, snapshot contains all .md files, can be extracted successfully",
+      "priority": "medium",
+      "dependencies": [
+        23
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 25,
+      "title": "Add Version Logging to Receipts",
+      "description": "Include Agent OS version and file hashes in workflow receipts for audit trail",
+      "details": "Update `workflow.rs` to add `agent_os_version` and file hashes to receipt JSON. This provides audit trail of which Agent OS version was used for each workflow execution.",
+      "testStrategy": "Execute workflow, verify receipt includes agent_os_version field and file hashes, version matches current Agent OS state",
+      "priority": "medium",
+      "dependencies": [
+        24
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 26,
+      "title": "Create Agent OS UI Badge",
+      "description": "Add Agent OS version badge to Node UI header",
+      "details": "Update `oneclaw-node/src/ui/index.html` to show \"Agent OS v1.X\" badge in header. Badge should link to `/agent-os` page for management interface.",
+      "testStrategy": "Verify badge appears in UI header, shows correct version number, links to agent-os page",
+      "priority": "low",
+      "dependencies": [
+        25
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 27,
+      "title": "Create Agent OS Management UI",
+      "description": "Build web interface for viewing and editing Agent OS files",
+      "details": "Create `/agent-os.html` page showing: current version, list of all .md files with edit buttons, file content in modals with textarea for editing, save functionality that triggers versioning.",
+      "testStrategy": "Test UI: View current files, edit SOUL.md in modal, save changes, verify version increments and new snapshot created",
+      "priority": "medium",
+      "dependencies": [
+        26
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 28,
+      "title": "Add Version History UI",
+      "description": "Create interface for viewing version history and rollback functionality",
+      "details": "Add to agent-os.html: \"Version History\" dropdown showing available snapshots, \"Rollback to vX\" button. Display version dates and change summaries if available.",
+      "testStrategy": "Test UI: View version history, select previous version, verify rollback button appears and is functional",
+      "priority": "medium",
+      "dependencies": [
+        27
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 29,
+      "title": "Implement Rollback Backend",
+      "description": "Add API endpoint for rolling back to previous Agent OS versions",
+      "details": "Add `POST /agent-os/rollback?version=1.0.0` endpoint to daemon.rs. Extract specified snapshot, replace current .md files, update version tracking. Handle errors gracefully.",
+      "testStrategy": "Test rollback: Create v1.2.0, rollback to v1.1.0, verify files restored correctly and version updated",
+      "priority": "medium",
+      "dependencies": [
+        28
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 30,
+      "title": "Add Agent OS Routes to Daemon",
+      "description": "Implement HTTP routes for Agent OS management in the Node daemon",
+      "details": "Update `src/daemon.rs` to add routes: GET `/agent-os` (serve UI), GET `/agent-os/files` (list files), POST `/agent-os/edit` (edit file), POST `/agent-os/rollback` (rollback version).",
+      "testStrategy": "Test all routes: UI loads correctly, file listing works, edit functionality saves and versions, rollback restores previous state",
+      "priority": "medium",
+      "dependencies": [
+        29
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 31,
+      "title": "Create Agent OS Configuration",
+      "description": "Add Agent OS settings to Node configuration file",
+      "details": "Update `oneclaw-node/config.yaml` to add `agent_os` section with: token budgets for each file, compression thresholds, versioning settings, snapshot retention policy.",
+      "testStrategy": "Verify config file parses correctly, Agent OS module reads configuration values, defaults work when config missing",
+      "priority": "low",
+      "dependencies": [
+        30
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 32,
+      "title": "Implement Token Budget Monitoring",
+      "description": "Add monitoring and alerts for Agent OS token usage",
+      "details": "Track token usage for each .md file injection, warn when approaching budget limits, provide usage statistics in UI. Help users optimize their Agent OS files for cost efficiency.",
+      "testStrategy": "Test with large MEMORY.md file, verify token counting is accurate, warnings appear when approaching limits",
+      "priority": "low",
+      "dependencies": [
+        31
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 33,
+      "title": "Add Error Handling for Missing Files",
+      "description": "Implement graceful fallbacks when Agent OS files are missing or corrupted",
+      "details": "Add error handling in agent_os.rs for missing files, corrupted files, permission issues. Fall back to default templates or continue without injection rather than crashing.",
+      "testStrategy": "Test with missing SOUL.md, corrupted MEMORY.md, permission denied scenarios - verify graceful degradation without crashes",
+      "priority": "medium",
+      "dependencies": [
+        32
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 34,
+      "title": "Implement Template Initialization",
+      "description": "Auto-create default Agent OS files from templates on first run",
+      "details": "On first daemon startup, copy template files from `templates/` to `~/.oneclaw/` if they don't exist. Initialize with default content that users can customize.",
+      "testStrategy": "Test fresh installation: Verify all template files are copied to user directory, default content is appropriate, versioning starts at 1.0.0",
+      "priority": "medium",
+      "dependencies": [
+        33
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 35,
+      "title": "Add Comprehensive Logging",
+      "description": "Implement detailed logging for Agent OS operations and debugging",
+      "details": "Add logging throughout Agent OS modules: file loading, versioning, memory operations, sub-agent spawning. Use appropriate log levels (debug, info, warn, error) for troubleshooting.",
+      "testStrategy": "Review logs during normal operation, verify appropriate detail level, no sensitive information logged, errors are clearly identified",
+      "priority": "low",
+      "dependencies": [
+        34
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 36,
+      "title": "Create Agent OS Documentation",
+      "description": "Write comprehensive documentation for Agent OS features and usage",
+      "details": "Create `AGENT_OS.md` documentation covering: file structure, injection rules, versioning system, UI usage, best practices for writing effective .md files, troubleshooting guide.",
+      "testStrategy": "Review documentation for completeness, accuracy, clarity. Test following documentation as new user to verify instructions work",
+      "priority": "medium",
+      "dependencies": [
+        35
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 37,
+      "title": "Update Progress Documentation",
+      "description": "Update project progress documentation to include Agent OS implementation",
+      "details": "Update `PROGRESS.md` to add Agent OS section documenting: completed features, architecture decisions, performance metrics, known limitations, future enhancements.",
+      "testStrategy": "Verify PROGRESS.md accurately reflects current state, includes Agent OS section, provides clear status of all features",
+      "priority": "low",
+      "dependencies": [
+        36
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 38,
+      "title": "Perform End-to-End Integration Test",
+      "description": "Execute comprehensive test of entire Agent OS system with all features",
+      "details": "Run complete flow: localhost Gmail OAuth → chat with personality → memory persists → progressive workflow → sub-agents spawn → receipt shows version. Verify all components work together seamlessly.",
+      "testStrategy": "Manual E2E test: Complete full user journey, verify each component functions correctly, no errors in logs, performance meets expectations",
+      "priority": "high",
+      "dependencies": [
+        37
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 39,
+      "title": "Performance Optimization and Tuning",
+      "description": "Optimize Agent OS performance and resource usage",
+      "details": "Profile Agent OS operations, optimize file loading, reduce memory usage, improve sub-agent spawn times. Implement caching where appropriate, lazy loading optimizations.",
+      "testStrategy": "Performance benchmarks: Measure file loading times, memory usage, sub-agent spawn performance. Compare before/after optimization metrics.",
+      "priority": "medium",
+      "dependencies": [
+        38
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 40,
+      "title": "Final Testing and Release Preparation",
+      "description": "Complete final testing, bug fixes, and prepare for release",
+      "details": "Comprehensive testing of all Agent OS features, fix any remaining bugs, verify all success metrics are met, prepare release notes, ensure documentation is complete and accurate.",
+      "testStrategy": "Full regression test suite, verify all PRD success metrics achieved, test edge cases, confirm system stability under load",
+      "priority": "high",
+      "dependencies": [
+        39
+      ],
+      "status": "pending",
+      "subtasks": []
+    }
+  ]
+}

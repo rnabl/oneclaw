@@ -1,0 +1,33 @@
+{
+  "name": "@oneclaw/node-runtime",
+  "version": "0.1.0",
+  "description": "OneClaw Node Runtime - Deterministic workflow execution engine",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "hono": "^4.7.9",
+    "@hono/node-server": "^1.14.0",
+    "zod": "^3.24.1",
+    "yaml": "^2.6.1",
+    "nanoid": "^5.0.9"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

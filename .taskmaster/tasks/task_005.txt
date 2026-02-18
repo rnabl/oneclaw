@@ -1,0 +1,11 @@
+# Task ID: 5
+# Title: Inject SOUL.md into Chat Prompts
+# Status: pending
+# Dependencies: 4
+# Priority: high
+# Description: Modify conversation system to inject SOUL.md content into system prompts for personality consistency
+# Details:
+Update `src/conversation.rs` to load SOUL.md content and prepend to system prompt. Add lazy loading to avoid reading file on every request. Inject only into chat prompts, not workflow or heartbeat prompts initially.
+
+# Test Strategy:
+A/B test: Compare chat responses without SOUL.md vs with SOUL.md - personality and tone should be noticeably different and consistent with SOUL.md content

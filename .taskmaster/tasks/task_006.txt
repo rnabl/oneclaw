@@ -1,0 +1,11 @@
+# Task ID: 6
+# Title: Create IDENTITY.md Template
+# Status: pending
+# Dependencies: 5
+# Priority: medium
+# Description: Create agent identity template with name, role, and communication style
+# Details:
+Create `oneclaw-node/templates/IDENTITY.md` with 150 tokens containing: agent name (e.g., "Monica"), specific role description, emoji usage guidelines, and communication style preferences. Keep concise but distinctive.
+
+# Test Strategy:
+Verify file exists, token count is ~150, contains name/role/style sections, and uses appropriate emojis

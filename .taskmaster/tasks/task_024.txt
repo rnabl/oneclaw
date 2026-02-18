@@ -1,0 +1,11 @@
+# Task ID: 24
+# Title: Implement Snapshot Creation
+# Status: pending
+# Dependencies: 23
+# Priority: medium
+# Description: Create compressed snapshots of Agent OS files when versions change
+# Details:
+On version change, create snapshot `~/.oneclaw/snapshots/v{version}.tar.gz` containing all 5 .md files. Use tar and flate2 crates for compression. Store snapshots for rollback functionality.
+
+# Test Strategy:
+Test: Edit file, verify snapshot created in correct location, snapshot contains all .md files, can be extracted successfully

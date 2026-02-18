@@ -1,0 +1,11 @@
+# Task ID: 30
+# Title: Add Agent OS Routes to Daemon
+# Status: pending
+# Dependencies: 29
+# Priority: medium
+# Description: Implement HTTP routes for Agent OS management in the Node daemon
+# Details:
+Update `src/daemon.rs` to add routes: GET `/agent-os` (serve UI), GET `/agent-os/files` (list files), POST `/agent-os/edit` (edit file), POST `/agent-os/rollback` (rollback version).
+
+# Test Strategy:
+Test all routes: UI loads correctly, file listing works, edit functionality saves and versions, rollback restores previous state

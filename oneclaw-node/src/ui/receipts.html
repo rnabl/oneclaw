@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receipts - OneClaw Node</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>OneClaw Node</h1>
+            <div id="status" class="status">Connecting...</div>
+        </header>
+        <nav>
+            <a href="/">Dashboard</a>
+            <a href="/receipts.html" class="active">Receipts</a>
+            <a href="/integrations.html">Integrations</a>
+            <a href="/setup.html">Config</a>
+        </nav>
+        <main>
+            <section class="card">
+                <h2>Workflow Receipts</h2>
+                <div id="receipts">Loading...</div>
+            </section>
+        </main>
+    </div>
+    <script>
+        async function load() {
+            try {
+                const res = await fetch('/receipts');
+                const data = await res.json();
+                if (data.length === 0) {
+                    document.getElementById('receipts').innerHTML = '<p>No receipts yet.</p>';
+                } else {
+                    document.getElementById('receipts').innerHTML = data.map(id => 
+                        '<div class="receipt-item"><a href="/receipts/' + id + '">' + id + '</a></div>'
+                    ).join('');
+                }
+                document.getElementById('status').textContent = 'Online';
+                document.getElementById('status').className = 'status online';
+            } catch (e) {
+                document.getElementById('status').textContent = 'Offline';
+                document.getElementById('status').className = 'status offline';
+            }
+        }
+        load();
+    </script>
+</body>
+</html>

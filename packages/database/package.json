@@ -1,0 +1,33 @@
+{
+  "name": "@oneclaw/database",
+  "version": "0.1.0",
+  "description": "Database client and Supabase utilities for iClaw",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
+    "lint": "eslint src/",
+    "clean": "rm -rf dist",
+    "migrate": "supabase db push",
+    "generate": "supabase gen types typescript --project-id $SUPABASE_PROJECT_ID > src/types.generated.ts",
+    "deploy:functions": "supabase functions deploy"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
+    "@oneclaw/core": "workspace:*"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.0",
+    "typescript": "^5.3.0",
+    "supabase": "^1.123.0"
+  }
+}

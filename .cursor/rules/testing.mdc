@@ -1,0 +1,369 @@
+# Testing Strategy Rules
+
+## Core Principles
+
+1. **No real money in tests** - Use mocks, in-memory stores, Stripe CLI
+2. **Fail loudly** - Tests should catch bugs before production
+3. **Fast feedback** - Unit tests run in < 5 seconds
+4. **Real integration tests** - But isolated per test
+
+## Testing Layers
+
+```
+┌─────────────────────────────────────────┐
+│  E2E Tests (Playwright)                 │
+│  - Full user flows                      │
+│  - Stripe CLI for payments              │
+│  - Real Discord test server             │
+└─────────────────────────────────────────┘
+                    │
+┌─────────────────────────────────────────┐
+│  Integration Tests                      │
+│  - Real database (test instance)        │
+│  - Mock external APIs                   │
+│  - Webhook simulations                  │
+└─────────────────────────────────────────┘
+                    │
+┌─────────────────────────────────────────┐
+│  Unit Tests                             │
+│  - In-memory stores                     │
+│  - Pure function testing                │
+│  - Schema validation                    │
+└─────────────────────────────────────────┘
+```
+
+## Unit Tests
+
+Use in-memory stores for all harness logic:
+
+```typescript
+import { describe, it, expect, beforeEach } from 'vitest';
+import { 
+  initInMemoryStores,
+  resetStores,
+  getStores,
+  resolveUser,
+} from '@iclaw/harness';
+
+describe('resolveUser', () => {
+  beforeEach(() => {
+    resetStores();
+    initInMemoryStores();
+  });
+
+  it('creates new user for unknown provider', async () => {
+    const user = await resolveUser('discord', '123456789');
+    
+    expect(user.id).toBeDefined();
+    
+    // Wallet should also be created
+    const wallet = await getStores().wallet.getByUserId(user.id);
+    expect(wallet.balanceCents).toBe(0);
+  });
+
+  it('returns existing user for known provider', async () => {
+    const user1 = await resolveUser('discord', '123456789');
+    const user2 = await resolveUser('discord', '123456789');
+    
+    expect(user1.id).toBe(user2.id);
+  });
+});
+```
+
+## Testing Billing Without Stripe
+
+### 1. Stripe CLI (Local Development)
+
+```bash
+# Terminal 1: Forward webhooks
+stripe listen --forward-to localhost:4001/webhook/stripe
+
+# Terminal 2: Trigger events
+stripe trigger checkout.session.completed \
+  --add checkout_session:client_reference_id=discord_123456789 \
+  --add checkout_session:amount_total=500
+```
+
+### 2. Webhook Simulation (Integration Tests)
+
+```typescript
+import { describe, it, expect, beforeEach } from 'vitest';
+import Stripe from 'stripe';
+
+describe('Stripe webhook handler', () => {
+  beforeEach(() => {
+    resetStores();
+    initInMemoryStores();
+  });
+
+  it('credits wallet on checkout.session.completed', async () => {
+    // Create user first
+    const user = await resolveUser('discord', '123456789');
+    
+    // Simulate Stripe webhook payload
+    const event: Stripe.Event = {
+      id: 'evt_test_123',
+      type: 'checkout.session.completed',
+      data: {
+        object: {
+          id: 'cs_test_456',
+          client_reference_id: 'discord_123456789',
+          amount_total: 500,
+          payment_status: 'paid',
+        } as Stripe.Checkout.Session,
+      },
+      // ... other fields
+    } as Stripe.Event;
+
+    // Call handler
+    await handleStripeWebhook(event);
+
+    // Verify wallet credited
+    const wallet = await getStores().wallet.getByUserId(user.id);
+    expect(wallet.balanceCents).toBe(500);
+  });
+
+  it('ignores duplicate events (idempotency)', async () => {
+    const user = await resolveUser('discord', '123456789');
+    
+    const event = createCheckoutEvent('evt_123', 'discord_123456789', 500);
+
+    // Process twice
+    await handleStripeWebhook(event);
+    await handleStripeWebhook(event);
+
+    // Should only credit once
+    const wallet = await getStores().wallet.getByUserId(user.id);
+    expect(wallet.balanceCents).toBe(500); // Not 1000
+  });
+});
+```
+
+### 3. Seed Scripts (Debug Without Paying)
+
+```typescript
+// scripts/seed-wallet.ts
+import { createClient } from '@supabase/supabase-js';
+import { randomUUID } from 'crypto';
+
+const supabase = createClient(
+  process.env.SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
+
+async function seedWallet(discordId: string, amountCents: number) {
+  // Find or create user
+  const { data: identity } = await supabase
+    .from('identities')
+    .select('user_id')
+    .eq('provider', 'discord')
+    .eq('provider_id', discordId)
+    .single();
+
+  if (!identity) {
+    console.error(`No user found for Discord ID ${discordId}`);
+    process.exit(1);
+  }
+
+  // Create transaction
+  const idempotencyKey = `seed_${Date.now()}_${randomUUID()}`;
+  
+  // Get current balance
+  const { data: wallet } = await supabase
+    .from('wallets')
+    .select('id, balance_cents')
+    .eq('user_id', identity.user_id)
+    .single();
+
+  if (!wallet) {
+    console.error(`No wallet found for user ${identity.user_id}`);
+    process.exit(1);
+  }
+
+  const newBalance = wallet.balance_cents + amountCents;
+
+  // Insert transaction
+  await supabase.from('transactions').insert({
+    wallet_id: wallet.id,
+    type: 'credit',
+    amount_cents: amountCents,
+    balance_after_cents: newBalance,
+    idempotency_key: idempotencyKey,
+    source: 'admin',
+    description: `Seed credit: ${amountCents} cents`,
+  });
+
+  // Update wallet
+  await supabase
+    .from('wallets')
+    .update({ balance_cents: newBalance })
+    .eq('id', wallet.id);
+
+  console.log(`Seeded ${amountCents} cents to Discord ${discordId}`);
+  console.log(`New balance: ${newBalance} cents`);
+}
+
+// Usage: npx tsx scripts/seed-wallet.ts 397102686660591616 1500
+const [discordId, amount] = process.argv.slice(2);
+seedWallet(discordId, parseInt(amount, 10));
+```
+
+### 4. Admin Endpoint (Production Debugging)
+
+```typescript
+// Protected admin endpoint for crediting wallets
+app.post('/admin/wallet/credit', adminAuth, async (c) => {
+  const { discordId, amountCents, reason } = await c.req.json();
+  
+  // Validate admin
+  const adminId = c.get('adminId');
+  
+  // Resolve user
+  const user = await resolveUser('discord', discordId);
+  
+  // Generate idempotency key
+  const idempotencyKey = `admin_${adminId}_${Date.now()}`;
+  
+  // Credit
+  const txn = await getStores().wallet.credit(
+    user.id,
+    amountCents,
+    idempotencyKey,
+    'admin',
+    adminId,
+    `Admin credit: ${reason}`
+  );
+  
+  // Audit log
+  console.log('[admin] Credit', { adminId, discordId, amountCents, reason });
+  
+  return c.json({ success: true, transaction: txn });
+});
+```
+
+## Schema Validation Tests
+
+```typescript
+import { describe, it, expect } from 'vitest';
+import { TransactionSchema, WalletSchema } from '@iclaw/harness';
+
+describe('TransactionSchema', () => {
+  it('accepts valid transaction', () => {
+    const result = TransactionSchema.safeParse({
+      id: '550e8400-e29b-41d4-a716-446655440000',
+      walletId: '550e8400-e29b-41d4-a716-446655440001',
+      type: 'credit',
+      amountCents: 500,
+      balanceAfterCents: 500,
+      idempotencyKey: 'stripe_evt_123',
+      source: 'stripe',
+      sourceId: 'evt_123',
+      description: 'Top up',
+      createdAt: new Date(),
+    });
+    
+    expect(result.success).toBe(true);
+  });
+
+  it('rejects invalid type', () => {
+    const result = TransactionSchema.safeParse({
+      // ... valid fields ...
+      type: 'invalid',
+    });
+    
+    expect(result.success).toBe(false);
+  });
+});
+```
+
+## Test Database Setup
+
+For integration tests, use a separate test database:
+
+```bash
+# .env.test
+SUPABASE_URL=http://localhost:54321
+SUPABASE_SERVICE_ROLE_KEY=test-key
+
+# Or use a real test project
+SUPABASE_URL=https://test-project.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=eyJ...
+```
+
+```typescript
+// vitest.config.ts
+export default {
+  test: {
+    env: {
+      SUPABASE_URL: 'http://localhost:54321',
+      SUPABASE_SERVICE_ROLE_KEY: 'test-key',
+    },
+  },
+};
+```
+
+## CI Pipeline
+
+```yaml
+# .github/workflows/test.yml
+name: Test
+on: [push, pull_request]
+
+jobs:
+  unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+      - run: pnpm install
+      - run: pnpm test:unit
+
+  integration:
+    runs-on: ubuntu-latest
+    services:
+      supabase:
+        image: supabase/postgres:15.1.0
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 54322:5432
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+      - run: pnpm install
+      - run: pnpm test:integration
+        env:
+          SUPABASE_URL: http://localhost:54321
+```
+
+## Anti-Patterns
+
+```typescript
+// ❌ BAD - Test requires real Stripe payment
+it('credits wallet after payment', async () => {
+  await makeRealStripePayment(); // DON'T DO THIS
+});
+
+// ✅ GOOD - Test simulates webhook
+it('credits wallet after payment', async () => {
+  await handleStripeWebhook(mockCheckoutEvent);
+});
+
+// ❌ BAD - Test shares state between tests
+let globalUser;
+beforeAll(() => { globalUser = createUser(); });
+
+// ✅ GOOD - Each test is isolated
+beforeEach(() => { resetStores(); initInMemoryStores(); });
+
+// ❌ BAD - Tests real production database
+await supabase.from('wallets').delete(); // DANGEROUS
+
+// ✅ GOOD - Uses test database or in-memory
+initInMemoryStores();
+```
+
+## Related Rules
+
+- [harness.mdc](mdc:.cursor/rules/harness.mdc) - Harness architecture
+- [billing.mdc](mdc:.cursor/rules/billing.mdc) - Billing rules

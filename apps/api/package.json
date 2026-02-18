@@ -1,0 +1,34 @@
+{
+  "name": "@oneclaw/api",
+  "version": "0.1.0",
+  "description": "OneClaw API server - handles messages and AI interactions",
+  "main": "./dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsup",
+    "start": "node dist/index.js",
+    "lint": "eslint src/",
+    "clean": "rm -rf dist",
+    "deploy": "echo 'Deploy to your platform of choice'"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.20.0",
+    "@hono/node-server": "^1.19.9",
+    "@oneclaw/bluebubbles": "workspace:*",
+    "@oneclaw/core": "workspace:*",
+    "@oneclaw/database": "workspace:*",
+    "@oneclaw/harness": "workspace:*",
+    "@oneclaw/sendblue": "workspace:*",
+    "@oneclaw/skills": "workspace:*",
+    "@oneclaw/workflows": "workspace:*",
+    "@supabase/supabase-js": "^2.43.0",
+    "dotenv": "^17.3.0",
+    "hono": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "tsup": "^8.0.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.0"
+  }
+}

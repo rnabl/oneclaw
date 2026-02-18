@@ -1,0 +1,11 @@
+# Task ID: 13
+# Title: Implement Lazy Loading for Skills
+# Status: pending
+# Dependencies: 12
+# Priority: medium
+# Description: Add conditional loading of SKILLS.md sections based on message content
+# Details:
+Update agent_os.rs to implement lazy loading: if message contains "email" keywords, load only email section from SKILLS.md. If contains "research", load research section. This optimizes token usage.
+
+# Test Strategy:
+Test with different message types: "email" messages should load email skills only, "research" messages should load research skills only

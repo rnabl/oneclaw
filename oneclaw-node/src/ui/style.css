@@ -1,0 +1,25 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: system-ui, -apple-system, sans-serif; background: #0a0a0a; color: #e0e0e0; min-height: 100vh; }
+.container { max-width: 900px; margin: 0 auto; padding: 20px; }
+header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid #222; }
+h1 { font-size: 1.5rem; }
+.status { padding: 6px 12px; border-radius: 4px; font-size: 0.875rem; background: #333; }
+.status.online { background: #1a4d1a; color: #4ade80; }
+.status.offline { background: #4d1a1a; color: #f87171; }
+nav { display: flex; gap: 10px; padding: 15px 0; }
+nav a { color: #888; text-decoration: none; padding: 8px 16px; border-radius: 4px; }
+nav a:hover { background: #1a1a1a; color: #fff; }
+nav a.active { background: #222; color: #fff; }
+.card { background: #111; border: 1px solid #222; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+.card h2 { font-size: 1.1rem; margin-bottom: 15px; color: #fff; }
+form label { display: block; margin-bottom: 12px; color: #aaa; font-size: 0.875rem; }
+form input, form textarea { width: 100%; padding: 10px; margin-top: 5px; background: #0a0a0a; border: 1px solid #333; border-radius: 4px; color: #fff; font-family: monospace; }
+form button { background: #e11d48; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: 500; }
+form button:hover { background: #be123c; }
+pre { background: #0a0a0a; padding: 15px; border-radius: 4px; overflow-x: auto; font-size: 0.875rem; border: 1px solid #222; }
+.executor { padding: 10px; border-bottom: 1px solid #222; }
+.executor:last-child { border-bottom: none; }
+.error { color: #f87171; }
+.receipt-item { padding: 10px; border-bottom: 1px solid #222; }
+.receipt-item a { color: #60a5fa; text-decoration: none; font-family: monospace; }
+.receipt-item a:hover { text-decoration: underline; }

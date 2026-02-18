@@ -1,0 +1,175 @@
+# Harness Architecture Rules
+
+## Core Principle
+
+Harness is **infrastructure** - a pure runtime that works anywhere. It has ZERO vendor dependencies.
+
+## What Harness IS
+
+- Zod schemas defining all data types (source of truth)
+- TypeScript interfaces for stores (IdentityStore, WalletStore, etc.)
+- Pure business logic that uses injected stores
+- In-memory implementations for testing/dev
+- Policy engine, metering, secrets vault
+
+## What Harness is NOT
+
+- NOT tied to Supabase, Postgres, or any specific database
+- NOT tied to Discord, Telegram, or any specific channel
+- NOT tied to Stripe or any specific payment provider
+- NOT the place for API routes or HTTP handlers
+
+## Deployment Modes
+
+Harness must work in ALL modes:
+
+1. **OneClaw Cloud** - We host, Supabase backend
+2. **Self-Hosted** - User's Fly.io, SQLite/Turso backend
+3. **Enterprise** - On-prem, Postgres backend
+4. **Testing** - In-memory stores, no external deps
+
+## Zod Schemas (Source of Truth)
+
+All types are defined as Zod schemas in `@iclaw/harness`:
+
+```typescript
+// packages/harness/src/schemas/user.ts
+import { z } from 'zod';
+
+export const UserSchema = z.object({
+  id: z.string().uuid(),
+  email: z.string().email().nullable(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+});
+
+export type User = z.infer<typeof UserSchema>;
+```
+
+## Store Interfaces
+
+Stores are interfaces - implementations are injected:
+
+```typescript
+// packages/harness/src/stores/wallet.ts
+export interface WalletStore {
+  getByUserId(userId: string): Promise<Wallet | null>;
+  create(userId: string): Promise<Wallet>;
+  credit(userId: string, cents: number, idempotencyKey: string): Promise<Transaction>;
+  debit(userId: string, cents: number, idempotencyKey: string): Promise<Transaction>;
+}
+
+// In-memory implementation for testing
+export class InMemoryWalletStore implements WalletStore { ... }
+```
+
+## Dependency Injection
+
+On startup, the host application injects implementations:
+
+```typescript
+// In apps/api (OneClaw Cloud)
+import { initStores } from '@iclaw/harness';
+import { SupabaseWalletStore } from './stores/supabase';
+
+initStores({
+  wallet: new SupabaseWalletStore(supabaseClient),
+  identity: new SupabaseIdentityStore(supabaseClient),
+});
+```
+
+## Identity Model
+
+One user = one identity, multiple providers:
+
+```typescript
+export const IdentitySchema = z.object({
+  id: z.string().uuid(),
+  userId: z.string().uuid(),
+  provider: z.enum(['discord', 'telegram', 'phone', 'google', 'apple', 'email']),
+  providerId: z.string(), // External ID from provider
+  metadata: z.record(z.unknown()).optional(), // Name, avatar, etc.
+  verifiedAt: z.date().nullable(),
+  createdAt: z.date(),
+});
+```
+
+Lookup flow:
+1. Message from Discord ID `123456`
+2. Query: `identities.findByProvider('discord', '123456')`
+3. Get `userId`
+4. All operations use `userId`
+
+## Billing Rules
+
+1. **Idempotency** - Every transaction has unique `idempotencyKey`. Duplicates are rejected.
+2. **Immutable transactions** - Never update, only insert.
+3. **Balance derived** - `SUM(transactions)` should equal `wallet.balance`. Reconcile if not.
+4. **Fail loudly** - If database unreachable, throw. Never return fake $0 balance.
+
+## Testing Without External Services
+
+```typescript
+// In tests
+import { initStores, InMemoryWalletStore, InMemoryIdentityStore } from '@iclaw/harness';
+
+beforeEach(() => {
+  initStores({
+    wallet: new InMemoryWalletStore(),
+    identity: new InMemoryIdentityStore(),
+  });
+});
+```
+
+## File Structure
+
+```
+packages/harness/
+├── src/
+│   ├── schemas/           # Zod schemas (source of truth)
+│   │   ├── user.ts
+│   │   ├── wallet.ts
+│   │   ├── transaction.ts
+│   │   └── identity.ts
+│   ├── stores/            # Interfaces + in-memory impls
+│   │   ├── types.ts       # Store interfaces
+│   │   ├── wallet.ts      # WalletStore interface + InMemoryWalletStore
+│   │   ├── identity.ts    # IdentityStore interface + InMemoryIdentityStore
+│   │   └── index.ts       # initStores(), getStores()
+│   ├── billing/           # Business logic (uses stores)
+│   │   ├── credit.ts
+│   │   ├── debit.ts
+│   │   └── reconcile.ts
+│   ├── policy/            # Rate limits, quotas
+│   ├── metering/          # Usage tracking
+│   └── index.ts
+```
+
+## Anti-Patterns (DO NOT DO)
+
+```typescript
+// ❌ BAD - Direct database call in harness
+import { supabase } from './supabase';
+const wallet = await supabase.from('wallets').select();
+
+// ✅ GOOD - Use injected store
+const wallet = await stores.wallet.getByUserId(userId);
+
+// ❌ BAD - Hardcoded provider logic
+if (discordId) { ... } else if (telegramId) { ... }
+
+// ✅ GOOD - Provider-agnostic
+const user = await stores.identity.findByProvider(provider, providerId);
+
+// ❌ BAD - Silent fallback to empty data
+if (!dbResult) return { balance: 0 }; // User loses money!
+
+// ✅ GOOD - Fail loudly
+if (!dbResult) throw new WalletNotFoundError(userId);
+```
+
+## Related Rules
+
+- [billing.mdc](mdc:.cursor/rules/billing.mdc) - Payment processing rules
+- [identity.mdc](mdc:.cursor/rules/identity.mdc) - User identity rules
+- [testing.mdc](mdc:.cursor/rules/testing.mdc) - Testing strategy

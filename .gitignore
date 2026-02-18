@@ -1,0 +1,55 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+dist/
+.turbo/
+target/
+**/target/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Test
+coverage/
+
+# Misc
+*.tsbuildinfo
+
+# Documentation (keep only essential docs in repo)
+BUILD_COMPLETE.md
+GMAIL_COMPLETE.md
+GMAIL_EXAMPLES.md
+GMAIL_INTEGRATION.md
+GMAIL_QUICKSTART.md
+GMAIL_SECURITY_IMPROVEMENTS.md
+INTERACTIVE_SETUP.md
+LESSONS_LEARNED.md
+NODE_RUNTIME_BUILD.md
+ONBOARDING_COMPLETE.md
+PROGRESSIVE_ONBOARDING.md
+SETUP_WIZARD.md
+WHAT_YOU_CAN_DO.md
+FRESH_DEPLOY.md
+deploy-vps.ps1
+deploy-quick.sh
+
+# Internal progress tracking
+PROGRESS.md

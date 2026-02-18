@@ -1,0 +1,11 @@
+# Task ID: 16
+# Title: Inject PLAYBOOKS.md into Prompts
+# Status: pending
+# Dependencies: 15
+# Priority: medium
+# Description: Add PLAYBOOKS.md injection to chat and heartbeat prompts with different sections
+# Details:
+Update conversation.rs to inject full PLAYBOOKS.md into chat prompts and only proactive section into heartbeat prompts. Test that "Research businesses" query follows multi-turn pattern from PLAYBOOKS.
+
+# Test Strategy:
+Test research query: LLM should follow progressive workflow pattern from PLAYBOOKS.md, suggesting multi-turn approach

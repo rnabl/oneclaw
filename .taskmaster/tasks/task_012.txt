@@ -1,0 +1,11 @@
+# Task ID: 12
+# Title: Create SKILLS.md Template with Benchmarks
+# Status: pending
+# Dependencies: 11
+# Priority: high
+# Description: Create skills catalog with workflow benchmarks table for smart routing decisions
+# Details:
+Create `templates/SKILLS.md` with markdown table containing: Workflow name, Time, Cost, Quality, Max capacity, Use cases. Include workflows like apify_gmaps (30s, $0.05, High, 10k, Volume >50), browser (2m, $0.10, Med, 50, Deep analysis), etc.
+
+# Test Strategy:
+Verify SKILLS.md contains properly formatted markdown table with all required columns and realistic benchmark data
