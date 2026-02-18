@@ -56,19 +56,11 @@ if ! command -v cargo &> /dev/null; then
 fi
 
 echo ""
-echo "🔧 Configuring nginx..."
+echo "🔧 Configuring nginx (HTTP-only for Certbot verification)..."
 cat > /etc/nginx/sites-available/oneclaw << EOF
 server {
     listen 80;
     server_name ${DOMAIN};
-    return 301 https://\$server_name\$request_uri;
-}
-
-server {
-    listen 443 ssl http2;
-    server_name ${DOMAIN};
-
-    # SSL will be configured by certbot
     
     location / {
         proxy_pass http://localhost:8787;
@@ -86,14 +78,6 @@ server {
 server {
     listen 80;
     server_name api.${DOMAIN};
-    return 301 https://\$server_name\$request_uri;
-}
-
-server {
-    listen 443 ssl http2;
-    server_name api.${DOMAIN};
-
-    # SSL will be configured by certbot
     
     location / {
         proxy_pass http://localhost:3000;
@@ -118,12 +102,12 @@ echo "🧪 Testing nginx configuration..."
 nginx -t
 
 echo ""
-echo "🔐 Getting SSL certificates..."
-certbot --nginx --non-interactive --agree-tos --email "$EMAIL" -d "$DOMAIN" -d "api.$DOMAIN"
-
-echo ""
 echo "🔄 Reloading nginx..."
 systemctl reload nginx
+
+echo ""
+echo "🔐 Getting SSL certificates..."
+certbot --nginx --non-interactive --agree-tos --email "$EMAIL" --redirect -d "$DOMAIN" -d "api.$DOMAIN"
 
 echo ""
 echo "✅ Setup complete!"
