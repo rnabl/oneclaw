@@ -27,7 +27,33 @@ fi
 echo ""
 echo "📦 Installing dependencies..."
 apt update -qq
-apt install -y nginx certbot python3-certbot-nginx curl git
+apt install -y nginx certbot python3-certbot-nginx curl git build-essential
+
+# Install Node.js 20
+if ! command -v node &> /dev/null; then
+    echo "📦 Installing Node.js..."
+    curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+    apt install -y nodejs
+fi
+
+# Install pnpm
+if ! command -v pnpm &> /dev/null; then
+    echo "📦 Installing pnpm..."
+    npm install -g pnpm
+fi
+
+# Install PM2
+if ! command -v pm2 &> /dev/null; then
+    echo "📦 Installing PM2..."
+    npm install -g pm2
+fi
+
+# Install Rust
+if ! command -v cargo &> /dev/null; then
+    echo "📦 Installing Rust..."
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+    source "$HOME/.cargo/env"
+fi
 
 echo ""
 echo "🔧 Configuring nginx..."
@@ -102,12 +128,60 @@ systemctl reload nginx
 echo ""
 echo "✅ Setup complete!"
 echo ""
+echo "📝 Configuring environment..."
+
+# Get script directory and project root
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
+
+# Copy .env.example to .env.local if it doesn't exist
+if [ ! -f "$PROJECT_ROOT/.env.local" ]; then
+    echo "Creating .env.local from .env.example..."
+    cp "$PROJECT_ROOT/.env.example" "$PROJECT_ROOT/.env.local"
+fi
+
+# Update GOOGLE_REDIRECT_URI in .env.local
+echo "Updating GOOGLE_REDIRECT_URI in .env.local..."
+sed -i "s|GOOGLE_REDIRECT_URI=.*|GOOGLE_REDIRECT_URI=https://api.${DOMAIN}/oauth/google/callback|g" "$PROJECT_ROOT/.env.local"
+
+# Create Node config directory and file
+mkdir -p /root/.config/oneclaw
+if [ ! -f /root/.config/oneclaw/config.toml ]; then
+    echo "Creating Node config.toml..."
+    cat > /root/.config/oneclaw/config.toml << NODEEOF
+[node]
+id = "vps-node"
+name = "OneClaw VPS"
+environment = "production"
+
+[control_plane]
+url = "http://localhost:3000"
+
+[paths]
+workflows = "/opt/oneclaw/.oneclaw/workflows"
+logs = "/opt/oneclaw/.oneclaw/logs"
+cache = "/opt/oneclaw/.oneclaw/cache"
+NODEEOF
+    
+    # Create directories
+    mkdir -p /opt/oneclaw/.oneclaw/{workflows,logs,cache}
+fi
+
+echo ""
+echo "✅ All configuration complete!"
+echo ""
 echo "📝 Next steps:"
-echo "1. Update Google OAuth redirect URI to: https://api.${DOMAIN}/oauth/google/callback"
-echo "2. Update .env.local with: GOOGLE_REDIRECT_URI=https://api.${DOMAIN}/oauth/google/callback"
-echo "3. Start services:"
-echo "   pm2 start --name oneclaw-api 'pnpm --filter @oneclaw/api start'"
-echo "   pm2 start --name oneclaw-node 'cargo run --release -- daemon' --cwd /opt/oneclaw/oneclaw-node"
+echo "1. Add your API keys to .env.local:"
+echo "   nano $PROJECT_ROOT/.env.local"
+echo ""
+echo "2. Update Google OAuth redirect URI to:"
+echo "   https://api.${DOMAIN}/oauth/google/callback"
+echo ""
+echo "3. Install dependencies and build:"
+echo "   cd $PROJECT_ROOT && pnpm install && pnpm build"
+echo ""
+echo "4. Start services:"
+echo "   ./scripts/start-services.sh"
 echo ""
 echo "🌐 Your OneClaw instance will be available at:"
 echo "   - https://${DOMAIN} (Node UI)"
