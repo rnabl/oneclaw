@@ -214,36 +214,38 @@ pnpm lint
 
 ### One-Click VPS Setup
 
-For self-hosting on a VPS with automatic SSL:
+Deploy OneClaw to your VPS with automatic SSL in 3 commands:
 
 ```bash
-# Download and run setup script
-curl -fsSL https://raw.githubusercontent.com/rnabl/oneclaw/main/scripts/setup-vps.sh | sudo bash
+# 1. Clone and setup
+git clone https://github.com/rnabl/oneclaw.git && cd oneclaw
+sudo ./scripts/setup-vps.sh
+# Enter: yourdomain.com
+# Enter: your@email.com
+
+# 2. Add API keys
+nano .env.local
+
+# 3. Build and start
+pnpm install && pnpm build
+./scripts/start-services.sh
 ```
 
-Or manually:
-
-```bash
-wget https://raw.githubusercontent.com/rnabl/oneclaw/main/scripts/setup-vps.sh
-chmod +x setup-vps.sh
-sudo ./setup-vps.sh
-```
-
-The script will:
-- Install nginx and certbot
-- Configure SSL certificates (Let's Encrypt)
-- Set up reverse proxy for your domain
-- Show next steps
+**What the script does:**
+- Installs Node.js, pnpm, PM2, Rust, Nginx, Certbot
+- Configures SSL certificates (Let's Encrypt)
+- Sets up reverse proxy for your domain
+- Creates `.env.local` and `config.toml`
+- Auto-updates `GOOGLE_REDIRECT_URI`
 
 **What you need:**
 - A VPS (DigitalOcean, AWS, etc.)
 - A domain pointed to your VPS IP
 - Root access
 
-**After setup:**
-1. Update Google OAuth redirect URI to: `https://api.yourdomain.com/oauth/google/callback`
-2. Update `.env.local` with your domain
-3. Start services with PM2
+**After deployment:**
+1. Update Google OAuth redirect URI in console to: `https://api.yourdomain.com/oauth/google/callback`
+2. Your OneClaw instance will be live at `https://yourdomain.com`
 
 ### Manual Deployment
 
@@ -258,11 +260,10 @@ cd oneclaw
 pnpm install && pnpm build
 
 # Start services
-pm2 start --name oneclaw-api "pnpm --filter @oneclaw/api start"
-pm2 start --name oneclaw-node "cargo run --release -- daemon" --cwd oneclaw-node
+./scripts/start-services.sh
 ```
 
-See [scripts/setup-vps.sh](scripts/setup-vps.sh) for SSL configuration details.
+For SSL configuration details, see [scripts/setup-vps.sh](scripts/setup-vps.sh).
 
 ---
 
