@@ -12,8 +12,6 @@ import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { logger } from 'hono/logger';
 
-import { webhookHandler } from './routes/webhook';
-import { sendblueWebhookHandler } from './routes/sendblue-webhook';
 import { healthHandler } from './routes/health';
 import { stripeWebhookHandler } from './routes/stripe';
 import { googleAuthHandler, googleCallbackHandler } from './routes/oauth';
@@ -52,12 +50,6 @@ app.use('*', cors());
 // Routes
 app.get('/', (c) => c.json({ name: 'OneClaw API', version: '0.2.0', status: 'ok' }));
 app.get('/health', healthHandler);
-
-// BlueBubbles webhook - receives incoming iMessages (legacy)
-app.post('/webhook/bluebubbles', webhookHandler);
-
-// Sendblue webhook - receives incoming iMessages (preferred)
-app.post('/webhook/sendblue', sendblueWebhookHandler);
 
 // Stripe webhook - handles subscription events
 app.post('/webhook/stripe', stripeWebhookHandler);
