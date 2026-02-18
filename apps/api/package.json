@@ -14,13 +14,9 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.20.0",
     "@hono/node-server": "^1.19.9",
-    "@oneclaw/bluebubbles": "workspace:*",
     "@oneclaw/core": "workspace:*",
     "@oneclaw/database": "workspace:*",
     "@oneclaw/harness": "workspace:*",
-    "@oneclaw/sendblue": "workspace:*",
-    "@oneclaw/skills": "workspace:*",
-    "@oneclaw/workflows": "workspace:*",
     "@supabase/supabase-js": "^2.43.0",
     "dotenv": "^17.3.0",
     "hono": "^4.0.0"

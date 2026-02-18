@@ -3,7 +3,6 @@
 import type { Context } from 'hono';
 import { createLogger, ONBOARDING_STATE } from '@oneclaw/core';
 import { updateUserTierByStripeId, updateUserTierByPhone, updateOnboardingState, linkStripeCustomer, saveOpenClawConfig } from '@oneclaw/database';
-import { createSendblueClient } from '@oneclaw/sendblue';
 import type { UserTier } from '@oneclaw/core';
 import { handlePaymentComplete, handleDeployComplete, getOnboardingState } from '../services/discord-onboarding';
 import { topUpAsync, formatCents, loadWallet } from '@oneclaw/harness';
@@ -344,25 +343,8 @@ export async function stripeWebhookHandler(c: Context) {
             log.warn('Could not update onboarding state', e);
           }
 
-          // Send confirmation message via Sendblue
-          try {
-            const sendblue = createSendblueClient();
-            await sendblue.sendMessage(
-              phoneNumber,
-              `Payment received ✅
-
-Spinning up your assistant...
-
-✓ Your own AI instance
-✓ Your data stays yours
-✓ Available 24/7
-
-Reply "ready" when you want to continue setup!`
-            );
-            log.info('Sent payment confirmation', { phoneNumber });
-          } catch (e) {
-            log.error('Failed to send payment confirmation', e);
-          }
+          // TODO: Send confirmation via email/notification instead of Sendblue
+          log.info('Payment confirmed for phone', { phoneNumber });
         }
         break;
       }

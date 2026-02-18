@@ -210,19 +210,59 @@ pnpm lint
 
 ---
 
-## Deployment
+## Self-Hosting
 
-**VPS (DigitalOcean, AWS, etc.)**
+### One-Click VPS Setup
+
+For self-hosting on a VPS with automatic SSL:
 
 ```bash
-ssh user@your-vps
-git clone https://github.com/rnabl/oneclaw.git
-cd oneclaw
-pnpm install && pnpm build
-pm2 start --name oneclaw-api "pnpm --filter @oneclaw/api start"
+# Download and run setup script
+curl -fsSL https://raw.githubusercontent.com/rnabl/oneclaw/main/scripts/setup-vps.sh | sudo bash
 ```
 
-See [DEPLOY.md](DEPLOY.md) for full instructions.
+Or manually:
+
+```bash
+wget https://raw.githubusercontent.com/rnabl/oneclaw/main/scripts/setup-vps.sh
+chmod +x setup-vps.sh
+sudo ./setup-vps.sh
+```
+
+The script will:
+- Install nginx and certbot
+- Configure SSL certificates (Let's Encrypt)
+- Set up reverse proxy for your domain
+- Show next steps
+
+**What you need:**
+- A VPS (DigitalOcean, AWS, etc.)
+- A domain pointed to your VPS IP
+- Root access
+
+**After setup:**
+1. Update Google OAuth redirect URI to: `https://api.yourdomain.com/oauth/google/callback`
+2. Update `.env.local` with your domain
+3. Start services with PM2
+
+### Manual Deployment
+
+If you prefer manual setup:
+
+```bash
+# Clone repo
+git clone https://github.com/rnabl/oneclaw.git
+cd oneclaw
+
+# Install dependencies
+pnpm install && pnpm build
+
+# Start services
+pm2 start --name oneclaw-api "pnpm --filter @oneclaw/api start"
+pm2 start --name oneclaw-node "cargo run --release -- daemon" --cwd oneclaw-node
+```
+
+See [scripts/setup-vps.sh](scripts/setup-vps.sh) for SSL configuration details.
 
 ---
 

@@ -16,9 +16,5 @@ export default defineConfig({
     '@oneclaw/harness',
     '@oneclaw/core',
     '@oneclaw/database',
-    '@oneclaw/skills',
-    '@oneclaw/workflows',
-    '@oneclaw/bluebubbles',
-    '@oneclaw/sendblue',
   ],
 });

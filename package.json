@@ -15,8 +15,6 @@
     "lint": "turbo lint",
     "test": "turbo test",
     "clean": "turbo clean && rm -rf node_modules",
-    "audit": "pnpm --filter @oneclaw/workflows audit",
-    "workflows:dev": "pnpm --filter @oneclaw/workflows dev",
     "harness:dev": "pnpm --filter @oneclaw/harness dev",
     "oneclaw": "pnpm --filter @oneclaw/cli run build && node packages/cli/dist/index.js",
     "node:build": "pnpm --filter @oneclaw/node-runtime build",
