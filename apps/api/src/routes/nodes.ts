@@ -2,11 +2,23 @@
 // Node registration, pairing, heartbeat, and dispatch
 
 import { Context } from 'hono';
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.SUPABASE_URL!;
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-const supabase = createClient(supabaseUrl, supabaseKey);
+let supabase: SupabaseClient | null = null;
+
+function getSupabase(): SupabaseClient {
+  if (supabase) return supabase;
+  
+  const supabaseUrl = process.env.SUPABASE_URL;
+  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  
+  if (!supabaseUrl || !supabaseKey) {
+    throw new Error('Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY');
+  }
+  
+  supabase = createClient(supabaseUrl, supabaseKey);
+  return supabase;
+}
 
 /**
  * Generate 9-character pairing code (ABC-DEF-GHI format)
@@ -224,7 +236,7 @@ export async function getRunStatusHandler(c: Context) {
 export async function listNodesHandler(c: Context) {
   const status = c.req.query('status');
   
-  let query = supabase.from('nodes').select('*');
+  let query = getSupabase().from('nodes').select('*');
   
   if (status) {
     query = query.eq('status', status);
