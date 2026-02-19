@@ -15,10 +15,28 @@ export interface Business {
   website?: string;
   phone?: string;
   address?: string;
+  city?: string;
+  state?: string;
+  zipCode?: string;
   rating?: number;
   review_count?: number;
   place_id?: string;
   category?: string;
+  googleMapsUrl?: string;
+  latitude?: number;
+  longitude?: number;
+  imageUrl?: string;
+  // Enrichment fields
+  enriched?: boolean;
+  ownerName?: string;
+  ownerEmail?: string;
+  ownerPhone?: string;
+  seoOptimized?: boolean;
+  hasAds?: boolean;
+  hasSocials?: boolean;
+  hasBooking?: boolean;
+  hasChatbot?: boolean;
+  aiReadable?: boolean;
 }
 
 export interface DiscoveryResult {
@@ -55,38 +73,57 @@ export async function handleDiscoveryWorkflow(params: Record<string, unknown>): 
     // Use the harness runner to execute the registered discovery workflow
     const job = await runner.execute(
       'discover-businesses',
-      'system', // tenant ID (use system for now, or pass user's tenant)
-      { niche, location, limit }
+      { niche, location, limit },
+      { 
+        tenantId: 'system',
+        tier: 'pro'
+      }
     );
     
-    // Wait for job to complete
-    const result = await runner.waitForJob(job.id, 120000); // 2 min timeout
-    
-    if (!result || !result.result) {
-      throw new Error('Discovery workflow returned no result');
+    // Job completes synchronously in harness - result is in job.output
+    if (job.status !== 'completed' || !job.output) {
+      throw new Error(`Discovery workflow failed: ${job.error || 'No output'}`);
     }
     
-    const harnessResult = result.result as {
+    const harnessResult = job.output as {
       businesses: Array<{
         name: string;
         website?: string;
         phone?: string;
         address?: string;
+        city?: string;
+        state?: string;
+        zipCode?: string;
         rating?: number;
         reviewCount?: number;
+        placeId?: string;
+        category?: string;
+        googleMapsUrl?: string;
+        latitude?: number;
+        longitude?: number;
+        imageUrl?: string;
       }>;
       totalFound: number;
       searchTimeMs: number;
     };
     
-    // Map harness result to our API format
+    // Map harness result to our API format (camelCase to snake_case)
     const businesses: Business[] = harnessResult.businesses.map(b => ({
       name: b.name,
       website: b.website,
       phone: b.phone,
       address: b.address,
+      city: b.city,
+      state: b.state,
+      zipCode: b.zipCode,
       rating: b.rating,
-      review_count: b.reviewCount,
+      review_count: b.reviewCount, // Convert camelCase to snake_case
+      place_id: b.placeId,
+      category: b.category,
+      googleMapsUrl: b.googleMapsUrl,
+      latitude: b.latitude,
+      longitude: b.longitude,
+      imageUrl: b.imageUrl,
     }));
     
     return {
@@ -265,6 +302,7 @@ function getMockResult(
 
 /**
  * Format discovery result for chat display (text version)
+ * Table format with business signals - LIMITED TO 10 FOR DISCORD
  */
 export function formatDiscoveryForChat(result: DiscoveryResult): string {
   const sourceEmoji = result.source === 'harness-apify' ? '🔥' :
@@ -274,49 +312,63 @@ export function formatDiscoveryForChat(result: DiscoveryResult): string {
   let message = `${sourceEmoji} **Found ${result.total_found} ${result.niche} businesses in ${result.location}**\n`;
   message += `_Search completed in ${(result.search_time_ms / 1000).toFixed(1)}s_\n\n`;
   
-  // Show top 5 in chat
-  const displayCount = Math.min(5, result.businesses.length);
-  
-  // Calculate average rating
+  // Calculate quick stats
   const ratings = result.businesses.filter(b => b.rating).map(b => b.rating!);
   const avgRating = ratings.length > 0 
     ? (ratings.reduce((a, b) => a + b, 0) / ratings.length).toFixed(1) 
     : 'N/A';
-  
-  // Count businesses with websites
   const withWebsite = result.businesses.filter(b => b.website).length;
+  const withPhone = result.businesses.filter(b => b.phone).length;
   
-  message += `📊 **Quick Stats**\n`;
-  message += `• Avg Rating: ⭐ ${avgRating}\n`;
-  message += `• With Website: ${withWebsite}/${result.total_found}\n\n`;
+  message += `📊 **Stats:** ⭐${avgRating} | 🌐 ${withWebsite}/${result.total_found} sites | 📞 ${withPhone}/${result.total_found} phones\n\n`;
   
-  message += `**Top Results:**\n`;
+  // LIMIT TO 10 FOR DISCORD (2000 char limit)
+  const displayCount = Math.min(10, result.businesses.length);
   
+  message += `**Results (showing ${displayCount} of ${result.total_found}):**\n`;
+  message += '```\n';
+  
+  // Compact table header
+  message += '#  | Name                | Phone        | Web |\n';
+  message += '---|---------------------|--------------|-----|\n';
+  
+  // Show businesses in compact table format
   for (let i = 0; i < displayCount; i++) {
     const biz = result.businesses[i];
-    const ratingStr = biz.rating ? `⭐${biz.rating}` : '';
-    const reviewStr = biz.review_count ? `(${biz.review_count})` : '';
     
-    message += `**${i + 1}. ${biz.name}** ${ratingStr} ${reviewStr}\n`;
+    // Column 1: Row number
+    const num = String(i + 1).padStart(2);
     
-    if (biz.website) {
-      message += `   🌐 ${biz.website}\n`;
-    }
-    if (biz.phone) {
-      message += `   📞 ${biz.phone}\n`;
-    }
+    // Column 2: Name (truncated to 19 chars)
+    const name = biz.name.length > 19 
+      ? biz.name.substring(0, 16) + '...' 
+      : biz.name.padEnd(19);
+    
+    // Column 3: Phone (truncated to 12 chars)
+    const phone = biz.phone 
+      ? (biz.phone.length > 12 ? biz.phone.substring(0, 12) : biz.phone.padEnd(12))
+      : '---'.padEnd(12);
+    
+    // Column 4: Has website
+    const hasWebsite = biz.website ? ' ✓ ' : ' ✗ ';
+    
+    message += `${num} | ${name} | ${phone} | ${hasWebsite}|\n`;
   }
+  
+  message += '```\n';
   
   if (result.businesses.length > displayCount) {
-    message += `\n_...and ${result.businesses.length - displayCount} more results_\n`;
+    message += `\n_+ ${result.businesses.length - displayCount} more businesses (type \`more\` to see next 10)_\n`;
   }
   
-  message += `\n💡 **Next steps:**\n`;
-  message += `• Say "audit [website]" to analyze any of these\n`;
-  message += `• Say "export" to download as CSV\n`;
+  // Action buttons
+  message += `\n💡 **Actions:**\n`;
+  message += `• \`enrich <#>\` - Get owner info + signals\n`;
+  message += `• \`details <#>\` - Full business info\n`;
+  message += `• \`export\` - Download CSV\n`;
   
   if (result.list_url) {
-    message += `\n[📥 View Full List →](${result.list_url})`;
+    message += `\n[📥 Full List →](${result.list_url})`;
   }
   
   return message;
@@ -324,6 +376,7 @@ export function formatDiscoveryForChat(result: DiscoveryResult): string {
 
 /**
  * Format discovery result as Discord embed (for richer display)
+ * Uses Discord's rich embed format with full signal table
  */
 export function formatDiscoveryAsEmbed(result: DiscoveryResult): object {
   const businesses = result.businesses.slice(0, 10);
@@ -336,62 +389,199 @@ export function formatDiscoveryAsEmbed(result: DiscoveryResult): object {
   const withWebsite = result.businesses.filter(b => b.website).length;
   const withPhone = result.businesses.filter(b => b.phone).length;
   
+  // Build list text with phone numbers next to business names
+  let listItems: string[] = [];
+  
+  for (let i = 0; i < businesses.length; i++) {
+    const biz = businesses[i];
+    // Use actual index if provided (for pagination), otherwise use i
+    const num = (biz._actualIndex !== undefined ? biz._actualIndex : i) + 1;
+    
+    // Truncate business name to 20 chars max
+    let bizName = biz.name.length > 20 ? biz.name.substring(0, 17) + '...' : biz.name;
+    
+    // Format phone nicely
+    let phoneFormatted = '';
+    if (biz.phone) {
+      const phone = biz.phone.replace(/\D/g, '');
+      const shortPhone = phone.length >= 10 ? phone.slice(-10) : phone;
+      phoneFormatted = shortPhone.length === 10 
+        ? `(${shortPhone.slice(0,3)}) ${shortPhone.slice(3,6)}-${shortPhone.slice(6)}`
+        : shortPhone;
+    }
+    
+    // First line: Business Name | Phone Number
+    const firstLine = phoneFormatted 
+      ? `**${num}. ${bizName}** | ${phoneFormatted}`
+      : `**${num}. ${bizName}**`;
+    
+    // Create clickable website link if exists (no "Web:" label)
+    let websiteLink = '✗';
+    if (biz.website) {
+      try {
+        const domain = new URL(biz.website.startsWith('http') ? biz.website : `https://${biz.website}`).hostname.replace('www.', '');
+        websiteLink = `[${domain}](${biz.website.startsWith('http') ? biz.website : `https://${biz.website}`})`;
+      } catch {
+        websiteLink = '✓';
+      }
+    }
+    
+    // Build signals line (removed "Web:" label)
+    const signals = `${websiteLink} | SEO: ${biz.seoOptimized ? '✓' : '?'} | Ads: ${biz.hasAds ? '✓' : '?'} | Cal: ${biz.hasBooking ? '✓' : '?'} | Bot: ${biz.hasChatbot ? '✓' : '?'} | AI: ${biz.aiReadable ? '✓' : '?'}`;
+    
+    const item = `${firstLine}\n   ${signals}`;
+    listItems.push(item);
+  }
+  
+  // Split into chunks that fit Discord's 1024 char limit per field
+  const fields: Array<{ name: string; value: string; inline: boolean }> = [];
+  let currentChunk: string[] = [];
+  let currentLength = 0;
+  
+  for (const item of listItems) {
+    const itemLength = item.length + 2; // +2 for \n\n
+    
+    if (currentLength + itemLength > 1000) { // 1000 to leave some buffer
+      // Save current chunk
+      fields.push({
+        name: fields.length === 0 ? `📋 Results (showing ${businesses.length} of ${result.total_found})` : '📋 (continued)',
+        value: currentChunk.join('\n\n'),
+        inline: false,
+      });
+      currentChunk = [item];
+      currentLength = itemLength;
+    } else {
+      currentChunk.push(item);
+      currentLength += itemLength;
+    }
+  }
+  
+  // Add remaining chunk
+  if (currentChunk.length > 0) {
+    fields.push({
+      name: fields.length === 0 ? `📋 Results (showing ${businesses.length} of ${result.total_found})` : '📋 (continued)',
+      value: currentChunk.join('\n\n'),
+      inline: false,
+    });
+  }
+  
   return {
     embeds: [{
       title: `🔍 Found ${result.total_found} ${result.niche} businesses`,
       description: `**Location:** ${result.location}\n**Search time:** ${(result.search_time_ms / 1000).toFixed(1)}s\n**Source:** ${result.source || 'discovery'}`,
-      color: 0x5865F2,
+      color: 0x5865F2, // Discord Blurple
       fields: [
         {
           name: '📊 Quick Stats',
-          value: `⭐ Avg Rating: ${avgRating}\n🌐 With Website: ${withWebsite}\n📞 With Phone: ${withPhone}`,
-          inline: true,
+          value: `⭐ Avg: ${avgRating} | 🌐 Sites: ${withWebsite}/${result.total_found} | 📞 Phones: ${withPhone}/${result.total_found}`,
+          inline: false,
         },
+        ...fields, // Spread the result fields (may be multiple if list is long)
         {
-          name: '🏆 Top Rated',
-          value: businesses
-            .filter(b => b.rating)
-            .sort((a, b) => (b.rating || 0) - (a.rating || 0))
-            .slice(0, 3)
-            .map(b => `${b.name} (⭐${b.rating})`)
-            .join('\n') || 'No ratings',
-          inline: true,
-        },
-        {
-          name: '📋 All Results',
-          value: businesses
-            .map((b, i) => `${i + 1}. **${b.name}**${b.rating ? ` ⭐${b.rating}` : ''}`)
-            .join('\n'),
+          name: '💡 Next Steps',
+          value: `Type \`more\` to see next ${Math.min(10, result.total_found - businesses.length)} businesses\nType \`enrich\` to analyze all websites ($5)`,
           inline: false,
         },
       ],
       footer: {
-        text: `OneClaw Discovery • ${result.businesses.length > 10 ? `Showing 10 of ${result.total_found}` : `${result.total_found} total`}`,
+        text: `OneClaw Discovery${(result as any)._pagination ? ` • Page ${(result as any)._pagination.current}/${(result as any)._pagination.total}` : result.businesses.length < result.total_found ? ` • Showing 1-${businesses.length} of ${result.total_found} (type "more")` : ` • ${result.total_found} results`}`,
+        icon_url: 'https://cdn.discordapp.com/emojis/1234567890.png', // Optional: Add your bot icon
       },
       timestamp: new Date().toISOString(),
     }],
-    components: result.businesses.length > 10 ? [{
-      type: 1,
+    // Buttons work via Discord Interactions endpoint
+    components: [{
+      type: 1, // Action Row
       components: [
         {
-          type: 2,
-          style: 1,
-          label: 'Show More',
-          custom_id: `discovery_more_${Date.now()}`,
-        },
-        {
-          type: 2,
-          style: 5,
-          label: 'View Full List',
+          type: 2, // Button
+          style: 5, // Link button
+          label: 'Full List',
           url: result.list_url || 'https://oneclaw.chat',
-        },
-        {
-          type: 2,
-          style: 2,
-          label: 'Export CSV',
-          custom_id: `discovery_export_${Date.now()}`,
+          emoji: { name: '🔗' }
         },
       ],
-    }] : undefined,
+    }],
   };
+}
+
+/**
+ * Format a single business with full details
+ * Use when user requests "details <number>"
+ */
+export function formatBusinessDetails(business: Business, index: number): string {
+  let message = `**#${index + 1}: ${business.name}**\n\n`;
+  
+  // Core info
+  if (business.category) {
+    message += `📂 **Category:** ${business.category}\n`;
+  }
+  if (business.rating) {
+    message += `⭐ **Rating:** ${business.rating.toFixed(1)}`;
+    if (business.review_count) {
+      message += ` (${business.review_count} reviews)`;
+    }
+    message += '\n';
+  }
+  
+  // Contact & Location
+  message += '\n**Contact & Location:**\n';
+  if (business.website) {
+    message += `🌐 Website: ${business.website}\n`;
+  } else {
+    message += `🌐 Website: ❌ None found\n`;
+  }
+  if (business.phone) {
+    message += `📞 Phone: ${business.phone}\n`;
+  }
+  if (business.address) {
+    message += `📍 Address: ${business.address}\n`;
+  }
+  
+  // Google Business Profile Status
+  message += '\n**Google Business Profile:**\n';
+  if (business.place_id) {
+    const claimStatus = business.isGbpClaimed ? '✅ Claimed' : '🎯 **UNCLAIMED** (Hot Lead!)';
+    message += `${claimStatus}\n`;
+    if (business.googleMapsUrl) {
+      message += `🗺️ [View on Google Maps](${business.googleMapsUrl})\n`;
+    }
+  } else {
+    message += `❌ No Google listing found\n`;
+  }
+  
+  // Lead Quality Signals
+  message += '\n**Lead Quality Signals:**\n';
+  const signals: string[] = [];
+  
+  if (!business.isGbpClaimed && business.place_id) {
+    signals.push('🎯 **Unclaimed GBP** - High value opportunity');
+  }
+  if (!business.website) {
+    signals.push('❌ **No website** - Needs digital presence');
+  }
+  if (business.rating && business.rating < 3.5) {
+    signals.push('⚠️ **Low rating** - Reputation management needed');
+  }
+  if (business.review_count && business.review_count < 10) {
+    signals.push('📉 **Few reviews** - Review generation opportunity');
+  }
+  if (business.website && !business.website.startsWith('https')) {
+    signals.push('🔓 **No HTTPS** - Security upgrade needed');
+  }
+  
+  if (signals.length > 0) {
+    signals.forEach(s => message += `• ${s}\n`);
+  } else {
+    message += '✨ Well-established online presence\n';
+  }
+  
+  // Quick actions
+  message += '\n**Actions:**\n';
+  if (business.website) {
+    message += `• \`audit ${business.website}\` - Run full website audit\n`;
+  }
+  message += `• \`contact ${index + 1}\` - Get contact script\n`;
+  
+  return message;
 }

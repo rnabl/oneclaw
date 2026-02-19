@@ -3,7 +3,7 @@
 // This runs as a separate process or alongside the API
 
 import { formatAuditForChat } from '../workflows/audit';
-import { formatDiscoveryForChat } from '../workflows/discovery';
+import { formatDiscoveryForChat, formatDiscoveryAsEmbed } from '../workflows/discovery';
 import {
   shouldStartOnboarding,
   handleSetupMessage,
@@ -31,6 +31,15 @@ interface User {
   createdAt: Date;
   updatedAt: Date;
 }
+
+// Store recent discovery results per user (in-memory, temporary)
+const userDiscoveryResults = new Map<string, {
+  businesses: any[];
+  niche: string;
+  location: string;
+  offset: number;
+  total: number;
+}>();
 
 // Discord Gateway Opcodes
 const OPCODES = {
@@ -265,6 +274,10 @@ export class DiscordBot {
       case 'MESSAGE_CREATE':
         await this.handleMessageCreate(data);
         break;
+      
+      case 'INTERACTION_CREATE':
+        await this.handleInteraction(data);
+        break;
         
       // Add more event handlers as needed
     }
@@ -315,8 +328,91 @@ export class DiscordBot {
     // Process regular message
     const response = await this.processMessage(content, message.author.id, message.author.username);
     
-    // Send response
-    await this.sendMessage(message.channel_id, response);
+    // Send response (detect if it's an embed object or plain text)
+    if (typeof response === 'object' && 'embeds' in response) {
+      await this.sendMessageWithComponents(message.channel_id, response);
+    } else {
+      await this.sendMessage(message.channel_id, response as string);
+    }
+  }
+
+  /**
+   * Handle button/select interactions
+   */
+  private async handleInteraction(interaction: any): Promise<void> {
+    console.log('[discord-bot] Interaction received:', interaction.data?.custom_id);
+    
+    // Acknowledge the interaction immediately
+    try {
+      await fetch(`https://discord.com/api/v10/interactions/${interaction.id}/${interaction.token}/callback`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          type: 4, // CHANNEL_MESSAGE_WITH_SOURCE
+          data: {
+            content: '⏳ Processing...',
+            flags: 64, // EPHEMERAL (only visible to user)
+          },
+        }),
+      });
+    } catch (error) {
+      console.error('[discord-bot] Failed to acknowledge interaction:', error);
+      return;
+    }
+
+    const customId = interaction.data?.custom_id || '';
+    
+    // Handle different button types
+    if (customId.startsWith('discovery_export_')) {
+      await this.handleExportButton(interaction);
+    } else if (customId.startsWith('discovery_more_')) {
+      await this.handleMoreButton(interaction);
+    } else {
+      // Unknown button
+      await this.editInteractionResponse(interaction, '❌ This button is not yet implemented.');
+    }
+  }
+
+  /**
+   * Handle "Export CSV" button
+   */
+  private async handleExportButton(interaction: any): Promise<void> {
+    await this.editInteractionResponse(
+      interaction,
+      '📥 CSV export is coming soon! For now, use the "Full List" link to view all results.'
+    );
+  }
+
+  /**
+   * Handle "Show More" button
+   */
+  private async handleMoreButton(interaction: any): Promise<void> {
+    await this.editInteractionResponse(
+      interaction,
+      '📋 Pagination is coming soon! For now, use the "Full List" link or type `more` to see additional results.'
+    );
+  }
+
+  /**
+   * Edit the response to an interaction (follow-up message)
+   */
+  private async editInteractionResponse(interaction: any, content: string): Promise<void> {
+    try {
+      await fetch(
+        `https://discord.com/api/v10/webhooks/${this.botId}/${interaction.token}/messages/@original`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ content }),
+        }
+      );
+    } catch (error) {
+      console.error('[discord-bot] Failed to edit interaction response:', error);
+    }
   }
 
   /**
@@ -336,7 +432,53 @@ export class DiscordBot {
   /**
    * Process user message and determine action
    */
-  private async processMessage(content: string, discordUserId: string, discordUsername: string): Promise<string> {
+  private async processMessage(content: string, discordUserId: string, discordUsername: string): Promise<string | { embeds: any[]; components?: any[] }> {
+    // Quick check for simple commands
+    const lowerContent = content.toLowerCase().trim();
+    
+    if (lowerContent === 'more') {
+      // Check if user has stored results
+      const stored = userDiscoveryResults.get(discordUserId);
+      if (!stored) {
+        return '❌ No previous discovery results found. Run a search first:\n`find [niche] in [location]`';
+      }
+      
+      // Get next batch
+      const nextOffset = stored.offset + 10;
+      if (nextOffset >= stored.businesses.length) {
+        return `📋 **No more results**\n\nYou've seen all ${stored.businesses.length} businesses from your last search.\n\nRun a new search: \`find [niche] in [location]\``;
+      }
+      
+      // Update offset
+      stored.offset = nextOffset;
+      userDiscoveryResults.set(discordUserId, stored);
+      
+      // Format next 10 businesses with correct numbering
+      const nextBatch = stored.businesses.slice(nextOffset, nextOffset + 10);
+      const currentPage = Math.floor(nextOffset / 10) + 1;
+      const totalPages = Math.ceil(stored.businesses.length / 10);
+      
+      const result = {
+        businesses: nextBatch.map((b: any, idx: number) => ({
+          ...b,
+          _actualIndex: nextOffset + idx, // Store actual index for numbering
+        })),
+        total_found: stored.total,
+        niche: stored.niche,
+        location: stored.location,
+        search_time_ms: 0,
+        source: 'cached',
+        list_url: 'https://oneclaw.chat',
+        _pagination: { current: currentPage, total: totalPages },
+      };
+      
+      return formatDiscoveryAsEmbed(result as any);
+    }
+    
+    if (lowerContent === 'enrich' || lowerContent === 'analyze') {
+      return '🔬 **Enrichment workflow**\n\nThis will analyze all discovered websites for:\n• SEO optimization\n• Running ads\n• Booking calendars\n• Chatbots\n• AI readability\n• Owner contact info\n\n💰 Cost: $5 for up to 50 businesses\n\n⚠️ **This feature is being implemented with Restate for durable execution.**\n\nComing soon!';
+    }
+    
     // 1. Parse intent using AI (falls back to pattern matching)
     const intent = await parseIntent(content);
     console.log(`[discord-bot] Parsed intent:`, intent);
@@ -514,7 +656,35 @@ export class DiscordBot {
         case 'discover':
         case 'discovery':
         case 'discover-businesses':
-          return formatDiscoveryForChat(job.output);
+          // Wrap harness output with params for formatting
+          const discoveryOutput = {
+            ...job.output,
+            niche: params.niche || 'businesses',
+            location: params.location || 'unknown',
+            limited_to: params.limit || 50,
+            list_url: `https://oneclaw.chat/lists/discovery-${job.id}`,
+            source: 'harness-apify',
+            // Convert camelCase to snake_case for formatter
+            total_found: job.output.totalFound,
+            search_time_ms: job.output.searchTimeMs,
+            businesses: job.output.businesses?.map((b: any) => ({
+              ...b,
+              review_count: b.reviewCount,
+              place_id: b.placeId,
+            })) || [],
+          };
+          
+          // Store results for pagination
+          userDiscoveryResults.set(userId, {
+            businesses: discoveryOutput.businesses,
+            niche: discoveryOutput.niche,
+            location: discoveryOutput.location,
+            offset: 0,
+            total: discoveryOutput.total_found,
+          });
+          
+          // Return embed object instead of plain text
+          return formatDiscoveryAsEmbed(discoveryOutput);
         default:
           return `✅ **${workflowId} Complete**\n\n${JSON.stringify(job.output, null, 2)}`;
       }

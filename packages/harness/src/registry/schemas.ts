@@ -138,8 +138,28 @@ export const BusinessSchema = z.object({
   website: z.string().url().optional(),
   phone: z.string().optional(),
   address: z.string().optional(),
+  city: z.string().optional(),
+  state: z.string().optional(),
+  zipCode: z.string().optional(),
   rating: z.number().min(0).max(5).optional(),
   reviewCount: z.number().min(0).optional(),
+  placeId: z.string().optional(),
+  category: z.string().optional(),
+  googleMapsUrl: z.string().url().optional(),
+  latitude: z.number().optional(),
+  longitude: z.number().optional(),
+  imageUrl: z.string().url().optional(),
+  // Enrichment fields (added later via separate enrichment workflow)
+  enriched: z.boolean().optional(),
+  ownerName: z.string().optional(),
+  ownerEmail: z.string().optional(),
+  ownerPhone: z.string().optional(),
+  seoOptimized: z.boolean().optional(),
+  hasAds: z.boolean().optional(),
+  hasSocials: z.boolean().optional(),
+  hasBooking: z.boolean().optional(),
+  hasChatbot: z.boolean().optional(),
+  aiReadable: z.boolean().optional(),
 });
 export type Business = z.infer<typeof BusinessSchema>;
 
@@ -221,9 +241,9 @@ export const AUDIT_TOOL: ToolDefinition = {
  * Business Discovery Tool
  */
 export const DiscoveryToolInput = z.object({
-  niche: z.string().min(1),
-  location: z.string().min(1),
-  limit: z.number().min(1).max(100).default(50),
+  niche: z.string().min(1).describe('Business type or niche (e.g., "dentist", "roofing contractor")'),
+  location: z.string().min(1).describe('Location string (e.g., "Austin, TX" or "Fort Worth, Texas")'),
+  limit: z.number().min(1).max(100).default(50).describe('Maximum number of results to return'),
 });
 export type DiscoveryToolInput = z.infer<typeof DiscoveryToolInput>;
 
