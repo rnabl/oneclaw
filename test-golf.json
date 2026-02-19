@@ -1,0 +1,11 @@
+{
+  "workflowId": "golf-tee-time-booking",
+  "input": {
+    "location": "Denver, CO",
+    "date": "2026-02-26",
+    "timeRange": "9-10AM",
+    "partySize": 4
+  },
+  "tenantId": "test-user",
+  "tier": "pro"
+}

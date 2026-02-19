@@ -9,7 +9,9 @@ import {
   ToolDefinition, 
   AUDIT_TOOL, 
   DISCOVERY_TOOL, 
-  CITATION_CHECK_TOOL 
+  CITATION_CHECK_TOOL,
+  HVAC_CONTACT_TOOL,
+  GOLF_BOOKING_TOOL
 } from './schemas';
 
 // =============================================================================
@@ -155,6 +157,8 @@ export const registry = new ToolRegistry();
 registry.register(AUDIT_TOOL);
 registry.register(DISCOVERY_TOOL);
 registry.register(CITATION_CHECK_TOOL);
+registry.register(HVAC_CONTACT_TOOL);
+registry.register(GOLF_BOOKING_TOOL);
 
 // =============================================================================
 // EXPORTS

@@ -1,0 +1,10 @@
+{
+  "workflowId": "hvac-contact-discovery",
+  "input": {
+    "location": "Denver, CO",
+    "limit": 10,
+    "extractOwners": true
+  },
+  "tenantId": "test-user",
+  "tier": "pro"
+}

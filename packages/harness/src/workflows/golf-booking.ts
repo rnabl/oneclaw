@@ -45,6 +45,7 @@
 import type { StepContext } from '../execution/runner';
 import { runner } from '../execution/runner';
 import { z } from 'zod';
+import { chromium } from 'playwright';
 
 // =============================================================================
 // SCHEMAS
@@ -438,7 +439,7 @@ async function scrapeTeeTimesSequential(
 }
 
 // =============================================================================
-// BROWSER SCRAPING LOGIC (LLM-Guided Navigation)
+// BROWSER SCRAPING LOGIC (Real Playwright Implementation)
 // =============================================================================
 
 async function scrapeCourseWithBrowser(
@@ -447,153 +448,111 @@ async function scrapeCourseWithBrowser(
   criteria: { date: Date; startHour: number; endHour: number; partySize: number }
 ): Promise<TeeTime[]> {
   
-  // This demonstrates the LLM → Executor → LLM loop
-  // In real implementation, this would use actual Playwright/Puppeteer
-  
   await ctx.log('debug', `Opening ${course.website} in browser...`);
   
-  // ITERATION 1: LLM decides to visit website
-  // Executor: browser.navigate(url)
-  const html = await simulateBrowserFetch(course.website);
+  const browser = await chromium.launch({ headless: true });
+  const page = await browser.newPage();
   
-  // ITERATION 2: LLM analyzes page for booking button
-  // In real version: LLM receives HTML or screenshot
-  const bookingButton = findBookingButton(html);
-  
-  if (!bookingButton) {
-    await ctx.log('debug', `No booking button found on ${course.name}`);
-    return [];
-  }
-  
-  await ctx.log('debug', `Found booking button: "${bookingButton.text}"`);
-  
-  // ITERATION 3: LLM decides to click button
-  // Executor: browser.click(selector)
-  const bookingPageHtml = await simulateButtonClick(bookingButton);
-  
-  // ITERATION 4: LLM analyzes booking page for date picker
-  await ctx.log('debug', `Navigated to booking page`);
-  
-  // ITERATION 5: LLM extracts available times
-  // In real version: browser.extract('.time-slot') or LLM analyzes HTML
-  const availableTimes = extractTeeTimesFromHTML(
-    bookingPageHtml,
-    criteria.date,
-    criteria.startHour,
-    criteria.endHour,
-    criteria.partySize
-  );
-  
-  // ITERATION 6: LLM structures the data
-  return availableTimes.map(time => ({
-    course,
-    time: time.timeStr,
-    date: criteria.date.toISOString().split('T')[0],
-    players: criteria.partySize,
-    price: time.price,
-    bookingUrl: time.bookingUrl || `${course.website}/booking`,
-    availability: time.confirmed ? 'confirmed' : 'likely',
-  }));
-}
-
-// =============================================================================
-// BROWSER SIMULATION (These would be real Playwright calls)
-// =============================================================================
-
-async function simulateBrowserFetch(url: string): Promise<string> {
-  // In real implementation:
-  // const page = await browser.newPage();
-  // await page.goto(url);
-  // return await page.content();
-  
-  // For now: simulate with mock HTML
-  return `
-    <html>
-      <body>
-        <nav>
-          <a href="/booking" class="book-btn">Book Tee Time</a>
-        </nav>
-        <h1>Welcome to Golf Course</h1>
-      </body>
-    </html>
-  `;
-}
-
-function findBookingButton(html: string): { text: string; selector: string } | null {
-  // LLM would analyze HTML to find booking button
-  // For now: simple regex
-  const bookingPatterns = [
-    /book.*tee.*time/i,
-    /reservations/i,
-    /book.*now/i,
-    /tee.*sheet/i,
-  ];
-  
-  for (const pattern of bookingPatterns) {
-    if (pattern.test(html)) {
-      return {
-        text: html.match(pattern)?.[0] || 'Book Tee Time',
-        selector: '.book-btn',
-      };
+  try {
+    // Navigate to course website
+    await page.goto(course.website, { 
+      timeout: 10000,
+      waitUntil: 'domcontentloaded' 
+    });
+    
+    await ctx.log('debug', `Loaded ${course.name} website`);
+    
+    // Look for booking button (human-thinking: "Where's the Book button?")
+    const bookingSelectors = [
+      'text=/book.*tee.*time/i',
+      'text=/reservations/i',
+      'text=/book.*now/i',
+      'a[href*="booking"]',
+      'a[href*="teetimes"]',
+      'a[href*="reserve"]',
+    ];
+    
+    let bookingUrl: string | null = null;
+    
+    for (const selector of bookingSelectors) {
+      try {
+        const element = await page.locator(selector).first();
+        if (await element.count() > 0) {
+          bookingUrl = await element.getAttribute('href');
+          await ctx.log('debug', `Found booking link: ${selector}`);
+          break;
+        }
+      } catch {
+        continue;
+      }
     }
+    
+    if (!bookingUrl) {
+      await ctx.log('debug', `No booking button found on ${course.name}`);
+      return [];
+    }
+    
+    // Navigate to booking page
+    const fullBookingUrl = bookingUrl.startsWith('http') 
+      ? bookingUrl 
+      : new URL(bookingUrl, course.website).href;
+    
+    await page.goto(fullBookingUrl, { 
+      timeout: 10000,
+      waitUntil: 'domcontentloaded' 
+    });
+    
+    await ctx.log('debug', `Navigated to booking page: ${fullBookingUrl}`);
+    
+    // Extract tee times (look for time slots, prices, availability)
+    const timeSlots = await page.$$eval('[class*="time"], [class*="slot"], [class*="available"]', (elements) => {
+      return elements.map(el => ({
+        text: el.textContent?.trim() || '',
+        html: el.innerHTML,
+      }));
+    }).catch(() => []);
+    
+    await ctx.log('debug', `Found ${timeSlots.length} potential time slot elements`);
+    
+    // Parse time slots with LLM-like logic (regex for now)
+    const times: TeeTime[] = [];
+    
+    for (const slot of timeSlots) {
+      // Look for time patterns: "9:30 AM", "9:30AM", "0930"
+      const timeMatch = slot.text.match(/(\d{1,2}):?(\d{2})?\s*(AM|PM)?/i);
+      if (!timeMatch) continue;
+      
+      const hour = parseInt(timeMatch[1], 10);
+      const minute = timeMatch[2] ? parseInt(timeMatch[2], 10) : 0;
+      
+      // Filter by time range
+      if (hour < criteria.startHour || hour >= criteria.endHour) continue;
+      
+      // Look for price: "$75", "$75.00", "75"
+      const priceMatch = slot.text.match(/\$?(\d+)(?:\.\d{2})?/);
+      const price = priceMatch ? parseInt(priceMatch[1], 10) : undefined;
+      
+      times.push({
+        course,
+        time: `${hour}:${minute.toString().padStart(2, '0')} ${hour < 12 ? 'AM' : 'PM'}`,
+        date: criteria.date.toISOString().split('T')[0],
+        players: criteria.partySize,
+        price,
+        bookingUrl: fullBookingUrl,
+        availability: 'likely',
+      });
+    }
+    
+    await ctx.log('debug', `Extracted ${times.length} tee times in range`);
+    
+    return times;
+    
+  } catch (error) {
+    await ctx.log('debug', `Failed to scrape ${course.name}: ${error}`);
+    return [];
+  } finally {
+    await browser.close();
   }
-  
-  return null;
-}
-
-async function simulateButtonClick(button: { selector: string }): Promise<string> {
-  // In real implementation:
-  // await page.click(button.selector);
-  // await page.waitForNavigation();
-  // return await page.content();
-  
-  // For now: simulate booking page HTML
-  return `
-    <html>
-      <body>
-        <h1>Book Your Tee Time</h1>
-        <input type="date" name="date" />
-        <select name="time">
-          <option>9:00 AM - $75</option>
-          <option>9:30 AM - $85</option>
-          <option>10:00 AM - $90</option>
-          <option>10:30 AM - $95</option>
-        </select>
-        <select name="players">
-          <option>2</option>
-          <option>4</option>
-        </select>
-      </body>
-    </html>
-  `;
-}
-
-function extractTeeTimesFromHTML(
-  html: string,
-  targetDate: Date,
-  startHour: number,
-  endHour: number,
-  partySize: number
-): Array<{ timeStr: string; price?: number; bookingUrl?: string; confirmed: boolean }> {
-  
-  // In real implementation: 
-  // LLM would parse HTML or use CSS selectors to extract time slots
-  // For now: regex extraction
-  
-  const timePattern = /(\d{1,2}:\d{2}\s*[AP]M)\s*-\s*\$(\d+)/g;
-  const matches = [...html.matchAll(timePattern)];
-  
-  const times = matches
-    .map(match => ({
-      timeStr: match[1],
-      price: parseInt(match[2], 10),
-      hour: parseInt(match[1].split(':')[0], 10),
-      bookingUrl: undefined,
-      confirmed: true,
-    }))
-    .filter(time => time.hour >= startHour && time.hour < endHour);
-  
-  return times;
 }
 
 // =============================================================================

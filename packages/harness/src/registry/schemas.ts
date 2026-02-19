@@ -326,3 +326,148 @@ export const CITATION_CHECK_TOOL: ToolDefinition = {
   createdAt: new Date(),
   updatedAt: new Date(),
 };
+
+/**
+ * HVAC Contact Discovery Tool
+ */
+export const HVACContactInput = z.object({
+  location: z.string().min(1),
+  limit: z.number().default(100),
+  extractOwners: z.boolean().default(true),
+  method: z.enum(['brave_website_scrape', 'apify_website_scrape', 'linkedin_enrichment', 'apify_only', 'auto']).default('auto'),
+});
+
+export const HVACContactOutput = z.object({
+  businesses: z.array(z.object({
+    name: z.string(),
+    phone: z.string().optional(),
+    website: z.string().optional(),
+    address: z.string().optional(),
+    city: z.string().optional(),
+    state: z.string().optional(),
+    zipCode: z.string().optional(),
+    rating: z.number().optional(),
+    reviewCount: z.number().optional(),
+    owner: z.object({
+      name: z.string(),
+      title: z.string().optional(),
+      source: z.enum(['website', 'inference', 'linkedin']),
+    }).optional(),
+  })),
+  stats: z.object({
+    total: z.number(),
+    withOwners: z.number(),
+    withoutOwners: z.number(),
+    method: z.string(),
+    timeMs: z.number(),
+    cost: z.number(),
+  }),
+  toolsUsed: z.array(z.string()),
+  missingTools: z.array(z.string()).optional(),
+  fallbackUsed: z.boolean().optional(),
+});
+
+export type HVACContactInput = z.infer<typeof HVACContactInput>;
+export type HVACContactOutput = z.infer<typeof HVACContactOutput>;
+
+export const HVAC_CONTACT_TOOL: ToolDefinition = {
+  id: 'hvac-contact-discovery',
+  name: 'HVAC Contact Discovery',
+  description: 'Find HVAC businesses with owner/decision-maker extraction via website scraping',
+  version: '1.0.0',
+  inputSchema: HVACContactInput,
+  outputSchema: HVACContactOutput,
+  requiredSecrets: [],
+  networkPolicy: {
+    allowedDomains: ['*'],
+    blockedDomains: [],
+    allowLocalhost: false,
+  },
+  costClass: 'medium',
+  estimatedCostUsd: 0.18,
+  retryPolicy: {
+    maxAttempts: 2,
+    backoffMs: 2000,
+    backoffMultiplier: 2,
+    retryableErrors: ['TIMEOUT', 'NETWORK_ERROR'],
+  },
+  timeoutMs: 120000,
+  idempotent: false,
+  isPublic: true,
+  tags: ['discovery', 'hvac', 'contacts', 'owners'],
+  createdAt: new Date(),
+  updatedAt: new Date(),
+};
+
+/**
+ * Golf Tee Time Booking Tool
+ */
+export const GolfBookingInput = z.object({
+  location: z.string().min(1),
+  date: z.string(),
+  timeRange: z.string(),
+  partySize: z.number().default(4),
+  maxCourses: z.number().default(10),
+  method: z.enum(['golfnow_api', 'brave_playwright_hybrid', 'brave_playwright_sequential', 'auto']).default('auto'),
+});
+
+export const GolfBookingOutput = z.object({
+  availableTimes: z.array(z.object({
+    course: z.object({
+      name: z.string(),
+      website: z.string(),
+      phone: z.string().optional(),
+      address: z.string().optional(),
+      rating: z.number().optional(),
+      source: z.enum(['golfnow', 'brave_search', 'apify']),
+    }),
+    time: z.string(),
+    date: z.string(),
+    players: z.number(),
+    price: z.number().optional(),
+    bookingUrl: z.string().optional(),
+    availability: z.enum(['confirmed', 'likely', 'unknown']),
+  })),
+  stats: z.object({
+    coursesChecked: z.number(),
+    timesFound: z.number(),
+    method: z.string(),
+    timeMs: z.number(),
+    cost: z.number(),
+  }),
+  toolsUsed: z.array(z.string()),
+  missingTools: z.array(z.string()).optional(),
+  fallbackUsed: z.boolean().optional(),
+});
+
+export type GolfBookingInput = z.infer<typeof GolfBookingInput>;
+export type GolfBookingOutput = z.infer<typeof GolfBookingOutput>;
+
+export const GOLF_BOOKING_TOOL: ToolDefinition = {
+  id: 'golf-tee-time-booking',
+  name: 'Golf Tee Time Booking',
+  description: 'Find available golf tee times by searching courses and scraping booking pages',
+  version: '1.0.0',
+  inputSchema: GolfBookingInput,
+  outputSchema: GolfBookingOutput,
+  requiredSecrets: [],
+  networkPolicy: {
+    allowedDomains: ['*'],
+    blockedDomains: [],
+    allowLocalhost: false,
+  },
+  costClass: 'medium',
+  estimatedCostUsd: 0.16,
+  retryPolicy: {
+    maxAttempts: 2,
+    backoffMs: 3000,
+    backoffMultiplier: 2,
+    retryableErrors: ['TIMEOUT', 'NETWORK_ERROR'],
+  },
+  timeoutMs: 180000,
+  idempotent: false,
+  isPublic: true,
+  tags: ['golf', 'booking', 'tee-times', 'reservations'],
+  createdAt: new Date(),
+  updatedAt: new Date(),
+};

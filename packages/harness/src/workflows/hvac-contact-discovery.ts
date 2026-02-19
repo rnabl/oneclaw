@@ -74,7 +74,7 @@ interface BusinessContact {
   };
 }
 
-interface HVACContactOutput {
+interface HVACContactOutput extends Record<string, unknown> {
   businesses: BusinessContact[];
   stats: {
     total: number;
@@ -278,14 +278,14 @@ async function discoverViaApify(
   
   return results.map(r => ({
     name: r.name,
-    phone: r.phone,
-    website: r.website,
-    address: r.address,
-    city: r.city,
-    state: r.state,
-    zipCode: r.zipCode,
-    rating: r.rating,
-    reviewCount: r.reviewCount,
+    phone: r.phone || undefined,
+    website: r.website || undefined,
+    address: r.address || undefined,
+    city: r.city || undefined,
+    state: r.state || undefined,
+    zipCode: r.zipCode || undefined,
+    rating: r.rating || undefined,
+    reviewCount: r.reviewCount || undefined,
   }));
 }
 
