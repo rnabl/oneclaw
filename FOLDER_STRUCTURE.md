@@ -31,7 +31,7 @@ oneclaw/
 │
 ├── packages/                      # Reusable libraries
 │   │
-│   ├── harness/                   # 🎯 CORE FRAMEWORK (Database-agnostic)
+│   ├── harness/                   # 🎯 CORE FRAMEWORK (Everything lives here!)
 │   │   ├── src/
 │   │   │   ├── index.ts          # Main exports
 │   │   │   ├── stores/           # Persistent data layer (DB abstraction)
@@ -77,7 +77,7 @@ oneclaw/
 │   │   │       └── audit.ts      # Website audit
 │   │   └── package.json
 │   │
-│   ├── node-runtime/             # Distributed node execution
+│   ├── node-runtime/             # Distributed node execution (ACTIVE)
 │   │   ├── src/
 │   │   │   ├── index.ts
 │   │   │   ├── daemon.ts         # Background daemon
@@ -85,24 +85,26 @@ oneclaw/
 │   │   │   └── api.ts            # Control plane API
 │   │   └── package.json
 │   │
-│   ├── cli/                      # Command-line interface
+│   ├── cli/                      # Command-line interface (ACTIVE)
 │   │   └── src/
 │   │       └── index.ts
 │   │
-│   ├── executors/                # Executor implementations
+│   ├── executors/                # Executor implementations (ACTIVE)
 │   │   └── http/                 # HTTP executor
 │   │
-│   ├── bluebubbles/              # iMessage integration
-│   ├── sendblue/                 # SMS integration
-│   ├── workflows/                # Workflow templates
-│   ├── skills/                   # Reusable agent skills
-│   ├── clients/                  # API clients
-│   ├── core/                     # Core types (legacy)
-│   ├── database/                 # Database schemas (legacy)
-│   ├── engine/                   # Workflow engine (legacy)
-│   ├── taxonomy/                 # Classification
-│   ├── templates/                # Templates
-│   └── node-ui/                  # Node UI components
+│   ├── core/                     # ⚠️ LEGACY - Basic types (to be migrated to harness)
+│   ├── database/                 # ⚠️ LEGACY - Supabase utils (to be migrated to harness)
+│   │
+│   └── [UNUSED - Marked for deletion]
+│       ├── bluebubbles/          # ❌ Not imported anywhere
+│       ├── sendblue/             # ❌ Not imported anywhere
+│       ├── workflows/            # ❌ Moved to harness/workflows/
+│       ├── skills/               # ❌ Not imported anywhere
+│       ├── clients/              # ❌ Not imported anywhere
+│       ├── engine/               # ❌ Replaced by harness/execution/
+│       ├── taxonomy/             # ❌ Not imported anywhere
+│       ├── templates/            # ❌ Not imported anywhere
+│       └── node-ui/              # ❌ Not imported anywhere
 │
 ├── scripts/                      # Utility scripts
 │   ├── add-wallet-funds.js
