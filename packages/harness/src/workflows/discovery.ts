@@ -22,6 +22,7 @@ import { runner } from '../execution/runner';
 import { artifactStore } from '../artifacts';
 import { DiscoveryToolInput, DiscoveryToolOutput } from '../registry/schemas';
 import { searchBusinesses } from '../apify/client';
+import { scanWebsitesBatch } from '../scanners/website-scanner';
 
 // =============================================================================
 // CONFIGURATION
@@ -112,43 +113,72 @@ async function discoveryWorkflowHandler(
     ctx.recordApiCall('apify', 'google_maps_scraper', results.length);
     
     // ==========================================================================
-    // STEP 3: Quick website scan for basic signals (if websites exist)
+    // STEP 3: Comprehensive website scanning for enrichment signals
     // ==========================================================================
     runner.updateStep(ctx.jobId, 3, 'Scanning websites', 4);
     
-    await ctx.log('info', 'Scanning websites for basic signals');
+    await ctx.log('info', 'Scanning websites for enrichment signals');
     
     const businessesWithWebsites = businesses.filter(b => b.website);
     await ctx.log('info', `Found ${businessesWithWebsites.length} businesses with websites`);
     
-    // Scan websites in parallel (limit concurrency to avoid rate limits)
-    const scanPromises = businessesWithWebsites.slice(0, 10).map(async (business) => {
-      try {
-        if (!business.website) return;
+    if (businessesWithWebsites.length > 0) {
+      // Use comprehensive scanner (limit to first 10 for performance in discovery phase)
+      const websitesToScan = businessesWithWebsites.slice(0, 10).map(b => b.website!);
+      
+      await ctx.log('info', `Performing comprehensive scan on ${websitesToScan.length} websites`);
+      
+      // Scan in batches of 5 with 8-second timeout per site
+      const scanResults = await scanWebsitesBatch(websitesToScan, 5, 8000);
+      
+      await ctx.log('info', `Scan complete: ${scanResults.filter(r => r.accessible).length}/${scanResults.length} accessible`);
+      
+      // Update businesses with enrichment data
+      for (let i = 0; i < scanResults.length; i++) {
+        const scanResult = scanResults[i];
+        const business = businessesWithWebsites[i];
         
-        const url = business.website.startsWith('http') ? business.website : `https://${business.website}`;
-        const response = await fetch(url, {
-          method: 'HEAD',
-          headers: { 'User-Agent': 'OneClaw-Bot/1.0' },
-          signal: AbortSignal.timeout(5000), // 5 second timeout
-        });
+        // Find business in main array by placeId
+        const businessIdx = businesses.findIndex(b => b.placeId === business.placeId);
+        if (businessIdx === -1) continue;
         
-        // Basic check: if website is accessible, mark it
-        if (response.ok) {
-          // Find business in array and update it
-          const idx = businesses.findIndex(b => b.placeId === business.placeId);
-          if (idx !== -1) {
-            businesses[idx].website = business.website; // Confirm website works
+        // Update enrichment fields
+        businesses[businessIdx].seoOptimized = scanResult.accessible && (
+          scanResult.hasMetaDescription && 
+          scanResult.hasH1 && 
+          scanResult.aiReadabilityScore >= 50
+        );
+        
+        businesses[businessIdx].hasAds = scanResult.accessible && (
+          scanResult.pixels.hasFacebookPixel ||
+          scanResult.pixels.hasGoogleAnalytics ||
+          scanResult.pixels.hasGoogleTagManager
+        );
+        
+        businesses[businessIdx].hasSocials = scanResult.hasSocialLinks;
+        
+        businesses[businessIdx].hasBooking = scanResult.booking.hasBookingSystem;
+        
+        businesses[businessIdx].hasChatbot = scanResult.chatbot.hasChatbot;
+        
+        businesses[businessIdx].aiReadable = scanResult.aiReadable;
+        
+        // Log interesting findings
+        if (scanResult.accessible) {
+          const signals = [];
+          if (scanResult.hasStructuredData) signals.push('structured-data');
+          if (scanResult.booking.hasBookingSystem) signals.push(`booking:${scanResult.booking.bookingPlatforms.join(',')}`);
+          if (scanResult.chatbot.hasChatbot) signals.push(`chat:${scanResult.chatbot.chatbotPlatforms.join(',')}`);
+          if (scanResult.tech.cms) signals.push(`cms:${scanResult.tech.cms}`);
+          
+          if (signals.length > 0) {
+            await ctx.log('debug', `${business.name}: ${signals.join(', ')}`);
           }
         }
-      } catch (error) {
-        // Website not accessible or timeout
-        await ctx.log('debug', `Website scan failed for ${business.name}: ${error}`);
       }
-    });
-    
-    await Promise.allSettled(scanPromises);
-    await ctx.log('info', 'Website scanning complete');
+      
+      await ctx.log('info', 'Website enrichment complete');
+    }
     
   } catch (error) {
     await ctx.log('error', 'Apify call failed', { error: String(error) });
