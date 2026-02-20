@@ -124,15 +124,42 @@ impl AgentOS {
         )
     }
 
-    /// Minimal system prompt (2–3 sentences + tools). Use by default to avoid bloat and blocking.
+    /// Minimal system prompt with SOUL personality + tools. Keeps personality while avoiding bloat.
     pub fn build_system_prompt_minimal(&self, tool_registry: &[ToolDefinition]) -> String {
         let tools_section = self.format_tool_registry(tool_registry);
+        
+        // Extract first paragraph of SOUL as personality core (before first ##)
+        let soul_core = self.soul
+            .lines()
+            .skip_while(|l| l.trim().starts_with('#'))
+            .take_while(|l| !l.trim().starts_with('#'))
+            .collect::<Vec<_>>()
+            .join("\n")
+            .trim()
+            .to_string();
+        
+        let personality = if soul_core.is_empty() || soul_core.contains("Not Found") {
+            "You are OneClaw, a helpful AI assistant.".to_string()
+        } else {
+            soul_core
+        };
+        
         format!(
-            r#"You are a helpful assistant with access to tools. When you need to run something (e.g. search, book), use the tool format below. Be concise and direct.
+            r#"{}
 
-# AVAILABLE TOOLS
+## Tool Usage
+
+When you need to execute something (search, book, fetch data), use a ```tool block:
+
+```tool
+{{"tool": "tool-name", "input": {{...}}}}
+```
+
+## Available Tools
 {}
-"#,
+
+Respond naturally. If you use a tool, I'll execute it and you can summarize the results."#,
+            personality,
             tools_section
         )
     }

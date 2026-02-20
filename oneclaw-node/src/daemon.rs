@@ -424,8 +424,10 @@ async fn chat(
         .add_user_message(&user_id, &req.message, &req.channel)
         .await;
 
-    // Build MINIMAL system prompt - just the essentials
-    let tools_section = format_tools(&state.harness_tools);
+    // Build system prompt using Agent OS (SOUL personality + tools)
+    let system_prompt = state.agent_os.build_system_prompt_minimal(&state.harness_tools);
+    
+    // Append local executors if any
     let local_executors: Vec<String> = state
         .executor_registry
         .list()
@@ -433,26 +435,12 @@ async fn chat(
         .filter(|e| e.id != "harness.execute")
         .map(|e| format!("- {}: {}", e.id, e.description))
         .collect();
-    let local_section = if local_executors.is_empty() {
-        String::new()
+    
+    let system_prompt = if local_executors.is_empty() {
+        system_prompt
     } else {
-        format!("\nLocal executors:\n{}", local_executors.join("\n"))
+        format!("{}\n\n### Local Executors\n{}", system_prompt, local_executors.join("\n"))
     };
-    let system_prompt = format!(
-        r#"You are OneClaw, a helpful AI assistant.
-
-If you need to use a tool, output it in a ```tool block:
-```tool
-{{"tool": "tool-name", "input": {{...}}}}
-```
-
-Available tools:
-{}{}
-
-Just respond naturally. If you use a tool, I'll execute it and you can summarize the results."#,
-        tools_section,
-        local_section
-    );
 
     // Build messages
     let messages = state
