@@ -2,7 +2,7 @@ use axum::{extract::State, http::StatusCode, response::Html, routing::{get, post
 use serde::{Deserialize, Serialize};
 use std::sync::Arc;
 use tower_http::cors::CorsLayer;
-use crate::{config, conversation, executor, identity, integration, memory, oauth_config, receipt, store, workflow};
+use crate::{agent_os, config, conversation, executor, identity, integration, memory, monitor, oauth_config, receipt, store, workflow};
 
 pub struct AppState {
     pub config: &'static config::NodeConfig,
@@ -10,6 +10,9 @@ pub struct AppState {
     pub store: Arc<dyn store::Store>,
     pub identity_manager: identity::IdentityManager,
     pub conversation_manager: conversation::ConversationManager,
+    pub agent_os: agent_os::AgentOS,
+    pub harness_tools: Vec<agent_os::ToolDefinition>,
+    pub job_monitor: monitor::JobMonitor,
 }
 
 pub async fn start(port: u16) -> anyhow::Result<()> {
@@ -44,12 +47,79 @@ pub async fn start(port: u16) -> anyhow::Result<()> {
         config.memory.session_max_messages,
     );
     
+    // Load Agent OS (SOUL.md, IDENTITY.md, etc.)
+    let agent_os = agent_os::AgentOS::load(None).unwrap_or_else(|e| {
+        tracing::warn!("Failed to load Agent OS templates: {}", e);
+        agent_os::AgentOS {
+            soul: "You are OneClaw, a helpful AI agent.".to_string(),
+            identity: "".to_string(),
+            skills: "".to_string(),
+            playbooks: "".to_string(),
+            memory: "".to_string(),
+        }
+    });
+    let soul_loaded = !agent_os.soul.is_empty() && !agent_os.soul.contains("Not Found");
+    tracing::info!(
+        "Agent OS: SOUL={} IDENTITY={} SKILLS={} PLAYBOOKS={} MEMORY={}",
+        if soul_loaded { "loaded" } else { "fallback" },
+        if agent_os.identity.contains("Not Found") { "missing" } else { "loaded" },
+        if agent_os.skills.contains("Not Found") { "missing" } else { "loaded" },
+        if agent_os.playbooks.contains("Not Found") { "missing" } else { "loaded" },
+        if agent_os.memory.contains("Not Found") { "missing" } else { "loaded" },
+    );
+    
+    // Fetch tools from harness (run blocking HTTP in spawn_blocking to avoid runtime panic)
+    let harness_url = std::env::var("HARNESS_URL").unwrap_or_else(|_| "http://localhost:9000".to_string());
+    let harness_url_clone = harness_url.clone();
+    let harness_tools = tokio::task::spawn_blocking(move || {
+        match reqwest::blocking::get(format!("{}/tools", harness_url_clone)) {
+            Ok(resp) => {
+                if let Ok(body) = resp.text() {
+                    if let Ok(parsed) = serde_json::from_str::<serde_json::Value>(&body) {
+                        if let Some(tools_arr) = parsed["tools"].as_array() {
+                            tools_arr.iter().filter_map(|t| {
+                                Some(agent_os::ToolDefinition {
+                                    id: t["id"].as_str()?.to_string(),
+                                    description: t["description"].as_str().unwrap_or("").to_string(),
+                                    params_schema: t.get("paramsSchema").cloned(),
+                                    cost_estimate: t["estimatedCostUsd"].as_f64(),
+                                    tier: t["tier"].as_str().map(|s| s.to_string()),
+                                })
+                            }).collect()
+                        } else {
+                            vec![]
+                        }
+                    } else {
+                        vec![]
+                    }
+                } else {
+                    vec![]
+                }
+            }
+            Err(e) => {
+                tracing::warn!("Could not fetch harness tools: {}", e);
+                vec![]
+            }
+        }
+    })
+    .await
+    .unwrap_or_else(|_| vec![]);
+    
+    tracing::info!("Harness URL: {} (set HARNESS_URL to override)", harness_url);
+    tracing::info!("Loaded {} harness tools", harness_tools.len());
+    
+    // Initialize job monitor
+    let job_monitor = monitor::JobMonitor::default();
+    
     let state = Arc::new(AppState { 
         config, 
         executor_registry,
         store: store_instance,
         identity_manager,
         conversation_manager,
+        agent_os,
+        harness_tools,
+        job_monitor,
     });
 
     let app = Router::new()
@@ -75,11 +145,13 @@ pub async fn start(port: u16) -> anyhow::Result<()> {
         .layer(CorsLayer::permissive())
         .with_state(state);
 
+    let harness_url = std::env::var("HARNESS_URL").unwrap_or_else(|_| "http://localhost:9000".to_string());
     println!("\n🦞 OneClaw Node Daemon (Rust)");
     println!("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
     println!("  Node:   {} ({})", config.node.name, config.node.id);
     println!("  Mode:   {}", config.node.environment);
     println!("  UI:     http://localhost:{}", port);
+    println!("  Harness: {} (tools execute here)", harness_url);
     println!("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
     println!("\nPress Ctrl+C to stop\n");
 
@@ -156,6 +228,7 @@ fn default_channel() -> String { "http".to_string() }
 struct ChatResponse {
     response: String,
     tool_calls: Vec<ToolCallResult>,
+    milestones: Vec<String>,
     duration_ms: u64,
 }
 
@@ -167,77 +240,162 @@ struct ToolCallResult {
     duration_ms: u64,
 }
 
-fn get_system_prompt(state: &AppState, user_id: &str) -> String {
-    let executors: Vec<String> = state.executor_registry.list()
-        .iter()
-        .map(|e| format!("- {}: {}", e.id, e.description))
-        .collect();
-    
-    // Check Gmail connection status
-    let control_plane_url = state.config.control_plane.url.as_deref();
-    let gmail_connected = tokio::task::block_in_place(|| {
-        tokio::runtime::Handle::current()
-            .block_on(integration::check_gmail_connected(user_id, control_plane_url))
+fn llm_timeout_secs() -> u64 {
+    std::env::var("LLM_CALL_TIMEOUT_SECS")
+        .ok()
+        .and_then(|v| v.parse::<u64>().ok())
+        .filter(|v| *v >= 5)
+        .unwrap_or(65)
+}
+
+async fn run_llm_with_timeout(
+    state: Arc<AppState>,
+    input: serde_json::Value,
+    phase: &'static str,
+) -> Result<executor::ExecutorResult, String> {
+    let timeout_secs = llm_timeout_secs();
+    let task = tokio::task::spawn_blocking(move || {
+        match state.executor_registry.get("llm.chat") {
+            Some(exec) => exec.execute(input, state.config),
+            None => executor::ExecutorResult::Error { error: "LLM executor not found".to_string() },
+        }
     });
-    
-    let mut prompt = format!(r#"You are OneClaw, a powerful AI assistant running on a local node.
 
-You have access to these tools that you can use by responding with JSON tool calls:
-
-AVAILABLE TOOLS:
-{}
-
-To use a tool, respond with a JSON block like this:
-```tool
-{{"tool": "http.request", "input": {{"method": "GET", "url": "https://api.example.com/data"}}}}
-```
-
-You can make multiple tool calls in one response. After each tool call, you'll receive the result and can continue your response.
-
-When making HTTP requests:
-- Use http.request for any API calls
-- The OneClaw API is at: http://104.131.111.116:3000
-- You have full network access (all domains allowed)
-"#, executors.join("\n"));
-    
-    // Add Gmail integration status
-    if gmail_connected {
-        prompt.push_str(r#"
-GMAIL INTEGRATION: ✅ Connected
-You can send emails using the google.gmail tool:
-```tool
-{"tool": "google.gmail", "input": {"user_id": "USER_ID", "to": "email@example.com", "subject": "Hello", "body": "Email content here"}}
-```
-
-When a user asks to send an email, use this tool to send it.
-"#);
-    } else {
-        prompt.push_str(&format!(r#"
-GMAIL INTEGRATION: ❌ Not Connected
-If the user asks to send an email, respond with:
-
-"I'd love to send that email! However, I need access to your Gmail first.
-
-🔗 Click here to connect: http://localhost:8787/integrations/gmail/connect
-
-This will open Google's secure login page. Once you approve, I'll be able to send emails on your behalf. Your credentials are encrypted and stored locally."
-
-Do NOT attempt to use the google.gmail tool until Gmail is connected.
-"#));
+    match tokio::time::timeout(std::time::Duration::from_secs(timeout_secs), task).await {
+        Ok(joined) => joined.map_err(|e| format!("{} join error: {}", phase, e)),
+        Err(_) => Err(format!("{} timed out after {}s", phase, timeout_secs)),
     }
-    
-    prompt.push_str(&format!(r#"
+}
 
-Be helpful, concise, and actually execute tasks when asked. You are wired into real systems - your tool calls will actually run.
+fn format_tools(tools: &[agent_os::ToolDefinition]) -> String {
+    if tools.is_empty() {
+        return "No tools available.".to_string();
+    }
+    let mut s = String::new();
+    for tool in tools {
+        s.push_str(&format!("- {}: {}\n", tool.id, tool.description));
+    }
+    s
+}
 
-Current node: {} ({})
-Environment: {}"#,
-        state.config.node.name,
-        state.config.node.id,
-        state.config.node.environment
-    ));
-    
-    prompt
+fn extract_content(result: &executor::ExecutorResult) -> String {
+    match result {
+        executor::ExecutorResult::Executed { output, .. } => {
+            output["content"].as_str().unwrap_or("").to_string()
+        }
+        executor::ExecutorResult::Error { error } => format!("Error: {}", error),
+        executor::ExecutorResult::Denied { denial_reason } => format!("Denied: {}", denial_reason.policy),
+    }
+}
+
+async fn execute_tool(
+    state: &Arc<AppState>,
+    tool_name: &str,
+    tool_input: serde_json::Value,
+) -> Option<ToolCallResult> {
+    let state = Arc::clone(state);
+    let tool_name_owned = tool_name.to_string();
+    let tool_input_for_result = tool_input.clone();
+
+    let result = tokio::task::spawn_blocking(move || {
+        state
+            .executor_registry
+            .get(&tool_name_owned)
+            .map(|exec| exec.execute(tool_input, state.config))
+    })
+    .await
+    .ok()
+    .flatten()?;
+
+    match result {
+        executor::ExecutorResult::Executed { output, duration_ms } => Some(ToolCallResult {
+            tool: tool_name.to_string(),
+            input: tool_input_for_result,
+            output,
+            duration_ms,
+        }),
+        executor::ExecutorResult::Error { error } => {
+            tracing::warn!("Tool error: {}", error);
+            Some(ToolCallResult {
+                tool: tool_name.to_string(),
+                input: tool_input_for_result,
+                output: serde_json::json!({ "error": error }),
+                duration_ms: 0,
+            })
+        }
+        executor::ExecutorResult::Denied { denial_reason } => Some(ToolCallResult {
+            tool: tool_name.to_string(),
+            input: tool_input_for_result,
+            output: serde_json::json!({ "denied": denial_reason.policy }),
+            duration_ms: 0,
+        }),
+    }
+}
+
+async fn find_and_execute_tools(
+    state: &Arc<AppState>,
+    content: &str,
+    messages: &[serde_json::Value],
+) -> Vec<ToolCallResult> {
+    let _ = messages;
+    let mut results = Vec::new();
+    let tool_regex = regex::Regex::new(
+        r"```tool\s*\n?([\s\S]*?)\n?```|<tool>\s*([\s\S]*?)\s*</tool>",
+    )
+    .unwrap();
+
+    for cap in tool_regex.captures_iter(content) {
+        let tool_json = match cap.get(1).or_else(|| cap.get(2)) {
+            Some(m) => m.as_str(),
+            None => continue,
+        };
+        let tool_call: serde_json::Value = match serde_json::from_str(tool_json)
+            .or_else(|_| json5::from_str(tool_json))
+        {
+            Ok(v) => v,
+            Err(_) => continue,
+        };
+        let tool_name = match tool_call["tool"].as_str() {
+            Some(s) => s,
+            None => continue,
+        };
+        let tool_input = tool_call["input"].clone();
+        tracing::info!("Executing tool: {}", tool_name);
+        if let Some(result) = execute_tool(state, tool_name, tool_input).await {
+            results.push(result);
+        }
+    }
+    results
+}
+
+async fn get_followup_response(
+    state: &Arc<AppState>,
+    messages: &[serde_json::Value],
+    tool_results: &[ToolCallResult],
+) -> String {
+    let mut new_messages = messages.to_vec();
+    for result in tool_results {
+        let result_msg = format!(
+            "[Tool Result: {}]\n{}",
+            result.tool,
+            serde_json::to_string_pretty(&result.output).unwrap_or_default()
+        );
+        new_messages.push(serde_json::json!({
+            "role": "system",
+            "content": result_msg
+        }));
+    }
+    new_messages.push(serde_json::json!({
+        "role": "user",
+        "content": "Summarize these results for the user in plain language. No tool blocks."
+    }));
+    let input = serde_json::json!({ "messages": new_messages });
+    match run_llm_with_timeout(Arc::clone(state), input, "followup").await {
+        Ok(executor::ExecutorResult::Executed { output, .. }) => {
+            output["content"].as_str().unwrap_or("").to_string()
+        }
+        _ => "Tool executed but could not generate summary.".to_string(),
+    }
 }
 
 async fn chat(
@@ -245,169 +403,111 @@ async fn chat(
     Json(req): Json<ChatRequest>,
 ) -> Result<Json<ChatResponse>, (StatusCode, String)> {
     let start = std::time::Instant::now();
-    let mut tool_call_results: Vec<ToolCallResult> = Vec::new();
-    
+    let milestones = vec!["Received your message".to_string()];
+
+    let msg_preview = req.message.chars().take(60).collect::<String>();
+    tracing::info!("Chat: \"{}\"", msg_preview);
+
     // Resolve user identity
     let provider = req.provider.as_deref().unwrap_or("http");
     let provider_id = req.provider_id.as_deref().unwrap_or("anonymous");
-    let username = req.username.as_deref();
-    
-    let (user_id, is_new) = state.identity_manager
-        .resolve(provider, provider_id, username)
+
+    let (user_id, _) = state
+        .identity_manager
+        .resolve(provider, provider_id, req.username.as_deref())
         .await
         .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
-    
-    if is_new {
-        tracing::info!(user_id = %user_id, provider = %provider, "New user created");
-    }
-    
-    // Add user message to persistent conversation
-    state.conversation_manager
+
+    // Store user message
+    let _ = state
+        .conversation_manager
         .add_user_message(&user_id, &req.message, &req.channel)
-        .await
-        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
-    
-    // Build messages array for LLM with integration-aware system prompt
-    let system_prompt = get_system_prompt(&state, &user_id);
-    let messages = state.conversation_manager
+        .await;
+
+    // Build MINIMAL system prompt - just the essentials
+    let tools_section = format_tools(&state.harness_tools);
+    let local_executors: Vec<String> = state
+        .executor_registry
+        .list()
+        .iter()
+        .filter(|e| e.id != "harness.execute")
+        .map(|e| format!("- {}: {}", e.id, e.description))
+        .collect();
+    let local_section = if local_executors.is_empty() {
+        String::new()
+    } else {
+        format!("\nLocal executors:\n{}", local_executors.join("\n"))
+    };
+    let system_prompt = format!(
+        r#"You are OneClaw, a helpful AI assistant.
+
+If you need to use a tool, output it in a ```tool block:
+```tool
+{{"tool": "tool-name", "input": {{...}}}}
+```
+
+Available tools:
+{}{}
+
+Just respond naturally. If you use a tool, I'll execute it and you can summarize the results."#,
+        tools_section,
+        local_section
+    );
+
+    // Build messages
+    let messages = state
+        .conversation_manager
         .build_llm_messages(&user_id, &system_prompt)
         .await
         .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
-    
-    // Call LLM executor
-    let llm_executor = state.executor_registry.get("llm.chat")
-        .ok_or((StatusCode::INTERNAL_SERVER_ERROR, "LLM executor not found".to_string()))?;
-    
+
+    // Call LLM
+    tracing::info!("Calling LLM...");
     let input = serde_json::json!({ "messages": messages });
-    let result = llm_executor.execute(input, state.config);
-    
-    let mut final_content = String::new();
-    
-    match result {
-        executor::ExecutorResult::Executed { output, duration_ms: _ } => {
-            let content = output["content"].as_str().unwrap_or("").to_string();
-            
-            // Check for tool calls in the response
-            let tool_regex = regex::Regex::new(r"```tool\s*\n?([\s\S]*?)\n?```").unwrap();
-            let mut remaining_content = content.clone();
-            
-            for cap in tool_regex.captures_iter(&content) {
-                let tool_json = &cap[1];
-                
-                // Parse tool call
-                if let Ok(tool_call) = serde_json::from_str::<serde_json::Value>(tool_json) {
-                    let tool_name = tool_call["tool"].as_str().unwrap_or("");
-                    let tool_input = tool_call["input"].clone();
-                    
-                    // Execute the tool
-                    if let Some(executor) = state.executor_registry.get(tool_name) {
-                        let tool_start = std::time::Instant::now();
-                        let tool_result = executor.execute(tool_input.clone(), state.config);
-                        
-                        match tool_result {
-                            executor::ExecutorResult::Executed { output, duration_ms } => {
-                                tool_call_results.push(ToolCallResult {
-                                    tool: tool_name.to_string(),
-                                    input: tool_input,
-                                    output: output.clone(),
-                                    duration_ms,
-                                });
-                                
-                                // Add tool result to conversation for follow-up
-                                let tool_result_msg = format!(
-                                    "[Tool Result: {}]\n{}",
-                                    tool_name,
-                                    serde_json::to_string_pretty(&output).unwrap_or_default()
-                                );
-                                
-                                // Record tool execution in persistent store
-                                let _ = state.conversation_manager
-                                    .add_assistant_message(&user_id, &format!("Executing {}...", tool_name), &req.channel, None)
-                                    .await;
-                                let _ = state.conversation_manager
-                                    .add_tool_message(&user_id, &tool_result_msg, &req.channel)
-                                    .await;
-                            }
-                            executor::ExecutorResult::Error { error } => {
-                                tool_call_results.push(ToolCallResult {
-                                    tool: tool_name.to_string(),
-                                    input: tool_input,
-                                    output: serde_json::json!({"error": error}),
-                                    duration_ms: tool_start.elapsed().as_millis() as u64,
-                                });
-                            }
-                            executor::ExecutorResult::Denied { denial_reason } => {
-                                tool_call_results.push(ToolCallResult {
-                                    tool: tool_name.to_string(),
-                                    input: tool_input,
-                                    output: serde_json::json!({"denied": denial_reason.policy}),
-                                    duration_ms: 0,
-                                });
-                            }
-                        }
-                    }
-                }
-                
-                // Remove tool block from visible content
-                remaining_content = remaining_content.replace(&cap[0], "");
-            }
-            
-            // Clean up the response
-            final_content = remaining_content.trim().to_string();
-            
-            // If we executed tools, get a follow-up response
-            if !tool_call_results.is_empty() {
-                // Rebuild messages with tool results from persistent store
-                let mut followup_messages = state.conversation_manager
-                    .build_llm_messages(&user_id, &system_prompt)
-                    .await
-                    .unwrap_or_else(|_| messages.clone());
-                
-                followup_messages.push(serde_json::json!({
-                    "role": "user",
-                    "content": "Now summarize the result for the user in a helpful way. Do NOT include any ```tool blocks - the tool has already been executed. Just explain what happened in plain text."
-                }));
-                
-                let followup_input = serde_json::json!({ "messages": followup_messages });
-                if let executor::ExecutorResult::Executed { output, .. } = llm_executor.execute(followup_input, state.config) {
-                    let mut followup_content = output["content"].as_str().unwrap_or(&final_content).to_string();
-                    // Strip any remaining tool blocks from follow-up
-                    let tool_regex = regex::Regex::new(r"```tool\s*\n?([\s\S]*?)\n?```").unwrap();
-                    followup_content = tool_regex.replace_all(&followup_content, "").to_string();
-                    final_content = followup_content.trim().to_string();
-                }
-            }
-            
-            // Add final response to persistent conversation
-            let tool_calls_for_storage: Option<Vec<conversation::ToolCall>> = if tool_call_results.is_empty() {
-                None
-            } else {
-                Some(tool_call_results.iter().map(|tc| conversation::ToolCall {
-                    tool: tc.tool.clone(),
-                    input: tc.input.clone(),
-                    output: Some(tc.output.clone()),
-                    success: !tc.output.get("error").is_some(),
-                    duration_ms: tc.duration_ms,
-                }).collect())
-            };
-            
-            let _ = state.conversation_manager
-                .add_assistant_message(&user_id, &final_content, &req.channel, tool_calls_for_storage.as_deref())
+    let result = run_llm_with_timeout(Arc::clone(&state), input, "main")
+        .await
+        .map_err(|e| (StatusCode::GATEWAY_TIMEOUT, e))?;
+
+    let content = extract_content(&result);
+    let tool_results = find_and_execute_tools(&state, &content, &messages).await;
+
+    // Get final response
+    let final_content = if tool_results.is_empty() {
+        content
+    } else {
+        for result in &tool_results {
+            let _ = state
+                .conversation_manager
+                .add_tool_message(
+                    &user_id,
+                    &format!("[{} result]", result.tool),
+                    &req.channel,
+                )
                 .await;
-            
-            Ok(Json(ChatResponse {
-                response: final_content,
-                tool_calls: tool_call_results,
-                duration_ms: start.elapsed().as_millis() as u64,
-            }))
         }
-        executor::ExecutorResult::Error { error } => {
-            Err((StatusCode::INTERNAL_SERVER_ERROR, error))
-        }
-        executor::ExecutorResult::Denied { denial_reason } => {
-            Err((StatusCode::FORBIDDEN, denial_reason.policy))
-        }
-    }
+        get_followup_response(&state, &messages, &tool_results).await
+    };
+
+    let final_content = if final_content.trim().is_empty() {
+        "I didn't get a response. Try again?".to_string()
+    } else {
+        final_content
+    };
+
+    let _ = state
+        .conversation_manager
+        .add_assistant_message(&user_id, &final_content, &req.channel, None)
+        .await;
+
+    let duration_ms = start.elapsed().as_millis() as u64;
+    tracing::info!("Chat done in {}ms ({} tools)", duration_ms, tool_results.len());
+
+    Ok(Json(ChatResponse {
+        response: final_content,
+        tool_calls: tool_results,
+        milestones,
+        duration_ms,
+    }))
 }
 
 #[derive(Deserialize)]

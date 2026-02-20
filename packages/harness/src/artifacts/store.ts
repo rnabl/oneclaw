@@ -173,7 +173,11 @@ export class ArtifactStore {
     this.artifacts.set(jobId, jobArtifacts);
     this.jobSizes.set(jobId, currentSize + sizeBytes);
     
-    console.log(`[Artifacts] Stored ${type} for step ${stepIndex}: ${sizeBytes} bytes`);
+    // Avoid terminal spam for per-log artifact writes unless explicitly enabled.
+    const verboseArtifacts = process.env.ARTIFACT_VERBOSE === 'true';
+    if (type !== 'log' || verboseArtifacts) {
+      console.log(`[Artifacts] Stored ${type} for step ${stepIndex}: ${sizeBytes} bytes`);
+    }
     return artifact;
   }
 

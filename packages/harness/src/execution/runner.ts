@@ -22,6 +22,14 @@ import { artifactStore } from '../artifacts';
 
 export type JobStatus = 'pending' | 'running' | 'completed' | 'failed' | 'cancelled';
 
+export interface JobLog {
+  timestamp: Date;
+  level: 'debug' | 'info' | 'warn' | 'error';
+  message: string;
+  step?: string;
+  data?: Record<string, unknown>;
+}
+
 export interface Job {
   id: string;
   tenantId: string;
@@ -37,6 +45,12 @@ export interface Job {
   currentStep: number;
   totalSteps: number;
   stepName?: string;
+  
+  // Real-time logging
+  logs: JobLog[];
+  
+  // Method switching
+  currentMethod?: string;
   
   // Timing
   createdAt: Date;
@@ -144,6 +158,7 @@ export class ExecutionRunner {
       input: validationResult.data as Record<string, unknown>,
       currentStep: 0,
       totalSteps: 1,  // Will be updated by workflow
+      logs: [],
       createdAt: new Date(),
       estimatedCostUsd: tool.estimatedCostUsd,
       actualCostUsd: 0,
@@ -285,6 +300,15 @@ export class ExecutionRunner {
       secrets,
       
       log: async (level, message, data) => {
+        // Keep an in-memory stream of progress logs for API/SSE consumers.
+        this.addLog(job.id, level, message, job.stepName, data);
+        
+        // Human-readable progress in terminal (avoid debug flood).
+        if (level !== 'debug') {
+          const step = job.stepName || `step-${job.currentStep}`;
+          console.log(`[Progress][${job.id}][${step}] ${level.toUpperCase()}: ${message}`);
+        }
+
         await artifactStore.storeLog(
           job.id,
           job.currentStep,
@@ -323,6 +347,57 @@ export class ExecutionRunner {
       job.stepName = stepName;
       if (totalSteps) job.totalSteps = totalSteps;
     }
+  }
+
+  /**
+   * Add log entry to job (for real-time monitoring)
+   */
+  addLog(jobId: string, level: 'debug' | 'info' | 'warn' | 'error', message: string, step?: string, data?: Record<string, unknown>): void {
+    const job = this.jobs.get(jobId);
+    if (job) {
+      job.logs.push({
+        timestamp: new Date(),
+        level,
+        message,
+        step,
+        data,
+      });
+      
+      // Keep logs bounded (last 500 entries)
+      if (job.logs.length > 500) {
+        job.logs = job.logs.slice(-500);
+      }
+    }
+  }
+
+  /**
+   * Get logs since a timestamp (for SSE streaming)
+   */
+  getLogsSince(jobId: string, since: Date): JobLog[] {
+    const job = this.jobs.get(jobId);
+    if (!job) return [];
+    return job.logs.filter(log => log.timestamp > since);
+  }
+
+  /**
+   * Switch method for a running job
+   */
+  switchMethod(jobId: string, newMethod: string, reason: string): boolean {
+    const job = this.jobs.get(jobId);
+    if (job && job.status === 'running') {
+      job.currentMethod = newMethod;
+      this.addLog(jobId, 'warn', `Switching method: ${reason}`, job.stepName, { newMethod });
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Get current method for a job
+   */
+  getCurrentMethod(jobId: string): string | undefined {
+    const job = this.jobs.get(jobId);
+    return job?.currentMethod;
   }
 
   /**

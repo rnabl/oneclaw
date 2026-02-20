@@ -46,6 +46,7 @@ import type { StepContext } from '../execution/runner';
 import { runner } from '../execution/runner';
 import { z } from 'zod';
 import { chromium } from 'playwright';
+import { GeminiVision } from '../utils/gemini-vision';
 
 // =============================================================================
 // SCHEMAS
@@ -57,7 +58,14 @@ const GolfBookingInput = z.object({
   timeRange: z.string(), // "9:00-10:00" or "9-10AM"
   partySize: z.number().default(4),
   maxCourses: z.number().default(10),
-  method: z.enum(['golfnow_api', 'brave_playwright_hybrid', 'brave_playwright_sequential', 'auto']).default('auto'),
+  method: z.enum(['golfnow_api', 'brave_playwright_hybrid', 'brave_playwright_sequential', 'vision', 'auto']).default('auto'),
+  useVision: z.boolean().default(false), // Enable Gemini Vision for iframe/widget handling
+  executionPolicy: z.object({
+    scopeMode: z.enum(['single_target', 'multi_target']).default('multi_target'),
+    allowExpansion: z.boolean().default(true),
+    maxTargets: z.number().min(1).max(50).default(10),
+    targetHint: z.string().optional(),
+  }).optional(),
 });
 
 type GolfBookingInput = z.infer<typeof GolfBookingInput>;
@@ -258,7 +266,8 @@ async function searchViaGolfNowAPI(
 async function searchViaBravePlaywright(
   ctx: StepContext,
   params: { location: string; date: Date; startHour: number; endHour: number; partySize: number; maxCourses: number },
-  mode: 'hybrid' | 'sequential'
+  mode: 'hybrid' | 'sequential',
+  useVision: boolean = false
 ): Promise<TeeTime[]> {
   
   // STEP 2a: Discovery via Brave Search (like Googling)
@@ -268,6 +277,10 @@ async function searchViaBravePlaywright(
   
   await ctx.log('info', `Found ${courses.length} golf courses via Brave Search`);
   
+  if (useVision) {
+    await ctx.log('info', `🤖 Vision mode enabled - will use Gemini Flash for intelligent navigation`);
+  }
+  
   // STEP 2b: Scrape each course website with Playwright
   if (mode === 'hybrid') {
     return await scrapeTeeTimesHybrid(ctx, courses, { 
@@ -275,14 +288,14 @@ async function searchViaBravePlaywright(
       startHour: params.startHour, 
       endHour: params.endHour, 
       partySize: params.partySize 
-    });
+    }, useVision);
   } else {
     return await scrapeTeeTimesSequential(ctx, courses, { 
       date: params.date, 
       startHour: params.startHour, 
       endHour: params.endHour, 
       partySize: params.partySize 
-    });
+    }, useVision);
   }
 }
 
@@ -367,7 +380,8 @@ async function discoverCoursesViaBrave(
 async function scrapeTeeTimesHybrid(
   ctx: StepContext,
   courses: CourseInfo[],
-  criteria: { date: Date; startHour: number; endHour: number; partySize: number }
+  criteria: { date: Date; startHour: number; endHour: number; partySize: number },
+  useVision: boolean = false
 ): Promise<TeeTime[]> {
   await ctx.log('info', `Visiting ${courses.length} course websites in parallel (hybrid method)...`);
   
@@ -378,7 +392,7 @@ async function scrapeTeeTimesHybrid(
   const promises = courses.map(async (course, index) => {
     try {
       // This would use real Playwright executor
-      const times = await scrapeCourseWithBrowser(ctx, course, criteria);
+      const times = await scrapeCourseWithBrowser(ctx, course, criteria, useVision);
       
       completed++;
       
@@ -409,7 +423,8 @@ async function scrapeTeeTimesHybrid(
 async function scrapeTeeTimesSequential(
   ctx: StepContext,
   courses: CourseInfo[],
-  criteria: { date: Date; startHour: number; endHour: number; partySize: number }
+  criteria: { date: Date; startHour: number; endHour: number; partySize: number },
+  useVision: boolean = false
 ): Promise<TeeTime[]> {
   await ctx.log('info', `Visiting ${courses.length} course websites sequentially (full logging)...`);
   
@@ -421,7 +436,7 @@ async function scrapeTeeTimesSequential(
     await ctx.log('info', `🔄 Checking ${i+1}/${courses.length}: ${course.name}...`);
     
     try {
-      const times = await scrapeCourseWithBrowser(ctx, course, criteria);
+      const times = await scrapeCourseWithBrowser(ctx, course, criteria, useVision);
       
       if (times.length > 0) {
         await ctx.log('info', `✅ Found ${times.length} available times`);
@@ -439,98 +454,537 @@ async function scrapeTeeTimesSequential(
 }
 
 // =============================================================================
-// BROWSER SCRAPING LOGIC (Real Playwright Implementation)
+// BROWSER SCRAPING LOGIC (Hybrid: Universal Patterns + LLM Fallback)
 // =============================================================================
 
 async function scrapeCourseWithBrowser(
   ctx: StepContext,
   course: CourseInfo,
-  criteria: { date: Date; startHour: number; endHour: number; partySize: number }
+  criteria: { date: Date; startHour: number; endHour: number; partySize: number },
+  useVision: boolean = false
 ): Promise<TeeTime[]> {
   
-  await ctx.log('debug', `Opening ${course.website} in browser...`);
+  await ctx.log('debug', `🌐 Opening ${course.website} in browser...`);
   
-  const browser = await chromium.launch({ headless: true });
-  const page = await browser.newPage();
+  // Initialize Gemini Vision if enabled
+  let vision: GeminiVision | null = null;
+  if (useVision) {
+    const geminiKey = ctx.secrets['google_api_key'] || process.env.GOOGLE_API_KEY;
+    if (geminiKey) {
+      vision = new GeminiVision(geminiKey);
+      await ctx.log('debug', `🤖 Gemini Vision enabled for intelligent navigation`);
+    } else {
+      await ctx.log('debug', `⚠️  Vision requested but no GOOGLE_API_KEY found, falling back to text mode`);
+    }
+  }
+  
+  // Launch with anti-detection measures
+  const browser = await chromium.launch({ 
+    headless: true,
+    args: [
+      '--disable-blink-features=AutomationControlled',
+      '--disable-dev-shm-usage',
+      '--no-sandbox',
+    ],
+  });
+  
+  const context = await browser.newContext({
+    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    viewport: { width: 1920, height: 1080 },
+    locale: 'en-US',
+    timezoneId: 'America/Denver',
+  });
+  
+  const page = await context.newPage();
   
   try {
-    // Navigate to course website
+    // Step 1: Navigate to course website (HUMAN THINKING: Wait for page to fully load)
+    await ctx.log('debug', `📡 Navigating to ${course.website}...`);
     await page.goto(course.website, { 
-      timeout: 10000,
-      waitUntil: 'domcontentloaded' 
+      timeout: 30000,  // 30 seconds - be patient!
+      waitUntil: 'networkidle'  // Wait until network is idle
     });
     
-    await ctx.log('debug', `Loaded ${course.name} website`);
+    await ctx.log('debug', `✅ Page loaded, waiting for content to appear...`);
     
-    // Look for booking button (human-thinking: "Where's the Book button?")
-    const bookingSelectors = [
-      'text=/book.*tee.*time/i',
-      'text=/reservations/i',
-      'text=/book.*now/i',
-      'a[href*="booking"]',
-      'a[href*="teetimes"]',
-      'a[href*="reserve"]',
-    ];
+    // HUMAN THINKING: Wait a few seconds for any dynamic content to load
+    await page.waitForTimeout(3000);
+    await page.waitForLoadState('domcontentloaded');
     
-    let bookingUrl: string | null = null;
-    
-    for (const selector of bookingSelectors) {
-      try {
-        const element = await page.locator(selector).first();
-        if (await element.count() > 0) {
-          bookingUrl = await element.getAttribute('href');
-          await ctx.log('debug', `Found booking link: ${selector}`);
-          break;
-        }
-      } catch {
-        continue;
-      }
-    }
+    // Step 2: Find booking page or iframe
+    await ctx.log('debug', `🔍 Looking for booking page or tee time widget...`);
+    const bookingUrl = await findBookingPage(page, course.website);
     
     if (!bookingUrl) {
-      await ctx.log('debug', `No booking button found on ${course.name}`);
+      await ctx.log('debug', `❌ No booking page found on ${course.name}`);
       return [];
     }
     
-    // Navigate to booking page
-    const fullBookingUrl = bookingUrl.startsWith('http') 
-      ? bookingUrl 
-      : new URL(bookingUrl, course.website).href;
-    
-    await page.goto(fullBookingUrl, { 
-      timeout: 10000,
-      waitUntil: 'domcontentloaded' 
-    });
-    
-    await ctx.log('debug', `Navigated to booking page: ${fullBookingUrl}`);
-    
-    // Extract tee times (look for time slots, prices, availability)
-    const timeSlots = await page.$$eval('[class*="time"], [class*="slot"], [class*="available"]', (elements) => {
-      return elements.map(el => ({
-        text: el.textContent?.trim() || '',
-        html: el.innerHTML,
-      }));
-    }).catch(() => []);
-    
-    await ctx.log('debug', `Found ${timeSlots.length} potential time slot elements`);
-    
-    // Parse time slots with LLM-like logic (regex for now)
-    const times: TeeTime[] = [];
-    
-    for (const slot of timeSlots) {
-      // Look for time patterns: "9:30 AM", "9:30AM", "0930"
-      const timeMatch = slot.text.match(/(\d{1,2}):?(\d{2})?\s*(AM|PM)?/i);
-      if (!timeMatch) continue;
+    if (bookingUrl !== page.url()) {
+      await ctx.log('debug', `🔗 Found booking page: ${bookingUrl}`);
+      await page.goto(bookingUrl, { 
+        timeout: 30000,
+        waitUntil: 'networkidle' 
+      });
       
-      const hour = parseInt(timeMatch[1], 10);
+      // HUMAN THINKING: Wait for booking widget to load
+      await ctx.log('debug', `⏳ Waiting for booking widget to load...`);
+      await page.waitForTimeout(5000);  // 5 seconds for widget
+      await page.waitForLoadState('domcontentloaded');
+    }
+    
+    // Step 3: Check for iframes (many booking widgets use them)
+    await ctx.log('debug', `🔍 Checking for iframes...`);
+    const frames = page.frames();
+    await ctx.log('debug', `Found ${frames.length} frames on page`);
+    
+    // === VISION-ENHANCED PATH ===
+    if (vision) {
+      await ctx.log('debug', `🤖 Using Gemini Vision for intelligent navigation...`);
+      
+      // Take initial screenshot
+      const screenshot1 = await page.screenshot({ fullPage: false });
+      await ctx.log('debug', `📸 Screenshot 1 captured`);
+      
+      // Ask Gemini what it sees
+      const analysis1 = await vision.analyzeAndDecide(
+        screenshot1,
+        `Find and interact with the date picker to select ${criteria.date.toDateString()} for ${criteria.partySize} players`
+      );
+      
+      await ctx.log('debug', `🤖 Gemini sees: ${analysis1.description}`);
+      
+      if (analysis1.suggestedAction && analysis1.suggestedAction.type === 'click' && analysis1.suggestedAction.coordinates) {
+        await ctx.log('debug', `🖱️  Clicking at (${analysis1.suggestedAction.coordinates.x}, ${analysis1.suggestedAction.coordinates.y})...`);
+        
+        try {
+          await page.mouse.click(analysis1.suggestedAction.coordinates.x, analysis1.suggestedAction.coordinates.y);
+          await page.waitForTimeout(3000); // Wait for interaction result
+          
+          // Take another screenshot after click
+          const screenshot2 = await page.screenshot({ fullPage: false });
+          await ctx.log('debug', `📸 Screenshot 2 captured after click`);
+          
+          // Ask Gemini to find date/time selection
+          const analysis2 = await vision.analyzeAndDecide(
+            screenshot2,
+            `Select date ${criteria.date.toDateString()} and look for available tee times between ${criteria.startHour}:00 and ${criteria.endHour}:00`
+          );
+          
+          await ctx.log('debug', `🤖 After click, Gemini sees: ${analysis2.description}`);
+          
+          if (analysis2.suggestedAction && analysis2.suggestedAction.coordinates) {
+            await page.mouse.click(analysis2.suggestedAction.coordinates.x, analysis2.suggestedAction.coordinates.y);
+            await page.waitForTimeout(5000); // Wait for times to load
+          }
+          
+        } catch (error) {
+          await ctx.log('debug', `⚠️  Click failed: ${error}`);
+        }
+      }
+      
+      // Final screenshot to extract times
+      const finalScreenshot = await page.screenshot({ fullPage: true });
+      await ctx.log('debug', `📸 Final screenshot captured, extracting tee times...`);
+      
+      const visionTimes = await vision.extractTeeTimes(finalScreenshot, {
+        date: criteria.date.toISOString().split('T')[0],
+        startHour: criteria.startHour,
+        endHour: criteria.endHour,
+        partySize: criteria.partySize,
+      });
+      
+      await ctx.log('debug', `🤖 Gemini extracted ${visionTimes.times.length} times (confidence: ${visionTimes.confidence})`);
+      
+      if (visionTimes.times.length > 0) {
+        return visionTimes.times.map(t => ({
+          course,
+          time: t.time,
+          date: criteria.date.toISOString().split('T')[0],
+          players: t.players || criteria.partySize,
+          price: t.price ? parseFloat(t.price.replace(/[^0-9.]/g, '')) : undefined,
+          bookingUrl: page.url(),
+          availability: t.available ? 'likely' : 'unknown',
+        }));
+      }
+    }
+    
+    // === FALLBACK TO TEXT EXTRACTION ===
+    await ctx.log('debug', `🔍 Vision didn't find times, trying text extraction...`);
+    
+    // Step 4: Interact with date picker (UNIVERSAL PATTERNS)
+    await ctx.log('debug', `📅 Attempting to set date to ${criteria.date.toDateString()}...`);
+    const dateSet = await setDateUniversal(page, criteria.date, ctx);
+    
+    if (!dateSet) {
+      await ctx.log('debug', `⚠️  Could not set date with universal patterns`);
+      // Don't give up yet - maybe times are already visible
+    } else {
+      await ctx.log('debug', `✅ Successfully set date!`);
+      
+      // HUMAN THINKING: Wait for times to refresh after date change
+      await ctx.log('debug', `⏳ Waiting for tee times to load...`);
+      await page.waitForTimeout(8000);  // 8 seconds for times to appear
+    }
+    
+    // Step 5: Set party size
+    await ctx.log('debug', `👥 Attempting to set party size to ${criteria.partySize}...`);
+    await setPartySizeUniversal(page, criteria.partySize, ctx);
+    
+    // HUMAN THINKING: Wait for times to refresh after party size change
+    await page.waitForTimeout(3000);
+    
+    // Step 6: Extract tee times
+    await ctx.log('debug', `⛳ Extracting tee times from page...`);
+    const times = await extractTeeTimesUniversal(page, course, criteria, ctx);
+    
+    await ctx.log('debug', `✅ Extracted ${times.length} tee times in range`);
+    
+    return times;
+    
+  } catch (error) {
+    await ctx.log('debug', `❌ Failed to scrape ${course.name}: ${error}`);
+    return [];
+  } finally {
+    await browser.close();
+  }
+}
+
+// =============================================================================
+// UNIVERSAL PATTERN HELPERS
+// =============================================================================
+
+async function findBookingPage(page: any, baseUrl: string): Promise<string | null> {
+  const bookingSelectors = [
+    'text=/book.*tee.*time/i',
+    'text=/reservations/i',
+    'text=/book.*now/i',
+    'text=/tee.*times/i',
+    'a[href*="booking"]',
+    'a[href*="teetimes"]',
+    'a[href*="tee-times"]',
+    'a[href*="reserve"]',
+    'a[href*="book"]',
+    'a[href*="/teetimes"]',  // Added for Riverdale-style URLs
+  ];
+  
+  for (const selector of bookingSelectors) {
+    try {
+      const element = await page.locator(selector).first();
+      if (await element.count() > 0) {
+        const href = await element.getAttribute('href');
+        if (href) {
+          return href.startsWith('http') ? href : new URL(href, baseUrl).href;
+        }
+      }
+    } catch {
+      continue;
+    }
+  }
+  
+  // If no button found, maybe we're already on the booking page
+  return page.url();
+}
+
+async function setDateUniversal(
+  page: any, 
+  date: Date, 
+  ctx: StepContext
+): Promise<boolean> {
+  const dateString = date.toISOString().split('T')[0]; // "2026-02-26"
+  const dayOfMonth = date.getDate(); // 26
+  
+  // Try Method 1: HTML5 date input
+  const dateInputSelectors = [
+    'input[type="date"]',
+    'input[name*="date" i]',
+    'input[id*="date" i]',
+    'input[placeholder*="date" i]',
+  ];
+  
+  for (const selector of dateInputSelectors) {
+    try {
+      const input = page.locator(selector).first();
+      if (await input.count() > 0) {
+        await input.fill(dateString);
+        await ctx.log('debug', `Set date via input: ${selector}`);
+        return true;
+      }
+    } catch {
+      continue;
+    }
+  }
+  
+  // Try Method 2: Click date picker, then select date
+  const datePickerSelectors = [
+    '[class*="datepicker"]',
+    '[class*="date-picker"]',
+    '[aria-label*="date" i]',
+    '[data-testid*="date"]',
+    'button:has-text("Select Date")',
+    'text=/select.*date/i',
+  ];
+  
+  for (const selector of datePickerSelectors) {
+    try {
+      const picker = page.locator(selector).first();
+      if (await picker.count() > 0) {
+        // Click to open
+        await picker.click();
+        await page.waitForTimeout(500);
+        
+        // Try to find the day
+        const daySelectors = [
+          `[aria-label*="February ${dayOfMonth}"]`,
+          `[aria-label*="26"]`,
+          `button:has-text("${dayOfMonth}")`,
+          `td:has-text("${dayOfMonth}")`,
+          `.day:has-text("${dayOfMonth}")`,
+        ];
+        
+        for (const daySelector of daySelectors) {
+          try {
+            const dayButton = page.locator(daySelector).first();
+            if (await dayButton.count() > 0) {
+              await dayButton.click();
+              await ctx.log('debug', `Clicked date: ${dayOfMonth}`);
+              return true;
+            }
+          } catch {
+            continue;
+          }
+        }
+      }
+    } catch {
+      continue;
+    }
+  }
+  
+  return false;
+}
+
+async function setPartySizeUniversal(
+  page: any,
+  partySize: number,
+  ctx: StepContext
+): Promise<boolean> {
+  const selectors = [
+    `select[name*="player" i]`,
+    `select[name*="party" i]`,
+    `select[name*="guest" i]`,
+    `input[name*="player" i]`,
+    `[aria-label*="players" i]`,
+  ];
+  
+  for (const selector of selectors) {
+    try {
+      const element = page.locator(selector).first();
+      if (await element.count() > 0) {
+        const tagName = await element.evaluate((el: any) => el.tagName.toLowerCase());
+        
+        if (tagName === 'select') {
+          await element.selectOption({ value: partySize.toString() });
+        } else if (tagName === 'input') {
+          await element.fill(partySize.toString());
+        }
+        
+        await ctx.log('debug', `Set party size: ${partySize}`);
+        return true;
+      }
+    } catch {
+      continue;
+    }
+  }
+  
+  return false;
+}
+
+async function extractTeeTimesUniversal(
+  page: any,
+  course: CourseInfo,
+  criteria: { date: Date; startHour: number; endHour: number; partySize: number },
+  ctx: StepContext
+): Promise<TeeTime[]> {
+  
+  // Try common time slot selectors (expanded list)
+  const timeSlotSelectors = [
+    // Golf Channel Solutions specific (like Riverdale)
+    'iframe[src*="golfchannelsolutions"]',
+    'iframe[src*="teeitup"]',
+    'iframe[src*="teesheet"]',
+    
+    // Common booking widget classes
+    '[class*="time-slot"]',
+    '[class*="tee-time"]',
+    '[class*="teetime"]',
+    '[class*="available"]',
+    '[class*="booking"]',
+    '[data-time]',
+    '[data-slot]',
+    
+    // Button/link patterns
+    'button:has-text("AM")',
+    'button:has-text("PM")',
+    'a:has-text("AM")',
+    'a:has-text("PM")',
+    
+    // Generic classes
+    '.time',
+    '.slot',
+    '.times',
+    '.availability',
+    
+    // Table cells (some sites use tables)
+    'td:has-text("AM")',
+    'td:has-text("PM")',
+    
+    // Divs with time text
+    'div:has-text(":")',
+  ];
+  
+  let timeElements: any[] = [];
+  
+  await ctx.log('debug', `🔍 Trying ${timeSlotSelectors.length} different selectors...`);
+  
+  for (const selector of timeSlotSelectors) {
+    try {
+      const elements = await page.locator(selector).all();
+      if (elements.length > 0) {
+        timeElements = elements;
+        await ctx.log('debug', `✅ Found ${elements.length} time elements with: ${selector}`);
+        break;
+      }
+    } catch {
+      continue;
+    }
+  }
+  
+  // If no elements found on main page, try iframes
+  if (timeElements.length === 0) {
+    await ctx.log('debug', `🔍 No times on main page, checking iframes...`);
+    const frames = page.frames();
+    await ctx.log('debug', `📦 Found ${frames.length} frames total`);
+    
+    for (const frame of frames) {
+      if (frame === page.mainFrame()) continue;
+      
+      const frameUrl = frame.url();
+      await ctx.log('debug', `🔍 Checking frame: ${frameUrl}`);
+      
+      for (const selector of timeSlotSelectors) {
+        try {
+          const elements = await frame.locator(selector).all();
+          if (elements.length > 0) {
+            timeElements = elements;
+            await ctx.log('debug', `✅ Found ${elements.length} time elements in iframe with: ${selector}`);
+            break;
+          }
+        } catch {
+          continue;
+        }
+      }
+      
+      if (timeElements.length > 0) break;
+      
+      // If still nothing, dump all text from this frame
+      try {
+        const frameText = await frame.textContent('body');
+        if (frameText && frameText.includes(':')) {
+          await ctx.log('debug', `📝 Frame contains text with colons, might have times. First 500 chars: ${frameText.substring(0, 500)}`);
+        }
+      } catch {
+        // Ignore
+      }
+    }
+  }
+  
+  // LAST RESORT: If still nothing, dump ALL page text and parse manually
+  if (timeElements.length === 0) {
+    await ctx.log('debug', `⚠️  No structured elements found, trying text extraction...`);
+    
+    try {
+      const bodyText = await page.textContent('body');
+      if (bodyText) {
+        await ctx.log('debug', `📝 Full page text (first 1000 chars): ${bodyText.substring(0, 1000)}`);
+        
+        // Look for time patterns in raw text
+        const timeMatches = bodyText.matchAll(/(\d{1,2}):(\d{2})\s*(AM|PM)/gi);
+        const rawTimes: TeeTime[] = [];
+        
+        for (const match of timeMatches) {
+          let hour = parseInt(match[1], 10);
+          const minute = parseInt(match[2], 10);
+          const meridian = match[3].toUpperCase();
+          
+          if (meridian === 'PM' && hour !== 12) hour += 12;
+          if (meridian === 'AM' && hour === 12) hour = 0;
+          
+          if (hour >= criteria.startHour && hour < criteria.endHour) {
+            rawTimes.push({
+              course,
+              time: `${hour}:${minute.toString().padStart(2, '0')} ${meridian}`,
+              date: criteria.date.toISOString().split('T')[0],
+              players: criteria.partySize,
+              bookingUrl: page.url(),
+              availability: 'unknown',
+            });
+          }
+        }
+        
+        if (rawTimes.length > 0) {
+          await ctx.log('debug', `✅ Extracted ${rawTimes.length} times from raw text`);
+          return rawTimes;
+        }
+      }
+    } catch (error) {
+      await ctx.log('debug', `⚠️  Text extraction failed: ${error}`);
+    }
+  }
+  
+  await ctx.log('debug', `📊 Processing ${timeElements.length} potential time elements...`);
+  
+  const times: TeeTime[] = [];
+  
+  for (const element of timeElements) {
+    try {
+      const text = await element.textContent();
+      if (!text) continue;
+      
+      await ctx.log('debug', `🔍 Checking text: "${text.substring(0, 50)}"`);
+      
+      // Parse time (expanded patterns)
+      const timeMatch = text.match(/(\d{1,2}):?(\d{2})?\s*(AM|PM)?/i);
+      if (!timeMatch) {
+        await ctx.log('debug', `⚠️  No time pattern found in: "${text}"`);
+        continue;
+      }
+      
+      let hour = parseInt(timeMatch[1], 10);
       const minute = timeMatch[2] ? parseInt(timeMatch[2], 10) : 0;
+      const meridian = timeMatch[3]?.toUpperCase();
+      
+      // Convert to 24-hour
+      if (meridian === 'PM' && hour !== 12) hour += 12;
+      if (meridian === 'AM' && hour === 12) hour = 0;
+      
+      // If no meridian, guess based on hour
+      if (!meridian) {
+        if (hour >= 1 && hour <= 7) hour += 12; // Assume PM for 1-7
+      }
+      
+      await ctx.log('debug', `⏰ Parsed time: ${hour}:${minute.toString().padStart(2, '0')}`);
       
       // Filter by time range
-      if (hour < criteria.startHour || hour >= criteria.endHour) continue;
+      if (hour < criteria.startHour || hour >= criteria.endHour) {
+        await ctx.log('debug', `⚠️  Time ${hour}:${minute} outside range ${criteria.startHour}-${criteria.endHour}`);
+        continue;
+      }
       
-      // Look for price: "$75", "$75.00", "75"
-      const priceMatch = slot.text.match(/\$?(\d+)(?:\.\d{2})?/);
-      const price = priceMatch ? parseInt(priceMatch[1], 10) : undefined;
+      // Parse price
+      const priceMatch = text.match(/\$(\d+(?:\.\d{2})?)/);
+      const price = priceMatch ? parseFloat(priceMatch[1]) : undefined;
+      
+      await ctx.log('debug', `✅ Found valid tee time: ${hour}:${minute} ${price ? `($${price})` : ''}`);
       
       times.push({
         course,
@@ -538,21 +992,16 @@ async function scrapeCourseWithBrowser(
         date: criteria.date.toISOString().split('T')[0],
         players: criteria.partySize,
         price,
-        bookingUrl: fullBookingUrl,
+        bookingUrl: page.url(),
         availability: 'likely',
       });
+    } catch (error) {
+      await ctx.log('debug', `⚠️  Error processing element: ${error}`);
+      continue;
     }
-    
-    await ctx.log('debug', `Extracted ${times.length} tee times in range`);
-    
-    return times;
-    
-  } catch (error) {
-    await ctx.log('debug', `Failed to scrape ${course.name}: ${error}`);
-    return [];
-  } finally {
-    await browser.close();
   }
+  
+  return times;
 }
 
 // =============================================================================
@@ -607,6 +1056,22 @@ async function golfBookingHandler(
 ): Promise<GolfBookingOutput> {
   const params = GolfBookingInput.parse(input);
   const { location, date: dateStr, timeRange, partySize, maxCourses, method: userMethod } = params;
+  let effectiveMaxCourses = maxCourses;
+  
+  // Generic execution policy (NLP-driven from Rust intent frame).
+  if (params.executionPolicy) {
+    effectiveMaxCourses = params.executionPolicy.maxTargets ?? maxCourses;
+    if (params.executionPolicy.scopeMode === 'single_target') {
+      effectiveMaxCourses = 1;
+    }
+    await ctx.log('info', 'Execution policy applied', {
+      scopeMode: params.executionPolicy.scopeMode,
+      allowExpansion: params.executionPolicy.allowExpansion,
+      maxTargets: params.executionPolicy.maxTargets,
+      targetHint: params.executionPolicy.targetHint,
+      effectiveMaxCourses,
+    });
+  }
   
   const startTime = Date.now();
   
@@ -620,7 +1085,7 @@ async function golfBookingHandler(
   // Parse date and time criteria
   const date = parseDate(dateStr);
   const { startHour, endHour } = parseTimeRange(timeRange);
-  const criteria = { location, date, startHour, endHour, partySize, maxCourses };
+  const criteria = { location, date, startHour, endHour, partySize, maxCourses: effectiveMaxCourses };
   
   await ctx.log('info', `Parsed criteria: ${date.toDateString()}, ${startHour}:00-${endHour}:00, ${partySize} players`);
   
@@ -705,7 +1170,7 @@ async function golfBookingHandler(
       toolsUsed.push('brave_search', 'playwright');
       
       try {
-        availableTimes = await searchViaBravePlaywright(ctx, criteria, mode);
+        availableTimes = await searchViaBravePlaywright(ctx, criteria, mode, params.useVision);
         executionMethod = `brave_playwright_${mode}`;
         
         if (availableTimes.length > 0) {
@@ -723,7 +1188,7 @@ async function golfBookingHandler(
           fallbackUsed = true;
           
           try {
-            availableTimes = await searchViaBravePlaywright(ctx, criteria, 'sequential');
+            availableTimes = await searchViaBravePlaywright(ctx, criteria, 'sequential', params.useVision);
             executionMethod = 'brave_playwright_sequential (fallback)';
             toolsUsed.push('sequential_fallback');
             
@@ -777,7 +1242,7 @@ async function golfBookingHandler(
   if (toolsUsed.includes('apify')) cost += 0.05;
   
   const stats = {
-    coursesChecked: maxCourses,
+    coursesChecked: effectiveMaxCourses,
     timesFound: availableTimes.length,
     method: executionMethod,
     timeMs,

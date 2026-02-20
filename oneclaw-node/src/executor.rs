@@ -34,10 +34,13 @@ pub struct Registry {
 
 impl Registry {
     pub fn load() -> anyhow::Result<Self> {
+        let harness_url = std::env::var("HARNESS_URL").unwrap_or_else(|_| "http://localhost:9000".to_string());
+        
         let mut executors: HashMap<String, Box<dyn Executor + Send + Sync>> = HashMap::new();
         executors.insert("http.request".to_string(), Box::new(HttpExecutor));
         executors.insert("llm.chat".to_string(), Box::new(LlmExecutor));
         executors.insert("google.gmail".to_string(), Box::new(GoogleGmailExecutor));
+        executors.insert("harness.execute".to_string(), Box::new(HarnessExecutor::new(harness_url)));
         Ok(Self { executors })
     }
 
@@ -129,6 +132,132 @@ impl Executor for HttpExecutor {
 
 pub struct LlmExecutor;
 
+fn extract_text_from_value(value: &Value) -> String {
+    match value {
+        Value::String(s) => s.clone(),
+        Value::Array(items) => {
+            let mut parts: Vec<String> = Vec::new();
+            for item in items {
+                if let Some(s) = item.as_str() {
+                    if !s.trim().is_empty() {
+                        parts.push(s.to_string());
+                    }
+                    continue;
+                }
+                if let Some(s) = item.get("text").and_then(|v| v.as_str()) {
+                    if !s.trim().is_empty() {
+                        parts.push(s.to_string());
+                    }
+                    continue;
+                }
+                if let Some(s) = item.get("content").and_then(|v| v.as_str()) {
+                    if !s.trim().is_empty() {
+                        parts.push(s.to_string());
+                    }
+                    continue;
+                }
+                if let Some(s) = item.get("value").and_then(|v| v.as_str()) {
+                    if !s.trim().is_empty() {
+                        parts.push(s.to_string());
+                    }
+                    continue;
+                }
+                if let Some(nested) = item.get("content") {
+                    let nested_text = extract_text_from_value(nested);
+                    if !nested_text.trim().is_empty() {
+                        parts.push(nested_text);
+                    }
+                }
+            }
+            parts.join("\n")
+        }
+        Value::Object(map) => {
+            for key in ["text", "content", "value"] {
+                if let Some(v) = map.get(key) {
+                    let text = extract_text_from_value(v);
+                    if !text.trim().is_empty() {
+                        return text;
+                    }
+                }
+            }
+            String::new()
+        }
+        _ => String::new(),
+    }
+}
+
+fn collect_string_values(value: &Value, out: &mut Vec<String>) {
+    match value {
+        Value::String(s) => {
+            let trimmed = s.trim();
+            if !trimmed.is_empty() {
+                out.push(trimmed.to_string());
+            }
+        }
+        Value::Array(items) => {
+            for item in items {
+                collect_string_values(item, out);
+            }
+        }
+        Value::Object(map) => {
+            for (_k, v) in map {
+                collect_string_values(v, out);
+            }
+        }
+        _ => {}
+    }
+}
+
+fn extract_assistant_content(parsed: &Value, provider: &str) -> String {
+    // Anthropic format: content is usually an array of blocks with .text
+    if provider == "anthropic" {
+        let text = extract_text_from_value(&parsed["content"]);
+        if !text.trim().is_empty() {
+            return text;
+        }
+    }
+
+    // OpenAI/OpenRouter common format.
+    let text = extract_text_from_value(&parsed["choices"][0]["message"]["content"]);
+    if !text.trim().is_empty() {
+        return text;
+    }
+
+    // Alternative formats seen across some compatible providers/models.
+    let text = extract_text_from_value(&parsed["choices"][0]["text"]);
+    if !text.trim().is_empty() {
+        return text;
+    }
+
+    let text = extract_text_from_value(&parsed["output_text"]);
+    if !text.trim().is_empty() {
+        return text;
+    }
+
+    let text = extract_text_from_value(&parsed["output"]);
+    if !text.trim().is_empty() {
+        return text;
+    }
+
+    // Provider-agnostic named fields seen in compatible APIs.
+    for key in ["response", "answer", "assistant", "final", "reasoning"] {
+        let text = extract_text_from_value(&parsed[key]);
+        if !text.trim().is_empty() {
+            return text;
+        }
+    }
+
+    // Last resort: deep scan for non-trivial strings and pick the longest.
+    let mut strings = Vec::new();
+    collect_string_values(parsed, &mut strings);
+    strings.retain(|s| s.len() >= 8);
+    if let Some(best) = strings.into_iter().max_by_key(|s| s.len()) {
+        return best;
+    }
+
+    String::new()
+}
+
 impl Executor for LlmExecutor {
     fn manifest(&self) -> ExecutorManifest {
         ExecutorManifest {
@@ -157,7 +286,7 @@ impl Executor for LlmExecutor {
         };
         
         // Build request based on provider
-        let (url, body, auth_header) = match config.llm.provider.as_str() {
+        let (url, mut body, auth_header) = match config.llm.provider.as_str() {
             "openrouter" => {
                 let url = "https://openrouter.ai/api/v1/chat/completions";
                 let body = serde_json::json!({
@@ -189,55 +318,144 @@ impl Executor for LlmExecutor {
                 error: format!("Unknown provider: {}", config.llm.provider) 
             },
         };
-        
-        let client = reqwest::blocking::Client::new();
-        let mut req = client.post(url)
-            .header("Content-Type", "application/json")
-            .json(&body);
-        
-        // Add auth header
-        if config.llm.provider == "anthropic" {
-            req = req.header("x-api-key", auth_header)
-                     .header("anthropic-version", "2023-06-01");
-        } else {
-            req = req.header("Authorization", auth_header);
-        }
-        
-        match req.send() {
-            Ok(resp) => {
-                let status = resp.status().as_u16();
-                let body_text = resp.text().unwrap_or_default();
-                
-                if status >= 400 {
-                    return ExecutorResult::Error { 
-                        error: format!("LLM API error {}: {}", status, body_text) 
+
+        // Optional fallback model for transient provider failures.
+        let fallback_model = std::env::var("LLM_FALLBACK_MODEL").ok();
+
+        // Timeouts + retry to avoid hanging when provider has transient 5xx issues.
+        let client = match reqwest::blocking::Client::builder()
+            .connect_timeout(std::time::Duration::from_secs(10))
+            .timeout(std::time::Duration::from_secs(45))
+            .build() {
+            Ok(c) => c,
+            Err(e) => return ExecutorResult::Error { error: format!("Failed to build HTTP client: {}", e) },
+        };
+
+        let max_attempts = 3;
+        let mut attempt_error = String::new();
+        let mut used_model = config.llm.model.clone();
+
+        for attempt in 1..=max_attempts {
+            let mut req = client.post(url)
+                .header("Content-Type", "application/json")
+                .json(&body);
+
+            // Add auth header
+            if config.llm.provider == "anthropic" {
+                req = req.header("x-api-key", auth_header.clone())
+                         .header("anthropic-version", "2023-06-01");
+            } else {
+                req = req.header("Authorization", auth_header.clone());
+            }
+
+            match req.send() {
+                Ok(resp) => {
+                    let status = resp.status().as_u16();
+                    let body_text = resp.text().unwrap_or_default();
+
+                    // Retry on provider-side errors.
+                    if status >= 500 && attempt < max_attempts {
+                        attempt_error = format!("LLM API error {} on attempt {}", status, attempt);
+                        std::thread::sleep(std::time::Duration::from_millis(400 * attempt as u64));
+                        continue;
+                    }
+
+                    // Optional fallback model after retries exhausted on 5xx.
+                    if status >= 500 && attempt == max_attempts {
+                        if let Some(fallback) = &fallback_model {
+                            if fallback != &used_model {
+                                used_model = fallback.clone();
+                                body["model"] = serde_json::Value::String(used_model.clone());
+                                attempt_error = format!("Primary model failed with {}, retrying once with fallback model {}", status, used_model);
+                                // One additional fallback request.
+                                let mut fb_req = client.post(url)
+                                    .header("Content-Type", "application/json")
+                                    .json(&body);
+                                if config.llm.provider == "anthropic" {
+                                    fb_req = fb_req.header("x-api-key", auth_header.clone())
+                                                   .header("anthropic-version", "2023-06-01");
+                                } else {
+                                    fb_req = fb_req.header("Authorization", auth_header.clone());
+                                }
+
+                                match fb_req.send() {
+                                    Ok(fb_resp) => {
+                                        let fb_status = fb_resp.status().as_u16();
+                                        let fb_body_text = fb_resp.text().unwrap_or_default();
+                                        if fb_status >= 400 {
+                                            let snippet = fb_body_text.chars().take(500).collect::<String>();
+                                            return ExecutorResult::Error {
+                                                error: format!("LLM API error {} (fallback model {}): {}", fb_status, used_model, snippet),
+                                            };
+                                        }
+
+                                        let parsed: Value = match serde_json::from_str(&fb_body_text) {
+                                            Ok(v) => v,
+                                            Err(e) => return ExecutorResult::Error { error: format!("Parse error (fallback): {}", e) },
+                                        };
+
+                                        let content = extract_assistant_content(&parsed, &config.llm.provider);
+
+                                        return ExecutorResult::Executed {
+                                            output: serde_json::json!({
+                                                "content": content,
+                                                "model": used_model,
+                                                "provider": config.llm.provider,
+                                                "raw": parsed
+                                            }),
+                                            duration_ms: start.elapsed().as_millis() as u64,
+                                        };
+                                    }
+                                    Err(e) => {
+                                        return ExecutorResult::Error { error: format!("Fallback request failed: {}", e) };
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if status >= 400 {
+                        let snippet = body_text.chars().take(500).collect::<String>();
+                        return ExecutorResult::Error { 
+                            error: format!("LLM API error {}: {}", status, snippet) 
+                        };
+                    }
+
+                    // Parse response to extract content
+                    let parsed: Value = match serde_json::from_str(&body_text) {
+                        Ok(v) => v,
+                        Err(e) => return ExecutorResult::Error { error: format!("Parse error: {}", e) },
+                    };
+
+                    // Extract assistant message based on provider format
+                    let content = extract_assistant_content(&parsed, &config.llm.provider);
+
+                    return ExecutorResult::Executed {
+                        output: serde_json::json!({
+                            "content": content,
+                            "model": used_model,
+                            "provider": config.llm.provider,
+                            "raw": parsed
+                        }),
+                        duration_ms: start.elapsed().as_millis() as u64,
                     };
                 }
-                
-                // Parse response to extract content
-                let parsed: Value = match serde_json::from_str(&body_text) {
-                    Ok(v) => v,
-                    Err(e) => return ExecutorResult::Error { error: format!("Parse error: {}", e) },
-                };
-                
-                // Extract assistant message based on provider format
-                let content = if config.llm.provider == "anthropic" {
-                    parsed["content"][0]["text"].as_str().unwrap_or("").to_string()
-                } else {
-                    parsed["choices"][0]["message"]["content"].as_str().unwrap_or("").to_string()
-                };
-                
-                ExecutorResult::Executed {
-                    output: serde_json::json!({
-                        "content": content,
-                        "model": config.llm.model,
-                        "provider": config.llm.provider,
-                        "raw": parsed
-                    }),
-                    duration_ms: start.elapsed().as_millis() as u64,
+                Err(e) => {
+                    attempt_error = format!("LLM request failed on attempt {}: {}", attempt, e);
+                    if attempt < max_attempts {
+                        std::thread::sleep(std::time::Duration::from_millis(400 * attempt as u64));
+                        continue;
+                    }
                 }
             }
-            Err(e) => ExecutorResult::Error { error: e.to_string() },
+        }
+
+        ExecutorResult::Error {
+            error: if attempt_error.is_empty() {
+                "LLM request failed after retries".to_string()
+            } else {
+                attempt_error
+            },
         }
     }
 }
@@ -247,6 +465,95 @@ impl Executor for LlmExecutor {
 // ============================================
 
 pub struct GoogleGmailExecutor;
+
+// ============================================
+// Harness Executor - Bridge to TypeScript
+// ============================================
+
+pub struct HarnessExecutor {
+    pub harness_url: String,
+}
+
+impl HarnessExecutor {
+    pub fn new(harness_url: String) -> Self {
+        Self { harness_url }
+    }
+}
+
+impl Executor for HarnessExecutor {
+    fn manifest(&self) -> ExecutorManifest {
+        ExecutorManifest {
+            id: "harness.execute".to_string(),
+            version: "0.1.0".to_string(),
+            description: "Execute workflows on the TypeScript Harness".to_string(),
+            permissions: vec!["network".to_string(), "harness".to_string()],
+        }
+    }
+    
+    fn execute(&self, input: Value, _config: &crate::config::NodeConfig) -> ExecutorResult {
+        let start = std::time::Instant::now();
+        
+        let executor_id = match input["executor"].as_str() {
+            Some(e) => e,
+            None => return ExecutorResult::Error { error: "executor required".to_string() },
+        };
+        
+        let params = input.get("params").cloned().unwrap_or(serde_json::json!({}));
+        let tenant_id = input["tenant_id"].as_str().unwrap_or("default");
+        let tier = input["tier"].as_str().unwrap_or("pro");
+        
+        let client = reqwest::blocking::Client::builder()
+            .timeout(std::time::Duration::from_secs(300)) // 5 min timeout for long workflows
+            .build()
+            .unwrap_or_else(|_| reqwest::blocking::Client::new());
+        
+        let payload = serde_json::json!({
+            "workflowId": executor_id,
+            "input": params,
+            "tenantId": tenant_id,
+            "tier": tier,
+        });
+        
+        let url = format!("{}/execute", self.harness_url);
+        
+        match client.post(&url)
+            .header("Content-Type", "application/json")
+            .json(&payload)
+            .send()
+        {
+            Ok(resp) => {
+                let status = resp.status().as_u16();
+                let body_text = resp.text().unwrap_or_default();
+                
+                if status >= 400 {
+                    return ExecutorResult::Error { 
+                        error: format!("Harness error {}: {}", status, body_text) 
+                    };
+                }
+                
+                let parsed: Value = serde_json::from_str(&body_text)
+                    .unwrap_or_else(|_| serde_json::json!({ "raw": body_text }));
+                
+                // Check for error in response
+                if let Some(err) = parsed.get("error") {
+                    return ExecutorResult::Error { 
+                        error: err.as_str().unwrap_or("Unknown error").to_string()
+                    };
+                }
+                
+                // NOTE: Monitor+heal spawn removed from here - execute() runs in spawn_blocking,
+                // and tokio::task::spawn from a blocking thread causes runtime panic. Re-enable
+                // by having the daemon spawn the monitor in async context after getting the response.
+                
+                ExecutorResult::Executed {
+                    output: parsed,
+                    duration_ms: start.elapsed().as_millis() as u64,
+                }
+            }
+            Err(e) => ExecutorResult::Error { error: e.to_string() },
+        }
+    }
+}
 
 impl Executor for GoogleGmailExecutor {
     fn manifest(&self) -> ExecutorManifest {

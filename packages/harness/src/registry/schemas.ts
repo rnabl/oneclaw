@@ -409,6 +409,12 @@ export const GolfBookingInput = z.object({
   partySize: z.number().default(4),
   maxCourses: z.number().default(10),
   method: z.enum(['golfnow_api', 'brave_playwright_hybrid', 'brave_playwright_sequential', 'auto']).default('auto'),
+  executionPolicy: z.object({
+    scopeMode: z.enum(['single_target', 'multi_target']).default('multi_target'),
+    allowExpansion: z.boolean().default(true),
+    maxTargets: z.number().min(1).max(50).default(10),
+    targetHint: z.string().optional(),
+  }).optional(),
 });
 
 export const GolfBookingOutput = z.object({

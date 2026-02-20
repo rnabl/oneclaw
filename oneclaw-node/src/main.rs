@@ -1,3 +1,4 @@
+mod agent_os;
 mod channels;
 mod config;
 mod conversation;
@@ -6,6 +7,7 @@ mod executor;
 mod identity;
 mod integration;
 mod memory;
+mod monitor;
 mod oauth_config;
 mod receipt;
 mod store;
@@ -43,7 +45,22 @@ enum Commands {
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
-    tracing_subscriber::fmt().with_target(false).init();
+    // Load .env so LLM/harness keys match .env.local at repo root (same as harness)
+    for path in ["../.env.local", "../.env", ".env.local", ".env"] {
+        if std::path::Path::new(path).exists() {
+            if let Err(e) = dotenvy::from_path(path) {
+                tracing::warn!("Could not load {}: {}", path, e);
+            } else {
+                tracing::info!("Loaded env from {}", path);
+                break;
+            }
+        }
+    }
+    use tracing_subscriber::{fmt, prelude::*, EnvFilter};
+    tracing_subscriber::registry()
+        .with(EnvFilter::try_from_default_env().unwrap_or_else(|_| EnvFilter::new("info")))
+        .with(fmt::layer().with_target(false))
+        .init();
     let cli = Cli::parse();
 
     match cli.command {

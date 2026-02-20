@@ -269,9 +269,79 @@ pub fn load() -> anyhow::Result<&'static NodeConfig> {
         anyhow::bail!("Config not found. Run 'oneclaw onboard' first.");
     }
     let contents = std::fs::read_to_string(&path)?;
-    let config: NodeConfig = serde_yaml::from_str(&contents)?;
+    let mut config: NodeConfig = serde_yaml::from_str(&contents)?;
+
+    // Allow env overrides so local .env.local can switch models/providers
+    // without editing ~/.oneclaw/node.yaml every time.
+    if let Ok(provider) = std::env::var("LLM_PROVIDER") {
+        let trimmed = provider.trim();
+        if !trimmed.is_empty() {
+            config.llm.provider = trimmed.to_string();
+        }
+    }
+    if let Ok(api_env) = std::env::var("LLM_API_KEY_ENV") {
+        let trimmed = api_env.trim();
+        if !trimmed.is_empty() {
+            config.llm.api_key_env = trimmed.to_string();
+        }
+    }
+
+    // Model precedence:
+    // 1) LLM_MODEL (global explicit override)
+    // 2) provider-specific model env
+    if let Ok(model) = std::env::var("LLM_MODEL") {
+        let trimmed = model.trim();
+        if !trimmed.is_empty() {
+            config.llm.model = trimmed.to_string();
+        }
+    } else {
+        match config.llm.provider.as_str() {
+            "openrouter" => {
+                if let Ok(model) = std::env::var("OPENROUTER_MODEL") {
+                    let trimmed = model.trim();
+                    if !trimmed.is_empty() {
+                        config.llm.model = trimmed.to_string();
+                    }
+                }
+            }
+            "anthropic" => {
+                if let Ok(model) = std::env::var("ANTHROPIC_MODEL") {
+                    let trimmed = model.trim();
+                    if !trimmed.is_empty() {
+                        config.llm.model = trimmed.to_string();
+                    }
+                }
+            }
+            "openai" => {
+                if let Ok(model) = std::env::var("OPENAI_MODEL") {
+                    let trimmed = model.trim();
+                    if !trimmed.is_empty() {
+                        config.llm.model = trimmed.to_string();
+                    }
+                }
+            }
+            _ => {}
+        }
+    }
+
+    // Keep api key env aligned with provider unless explicitly overridden.
+    if std::env::var("LLM_API_KEY_ENV").is_err() {
+        config.llm.api_key_env = match config.llm.provider.as_str() {
+            "openrouter" => "OPENROUTER_API_KEY".to_string(),
+            "anthropic" => "ANTHROPIC_API_KEY".to_string(),
+            "openai" => "OPENAI_API_KEY".to_string(),
+            _ => config.llm.api_key_env.clone(),
+        };
+    }
+
     CONFIG.set(config.clone()).ok();
-    tracing::info!(node_id = %config.node.id, "Config loaded");
+    tracing::info!(
+        node_id = %config.node.id,
+        provider = %config.llm.provider,
+        model = %config.llm.model,
+        api_key_env = %config.llm.api_key_env,
+        "Config loaded"
+    );
     Ok(CONFIG.get().unwrap())
 }
 

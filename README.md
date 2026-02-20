@@ -22,32 +22,61 @@ Self-hosted. Data-local. Production-ready.
 │                    Your Machine                             │
 │                                                             │
 │  ┌────────────────────────────────────────────────────┐    │
-│  │  OneClaw Node (Rust)                               │    │
-│  │  • AI agent runtime (~3MB binary)                  │    │
-│  │  • Workflow execution                              │    │
-│  │  • Conversation memory                             │    │
-│  │  • Web UI (port 8787)                              │    │
+│  │  OneClaw Node (Rust) - Port 8787                   │    │
+│  │  • Simplified chat (minimal prompt)                │    │
+│  │  • Agent OS (SOUL, IDENTITY, etc.)                 │    │
+│  │  • Tool execution (```tool blocks)                 │    │
+│  │  • Conversation memory (SQLite)                    │    │
+│  │  • Web UI                                           │    │
 │  └────────────────────────────────────────────────────┘    │
 │                        │                                    │
 │                        │ HTTP                               │
 │                        ▼                                    │
 │  ┌────────────────────────────────────────────────────┐    │
-│  │  OneClaw API (TypeScript/Hono)                     │    │
+│  │  Harness (TypeScript) - Port 9000                  │    │
+│  │  • Workflow executors                              │    │
+│  │  • Durable execution                               │    │
+│  │  • Artifact storage                                │    │
+│  └────────────────────────────────────────────────────┘    │
+│                        │                                    │
+│                        │ Optional                           │
+│                        ▼                                    │
+│  ┌────────────────────────────────────────────────────┐    │
+│  │  API (TypeScript/Hono) - Port 3000                 │    │
 │  │  • OAuth proxy (Gmail, Calendar)                   │    │
-│  │  • Billing & wallet system                         │    │
-│  │  • Workflow registry                               │    │
+│  │  • Billing & wallet                                │    │
+│  │  • Node registry                                   │    │
 │  └────────────────────────────────────────────────────┘    │
 └─────────────────────────────────────────────────────────────┘
                         │
                         │ External Services
                         ▼
 ┌─────────────────────────────────────────────────────────────┐
+│  • OpenRouter/Anthropic/OpenAI (LLM)                        │
 │  • Google (Gmail, Calendar)                                 │
-│  • Anthropic (Claude)                                       │
 │  • Stripe (Payments)                                        │
 │  • Supabase (Database)                                      │
 └─────────────────────────────────────────────────────────────┘
 ```
+
+---
+
+## What's New in v0.2.0 (Simplified Chat)
+
+**Removed:**
+- IntentFrame extraction (LLM decides tool use)
+- ExecutionPolicy injection (harness handles it)
+- Golf special-case fallback (LLM handles uniformly)
+- 500-line system prompt bloat
+- Milestone spam
+
+**Added:**
+- Minimal 2-3 sentence system prompt
+- Agent OS workspace loader (~/.oneclaw/workspace/)
+- Simplified chat flow: LLM → tool blocks → execute → followup
+- Single milestone: "Received your message"
+
+**Result:** ~3-5x faster response, cleaner logs, same capabilities.
 
 ---
 

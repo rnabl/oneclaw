@@ -29,6 +29,8 @@
         .tool-call .tool-detail { font-size: 0.8rem; color: #8b949e; margin-top: 4px; font-family: monospace; max-height: 100px; overflow: auto; }
         .tool-call.success { border-left: 3px solid #3fb950; }
         .tool-call.error { border-left: 3px solid #f85149; }
+        .milestones { margin-top: 10px; padding: 10px; background: #10151d; border: 1px dashed #2f3d52; border-radius: 6px; }
+        .milestone { color: #9fb4cf; font-size: 0.82rem; line-height: 1.4; margin: 2px 0; }
     </style>
 </head>
 <body>
@@ -91,7 +93,7 @@
                 document.getElementById('debug-model').textContent = config.llm.model;
                 
                 // Render existing history
-                history.forEach(msg => addMessage(msg.role, msg.content, []));
+                history.forEach(msg => addMessage(msg.role, msg.content, [], []));
                 updateMessageCount();
             } catch (e) {
                 document.getElementById('status').textContent = 'Offline';
@@ -99,7 +101,7 @@
             }
         }
         
-        function addMessage(role, content, toolCalls) {
+        function addMessage(role, content, toolCalls, milestones) {
             const div = document.createElement('div');
             div.className = 'message ' + role;
             
@@ -119,6 +121,13 @@
                 });
                 html += '</div>';
             }
+            if (milestones && milestones.length > 0) {
+                html += '<div class="milestones">';
+                milestones.slice(0, 6).forEach(m => {
+                    html += '<div class="milestone">• ' + m + '</div>';
+                });
+                html += '</div>';
+            }
             
             div.innerHTML = html;
             div.querySelector('.content').textContent = content;
@@ -130,7 +139,7 @@
             const div = document.createElement('div');
             div.className = 'message assistant typing';
             div.id = 'typing';
-            div.innerHTML = '<div class="role">assistant</div><div class="content">Thinking...</div>';
+            div.innerHTML = '<div class="role">assistant</div><div class="content">Thinking…</div><div class="content" style="font-size:0.85rem;color:#666;margin-top:6px;">Tool runs (e.g. golf tee time) can take 1–2 min. Keep this tab open; check the daemon terminal for progress.</div>';
             messagesEl.appendChild(div);
             messagesEl.scrollTop = messagesEl.scrollHeight;
         }
@@ -150,17 +159,22 @@
             if (!message) return;
             
             inputEl.value = '';
-            addMessage('user', message, []);
+            addMessage('user', message, [], []);
             addTyping();
             updateMessageCount();
+            
+            // Long timeout: tool runs (e.g. golf tee time) can take 2–3 min on the harness
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 5 * 60 * 1000); // 5 min
             
             try {
                 const res = await fetch('/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message })
+                    body: JSON.stringify({ message }),
+                    signal: controller.signal
                 });
-                
+                clearTimeout(timeoutId);
                 removeTyping();
                 
                 if (!res.ok) {
@@ -170,13 +184,17 @@
                 }
                 
                 const data = await res.json();
-                addMessage('assistant', data.response, data.tool_calls || []);
+                addMessage('assistant', data.response, data.tool_calls || [], data.milestones || []);
                 document.getElementById('debug-duration').textContent = data.duration_ms + 'ms';
                 document.getElementById('debug-tools').textContent = (data.tool_calls || []).length + ' tool calls';
                 updateMessageCount();
             } catch (e) {
+                clearTimeout(timeoutId);
                 removeTyping();
-                addMessage('assistant', 'Error: ' + e.message);
+                const msg = e.name === 'AbortError'
+                    ? 'Request timed out after 5 minutes. Long runs (e.g. golf search) can take 1–2 min — try again or check the daemon terminal for progress.'
+                    : e.message;
+                addMessage('assistant', 'Error: ' + msg, [], []);
             }
         }
         

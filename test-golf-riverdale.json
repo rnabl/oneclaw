@@ -1,0 +1,13 @@
+{
+  "workflowId": "golf-tee-time-booking",
+  "input": {
+    "location": "Riverdale Golf Club, Brighton, CO",
+    "date": "2026-02-26",
+    "timeRange": "9-10AM",
+    "partySize": 4,
+    "method": "brave_playwright_sequential",
+    "maxCourses": 1
+  },
+  "tier": "pro",
+  "tenantId": "test-user"
+}

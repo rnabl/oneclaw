@@ -1,268 +1,296 @@
 /**
- * Discovery Workflow
+ * UNIVERSAL AGENT DISCOVERY WORKFLOW
  * 
- * Business discovery via Apify Google Maps scraper.
- * Uses the Apify client for clean separation of concerns.
+ * This is the OpenClaw-style "agent loop" that:
+ * 1. Takes a natural language goal
+ * 2. Uses vision to see what's on screen
+ * 3. Reasons about what to do next
+ * 4. Takes action (click, type, scroll)
+ * 5. Observes result
+ * 6. Loops until goal achieved
  * 
- * The Harness adds:
- * - Rate limiting per tenant
- * - Cost metering ($0.004/result via Apify)
- * - Artifact capture
- * - Optional: tenant's own Apify key
- * 
- * Output includes comprehensive business data:
- * - Core: name, category, address, phone, website
- * - Location: city, state, zipCode, latitude, longitude
- * - Google: placeId, googleMapsUrl, rating, reviewCount
- * - Enrichment: imageUrl
+ * NO HARDCODED SELECTORS. NO SITE-SPECIFIC LOGIC.
+ * Just an LLM that can SEE and THINK like a human.
  */
 
-import type { StepContext } from '../execution/runner';
-import { runner } from '../execution/runner';
-import { artifactStore } from '../artifacts';
-import { DiscoveryToolInput, DiscoveryToolOutput } from '../registry/schemas';
-import { searchBusinesses } from '../apify/client';
-import { scanWebsitesBatch } from '../scanners/website-scanner';
+import { chromium, Browser, Page } from 'playwright';
+import { GeminiVision, VisionAnalysis } from '../utils/gemini-vision';
 
-// =============================================================================
-// CONFIGURATION
-// =============================================================================
+export interface AgentGoal {
+  task: string;           // "Find golf tee times for 4 players on Feb 26"
+  startUrl: string;       // "https://www.riverdalegolf.com/teetimes/"
+  maxIterations?: number; // Default 10
+  extractData?: boolean;  // If true, extract structured data at end
+}
 
-// Cost per result from Apify Google Maps scraper
-const APIFY_COST_PER_RESULT = 0.004;
+export interface AgentResult {
+  success: boolean;
+  iterations: number;
+  actions: string[];
+  data?: any;            // Extracted data if requested
+  screenshots?: string[]; // Base64 screenshots for debugging
+  error?: string;
+}
 
-// =============================================================================
-// DISCOVERY WORKFLOW HANDLER
-// =============================================================================
+export class DiscoveryAgent {
+  private vision: GeminiVision;
+  private browser: Browser | null = null;
+  private page: Page | null = null;
+  private debug: boolean;
 
-async function discoveryWorkflowHandler(
-  ctx: StepContext,
-  input: Record<string, unknown>
-): Promise<DiscoveryToolOutput> {
-  const params = input as DiscoveryToolInput;
-  const { niche, location, limit = 50 } = params;
-  
-  await ctx.log('info', `Starting discovery: ${niche} in ${location}`, { limit });
-  
-  const startTime = Date.now();
-  
-  // ==========================================================================
-  // STEP 1: Prepare Apify request
-  // ==========================================================================
-  runner.updateStep(ctx.jobId, 1, 'Preparing search', 4);
-  
-  // Parse location into city and state
-  const locationParts = location.split(',').map(s => s.trim());
-  const city = locationParts[0] || location;
-  const state = locationParts[1] || 'TX'; // Default to TX if not specified
-  
-  // Use tenant's Apify key if provided, otherwise platform key
-  const apifyToken = ctx.secrets['apify'] || process.env.APIFY_API_TOKEN;
-  
-  if (!apifyToken) {
-    await ctx.log('warn', 'Apify API token not configured, using mock data');
-    const searchTimeMs = Date.now() - startTime;
-    
-    return {
-      businesses: generateMockBusinesses(niche, location, limit),
-      totalFound: Math.min(limit, 10),
-      searchTimeMs,
-    };
+  constructor(apiKey: string, debug: boolean = true) {
+    this.vision = new GeminiVision(apiKey);
+    this.debug = debug;
   }
-  
-  await ctx.log('info', 'Calling Apify Google Maps scraper', { niche, city, state, limit });
-  
-  // ==========================================================================
-  // STEP 2: Call Apify via client
-  // ==========================================================================
-  runner.updateStep(ctx.jobId, 2, 'Searching businesses', 4);
-  
-  let businesses: DiscoveryToolOutput['businesses'] = [];
-  
-  try {
-    // Call Apify client
-    const results = await searchBusinesses({
-      query: niche,
-      city,
-      state,
-      maxResults: limit,
-    });
+
+  private log(message: string) {
+    if (this.debug) {
+      console.log(`[Agent] ${message}`);
+    }
+  }
+
+  /**
+   * THE MAIN AGENT LOOP
+   * This is what makes it work like OpenClaw
+   */
+  async execute(goal: AgentGoal): Promise<AgentResult> {
+    const maxIterations = goal.maxIterations || 10;
+    const actions: string[] = [];
+    const screenshots: string[] = [];
     
-    await ctx.log('info', `Got ${results.length} results from Apify`);
-    
-    // Transform to our output format
-    businesses = results.map(r => ({
-      name: r.name,
-      website: r.website || undefined,
-      phone: r.phone || undefined,
-      address: r.address || undefined,
-      city: r.city || undefined,
-      state: r.state || undefined,
-      zipCode: r.zipCode || undefined,
-      rating: r.rating || undefined,
-      reviewCount: r.reviewCount || undefined,
-      placeId: r.googlePlaceId,
-      category: r.category,
-      googleMapsUrl: r.googleMapsUrl || undefined,
-      latitude: r.latitude || undefined,
-      longitude: r.longitude || undefined,
-      imageUrl: r.imageUrl || undefined,
-    }));
-    
-    // Record cost
-    ctx.recordApiCall('apify', 'google_maps_scraper', results.length);
-    
-    // ==========================================================================
-    // STEP 3: Comprehensive website scanning for enrichment signals
-    // ==========================================================================
-    runner.updateStep(ctx.jobId, 3, 'Scanning websites', 4);
-    
-    await ctx.log('info', 'Scanning websites for enrichment signals');
-    
-    const businessesWithWebsites = businesses.filter(b => b.website);
-    await ctx.log('info', `Found ${businessesWithWebsites.length} businesses with websites`);
-    
-    if (businessesWithWebsites.length > 0) {
-      // Use comprehensive scanner (limit to first 10 for performance in discovery phase)
-      const websitesToScan = businessesWithWebsites.slice(0, 10).map(b => b.website!);
+    try {
+      // Launch browser
+      this.log('🚀 Launching browser...');
+      this.browser = await chromium.launch({
+        headless: true,
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      });
       
-      await ctx.log('info', `Performing comprehensive scan on ${websitesToScan.length} websites`);
+      const context = await this.browser.newContext({
+        viewport: { width: 1920, height: 1080 },
+        userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+      });
       
-      // Scan in batches of 5 with 8-second timeout per site
-      const scanResults = await scanWebsitesBatch(websitesToScan, 5, 8000);
+      this.page = await context.newPage();
+
+      // Navigate to start URL
+      this.log(`📍 Navigating to: ${goal.startUrl}`);
+      await this.page.goto(goal.startUrl, { 
+        waitUntil: 'domcontentloaded',
+        timeout: 60000 
+      });
       
-      await ctx.log('info', `Scan complete: ${scanResults.filter(r => r.accessible).length}/${scanResults.length} accessible`);
-      
-      // Update businesses with enrichment data
-      for (let i = 0; i < scanResults.length; i++) {
-        const scanResult = scanResults[i];
-        const business = businessesWithWebsites[i];
+      // Wait for page to settle - be patient like a human
+      this.log('⏳ Waiting for page to load...');
+      await this.page.waitForTimeout(5000);
+      actions.push(`Navigated to ${goal.startUrl}`);
+
+      // THE LOOP
+      for (let iteration = 1; iteration <= maxIterations; iteration++) {
+        this.log(`\n📸 Iteration ${iteration}/${maxIterations}`);
         
-        // Find business in main array by placeId
-        const businessIdx = businesses.findIndex(b => b.placeId === business.placeId);
-        if (businessIdx === -1) continue;
+        // 1. SEE - Take screenshot (full page to see everything)
+        const screenshot = await this.page.screenshot({ fullPage: true });
+        screenshots.push(screenshot.toString('base64'));
         
-        // Update enrichment fields
-        businesses[businessIdx].seoOptimized = scanResult.accessible && (
-          scanResult.hasMetaDescription && 
-          scanResult.hasH1 && 
-          scanResult.aiReadabilityScore >= 50
+        // 2. THINK - Ask LLM what to do
+        this.log('🧠 Analyzing screenshot...');
+        const analysis = await this.vision.analyzeAndDecide(
+          screenshot,
+          goal.task,
+          actions,
+          iteration
         );
         
-        businesses[businessIdx].hasAds = scanResult.accessible && (
-          scanResult.pixels.hasFacebookPixel ||
-          scanResult.pixels.hasGoogleAnalytics ||
-          scanResult.pixels.hasGoogleTagManager
-        );
-        
-        businesses[businessIdx].hasSocials = scanResult.hasSocialLinks;
-        
-        businesses[businessIdx].hasBooking = scanResult.booking.hasBookingSystem;
-        
-        businesses[businessIdx].hasChatbot = scanResult.chatbot.hasChatbot;
-        
-        businesses[businessIdx].aiReadable = scanResult.aiReadable;
-        
-        // Log interesting findings
-        if (scanResult.accessible) {
-          const signals = [];
-          if (scanResult.hasStructuredData) signals.push('structured-data');
-          if (scanResult.booking.hasBookingSystem) signals.push(`booking:${scanResult.booking.bookingPlatforms.join(',')}`);
-          if (scanResult.chatbot.hasChatbot) signals.push(`chat:${scanResult.chatbot.chatbotPlatforms.join(',')}`);
-          if (scanResult.tech.cms) signals.push(`cms:${scanResult.tech.cms}`);
+        this.log(`   State: ${analysis.pageState}`);
+        this.log(`   Sees: ${analysis.description}`);
+        this.log(`   Action: ${analysis.suggestedAction.type} - ${analysis.suggestedAction.reasoning}`);
+        this.log(`   Progress: ${analysis.goalProgress}%`);
+
+        // 3. CHECK - Are we done?
+        if (analysis.suggestedAction.type === 'done') {
+          this.log('✅ Goal achieved!');
           
-          if (signals.length > 0) {
-            await ctx.log('debug', `${business.name}: ${signals.join(', ')}`);
+          // Extract data if requested
+          let extractedData = null;
+          if (goal.extractData) {
+            this.log('📊 Extracting data...');
+            const finalScreenshot = await this.page.screenshot({ fullPage: true });
+            extractedData = await this.extractDataFromScreen(finalScreenshot, goal.task);
           }
+          
+          return {
+            success: true,
+            iterations: iteration,
+            actions,
+            data: extractedData,
+            screenshots: this.debug ? screenshots : undefined,
+          };
+        }
+
+        if (analysis.suggestedAction.type === 'fail') {
+          this.log('❌ Agent determined goal cannot be achieved');
+          return {
+            success: false,
+            iterations: iteration,
+            actions,
+            error: analysis.suggestedAction.reasoning,
+            screenshots: this.debug ? screenshots : undefined,
+          };
+        }
+
+        // 4. ACT - Execute the action
+        const actionResult = await this.executeAction(analysis);
+        actions.push(`${analysis.suggestedAction.type}: ${analysis.suggestedAction.target || analysis.suggestedAction.reasoning}`);
+        
+        // 5. OBSERVE - Wait for result
+        if (analysis.suggestedAction.type !== 'wait') {
+          await this.page.waitForTimeout(1500); // Let page react
+        }
+        
+        // Check for any navigation
+        try {
+          await this.page.waitForLoadState('networkidle', { timeout: 3000 });
+        } catch {
+          // Timeout is fine, page might not navigate
         }
       }
-      
-      await ctx.log('info', 'Website enrichment complete');
-    }
-    
-  } catch (error) {
-    await ctx.log('error', 'Apify call failed', { error: String(error) });
-    
-    // For development: return mock data if Apify fails
-    if (!apifyToken) {
-      await ctx.log('warn', 'Using mock discovery results');
-      businesses = generateMockBusinesses(niche, location, limit);
-    } else {
-      throw error;
+
+      // Ran out of iterations
+      this.log('⚠️ Max iterations reached');
+      return {
+        success: false,
+        iterations: maxIterations,
+        actions,
+        error: 'Max iterations reached without achieving goal',
+        screenshots: this.debug ? screenshots : undefined,
+      };
+
+    } catch (error: any) {
+      this.log(`❌ Error: ${error.message}`);
+      return {
+        success: false,
+        iterations: 0,
+        actions,
+        error: error.message,
+        screenshots: this.debug ? screenshots : undefined,
+      };
+    } finally {
+      if (this.browser) {
+        await this.browser.close();
+      }
     }
   }
-  
-  // ==========================================================================
-  // STEP 4: Store artifacts and finalize
-  // ==========================================================================
-  runner.updateStep(ctx.jobId, 4, 'Finalizing', 4);
-  
-  const searchTimeMs = Date.now() - startTime;
-  
-  // Store search results as artifact
-  await artifactStore.storeLog(
-    ctx.jobId,
-    4,
-    'Discovery results',
-    'info',
-    `Found ${businesses.length} businesses`,
-    { 
-      niche, 
-      location, 
-      count: businesses.length,
-      searchTimeMs,
+
+  /**
+   * Execute an action based on LLM decision
+   */
+  private async executeAction(analysis: VisionAnalysis): Promise<void> {
+    if (!this.page) return;
+    
+    const action = analysis.suggestedAction;
+    
+    switch (action.type) {
+      case 'click':
+        if (action.coordinates) {
+          this.log(`   🖱️ Clicking at (${action.coordinates.x}, ${action.coordinates.y})`);
+          await this.page.mouse.click(action.coordinates.x, action.coordinates.y);
+        }
+        break;
+        
+      case 'type':
+        if (action.value) {
+          this.log(`   ⌨️ Typing: ${action.value}`);
+          await this.page.keyboard.type(action.value);
+        }
+        break;
+        
+      case 'scroll':
+        this.log('   📜 Scrolling down');
+        await this.page.mouse.wheel(0, 500);
+        break;
+        
+      case 'wait':
+        this.log('   ⏳ Waiting 3 seconds...');
+        await this.page.waitForTimeout(3000);
+        break;
     }
-  );
-  
-  await ctx.log('info', `Discovery complete: ${businesses.length} businesses in ${searchTimeMs}ms`);
-  
-  return {
-    businesses,
-    totalFound: businesses.length,
-    searchTimeMs,
-  };
-}
-
-// =============================================================================
-// HELPERS
-// =============================================================================
-
-function generateMockBusinesses(niche: string, location: string, limit: number) {
-  const count = Math.min(limit, 10);
-  const businesses = [];
-  
-  // Parse location to extract city/state
-  const locationParts = location.split(',').map(s => s.trim());
-  const city = locationParts[0] || location;
-  const state = locationParts[1] || 'TX';
-  
-  for (let i = 0; i < count; i++) {
-    businesses.push({
-      name: `${niche.charAt(0).toUpperCase() + niche.slice(1)} Business ${i + 1}`,
-      website: i % 3 === 0 ? undefined : `https://example${i + 1}.com`, // 1/3 have no website
-      phone: `(555) 000-${String(i + 1).padStart(4, '0')}`,
-      address: `${100 + i} Main St, ${city}, ${state}`,
-      city: city,
-      state: state,
-      zipCode: `7610${i}`,
-      rating: Math.round((3.5 + Math.random() * 1.5) * 10) / 10,
-      reviewCount: Math.floor(Math.random() * 200) + 10,
-      placeId: `ChIJmock${i}`,
-      category: niche,
-      googleMapsUrl: `https://www.google.com/maps/place/?q=place_id:ChIJmock${i}`,
-      latitude: 30.2672 + (Math.random() * 0.1 - 0.05),
-      longitude: -97.7431 + (Math.random() * 0.1 - 0.05),
-      imageUrl: `https://picsum.photos/seed/${i}/400/300`,
-    });
   }
-  
-  return businesses;
+
+  /**
+   * Extract structured data from the final screen
+   */
+  private async extractDataFromScreen(screenshot: Buffer, task: string): Promise<any> {
+    const base64Image = screenshot.toString('base64');
+    
+    // Use Gemini to extract structured data
+    const model = (this.vision as any).model;
+    
+    const prompt = `You just helped complete this task: "${task}"
+
+Looking at this screenshot, extract any relevant structured data that would answer the user's request.
+
+Return as JSON. For example, if the task was about golf tee times:
+{
+  "teeTimes": [
+    { "time": "9:00 AM", "price": "$75", "available": true },
+    { "time": "9:15 AM", "price": "$75", "available": true }
+  ]
 }
 
-// =============================================================================
-// REGISTER WORKFLOW
-// =============================================================================
+Or if it was about finding businesses:
+{
+  "businesses": [
+    { "name": "ABC Company", "phone": "555-1234", "address": "123 Main St" }
+  ]
+}
 
-runner.registerWorkflow('discover-businesses', discoveryWorkflowHandler);
+Extract whatever is relevant to the completed task.`;
 
-export { discoveryWorkflowHandler };
+    const result = await model.generateContent([
+      prompt,
+      {
+        inlineData: {
+          mimeType: 'image/png',
+          data: base64Image,
+        },
+      },
+    ]);
+
+    const response = result.response.text();
+    
+    try {
+      const jsonMatch = response.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        return JSON.parse(jsonMatch[0]);
+      }
+    } catch {
+      return { raw: response };
+    }
+    
+    return { raw: response };
+  }
+}
+
+/**
+ * Simple function to run the agent
+ */
+export async function runAgent(
+  task: string,
+  startUrl: string,
+  apiKey: string,
+  options?: {
+    maxIterations?: number;
+    extractData?: boolean;
+    debug?: boolean;
+  }
+): Promise<AgentResult> {
+  const agent = new DiscoveryAgent(apiKey, options?.debug ?? true);
+  
+  return agent.execute({
+    task,
+    startUrl,
+    maxIterations: options?.maxIterations ?? 10,
+    extractData: options?.extractData ?? true,
+  });
+}

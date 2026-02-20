@@ -214,6 +214,138 @@ app.post('/jobs/:id/cancel', (c) => {
   return c.json({ success });
 });
 
+/**
+ * Switch execution method for a running job
+ * POST /jobs/:id/switch-method
+ * Body: { method, reason }
+ */
+app.post('/jobs/:id/switch-method', async (c) => {
+  try {
+    const jobId = c.req.param('id');
+    const body = await c.req.json();
+    const { method, reason } = body;
+    
+    if (!method) {
+      return c.json({ error: 'Missing method' }, 400);
+    }
+    
+    const success = runner.switchMethod(jobId, method, reason || 'External request');
+    return c.json({ success, method });
+  } catch (error) {
+    return c.json({ error: String(error) }, 500);
+  }
+});
+
+/**
+ * Get job logs (polling endpoint)
+ * GET /jobs/:id/logs?since=ISO_DATE
+ */
+app.get('/jobs/:id/logs', (c) => {
+  const jobId = c.req.param('id');
+  const sinceParam = c.req.query('since');
+  const since = sinceParam ? new Date(sinceParam) : new Date(0);
+  
+  const logs = runner.getLogsSince(jobId, since);
+  const job = runner.getJob(jobId);
+
+  // Short, user-friendly progress summaries for UI.
+  const milestones = logs
+    .filter(l => l.level !== 'debug')
+    .map(l => ({
+      timestamp: l.timestamp,
+      level: l.level,
+      step: l.step,
+      summary: l.message,
+    }));
+  
+  return c.json({ 
+    logs,
+    milestones,
+    status: job?.status,
+    currentStep: job?.stepName,
+    progress: job ? (job.currentStep / job.totalSteps) : 0,
+  });
+});
+
+/**
+ * Stream job logs (SSE endpoint)
+ * GET /jobs/:id/stream
+ */
+app.get('/jobs/:id/stream', async (c) => {
+  const jobId = c.req.param('id');
+  const job = runner.getJob(jobId);
+  
+  if (!job) {
+    return c.json({ error: 'Job not found' }, 404);
+  }
+  
+  // Set SSE headers
+  c.header('Content-Type', 'text/event-stream');
+  c.header('Cache-Control', 'no-cache');
+  c.header('Connection', 'keep-alive');
+  
+  // Create a readable stream for SSE
+  const stream = new ReadableStream({
+    async start(controller) {
+      let lastCheck = new Date(0);
+      let iteration = 0;
+      const maxIterations = 600; // 10 minutes at 1s intervals
+      
+      const sendEvent = (data: unknown) => {
+        controller.enqueue(new TextEncoder().encode(`data: ${JSON.stringify(data)}\n\n`));
+      };
+      
+      // Initial status
+      sendEvent({
+        type: 'status',
+        status: job.status,
+        stepName: job.stepName,
+        progress: job.currentStep / job.totalSteps,
+      });
+      
+      // Poll for updates
+      while (iteration < maxIterations) {
+        const currentJob = runner.getJob(jobId);
+        if (!currentJob) break;
+        
+        // Send new logs
+        const newLogs = runner.getLogsSince(jobId, lastCheck);
+        for (const log of newLogs) {
+          sendEvent({
+            type: 'log',
+            ...log,
+            timestamp: log.timestamp.toISOString(),
+          });
+        }
+        
+        if (newLogs.length > 0) {
+          lastCheck = newLogs[newLogs.length - 1].timestamp;
+        }
+        
+        // Check for completion
+        if (['completed', 'failed', 'cancelled'].includes(currentJob.status)) {
+          sendEvent({
+            type: 'complete',
+            status: currentJob.status,
+            output: currentJob.output,
+            error: currentJob.error,
+            cost: currentJob.actualCostUsd,
+          });
+          break;
+        }
+        
+        // Wait before next poll
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        iteration++;
+      }
+      
+      controller.close();
+    },
+  });
+  
+  return new Response(stream);
+});
+
 // =============================================================================
 // METERING & USAGE
 // =============================================================================
