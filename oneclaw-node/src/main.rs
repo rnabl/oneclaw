@@ -4,6 +4,7 @@ mod config;
 mod conversation;
 mod daemon;
 mod executor;
+mod heartbeat;
 mod identity;
 mod integration;
 mod memory;

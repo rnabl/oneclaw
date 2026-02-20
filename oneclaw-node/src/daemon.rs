@@ -2,14 +2,14 @@ use axum::{extract::State, http::StatusCode, response::Html, routing::{get, post
 use serde::{Deserialize, Serialize};
 use std::sync::Arc;
 use tower_http::cors::CorsLayer;
-use crate::{agent_os, config, conversation, executor, identity, integration, memory, monitor, oauth_config, receipt, store, workflow};
+use crate::{agent_os, config, conversation, executor, heartbeat, identity, integration, memory, monitor, oauth_config, receipt, store, workflow};
 
 pub struct AppState {
     pub config: &'static config::NodeConfig,
-    pub executor_registry: executor::Registry,
+    pub executor_registry: Arc<executor::Registry>,
     pub store: Arc<dyn store::Store>,
-    pub identity_manager: identity::IdentityManager,
-    pub conversation_manager: conversation::ConversationManager,
+    pub identity_manager: Arc<identity::IdentityManager>,
+    pub conversation_manager: Arc<conversation::ConversationManager>,
     pub agent_os: agent_os::AgentOS,
     pub harness_tools: Vec<agent_os::ToolDefinition>,
     pub job_monitor: monitor::JobMonitor,
@@ -111,16 +111,38 @@ pub async fn start(port: u16) -> anyhow::Result<()> {
     // Initialize job monitor
     let job_monitor = monitor::JobMonitor::default();
     
+    // Wrap managers in Arc for sharing with heartbeat
+    let executor_registry = Arc::new(executor_registry);
+    let identity_manager = Arc::new(identity_manager);
+    let conversation_manager = Arc::new(conversation_manager);
+    
     let state = Arc::new(AppState { 
         config, 
-        executor_registry,
-        store: store_instance,
-        identity_manager,
-        conversation_manager,
-        agent_os,
-        harness_tools,
+        executor_registry: executor_registry.clone(),
+        store: store_instance.clone(),
+        identity_manager: identity_manager.clone(),
+        conversation_manager: conversation_manager.clone(),
+        agent_os: agent_os.clone(),
+        harness_tools: harness_tools.clone(),
         job_monitor,
     });
+
+    // Start heartbeat service in background
+    let heartbeat_config = heartbeat::HeartbeatConfig::default();
+    if heartbeat_config.enabled {
+        let heartbeat_service = Arc::new(heartbeat::HeartbeatService::new(
+            heartbeat_config,
+            agent_os,
+            executor_registry,
+            conversation_manager,
+            identity_manager,
+            harness_tools,
+            config,
+        ));
+        tokio::spawn(async move {
+            heartbeat_service.start().await;
+        });
+    }
 
     let app = Router::new()
         .route("/", get(ui_dashboard))

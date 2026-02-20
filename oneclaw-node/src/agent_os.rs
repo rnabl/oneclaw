@@ -164,7 +164,7 @@ Respond naturally. If you use a tool, I'll execute it and you can summarize the 
         )
     }
 
-    fn format_tool_registry(&self, tools: &[ToolDefinition]) -> String {
+    pub fn format_tool_registry(&self, tools: &[ToolDefinition]) -> String {
         if tools.is_empty() {
             return "No harness tools available.".to_string();
         }
