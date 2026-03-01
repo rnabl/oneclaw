@@ -260,9 +260,10 @@ export class SchedulerHeartbeat {
     const result = await workflowExecutor.executeStateLevelDiscovery({
       state: params.location,
       niche: params.niche,
-      maxCities: params.limit || 10,
+      cities: params.cities,
+      limit: params.limit || 10,
       tenantId: schedule.tenantId
-    });
+    } as any);
     
     return { executionId: result.executionId };
   }
