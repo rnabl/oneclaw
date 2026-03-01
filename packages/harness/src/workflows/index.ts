@@ -7,6 +7,7 @@ import './enrich-contact';
 import './golf-booking';
 import './sdr-pipeline';
 import './sdr-volume-outreach';
+import './complete-sdr-discovery';
 
 // Import tools to register them
 import '../tools/send-gmail';
