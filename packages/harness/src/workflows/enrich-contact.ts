@@ -25,7 +25,6 @@ import { runner } from '../execution/runner';
 import { z } from 'zod';
 import { findContacts } from '../providers/apify/lead-finder';
 import { searchBusinessOwner as perplexityOwnerSearch } from '../providers/perplexity/owner-search';
-import { searchBusinessOwner as dataForSEOOwnerSearch } from '../providers/dataforseo/serp';
 
 // =============================================================================
 // SCHEMAS
@@ -354,38 +353,7 @@ async function enrichContactHandler(
     }
   }
   
-  // Try DataForSEO (medium cost)
-  if (businessName) {
-    try {
-      await ctx.log('info', 'Trying DataForSEO SERP enrichment');
-      const dataForSEOResult = await enrichViaDataForSEO(ctx, businessName, city, state);
-      
-      if (dataForSEOResult && dataForSEOResult.owner) {
-        owner = dataForSEOResult.owner;
-        source = 'dataforseo';
-        cost = 0.10;
-        
-        await ctx.log('info', 'DataForSEO found owner contact');
-        ctx.recordApiCall('dataforseo', 'serp', 1);
-        
-        const timeMs = Date.now() - startTime;
-        return {
-          url,
-          businessName,
-          owner,
-          contacts: [],
-          company: null,
-          method: 'dataforseo',
-          source,
-          timeMs,
-          cost,
-          fallbackUsed: true,
-        };
-      }
-    } catch (error) {
-      await ctx.log('warn', `DataForSEO failed: ${error}`);
-    }
-  }
+  // Skip DataForSEO - using Apify and Perplexity only
   
   // Try direct LinkedIn search (most expensive, last resort)
   try {
