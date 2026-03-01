@@ -214,14 +214,18 @@ async function businessDiscoveryHandler(
   
   await ctx.log('info', `Starting discovery: ${niche} in ${location}`, { limit, enrich });
   
-  // STEP 1: Call APIFY
+  // ==========================================================================
+  // STEP 1: Call APIFY (Returns businesses immediately)
+  // ==========================================================================
+  runner.updateStep(ctx.jobId, 1, 'Discovering businesses via Apify', 4);
+  
   const { searchBusinesses } = await import('../providers/apify/google-places');
   
   const locationParts = location.split(',').map(s => s.trim());
   const city = locationParts[0] || location;
   const state = locationParts[1] || '';
   
-  await ctx.log('info', `Calling APIFY: city="${city}", state="${state}", query="${niche}"`);
+  await ctx.log('info', `Calling APIFY Leads Finder: city="${city}", state="${state}", query="${niche}"`);
   
   const results = await searchBusinesses({
     query: niche,
@@ -230,14 +234,14 @@ async function businessDiscoveryHandler(
     maxResults: limit,
   });
   
-  await ctx.log('info', `APIFY returned ${results.length} businesses`);
+  await ctx.log('info', `✅ APIFY returned ${results.length} businesses`);
   
   // Record cost: Apify Leads Finder is $1.50 per 1000 leads
   const apifyCost = (results.length / 1000) * 1.50;
   ctx.recordApiCall('apify', 'leads_finder', results.length);
-  await ctx.log('info', `Cost: $${apifyCost.toFixed(4)} for ${results.length} leads`);
+  await ctx.log('info', `💰 Discovery cost: $${apifyCost.toFixed(4)} (${results.length} leads @ $1.50/1000)`);
   
-  // Deduplicate
+  // Deduplicate by place ID
   const seen = new Set<string>();
   const uniqueResults = results.filter(r => {
     const id = r.googlePlaceId || r.name;
@@ -246,9 +250,11 @@ async function businessDiscoveryHandler(
     return true;
   });
   
-  const apifyTime = Date.now() - startTime;
+  // ==========================================================================
+  // STEP 2: Website Scanner (AFTER Apify returns)
+  // ==========================================================================
+  runner.updateStep(ctx.jobId, 2, 'Scanning websites for signals', 4);
   
-  // STEP 2: Enrich with website scanner (FREE - just HTTP fetches)
   const enrichStartTime = Date.now();
   const businessesWithWebsites = uniqueResults.filter(b => b.website);
   

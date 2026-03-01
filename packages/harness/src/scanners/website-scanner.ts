@@ -184,23 +184,45 @@ export async function scanWebsite(
   };
   
   try {
-    // Add human-like delay before scan (200-800ms)
-    await sleep(500, 0.6);
+    // Try direct fetch first (no proxy)
+    let response: Response;
     
-    // Try fetch with automatic proxy fallback
-    const response = await proxyManager.fetchWithFallback(url, {
-      signal: AbortSignal.timeout(timeout),
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-        'Accept-Language': 'en-US,en;q=0.5',
-        'Accept-Encoding': 'gzip, deflate, br',
-        'DNT': '1',
-        'Connection': 'keep-alive',
-        'Upgrade-Insecure-Requests': '1',
-      },
-      redirect: 'follow',
-    }, 2); // Max 2 retries with proxy
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), timeout);
+      
+      response = await fetch(url, {
+        signal: controller.signal,
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+          'Accept-Language': 'en-US,en;q=0.5',
+        },
+        redirect: 'follow',
+      });
+      
+      clearTimeout(timeoutId);
+      
+    } catch (directError) {
+      // Direct fetch failed - try with residential proxy
+      console.log(`[Scanner] Direct fetch failed for ${url}, trying with proxy...`);
+      
+      response = await proxyManager.fetchWithFallback(url, {
+        signal: AbortSignal.timeout(timeout),
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+          'Accept-Language': 'en-US,en;q=0.5',
+          'Accept-Encoding': 'gzip, deflate, br',
+          'DNT': '1',
+          'Connection': 'keep-alive',
+          'Upgrade-Insecure-Requests': '1',
+        },
+        redirect: 'follow',
+      }, 2); // Max 2 retries with proxy only if direct failed
+      
+      console.log(`[Scanner] ✅ Proxy fetch succeeded for ${url}`);
+    }
     
     result.statusCode = response.status;
     result.accessible = response.ok;
