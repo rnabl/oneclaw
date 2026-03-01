@@ -231,7 +231,11 @@ async function businessDiscoveryHandler(
   });
   
   await ctx.log('info', `APIFY returned ${results.length} businesses`);
-  ctx.recordApiCall('apify', 'google_maps_scraper', results.length);
+  
+  // Record cost: Apify Leads Finder is $1.50 per 1000 leads
+  const apifyCost = (results.length / 1000) * 1.50;
+  ctx.recordApiCall('apify', 'leads_finder', results.length);
+  await ctx.log('info', `Cost: $${apifyCost.toFixed(4)} for ${results.length} leads`);
   
   // Deduplicate
   const seen = new Set<string>();
