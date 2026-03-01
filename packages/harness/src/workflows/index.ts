@@ -20,3 +20,4 @@ export { enrichContactHandler } from './enrich-contact';
 export { golfBookingHandler } from './golf-booking';
 export { sdrPipelineHandler } from './sdr-pipeline';
 export { volumeOutreachHandler } from './sdr-volume-outreach';
+export { completeSDRDiscoveryHandler } from './complete-sdr-discovery';
