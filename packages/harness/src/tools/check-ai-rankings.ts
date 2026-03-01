@@ -13,6 +13,7 @@
  */
 
 import { z } from 'zod';
+import { getPrimaryQuery } from '../data/search-queries';
 
 const CheckAIRankingsInputSchema = z.object({
   niche: z.string().describe('Business niche (e.g., "HVAC", "plumbing", "med spa")'),
@@ -54,11 +55,10 @@ async function checkAIRankingsHandler(
     throw new Error('PERPLEXITY_API_KEY not configured');
   }
   
-  // Build query in the format you specified
-  const servicePhrase = input.service ? ` for ${input.service}` : '';
-  const query = `Best ${input.niche} in ${input.city}, ${input.state}${servicePhrase}`;
+  // Use data-driven query template (not guessing!)
+  const query = getPrimaryQuery(input.niche, input.city, input.state, input.service);
   
-  console.log(`[AI Rankings] Query: "${query}"`);
+  console.log(`[AI Rankings] Using template query: "${query}"`);
   
   try {
     // Query Perplexity
