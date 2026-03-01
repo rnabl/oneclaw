@@ -1144,16 +1144,16 @@ app.post('/schedules', async (c) => {
     // Parse natural language schedule
     const parsedSchedule = parseSchedule(scheduleInput);
 
-    // Create schedule
+    // Create schedule using the parsed schedule (already has correct types from Zod)
     const schedule = scheduleStore.create({
+      ...parsedSchedule,
       name,
       description,
       workflow,
       params,
       tenantId,
       enabled: true,
-      ...parsedSchedule
-    });
+    } as any);
 
     return c.json({ schedule });
   } catch (error) {
