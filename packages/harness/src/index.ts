@@ -80,7 +80,7 @@ export type { TenantTier, TenantPolicy, PolicyCheckResult } from './policy';
 
 // Execution
 export { runner, ExecutionRunner } from './execution';
-export type { Job, JobStatus, StepContext, ExecuteOptions, WorkflowHandler } from './execution/runner';
+export type { Job as ExecutionJob, JobStatus, StepContext, ExecuteOptions, WorkflowHandler } from './execution/runner';
 
 // Metering
 export { meteringTracker, MeteringTracker, API_COSTS } from './metering';
@@ -120,10 +120,14 @@ export * from './pricing';
 
 // Database (Autonomous Job System)
 export { JobDatabase, getDatabase, closeDatabase } from './database';
-export type { 
-  Job as DbJob, 
-  JobStep as DbJobStep, 
-  Business as DbBusiness, 
-  Contact as DbContact, 
-  JobLog as DbJobLog 
-} from './database/schema';
+export type { Job as AutonomousJob, JobStep, Business, Contact, JobLog } from './database/schema';
+
+// Security
+export { pathValidator, PathValidator } from './security';
+export type { PathValidationResult } from './security';
+
+// Self-Improvement Tools
+export { executeCodeHandler } from './tools/execute-code';
+export { writeFileHandler } from './tools/write-file';
+export { readFileHandler } from './tools/read-file';
+export { databaseHandler, getDatabasePath, closeDatabaseConnections } from './tools/database';

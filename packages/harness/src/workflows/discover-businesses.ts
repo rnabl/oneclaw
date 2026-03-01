@@ -9,6 +9,7 @@ import type { StepContext } from '../execution/runner';
 import { runner } from '../execution/runner';
 import { z } from 'zod';
 import { scanWebsite, type WebsiteScanResult } from '../scanners/website-scanner';
+import { createClient } from '@supabase/supabase-js';
 
 const BusinessDiscoveryInput = z.object({
   niche: z.string(),
@@ -213,14 +214,18 @@ async function businessDiscoveryHandler(
   
   await ctx.log('info', `Starting discovery: ${niche} in ${location}`, { limit, enrich });
   
-  // STEP 1: Call APIFY
+  // ==========================================================================
+  // STEP 1: Call APIFY (Returns businesses immediately)
+  // ==========================================================================
+  runner.updateStep(ctx.jobId, 1, 'Discovering businesses via Apify', 4);
+  
   const { searchBusinesses } = await import('../providers/apify/google-places');
   
   const locationParts = location.split(',').map(s => s.trim());
   const city = locationParts[0] || location;
   const state = locationParts[1] || '';
   
-  await ctx.log('info', `Calling APIFY: city="${city}", state="${state}", query="${niche}"`);
+  await ctx.log('info', `Calling APIFY Leads Finder: city="${city}", state="${state}", query="${niche}"`);
   
   const results = await searchBusinesses({
     query: niche,
@@ -229,10 +234,14 @@ async function businessDiscoveryHandler(
     maxResults: limit,
   });
   
-  await ctx.log('info', `APIFY returned ${results.length} businesses`);
-  ctx.recordApiCall('apify', 'google_maps_scraper', results.length);
+  await ctx.log('info', `✅ APIFY returned ${results.length} businesses`);
   
-  // Deduplicate
+  // Record cost: Apify Leads Finder is $1.50 per 1000 leads
+  const apifyCost = (results.length / 1000) * 1.50;
+  ctx.recordApiCall('apify', 'leads_finder', results.length);
+  await ctx.log('info', `💰 Discovery cost: $${apifyCost.toFixed(4)} (${results.length} leads @ $1.50/1000)`);
+  
+  // Deduplicate by place ID
   const seen = new Set<string>();
   const uniqueResults = results.filter(r => {
     const id = r.googlePlaceId || r.name;
@@ -241,9 +250,11 @@ async function businessDiscoveryHandler(
     return true;
   });
   
-  const apifyTime = Date.now() - startTime;
+  // ==========================================================================
+  // STEP 2: Website Scanner (AFTER Apify returns)
+  // ==========================================================================
+  runner.updateStep(ctx.jobId, 2, 'Scanning websites for signals', 4);
   
-  // STEP 2: Enrich with website scanner (FREE - just HTTP fetches)
   const enrichStartTime = Date.now();
   const businessesWithWebsites = uniqueResults.filter(b => b.website);
   
@@ -252,31 +263,48 @@ async function businessDiscoveryHandler(
   if (enrich && businessesWithWebsites.length > 0) {
     await ctx.log('info', `Enriching ${businessesWithWebsites.length} businesses with website scanner...`);
     
-    // Scan in parallel with timeout
-    const SCAN_TIMEOUT = 8000;
-    const MAX_CONCURRENT = 10;
+    // Scan in batches with rate limiting and human-like delays
+    const SCAN_TIMEOUT = 10000;
+    const MAX_CONCURRENT = 5; // Reduced for more human-like behavior
+    const DELAY_BETWEEN_BATCHES = 2000; // 2s between batches
+    const DELAY_BETWEEN_SCANS = 500; // 500ms between individual scans
     
     const batches: typeof businessesWithWebsites[] = [];
     for (let i = 0; i < businessesWithWebsites.length; i += MAX_CONCURRENT) {
       batches.push(businessesWithWebsites.slice(i, i + MAX_CONCURRENT));
     }
     
-    for (const batch of batches) {
-      const batchResults = await Promise.allSettled(
-        batch.map(async (b) => {
-          const scan = await scanWebsite(b.website!, SCAN_TIMEOUT);
-          return { website: b.website!, scan };
-        })
-      );
+    for (let batchIndex = 0; batchIndex < batches.length; batchIndex++) {
+      const batch = batches[batchIndex];
       
-      for (const result of batchResults) {
-        if (result.status === 'fulfilled') {
-          scanResults.set(result.value.website, result.value.scan);
+      await ctx.log('debug', `Scanning batch ${batchIndex + 1}/${batches.length} (${batch.length} websites)`);
+      
+      // Process batch with delays
+      for (const business of batch) {
+        try {
+          const scan = await scanWebsite(business.website!, SCAN_TIMEOUT);
+          scanResults.set(business.website!, scan);
+          
+          // Human-like delay between scans (randomized 300-700ms)
+          if (batch.indexOf(business) < batch.length - 1) {
+            const delay = DELAY_BETWEEN_SCANS + (Math.random() * 400 - 200);
+            await new Promise(resolve => setTimeout(resolve, delay));
+          }
+        } catch (error) {
+          await ctx.log('debug', `Scan failed for ${business.website}: ${error}`);
+          // Continue with next business
         }
+      }
+      
+      // Delay between batches (randomized 1.5-2.5s)
+      if (batchIndex < batches.length - 1) {
+        const batchDelay = DELAY_BETWEEN_BATCHES + (Math.random() * 1000 - 500);
+        await ctx.log('debug', `Waiting ${(batchDelay / 1000).toFixed(1)}s before next batch...`);
+        await new Promise(resolve => setTimeout(resolve, batchDelay));
       }
     }
     
-    await ctx.log('info', `Scanned ${scanResults.size}/${businessesWithWebsites.length} websites`);
+    await ctx.log('info', `Scanned ${scanResults.size}/${businessesWithWebsites.length} websites with rate limiting`);
   }
   
   const enrichmentTimeMs = Date.now() - enrichStartTime;
@@ -326,6 +354,68 @@ async function businessDiscoveryHandler(
   
   await ctx.log('info', `Discovery complete: ${businesses.length} businesses, ${stats.enriched} enriched in ${searchTimeMs}ms`);
   await ctx.log('info', `Stats: ${stats.withAds} with ads, ${stats.withBooking} with booking, ${stats.withChatbot} with chatbot`);
+  
+  // ==========================================================================
+  // STEP 4: Store in Supabase (Production Database)
+  // ==========================================================================
+  
+  if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    await ctx.log('info', 'Storing leads in Supabase production database...');
+    
+    try {
+      const supabase = createClient(
+        process.env.SUPABASE_URL,
+        process.env.SUPABASE_SERVICE_ROLE_KEY
+      );
+      
+      const leadRecords = businesses.map(b => {
+        const signals = b.signals || {};
+        
+        // Auto-calculate scores from signals
+        let score = 50;
+        if (b.website) score += 20;
+        if (signals.hasAds) score += 10;
+        if (!signals.aiReadable) score += 15; // Low AI visibility = bigger opportunity
+        if (b.reviewCount && b.reviewCount > 20) score += 5;
+        
+        return {
+          company_name: b.name,
+          website: b.website,
+          phone: b.phone,
+          industry: niche,
+          address: b.address,
+          city: b.city,
+          state: b.state,
+          zip_code: b.zipCode,
+          google_place_id: b.googlePlaceId || b.placeId,
+          google_rating: b.rating,
+          google_reviews: b.reviewCount,
+          google_maps_url: b.googleMapsUrl,
+          image_url: b.imageUrl,
+          website_signals: signals,
+          lead_score: Math.min(score, 100),
+          geo_readiness_score: signals.seoOptimized ? 7.0 : 3.0,
+          aeo_readiness_score: signals.aiReadable ? 7.0 : 2.0,
+          stage: 'discovered',
+          source_job_id: ctx.jobId,
+        };
+      });
+      
+      const { data, error } = await supabase
+        .from('crm.leads')
+        .insert(leadRecords)
+        .select('id');
+      
+      if (error) {
+        await ctx.log('warn', `Supabase storage failed: ${error.message}`);
+      } else {
+        await ctx.log('info', `✅ Stored ${data?.length || 0} leads in Supabase crm.leads table`);
+      }
+    } catch (error) {
+      await ctx.log('warn', `Supabase error: ${error}. Continuing without Supabase storage.`);
+      // Don't fail workflow if Supabase unavailable
+    }
+  }
   
   // Build formatted response for chat display
   const formattedResponse = formatDiscoveryForChat(businesses, stats, niche, location, searchTimeMs);

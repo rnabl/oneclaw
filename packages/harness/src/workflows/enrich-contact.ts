@@ -25,7 +25,6 @@ import { runner } from '../execution/runner';
 import { z } from 'zod';
 import { findContacts } from '../providers/apify/lead-finder';
 import { searchBusinessOwner as perplexityOwnerSearch } from '../providers/perplexity/owner-search';
-import { searchBusinessOwner as dataForSEOOwnerSearch } from '../providers/dataforseo/serp';
 
 // =============================================================================
 // SCHEMAS
@@ -115,43 +114,8 @@ async function enrichViaPerplexity(
 }
 
 /**
- * Method 2: DataForSEO SERP - $0.10-0.15 per search
- * Rich SERP data (AI Overview, Featured Snippets, Knowledge Graph)
- */
-async function enrichViaDataForSEO(
-  ctx: StepContext,
-  businessName: string,
-  city?: string,
-  state?: string
-): Promise<{ owner: ContactPerson | null; sources: string[] } | null> {
-  
-  await ctx.log('info', `Searching DataForSEO SERP for ${businessName} owner`);
-  
-  try {
-    const result = await dataForSEOOwnerSearch({ businessName, city, state });
-    
-    if (!result.ownerName) {
-      return null;
-    }
-    
-    return {
-      owner: {
-        name: result.ownerName,
-        title: result.ownerRole || 'Owner',
-        seniorityLevel: 'owner',
-      },
-      sources: result.allMentions.map(m => m.source),
-    };
-    
-  } catch (error) {
-    await ctx.log('warn', `DataForSEO search failed: ${error}`);
-    throw error;
-  }
-}
-
-/**
- * Method 3: Apify LinkedIn (code_crafter/leads-finder) - $0.15+ per search
- * Full LinkedIn profile enrichment
+ * Method 2: Apify LinkedIn (code_crafter/leads-finder) - $1.50 per 1000
+ * Full LinkedIn profile enrichment with verified emails
  */
 async function enrichViaApifyLeadFinder(
   ctx: StepContext,
@@ -354,38 +318,7 @@ async function enrichContactHandler(
     }
   }
   
-  // Try DataForSEO (medium cost)
-  if (businessName) {
-    try {
-      await ctx.log('info', 'Trying DataForSEO SERP enrichment');
-      const dataForSEOResult = await enrichViaDataForSEO(ctx, businessName, city, state);
-      
-      if (dataForSEOResult && dataForSEOResult.owner) {
-        owner = dataForSEOResult.owner;
-        source = 'dataforseo';
-        cost = 0.10;
-        
-        await ctx.log('info', 'DataForSEO found owner contact');
-        ctx.recordApiCall('dataforseo', 'serp', 1);
-        
-        const timeMs = Date.now() - startTime;
-        return {
-          url,
-          businessName,
-          owner,
-          contacts: [],
-          company: null,
-          method: 'dataforseo',
-          source,
-          timeMs,
-          cost,
-          fallbackUsed: true,
-        };
-      }
-    } catch (error) {
-      await ctx.log('warn', `DataForSEO failed: ${error}`);
-    }
-  }
+  // Skip DataForSEO - using Apify and Perplexity only
   
   // Try direct LinkedIn search (most expensive, last resort)
   try {
