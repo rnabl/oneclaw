@@ -6,6 +6,7 @@ import './discover-businesses';
 import './enrich-contact';
 import './golf-booking';
 import './sdr-pipeline';
+import './sdr-volume-outreach';
 
 // Import tools to register them
 import '../tools/send-gmail';
@@ -17,3 +18,4 @@ export { businessDiscoveryHandler } from './discover-businesses';
 export { enrichContactHandler } from './enrich-contact';
 export { golfBookingHandler } from './golf-booking';
 export { sdrPipelineHandler } from './sdr-pipeline';
+export { volumeOutreachHandler } from './sdr-volume-outreach';
