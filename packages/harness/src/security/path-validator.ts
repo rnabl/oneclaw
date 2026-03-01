@@ -10,6 +10,7 @@
 
 import path from 'path';
 import fs from 'fs';
+import os from 'os';
 
 export interface PathValidationResult {
   allowed: boolean;
@@ -17,7 +18,24 @@ export interface PathValidationResult {
   normalizedPath?: string;
 }
 
-const WORKSPACE_ROOT = path.join(__dirname, '../../oneclaw-workspace');
+// Workspace location (configurable via environment)
+// Development: packages/harness/oneclaw-workspace
+// Production: ~/.oneclaw/workspace or custom path
+const getWorkspaceRoot = (): string => {
+  if (process.env.ONECLAW_WORKSPACE) {
+    return process.env.ONECLAW_WORKSPACE;
+  }
+  
+  // Check if we're in production mode
+  if (process.env.NODE_ENV === 'production') {
+    return path.join(os.homedir(), '.oneclaw', 'workspace');
+  }
+  
+  // Development: relative to this file
+  return path.join(__dirname, '../../oneclaw-workspace');
+};
+
+const WORKSPACE_ROOT = getWorkspaceRoot();
 
 const ALLOWED_PATHS = [
   WORKSPACE_ROOT,

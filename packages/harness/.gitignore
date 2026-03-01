@@ -1,0 +1,19 @@
+# Build output
+dist/
+*.tsbuildinfo
+
+# Dependencies
+node_modules/
+
+# Environment
+.env
+.env.local
+
+# OneClaw Self-Improvement Workspace
+# This is where AI-generated code, databases, and artifacts live
+# Should NOT be committed to version control
+oneclaw-workspace/
+
+# Test artifacts
+*.test.db
+test-*.db

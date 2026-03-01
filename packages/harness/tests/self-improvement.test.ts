@@ -8,12 +8,12 @@
  * 4. Database operations
  */
 
-import { pathValidator } from '../security/path-validator';
-import { writeFileHandler } from './write-file';
-import { readFileHandler } from './read-file';
-import { executeCodeHandler } from './execute-code';
-import { databaseHandler } from './database';
-import { initDatabaseHandler } from './init-database';
+import { pathValidator } from '../src/security/path-validator';
+import { writeFileHandler } from '../src/tools/write-file';
+import { readFileHandler } from '../src/tools/read-file';
+import { executeCodeHandler } from '../src/tools/execute-code';
+import { databaseHandler } from '../src/tools/database';
+import { initDatabaseHandler } from '../src/tools/init-database';
 
 const TENANT_ID = 'test-tenant';
 
