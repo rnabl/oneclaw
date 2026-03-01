@@ -257,31 +257,48 @@ async function businessDiscoveryHandler(
   if (enrich && businessesWithWebsites.length > 0) {
     await ctx.log('info', `Enriching ${businessesWithWebsites.length} businesses with website scanner...`);
     
-    // Scan in parallel with timeout
-    const SCAN_TIMEOUT = 8000;
-    const MAX_CONCURRENT = 10;
+    // Scan in batches with rate limiting and human-like delays
+    const SCAN_TIMEOUT = 10000;
+    const MAX_CONCURRENT = 5; // Reduced for more human-like behavior
+    const DELAY_BETWEEN_BATCHES = 2000; // 2s between batches
+    const DELAY_BETWEEN_SCANS = 500; // 500ms between individual scans
     
     const batches: typeof businessesWithWebsites[] = [];
     for (let i = 0; i < businessesWithWebsites.length; i += MAX_CONCURRENT) {
       batches.push(businessesWithWebsites.slice(i, i + MAX_CONCURRENT));
     }
     
-    for (const batch of batches) {
-      const batchResults = await Promise.allSettled(
-        batch.map(async (b) => {
-          const scan = await scanWebsite(b.website!, SCAN_TIMEOUT);
-          return { website: b.website!, scan };
-        })
-      );
+    for (let batchIndex = 0; batchIndex < batches.length; batchIndex++) {
+      const batch = batches[batchIndex];
       
-      for (const result of batchResults) {
-        if (result.status === 'fulfilled') {
-          scanResults.set(result.value.website, result.value.scan);
+      await ctx.log('debug', `Scanning batch ${batchIndex + 1}/${batches.length} (${batch.length} websites)`);
+      
+      // Process batch with delays
+      for (const business of batch) {
+        try {
+          const scan = await scanWebsite(business.website!, SCAN_TIMEOUT);
+          scanResults.set(business.website!, scan);
+          
+          // Human-like delay between scans (randomized 300-700ms)
+          if (batch.indexOf(business) < batch.length - 1) {
+            const delay = DELAY_BETWEEN_SCANS + (Math.random() * 400 - 200);
+            await new Promise(resolve => setTimeout(resolve, delay));
+          }
+        } catch (error) {
+          await ctx.log('debug', `Scan failed for ${business.website}: ${error}`);
+          // Continue with next business
         }
+      }
+      
+      // Delay between batches (randomized 1.5-2.5s)
+      if (batchIndex < batches.length - 1) {
+        const batchDelay = DELAY_BETWEEN_BATCHES + (Math.random() * 1000 - 500);
+        await ctx.log('debug', `Waiting ${(batchDelay / 1000).toFixed(1)}s before next batch...`);
+        await new Promise(resolve => setTimeout(resolve, batchDelay));
       }
     }
     
-    await ctx.log('info', `Scanned ${scanResults.size}/${businessesWithWebsites.length} websites`);
+    await ctx.log('info', `Scanned ${scanResults.size}/${businessesWithWebsites.length} websites with rate limiting`);
   }
   
   const enrichmentTimeMs = Date.now() - enrichStartTime;
