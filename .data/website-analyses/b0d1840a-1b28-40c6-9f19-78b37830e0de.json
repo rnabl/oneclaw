@@ -1,0 +1,53 @@
+{
+  "overall_aeo_score": 45,
+  "aeo_readiness": {
+    "score": 40,
+    "summary": "The business has a basic online presence but lacks essential elements for strong AEO readiness, such as reviews, schema markup, and detailed content.",
+    "quick_wins": [
+      "Implement schema markup to enhance search engine understanding of the business.",
+      "Encourage customers to leave Google reviews to build credibility and improve local search visibility.",
+      "Expand website content to include detailed service descriptions, keywords, and location-specific information."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 30,
+    "found": "The business has a Google Business Profile (GBP) but lacks reviews and detailed information.",
+    "summary": "The GBP is incomplete and not optimized, with no reviews or detailed business description.",
+    "critical_issues": [
+      "No customer reviews, which are crucial for local search ranking and trust-building.",
+      "Incomplete business information, such as hours of operation and service areas.",
+      "Lack of posts or updates to engage with potential customers."
+    ]
+  },
+  "nap_citations": {
+    "score": 50,
+    "summary": "The business has consistent NAP (Name, Address, Phone number) information on its website but lacks citations on other platforms.",
+    "action_items": [
+      "Create and verify listings on major directories such as Yelp, Bing Places, and Yellow Pages.",
+      "Ensure NAP consistency across all online platforms and directories.",
+      "Monitor and update citations regularly to maintain accuracy."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "ContactPoint",
+    "AggregateRating"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of schema markup and detailed content",
+    "invisible_for": "Search engines and AI crawlers due to missing structured data and insufficient content depth",
+    "low_hanging_fruit": "Implement basic schema markup for LocalBusiness and Service types",
+    "authority_opportunity": "Build authority by regularly publishing informative content, obtaining customer reviews, and engaging with the local community"
+  },
+  "analyzed_at": "2026-02-27T04:00:39.157Z",
+  "lead_id": "b0d1840a-1b28-40c6-9f19-78b37830e0de",
+  "business_name": "Clear Springs Air Conditioning & Electric",
+  "website": "https://clearspringsacandelectric.com/",
+  "location": "New Braunfels, Texas",
+  "page_title": "Clear Springs AC &amp; Electric | Clear Springs Air Conditioning &amp; Electric",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_found": false
+}

@@ -1,0 +1,67 @@
+{
+  "overall_aeo_score": 68,
+  "aeo_readiness": {
+    "score": 60,
+    "summary": "AI assistants are unlikely to cite Build and Move LLC due to insufficient structured data and conversational content, but with improvements, they can gain visibility.",
+    "quick_wins": [
+      "Implement FAQPage schema with common handyman service questions and answers.",
+      "Enhance content with conversational language focused on user queries."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "Google Business Profile is well-optimized but has minor inconsistencies.",
+    "critical_issues": [
+      "Phone number mismatch between website and GBP.",
+      "Lack of regular posts or Q&A engagement."
+    ]
+  },
+  "nap_citations": {
+    "score": 75,
+    "summary": "NAP consistency is moderate with a minor phone number discrepancy.",
+    "action_items": [
+      "Standardize phone number format across all platforms (use (702) 327-0005).",
+      "Audit and correct NAP citations on third-party directories."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for service processes"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content tailored to AI queries.",
+    "invisible_for": "Local service queries such as 'handyman services near me' or 'drywall repair North Las Vegas'.",
+    "low_hanging_fruit": "Implementing FAQPage schema with questions like 'How much does drywall repair cost?'.",
+    "authority_opportunity": "Position as the local expert by creating content around common home maintenance challenges and solutions."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for ChatGPT and Google Bard.",
+    "pain_point": "Without AI optimization, they miss out on 40% of potential leads from voice and AI search.",
+    "proof_point": "Their website lacks FAQ schema and conversational content, making it less likely for AI to recommend them.",
+    "solution": "Our AEO strategy integrates structured data, conversational content, and GBP optimization to ensure AI models cite their services.",
+    "impact_estimate": "Expect a 30% increase in AI-driven leads within 3 months.",
+    "urgency": "Competitors optimizing for AI are capturing market share—act now to stay competitive."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads for Your Handyman Services",
+  "opening_line": "We analyzed your website and found opportunities to make your handyman services more visible to AI assistants.",
+  "cta": "Let's schedule a call to discuss how we can optimize your online presence for AI-driven growth.",
+  "analyzed_at": "2026-02-26T16:16:17.443Z",
+  "lead_id": "cfe61b52-7c71-44e1-a052-fd8b60d3c4de",
+  "business_name": "Build and Move LLC Handyman",
+  "website": "http://www.buildandmove.com/",
+  "location": "North Las Vegas, Nevada",
+  "page_title": "Handyman Services In N. Las Vegas, NV | Build And Move LLC",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 5,
+  "gbp_review_count": 80,
+  "gbp_found": true,
+  "nap_score": 75,
+  "nap_issues": [
+    "Phone mismatch: Website has +1 702-327-0005, GBP has (702) 327-0005"
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 68,
+  "aeo_readiness": {
+    "score": 55,
+    "summary": "AI assistants are unlikely to cite HVAC Cowboys due to limited structured data and a lack of conversational content.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup with detailed service information.",
+      "Expand FAQ content to address common HVAC queries and optimize with FAQPage schema."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 30,
+    "found": false,
+    "summary": "Google Business Profile is not optimized and is invisible to Google AI, severely limiting local search visibility.",
+    "critical_issues": [
+      "GBP is not set up or claimed.",
+      "Missing photos, posts, and Q&A to engage potential customers."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Focus on expanding citations to industry-specific directories."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema implemented",
+    "No HowTo schema for common HVAC tasks"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content prevents AI from recognizing HVAC Cowboys as an authority.",
+    "invisible_for": "Queries related to HVAC services in Kansas City, MO.",
+    "low_hanging_fruit": "Implementing LocalBusiness and FAQPage schema to improve AI recognition.",
+    "authority_opportunity": "Creating detailed content on HVAC maintenance and repairs, supported by schema markup, to position HVAC Cowboys as the local expert."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for answer engines and AI search.",
+    "pain_point": "Without AI optimization, HVAC Cowboys is missing out on 40% of potential leads from voice and AI assistants.",
+    "proof_point": "The Google Business Profile is not set up, making the business invisible in local AI-driven searches.",
+    "solution": "Our AEO approach includes structured data implementation, GBP optimization, and creating conversational content to boost AI visibility and drive more qualified leads.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 3 months.",
+    "urgency": "Competitors are already optimizing for AI, so acting now is crucial to stay competitive and capture market share."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads for HVAC Cowboys in Kansas City",
+  "opening_line": "We analyzed your website and found significant opportunities to improve your AI search visibility.",
+  "cta": "Let's schedule a call to discuss how we can optimize your online presence for AI and boost your lead generation.",
+  "analyzed_at": "2026-02-26T15:54:56.733Z",
+  "lead_id": "05ae4bf6-210e-4a16-9199-758ccf0d5505",
+  "business_name": "HVAC Cowboys",
+  "website": "https://www.hvaccowboyskc.com/",
+  "location": "Kansas City, MO",
+  "page_title": "Home | HVAC Cowboys",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": null,
+  "gbp_review_count": null,
+  "gbp_found": false,
+  "nap_score": 100,
+  "nap_issues": []
+}

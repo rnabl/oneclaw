@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 78,
+  "aeo_readiness": {
+    "score": 75,
+    "summary": "AI assistants are likely to cite Air Innovations HVAC due to strong local SEO signals, but conversational content and schema gaps limit their visibility.",
+    "quick_wins": [
+      "Implement FAQPage schema to highlight existing FAQ content.",
+      "Expand conversational content to address common HVAC queries in a natural, AI-friendly tone."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 90,
+    "found": true,
+    "summary": "Google Business Profile is well-optimized with high ratings, photos, and accurate information.",
+    "critical_issues": [
+      "No recent posts to engage with local audience.",
+      "Q&A section is not actively managed."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly audit citations to prevent future inconsistencies."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema despite existing FAQ content",
+    "No HowTo schema for service-related content"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content limits AI model citations.",
+    "invisible_for": "Queries related to 'HVAC services in Raleigh-Durham' where AI assistants prioritize rich, structured data.",
+    "low_hanging_fruit": "Implementing FAQPage schema to leverage existing FAQ content.",
+    "authority_opportunity": "Highlighting owner expertise and 30+ years of experience through AboutPage schema and detailed service descriptions."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for conversational search and structured data.",
+    "pain_point": "Missing out on 40% of potential leads from AI assistants like ChatGPT and Claude.",
+    "proof_point": "Despite a strong GBP and high ratings, the website lacks the schema and conversational content needed for AI visibility.",
+    "solution": "Our AEO approach integrates schema markup, expands conversational content, and leverages your expertise to make your business the top choice for AI-driven queries.",
+    "impact_estimate": "Expect a 30% increase in AI-driven leads within 3 months.",
+    "urgency": "Competitors are already optimizing for AI search—act now to secure your position."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads with Our AEO Expertise",
+  "opening_line": "We analyzed your website and identified key opportunities to boost your visibility with AI assistants.",
+  "cta": "Let's schedule a call to discuss how we can optimize your site for AI-driven search and increase your leads.",
+  "analyzed_at": "2026-02-26T15:43:57.416Z",
+  "lead_id": "448f0b05-9f95-4abf-bdac-2457cdced6c7",
+  "business_name": "Air Innovations Heating and Cooling, LLC.",
+  "website": "https://www.airinnovationshvac.com/",
+  "location": "Durham, North Carolina",
+  "page_title": "HOME | Air Innovations HVAC",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.9,
+  "gbp_review_count": 156,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

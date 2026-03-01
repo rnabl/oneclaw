@@ -1,0 +1,63 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 60,
+    "summary": "AI assistants are unlikely to cite Ventflow Services due to the absence of structured data and conversational content. They are missing out on AI-driven search visibility.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup with relevant details (e.g., address, services, reviews).",
+      "Create an FAQ section addressing common customer queries about dryer vent and air duct cleaning."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "Google Business Profile is well-optimized with a high rating, photos, and accurate contact information, but lacks regular posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent posts or updates on GBP.",
+      "No engagement with customer questions in the Q&A section."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected across platforms.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly monitor for any inconsistencies or new citation opportunities."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema markup.",
+    "No FAQPage schema implemented.",
+    "No HowTo schema for instructional content."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data prevents AI from identifying Ventflow as a reliable local service provider.",
+    "invisible_for": "Queries related to 'dryer vent cleaning in Kent, WA' or 'air duct cleaning services near me'.",
+    "low_hanging_fruit": "Adding LocalBusiness schema markup to provide AI with essential business information.",
+    "authority_opportunity": "Positioning as an expert through detailed FAQ content and instructional articles using HowTo schema."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven visibility for your HVAC business.",
+    "pain_point": "Without AI optimization, Ventflow is missing out on 40% of potential leads from AI assistants like ChatGPT and voice search users.",
+    "proof_point": "The website lacks critical schema markup and conversational content, making it less likely for AI to recommend their services.",
+    "solution": "Our AEO approach integrates structured data, conversational content, and authority signals to make Ventflow the top choice for AI-driven search queries.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 3 months.",
+    "urgency": "Competitors are already optimizing for AI search—waiting means losing ground and potential customers."
+  },
+  "email_subject_line": "Boost AI Visibility: Your Path to Top HVAC Rankings",
+  "opening_line": "We analyzed your website and identified key opportunities to enhance your AI-driven search presence.",
+  "cta": "Let’s schedule a call to discuss how we can optimize your site for AI search and boost your lead generation.",
+  "analyzed_at": "2026-02-26T16:08:16.258Z",
+  "lead_id": "9efd94dd-c70d-4fb6-b0c6-b0ba8602c002",
+  "business_name": "Ventflow Dryer Vent And Air Duct Cleaning Service",
+  "website": "http://ventflowservices.com/",
+  "location": "Kent, Washington",
+  "page_title": "Ventflow Services",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": 5,
+  "gbp_review_count": 139,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

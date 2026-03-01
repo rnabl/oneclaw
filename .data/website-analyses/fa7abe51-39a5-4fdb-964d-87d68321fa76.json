@@ -1,0 +1,53 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "Jade Air has a basic level of AEO readiness with some critical areas for improvement. The website has relevant content and schema markup but lacks comprehensive optimization for AI search visibility.",
+    "quick_wins": [
+      "Implement a review generation strategy to build Google reviews and improve local SEO.",
+      "Optimize meta tags and headings with targeted keywords related to AC and HVAC services in Dallas.",
+      "Enhance the website's internal linking structure to improve crawlability and user navigation."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 50,
+    "found": "The website has a clear business description and contact information but lacks detailed service pages and location-specific content.",
+    "summary": "Jade Air's website provides a general overview of services but lacks depth in content and geographic targeting, which are essential for Google Business Profile optimization.",
+    "critical_issues": [
+      "No dedicated service pages with detailed information and targeted keywords.",
+      "Lack of location-specific content to target local search queries."
+    ]
+  },
+  "nap_citations": {
+    "score": 60,
+    "summary": "The business has consistent NAP (Name, Address, Phone) information on the website but lacks citations across major directories and local listings.",
+    "action_items": [
+      "Create and verify a Google Business Profile with accurate NAP information.",
+      "List the business on relevant local directories such as Yelp, Yellow Pages, and local chamber of commerce websites.",
+      "Ensure NAP consistency across all online platforms and citations."
+    ]
+  },
+  "schema_gaps": [
+    "No Organization schema for business details.",
+    "Missing Service schema for detailed service offerings.",
+    "No LocalBusiness schema with geographic markup."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of comprehensive content and structured data to support AI-driven search queries.",
+    "invisible_for": "AI search algorithms due to insufficient content depth and structured data.",
+    "low_hanging_fruit": "Implement FAQ schema and expand service pages with detailed information and FAQs.",
+    "authority_opportunity": "Develop a blog section with informative articles on HVAC maintenance, energy efficiency, and local weather-related topics to establish authority and improve search visibility."
+  },
+  "analyzed_at": "2026-02-27T02:28:38.264Z",
+  "lead_id": "fa7abe51-39a5-4fdb-964d-87d68321fa76",
+  "business_name": "Jade Air",
+  "website": "http://jadeair.net/",
+  "location": "Dallas, Texas",
+  "page_title": "Jade Air | Home Air Conditioning Repair &amp; Service | Dallas TX",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

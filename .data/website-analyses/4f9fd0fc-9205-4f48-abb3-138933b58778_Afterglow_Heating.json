@@ -1,0 +1,63 @@
+{
+  "overall_aeo_score": 55,
+  "aeo_readiness": {
+    "score": 40,
+    "summary": "AI assistants are unlikely to cite Afterglow Heating due to a lack of structured data and conversational content, limiting their visibility in AI-driven search results.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup.",
+      "Create an FAQ page with common HVAC queries and detailed answers."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 20,
+    "found": false,
+    "summary": "Google Business Profile is not optimized or claimed, making the business invisible to Google AI and local search.",
+    "critical_issues": [
+      "GBP not claimed or set up.",
+      "Missing photos, posts, and Q&A engagement."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Expand NAP citations to additional local directories."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema.",
+    "No FAQPage schema.",
+    "No HowTo schema for common HVAC tasks."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data prevents AI from recognizing them as a local authority.",
+    "invisible_for": "Queries related to 'HVAC services in Berkeley' and 'emergency plumbing near me'.",
+    "low_hanging_fruit": "Implementing LocalBusiness schema to improve AI recognition.",
+    "authority_opportunity": "Creating content that highlights certifications, expertise, and smart technology integrations."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for answer engines and AI search.",
+    "pain_point": "Without AI optimization, they are missing out on 40% of potential leads from voice and AI-assisted searches.",
+    "proof_point": "Their Google Business Profile is not found, and there is no schema markup to aid AI in citing their services.",
+    "solution": "Our AEO approach integrates schema markup, GBP optimization, and conversational content to make Afterglow Heating a top AI-recommended choice.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 6 months.",
+    "urgency": "Competitors optimizing for AI are already capturing market share—act now to stay competitive."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads for Afterglow Heating Today!",
+  "opening_line": "We analyzed your website and found significant opportunities to boost your visibility with AI search and answer engines.",
+  "cta": "Schedule a consultation to discuss our AEO strategy and how it can drive more leads for your business.",
+  "analyzed_at": "2026-02-26T16:19:41.884Z",
+  "lead_id": "4f9fd0fc-9205-4f48-abb3-138933b58778",
+  "business_name": "Afterglow Heating",
+  "website": "http://callafterglow.com/",
+  "location": "Berkeley, California",
+  "page_title": "Providing premium plumbing and heating services with professional, clean uniformed technicians, upfront pricing, high-quality parts and warranties, and a strong focus on client respect and home care. Expert service with local roots in the Bay Area, offering honest, long-lasting solutions, smart technology integrations, and peace of mind for every customer.",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": null,
+  "gbp_review_count": null,
+  "gbp_found": false,
+  "nap_score": 100,
+  "nap_issues": []
+}

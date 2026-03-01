@@ -8,12 +8,21 @@ importers:
 
   .:
     dependencies:
+      csv-parse:
+        specifier: ^6.1.0
+        version: 6.1.0
+      csv-stringify:
+        specifier: ^6.6.0
+        version: 6.6.0
       eslint-scope:
         specifier: ^7.2.2
         version: 7.2.2
       eslint-visitor-keys:
         specifier: ^3.4.3
         version: 3.4.3
+      https-proxy-agent:
+        specifier: ^7.0.6
+        version: 7.0.6
     devDependencies:
       '@supabase/supabase-js':
         specifier: ^2.43.0
@@ -22,7 +31,7 @@ importers:
         specifier: ^20.11.0
         version: 20.19.33
       dotenv:
-        specifier: ^16.4.0
+        specifier: ^16.6.1
         version: 16.6.1
       eslint:
         specifier: ^8.56.0
@@ -2215,6 +2224,14 @@ packages:
   /csstype@3.2.3:
     resolution: {integrity: sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==}
     dev: true
+
+  /csv-parse@6.1.0:
+    resolution: {integrity: sha512-CEE+jwpgLn+MmtCpVcPtiCZpVtB6Z2OKPTr34pycYYoL7sxdOkXDdQ4lRiw6ioC0q6BLqhc6cKweCVvral8yhw==}
+    dev: false
+
+  /csv-stringify@6.6.0:
+    resolution: {integrity: sha512-YW32lKOmIBgbxtu3g5SaiqWNwa/9ISQt2EcgOq0+RAIFufFp9is6tqNnKahqE5kuKvrnYAzs28r+s6pXJR8Vcw==}
+    dev: false
 
   /data-uri-to-buffer@4.0.1:
     resolution: {integrity: sha512-0R9ikRb668HB7QDxT1vkpuUBtqc53YyAwMwGeUFKRojY/NWKvdZ+9UYtRfGmhqNbRkTSVpMbmyhXipFFv2cb/A==}

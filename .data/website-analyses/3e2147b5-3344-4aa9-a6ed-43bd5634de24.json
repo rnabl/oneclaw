@@ -1,0 +1,54 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "The business has a basic level of AEO readiness with some foundational elements in place, such as schema markup and localized content. However, there are significant gaps in user engagement, reviews, and authority signals.",
+    "quick_wins": [
+      "Implement a strategy to generate and showcase customer reviews on the website and Google Business Profile.",
+      "Optimize meta tags and headers with targeted keywords related to HVAC services in Mesa and Phoenix.",
+      "Create localized content that highlights the business's service areas and unique value propositions."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 40,
+    "found": false,
+    "summary": "The business does not appear to have an optimized Google Business Profile (GBP). No GBP was found during the analysis, which is critical for local search visibility.",
+    "critical_issues": [
+      "No active GBP exists for the business.",
+      "Missing opportunity to leverage GBP for local search and customer engagement.",
+      "Lack of reviews and business information on GBP, which impacts local SEO."
+    ]
+  },
+  "nap_citations": {
+    "score": 55,
+    "summary": "The business's Name, Address, and Phone Number (NAP) citations are partially consistent across the web, but there is room for improvement in citation quality and quantity.",
+    "action_items": [
+      "Audit and update NAP information across all online directories and platforms to ensure consistency.",
+      "Claim and optimize profiles on major citation sites like Yelp, Yellow Pages, and industry-specific directories.",
+      "Monitor and manage citations regularly to maintain accuracy and consistency."
+    ]
+  },
+  "schema_gaps": [
+    "No Organization schema found for the business details.",
+    "Missing Service schema for individual HVAC services offered.",
+    "No FAQPage schema to address common customer queries."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of user-generated content and engagement signals (e.g., reviews, testimonials).",
+    "invisible_for": "Local search users and potential customers searching for HVAC services in Mesa and Phoenix.",
+    "low_hanging_fruit": "Implementing a review generation strategy and optimizing the website for local SEO.",
+    "authority_opportunity": "Creating high-quality, informative content (e.g., blog posts, guides) that establishes the business as an expert in the HVAC industry."
+  },
+  "analyzed_at": "2026-02-27T03:37:15.229Z",
+  "lead_id": "3e2147b5-3344-4aa9-a6ed-43bd5634de24",
+  "business_name": "AC and Refrigeration (AC, Heating, Refrigeration, Electrical and Plumbing)",
+  "website": "https://www.vesselhomeservices.com/",
+  "location": "Tempe, Arizona",
+  "page_title": "HVAC Services in Mesa | Vessel Home Services LLC",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

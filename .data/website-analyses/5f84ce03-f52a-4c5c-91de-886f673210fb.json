@@ -1,0 +1,54 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "The website has a basic structure for AEO but lacks depth in content and optimization for AI search. The site includes relevant keywords and has implemented schema markup, but there is room for improvement in content quality and user engagement.",
+    "quick_wins": [
+      "Expand the blog section with detailed, keyword-rich articles about HVAC and electrical services.",
+      "Implement more structured data types to enhance search engine understanding of the services offered.",
+      "Add customer testimonials and reviews to build trust and improve local search visibility."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 50,
+    "found": "The website includes a basic 'About Us' section and mentions of local service areas, but lacks a clear Google Business Profile strategy.",
+    "summary": "The business has not fully leveraged the potential of a Google Business Profile. There are no reviews, and the business does not appear to be actively managing its local presence.",
+    "critical_issues": [
+      "No Google Business Profile reviews or engagement.",
+      "Lack of detailed location-specific content.",
+      "No clear strategy for managing and updating the business profile."
+    ]
+  },
+  "nap_citations": {
+    "score": 60,
+    "summary": "The business has consistent NAP (Name, Address, Phone Number) information on its website, but there is no evidence of widespread citations across local directories and platforms.",
+    "action_items": [
+      "Create and verify listings on major local directories such as Yelp, Yellow Pages, and Bing Places.",
+      "Ensure NAP consistency across all online platforms and directories.",
+      "Encourage customers to leave reviews on these platforms to boost local search presence."
+    ]
+  },
+  "schema_gaps": [
+    "No Organization schema for the business.",
+    "Missing Service schema for specific HVAC and electrical services.",
+    "No LocalBusiness schema with detailed location information."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of detailed, high-quality content that targets long-tail keywords and user intent.",
+    "invisible_for": "The website is not optimized for voice search and lacks structured data to enhance AI-driven search results.",
+    "low_hanging_fruit": "Adding FAQ sections and how-to guides to address common customer queries.",
+    "authority_opportunity": "Building backlinks from reputable HVAC and electrical industry websites to improve domain authority."
+  },
+  "analyzed_at": "2026-02-27T03:24:18.615Z",
+  "lead_id": "5f84ce03-f52a-4c5c-91de-886f673210fb",
+  "business_name": "Blue Collar Trades, L.L.C. of Concord, Mooresville & Davidson",
+  "website": "https://www.bluecollartrades.com/",
+  "location": "Concord, North Carolina",
+  "page_title": "Reliable HVAC &amp; Electrical Services You Can Trust | Blue Collar Trades Concord NC",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

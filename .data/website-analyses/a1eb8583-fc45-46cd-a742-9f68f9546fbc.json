@@ -1,0 +1,55 @@
+{
+  "overall_aeo_score": 68,
+  "aeo_readiness": {
+    "score": 72,
+    "summary": "The business has a basic level of AEO readiness with some positive customer reviews and schema implementation, but lacks a substantial online presence and review volume.",
+    "quick_wins": [
+      "Encourage satisfied customers to leave Google reviews to build credibility and improve local search visibility.",
+      "Expand website content to include detailed service descriptions, location-specific keywords, and a blog for increased organic traffic.",
+      "Implement a consistent citation strategy across major directories to enhance local SEO."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 60,
+    "found": "The business has a Google Business Profile (GBP) but lacks reviews and engagement.",
+    "summary": "The GBP is not actively utilized, with no reviews or regular updates, which limits its effectiveness in local search.",
+    "critical_issues": [
+      "No customer reviews on GBP.",
+      "Insufficient business information and updates on the GBP.",
+      "Lack of engagement with customer queries and feedback on GBP."
+    ]
+  },
+  "nap_citations": {
+    "score": 55,
+    "summary": "The business has inconsistent or incomplete NAP (Name, Address, Phone Number) citations across online directories, which can confuse search engines and potential customers.",
+    "action_items": [
+      "Audit and update all NAP citations to ensure consistency across major directories like Yelp, Bing, and Yellow Pages.",
+      "Claim and verify the business listing on Google, Bing, and Apple Maps.",
+      "Regularly monitor and manage citations to correct any inaccuracies."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "AggregateRating"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of customer reviews and engagement on GBP and the website.",
+    "invisible_for": "Users searching for HVAC services in Lakewood, Colorado, due to low review volume and limited local SEO efforts.",
+    "low_hanging_fruit": "Encouraging customer reviews and improving GBP engagement.",
+    "authority_opportunity": "Creating high-quality, locally relevant content and building backlinks from local business directories and industry-related websites."
+  },
+  "analyzed_at": "2026-02-27T03:46:54.485Z",
+  "lead_id": "a1eb8583-fc45-46cd-a742-9f68f9546fbc",
+  "business_name": "Winter Brothers HVAC INC",
+  "website": "http://winter-bros.com/",
+  "location": "Lakewood, Colorado",
+  "page_title": "Winter Brothers - Heating and Cooling",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

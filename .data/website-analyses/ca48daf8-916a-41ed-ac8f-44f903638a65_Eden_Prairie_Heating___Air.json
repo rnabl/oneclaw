@@ -1,0 +1,63 @@
+{
+  "overall_aeo_score": 62,
+  "aeo_readiness": {
+    "score": 55,
+    "summary": "AI assistants are unlikely to cite this business due to a lack of structured data and conversational content, but there is potential for improvement with targeted optimizations.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup",
+      "Add an FAQ section with relevant HVAC questions and answers"
+    ]
+  },
+  "gbp_analysis": {
+    "score": 75,
+    "found": true,
+    "summary": "The Google Business Profile is well-rated but missing key elements like listed hours and regular posts.",
+    "critical_issues": [
+      "Business hours are not listed",
+      "No regular posts or Q&A engagement"
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms",
+      "Regularly monitor citations for any potential discrepancies"
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for common HVAC tasks"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of schema markup and conversational content makes the site less attractive to AI crawlers.",
+    "invisible_for": "Queries related to 'HVAC services in Eden Prairie' where AI assistants prefer sites with structured data.",
+    "low_hanging_fruit": "Implementing LocalBusiness and FAQ schema markup.",
+    "authority_opportunity": "Showcasing certifications, licenses, and detailed service explanations to establish expertise."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by making your business the top choice for AI assistants.",
+    "pain_point": "Without AI optimization, you're missing out on 40% of potential leads from voice and AI search.",
+    "proof_point": "Your website lacks essential schema markup and conversational content, causing AI assistants to overlook your business.",
+    "solution": "Our AEO approach includes implementing schema markup, creating FAQ content, and optimizing your GBP to ensure AI models recognize and recommend your business.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 3 months.",
+    "urgency": "Competitors who optimize for AI are already capturing your potential market share. Act now to stay competitive."
+  },
+  "email_subject_line": "Unlock AI-driven growth for your HVAC business",
+  "opening_line": "We analyzed your website and identified key opportunities to make your business stand out to AI assistants.",
+  "cta": "Let's schedule a call to discuss how we can optimize your online presence for AI search and drive more leads.",
+  "analyzed_at": "2026-02-26T15:54:12.000Z",
+  "lead_id": "ca48daf8-916a-41ed-ac8f-44f903638a65",
+  "business_name": "Eden Prairie Heating & Air",
+  "website": "http://www.epheating.com/",
+  "location": "Eden Prairie, Minnesota",
+  "page_title": "epheating.com - Heating and Air Conditioning in the Twin Cities",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": 5,
+  "gbp_review_count": 31,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

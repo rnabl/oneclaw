@@ -1,0 +1,53 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "The business has a basic foundation for AEO with clear service offerings and contact information but lacks customer reviews and detailed content to build authority.",
+    "quick_wins": [
+      "Encourage satisfied customers to leave Google reviews to build social proof and improve local search visibility.",
+      "Expand service pages with detailed content, FAQs, and targeted keywords to enhance relevance for search engines."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 50,
+    "found": "The website has location-specific content (Boston, MA) and a phone number but lacks a Google Business Profile (GBP).",
+    "summary": "The absence of a GBP significantly impacts local search visibility and customer engagement opportunities.",
+    "critical_issues": [
+      "No Google Business Profile (GBP) set up.",
+      "Missing location-specific landing pages or content optimizations."
+    ]
+  },
+  "nap_citations": {
+    "score": 60,
+    "summary": "The business has consistent NAP (Name, Address, Phone Number) on its website but lacks citations on external platforms.",
+    "action_items": [
+      "Create and verify listings on major directories such as Yelp, Bing Places, and Apple Maps.",
+      "Ensure NAP consistency across all online platforms, including social media profiles."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Product",
+    "Review",
+    "FAQPage"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of customer reviews and detailed content to establish authority and relevance.",
+    "invisible_for": "Users searching for HVAC services with local intent due to the absence of a GBP and local citations.",
+    "low_hanging_fruit": "Setting up a Google Business Profile and generating initial customer reviews.",
+    "authority_opportunity": "Creating comprehensive, keyword-rich content for service pages and publishing customer testimonials."
+  },
+  "analyzed_at": "2026-02-27T03:31:36.957Z",
+  "lead_id": "e31a30ef-1e13-46b3-883a-c12c19a8fa73",
+  "business_name": "Service Right, LLC",
+  "website": "https://servicerightllc.com/",
+  "location": "Dorchester, Massachusetts",
+  "page_title": "Home HVAC Contractor in Boston, MA - Service Right, LLC",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

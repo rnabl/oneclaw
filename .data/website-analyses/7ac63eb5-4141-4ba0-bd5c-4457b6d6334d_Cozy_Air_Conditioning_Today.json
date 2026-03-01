@@ -1,0 +1,66 @@
+{
+  "overall_aeo_score": 78,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "The business has a strong foundation for AI visibility but lacks conversational content and structured data to ensure AI assistants cite them as a top recommendation.",
+    "quick_wins": [
+      "Implement FAQ content with structured data (FAQPage schema).",
+      "Add HowTo schema for common HVAC tasks/services."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with photos, hours, and reviews, but lacks regular posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent posts on GBP.",
+      "No engagement with Q&A section."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly monitor for any inconsistencies or new citation opportunities."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema",
+    "No Service schema for specific HVAC services"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content limits AI recognition.",
+    "invisible_for": "Queries related to 'HVAC repair in Santa Monica' and 'emergency HVAC services'.",
+    "low_hanging_fruit": "Implementing FAQPage schema with common customer questions and answers.",
+    "authority_opportunity": "Highlighting certifications, awards, and detailed project case studies to establish authority."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by making your business the top recommendation for HVAC queries in Santa Monica.",
+    "pain_point": "Without AI optimization, you're missing out on 40% of potential leads from voice and AI search users.",
+    "proof_point": "Competitors with structured data and conversational content are consistently cited by AI assistants.",
+    "solution": "Our AEO approach integrates structured data, FAQ content, and authority signals to ensure AI models recognize and recommend your business.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 3 months.",
+    "urgency": "Waiting means losing ground to competitors who are already optimizing for AI search."
+  },
+  "email_subject_line": "Maximize AI Visibility: Your Path to HVAC Leads in Santa Monica",
+  "opening_line": "We analyzed your website and identified key opportunities to enhance your AI search presence and attract more HVAC leads.",
+  "cta": "Let's schedule a call to discuss how we can optimize your online presence for AI search and boost your lead generation.",
+  "analyzed_at": "2026-02-26T15:47:36.752Z",
+  "lead_id": "7ac63eb5-4141-4ba0-bd5c-4457b6d6334d",
+  "business_name": "Cozy Air Conditioning Today",
+  "website": "https://cozyairconditioningtoday.xyz/santa-monica/",
+  "location": "Santa Monica, California",
+  "page_title": "Santa Monica Air Conditioner & HVAC Repair (424) 279-5727 Call us",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.8,
+  "gbp_review_count": 98,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

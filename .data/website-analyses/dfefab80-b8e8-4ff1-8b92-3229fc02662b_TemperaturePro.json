@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "While TemperaturePro has a strong foundation with decent content and good NAP consistency, it lacks the structured data and conversational depth needed for AI assistants to prioritize them in search results.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup with detailed business information.",
+      "Expand FAQ content to address common HVAC queries and optimize for voice search."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with a high rating, numerous photos, and accurate contact information.",
+    "critical_issues": [
+      "No recent posts or updates on GBP.",
+      "Missing Q&A section engagement."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected across platforms.",
+    "action_items": [
+      "Maintain current NAP consistency.",
+      "Regularly audit citations to ensure ongoing accuracy."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for common HVAC tasks"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content limits AI model citations.",
+    "invisible_for": "Queries related to 'HVAC repair near me' and 'best HVAC services in Round Rock'.",
+    "low_hanging_fruit": "Adding LocalBusiness schema and expanding FAQ content.",
+    "authority_opportunity": "Positioning as HVAC experts by publishing detailed guides and obtaining certifications."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for the new search landscape.",
+    "pain_point": "Without AI optimization, TemperaturePro misses out on 40% of potential leads from voice and AI search.",
+    "proof_point": "Competitors with structured data and conversational content rank higher in AI search results.",
+    "solution": "Our AEO approach integrates structured data, expands conversational content, and enhances GBP engagement to boost AI visibility.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within 3-6 months.",
+    "urgency": "Waiting means losing ground to competitors who are already optimizing for AI search."
+  },
+  "email_subject_line": "Unlock AI-Driven Growth for TemperaturePro: Act Now!",
+  "opening_line": "We analyzed your website and identified key opportunities to enhance your AI search visibility.",
+  "cta": "Let's discuss how we can optimize your online presence for AI assistants and drive more leads.",
+  "analyzed_at": "2026-02-26T16:24:03.427Z",
+  "lead_id": "dfefab80-b8e8-4ff1-8b92-3229fc02662b",
+  "business_name": "TemperaturePro",
+  "website": "https://temperaturepro.com/round-rock-tx/?utm_source=google&utm_medium=organic&utm_campaign=gbp",
+  "location": "Round Rock, Texas",
+  "page_title": "Leading Round Rock HVAC Services | TemperaturePro",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 5,
+  "gbp_review_count": 99,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

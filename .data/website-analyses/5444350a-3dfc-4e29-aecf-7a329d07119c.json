@@ -1,0 +1,54 @@
+{
+  "overall_aeo_score": 55,
+  "aeo_readiness": {
+    "score": 60,
+    "summary": "The website has basic AEO elements in place, such as schema markup and a focus on local services, but lacks depth in content, reviews, and structured data optimization.",
+    "quick_wins": [
+      "Implement a review generation strategy to build Google reviews and improve social proof.",
+      "Optimize meta titles and descriptions with relevant local keywords for better search visibility.",
+      "Enhance content on service pages with more detailed information and FAQs to target long-tail keywords."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 40,
+    "found": "The website has a Google Business Profile (GBP) but lacks reviews and complete information.",
+    "summary": "The GBP is not fully optimized. It has no reviews, which significantly impacts local search visibility and trust. Essential information like business hours, photos, and services are incomplete.",
+    "critical_issues": [
+      "No customer reviews on GBP.",
+      "Incomplete business information (e.g., missing photos, services, and business hours).",
+      "Lack of regular updates or posts on the GBP."
+    ]
+  },
+  "nap_citations": {
+    "score": 50,
+    "summary": "The business has inconsistent Name, Address, Phone (NAP) citations across directories, which can confuse search engines and affect local SEO.",
+    "action_items": [
+      "Audit and update NAP information across all major directories to ensure consistency.",
+      "Claim and verify the business on key local directories such as Yelp, Bing Places, and Apple Maps.",
+      "Regularly monitor and manage NAP citations to maintain accuracy."
+    ]
+  },
+  "schema_gaps": [
+    "No FAQPage schema to address common customer questions.",
+    "Missing Review schema to highlight customer testimonials.",
+    "No LocalBusiness schema with detailed service area information."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of content depth and targeted keywords for AI-driven search queries.",
+    "invisible_for": "Voice search and conversational AI due to the absence of natural language content.",
+    "low_hanging_fruit": "Incorporate FAQ sections and blog posts that answer common customer questions in a conversational tone.",
+    "authority_opportunity": "Develop content that establishes the business as an authority in home services by providing expert advice, tips, and industry insights."
+  },
+  "analyzed_at": "2026-02-27T02:51:39.404Z",
+  "lead_id": "5444350a-3dfc-4e29-aecf-7a329d07119c",
+  "business_name": "United Home Services",
+  "website": "https://unitedhomeservices.com/locations/plano-tx",
+  "location": "Plano, Texas",
+  "page_title": "Home Services In Plano, TX By United Home Services",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

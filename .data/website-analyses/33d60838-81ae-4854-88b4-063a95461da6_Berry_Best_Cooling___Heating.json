@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "AI assistants are likely to cite Berry Best Cooling & Heating due to their strong local presence and reviews, but gaps in structured data and conversational content limit their visibility.",
+    "quick_wins": [
+      "Implement FAQPage schema with common HVAC questions and answers.",
+      "Add HowTo schema for common HVAC maintenance and repair processes."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "Google Business Profile is well-optimized with high ratings, photos, and accurate information, but lacks regular posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent posts or updates on GBP.",
+      "No engagement with Q&A section."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly monitor for any discrepancies or new citation opportunities."
+    ]
+  },
+  "schema_gaps": [
+    "Missing FAQPage schema",
+    "Missing HowTo schema",
+    "LocalBusiness schema could be enhanced with more detailed service descriptions"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content limits AI model citations.",
+    "invisible_for": "Queries related to HVAC maintenance tips and troubleshooting.",
+    "low_hanging_fruit": "Implementing FAQPage schema with common HVAC questions and answers.",
+    "authority_opportunity": "Position as the expert by creating in-depth content on complex HVAC topics and using HowTo schema."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for ChatGPT, Claude, and Perplexity.",
+    "pain_point": "Missing out on 40% of potential leads from AI assistants who can't find or recommend their services effectively.",
+    "proof_point": "Their website lacks FAQPage and HowTo schema, which are crucial for AI model citations.",
+    "solution": "Enhance their online presence with structured data, conversational content, and authority-building strategies to ensure AI models recognize and recommend them as the top HVAC provider in Dallas.",
+    "impact_estimate": "Expected 30-40% increase in AI-driven leads within 6 months.",
+    "urgency": "Competitors are already optimizing for AI, and waiting means losing ground in the AI-driven search landscape."
+  },
+  "email_subject_line": "Boost Your AI Visibility: Are You Ready for the Future of HVAC Searches?",
+  "opening_line": "We analyzed your website and Google Business Profile and found exciting opportunities to enhance your AI-driven visibility.",
+  "cta": "Let's schedule a call to discuss how we can optimize your online presence for AI assistants and boost your lead generation.",
+  "analyzed_at": "2026-02-26T16:12:36.233Z",
+  "lead_id": "33d60838-81ae-4854-88b4-063a95461da6",
+  "business_name": "Berry Best Cooling & Heating",
+  "website": "https://www.callberrybest.com/",
+  "location": "Dallas, Texas",
+  "page_title": "Reliable Air Conditioning Repair in Dallas, TX | Company",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 5,
+  "gbp_review_count": 94,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

@@ -1,0 +1,54 @@
+{
+  "overall_aeo_score": 55,
+  "aeo_readiness": {
+    "score": 60,
+    "summary": "The website has basic AEO elements in place, such as schema markup, but lacks depth in content and optimization for AI search. The focus on services and products is evident, but there is room for improvement in user engagement and content relevance.",
+    "quick_wins": [
+      "Enhance content with relevant keywords and phrases specific to HVAC services in Minneapolis, MN.",
+      "Implement a blog section to regularly publish informative content about HVAC maintenance, energy efficiency, and local trends.",
+      "Optimize meta tags and descriptions for better click-through rates from search engines."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 40,
+    "found": "The website has a Google Business Profile (GBP) but lacks reviews and engagement.",
+    "summary": "The GBP is set up but not actively managed. There are no reviews, which significantly impacts local search visibility and customer trust.",
+    "critical_issues": [
+      "No customer reviews on GBP.",
+      "Incomplete business information or lack of regular updates.",
+      "No posts or engagement activities on the GBP."
+    ]
+  },
+  "nap_citations": {
+    "score": 50,
+    "summary": "The business has consistent NAP (Name, Address, Phone Number) information on its website but lacks citations across major directories and platforms.",
+    "action_items": [
+      "Create and verify listings on major directories such as Yelp, Bing Places, and Apple Maps.",
+      "Ensure NAP consistency across all online platforms and directories.",
+      "Encourage customers to leave reviews on these platforms to boost local SEO."
+    ]
+  },
+  "schema_gaps": [
+    "ServiceArea schema is missing, which is crucial for local SEO.",
+    "Review schema is not implemented to showcase customer feedback.",
+    "LocalBusiness schema could be more detailed, including attributes like opening hours and payment methods."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of comprehensive, AI-friendly content that answers common customer queries and provides detailed information about services.",
+    "invisible_for": "Voice search and AI-driven assistants due to the absence of conversational content and structured data enhancements.",
+    "low_hanging_fruit": "Implementing FAQ sections and how-to guides related to HVAC services and products.",
+    "authority_opportunity": "Positioning the business as a local expert by creating content that addresses regional HVAC needs and trends."
+  },
+  "analyzed_at": "2026-02-27T04:10:53.050Z",
+  "lead_id": "5126a798-7d3b-48bf-90a5-7c7eb756a83a",
+  "business_name": "Southside Heating & Air Conditioning",
+  "website": "http://www.southsideheating.com/?utm_source=google&utm_medium=organic&utm_campaign=GMBListing-Minneapolis-MN",
+  "location": "Minneapolis, Minnesota",
+  "page_title": "Heating &amp; Air Conditioning In Bloomington, MN",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

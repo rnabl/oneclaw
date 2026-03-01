@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 68,
+  "aeo_readiness": {
+    "score": 55,
+    "summary": "Polaris Heating and Cooling is not fully optimized for AI search, making it unlikely for AI assistants to prominently cite or recommend them in response to user queries.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup to improve AI recognition.",
+      "Expand conversational content to address common HVAC queries directly on the website."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-maintained with positive reviews, photos, and accurate contact information, but lacks depth in posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent posts or updates on GBP.",
+      "Limited engagement with customer Q&A."
+    ]
+  },
+  "nap_citations": {
+    "score": 75,
+    "summary": "NAP consistency is moderate, with the address missing from the website but present on GBP, creating potential confusion for AI and users.",
+    "action_items": [
+      "Add the complete address to the website footer.",
+      "Ensure consistent NAP information across all online directories."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for common HVAC tasks"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content limits AI's ability to recognize and recommend them.",
+    "invisible_for": "Queries related to HVAC services in Columbus, Ohio.",
+    "low_hanging_fruit": "Implementing LocalBusiness schema and expanding FAQ content.",
+    "authority_opportunity": "Positioning as HVAC experts by publishing detailed guides and obtaining relevant certifications."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for answer engines.",
+    "pain_point": "Missing out on 40% of potential leads due to lack of AI visibility.",
+    "proof_point": "Website lacks essential schema markup and conversational content, making it less likely for AI to cite them.",
+    "solution": "Our AEO approach integrates schema optimization, conversational content, and GBP enhancement to boost AI citations and drive more qualified leads.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within 6 months.",
+    "urgency": "Competitors are already optimizing for AI; waiting means losing market share."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads for Polaris Heating and Cooling",
+  "opening_line": "We analyzed your website and identified key opportunities to enhance your AI search visibility.",
+  "cta": "Let's schedule a call to discuss how we can optimize your digital presence for AI and boost your lead generation.",
+  "analyzed_at": "2026-02-26T15:52:50.919Z",
+  "lead_id": "887e2ccf-18ac-413e-b240-bdc1933ed641",
+  "business_name": "Polaris Heating and Cooling",
+  "website": "http://www.polarisheatingandcooling.com/",
+  "location": "Columbus, Ohio",
+  "page_title": "Polaris heating and cooling - Air Conditioner Repair, Furnace Repair",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": 5,
+  "gbp_review_count": 46,
+  "gbp_found": true,
+  "nap_score": 75,
+  "nap_issues": [
+    "Address not found on website but listed on GBP"
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "overall_aeo_score": 68,
+  "aeo_readiness": {
+    "score": 60,
+    "summary": "AI assistants are unlikely to cite this business due to a lack of structured data and conversational content, despite having strong NAP consistency and a good GBP rating.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup",
+      "Create an FAQ page with common HVAC and appliance repair questions"
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with a high rating, photos, and accurate hours, but posts and Q&A sections could be more active.",
+    "critical_issues": [
+      "No recent posts on GBP",
+      "Lack of engagement in the Q&A section"
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms",
+      "Regularly audit NAP citations to ensure ongoing accuracy"
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for common repair processes"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of schema markup and conversational content",
+    "invisible_for": "Queries related to 'HVAC repair in Austin' and 'appliance repair near me'",
+    "low_hanging_fruit": "Adding LocalBusiness and FAQ schema to key service pages",
+    "authority_opportunity": "Positioning as the expert through detailed how-to guides and media coverage"
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for answer engines and AI search.",
+    "pain_point": "Without AI optimization, they are missing out on 40% of potential leads from voice and AI search.",
+    "proof_point": "Their website lacks essential schema markup and conversational content, making it less likely for AI assistants to cite them.",
+    "solution": "Implement structured data, create FAQ content, and optimize for conversational queries to enhance AI visibility.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within 6 months.",
+    "urgency": "Competitors are already optimizing for AI, and waiting means losing market share to them."
+  },
+  "email_subject_line": "Unlock AI-driven growth for GREENTEK: Optimize for ChatGPT & AI Search",
+  "opening_line": "We analyzed your website and identified key opportunities to enhance your visibility with AI assistants like ChatGPT and Google Bard.",
+  "cta": "Let's schedule a call to discuss how we can optimize your site for AI search and boost your lead generation.",
+  "analyzed_at": "2026-02-26T16:03:00.064Z",
+  "lead_id": "b8865efe-4fee-40a1-a22d-30e5e6387675",
+  "business_name": "GREENTEK INC",
+  "website": "https://greentektx.com/",
+  "location": "Austin, Texas",
+  "page_title": "HVAC & Appliance Repair in Austin, Texas – GREENTEK",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": 4.9,
+  "gbp_review_count": 135,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

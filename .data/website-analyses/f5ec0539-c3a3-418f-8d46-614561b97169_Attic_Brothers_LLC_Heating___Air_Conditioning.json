@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 62,
+  "aeo_readiness": {
+    "score": 55,
+    "summary": "The business is not optimized for AI search, making it unlikely for AI assistants to cite or recommend them. Their content lacks the necessary depth and structured data for AI models to recognize them as a credible source.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup",
+      "Expand content to include detailed service explanations and conversational FAQs"
+    ]
+  },
+  "gbp_analysis": {
+    "score": 20,
+    "found": false,
+    "summary": "The Google Business Profile is not optimized and is currently invisible to Google AI, severely limiting local search visibility.",
+    "critical_issues": [
+      "GBP not found",
+      "Missing photos, posts, and Q&A engagement"
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected, ensuring accurate business information across platforms.",
+    "action_items": [
+      "Maintain current NAP consistency",
+      "Expand NAP citations to additional local directories"
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for service processes"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and detailed service information",
+    "invisible_for": "Local HVAC service queries and solution-based searches",
+    "low_hanging_fruit": "Implementing LocalBusiness schema and expanding service pages with conversational content",
+    "authority_opportunity": "Position as local HVAC experts by showcasing certifications, customer testimonials, and detailed project walkthroughs"
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by making your business the top choice for local HVAC queries.",
+    "pain_point": "Without AI optimization, they are missing out on 40% of potential leads from voice and AI-assisted searches.",
+    "proof_point": "Their GBP is not found, and their website lacks the structured data needed for AI recognition.",
+    "solution": "Our AEO approach integrates schema markup, GBP optimization, and conversational content to ensure AI models cite and recommend your services.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 3 months.",
+    "urgency": "Competitors optimized for AI are already capturing your potential market share. Act now to stay competitive."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads: Your Path to HVAC Authority",
+  "opening_line": "We analyzed your website and found significant opportunities to enhance your visibility with AI search and voice assistants.",
+  "cta": "Let's schedule a call to discuss how we can optimize your online presence for AI and capture more local HVAC leads.",
+  "analyzed_at": "2026-02-26T15:44:29.827Z",
+  "lead_id": "f5ec0539-c3a3-418f-8d46-614561b97169",
+  "business_name": "Attic Brothers LLC Heating & Air Conditioning",
+  "website": "http://atticbrothersac.com/",
+  "location": "Dallas, TX",
+  "page_title": "Home | Attic Brothers Home Services",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": null,
+  "gbp_review_count": null,
+  "gbp_found": false,
+  "nap_score": 100,
+  "nap_issues": []
+}

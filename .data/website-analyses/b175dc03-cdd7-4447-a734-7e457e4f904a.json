@@ -1,0 +1,55 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "The business has a basic foundation for AEO with clear service offerings and contact information but lacks content depth, reviews, and keyword optimization.",
+    "quick_wins": [
+      "Add customer reviews and testimonials to build trust and improve local SEO.",
+      "Optimize service pages with targeted keywords and location-specific content.",
+      "Implement a blog to provide valuable content related to HVAC services and local weather conditions."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 60,
+    "found": "The website includes the business name, address, and phone number (NAP) but lacks consistency and additional citations across the web.",
+    "summary": "The NAP information is present on the website but needs verification and enhancement in local directories and platforms.",
+    "critical_issues": [
+      "Inconsistent NAP information across the web.",
+      "Lack of citations in major local directories and platforms."
+    ]
+  },
+  "nap_citations": {
+    "score": 55,
+    "summary": "The NAP information is present on the website but lacks citations in external directories and platforms.",
+    "action_items": [
+      "Create and verify a Google My Business profile.",
+      "List the business in local directories such as Yelp, Bing Places, and Yellow Pages.",
+      "Ensure consistent NAP information across all platforms and directories."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "Product",
+    "BreadcrumbList"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of customer reviews and testimonials.",
+    "invisible_for": "Local search users and potential customers looking for HVAC services in Georgetown, TX.",
+    "low_hanging_fruit": "Encourage satisfied customers to leave reviews on Google and other platforms.",
+    "authority_opportunity": "Publish high-quality, informative content related to HVAC services and local weather to establish the business as a local authority."
+  },
+  "analyzed_at": "2026-02-27T02:44:48.619Z",
+  "lead_id": "b175dc03-cdd7-4447-a734-7e457e4f904a",
+  "business_name": "Georgetown Air Conditioning & Heating | AC Repair, Installation, Heating and Air Quality Services",
+  "website": "http://georgetownac.com/",
+  "location": "Georgetown, Texas",
+  "page_title": "HVAC Contractors Georgetown, TX | Georgetown AC and Heating",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

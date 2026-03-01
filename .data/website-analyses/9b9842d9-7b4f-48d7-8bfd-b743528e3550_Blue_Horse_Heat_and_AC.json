@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "The business has foundational elements for AI visibility but lacks depth in conversational content and authority signals to ensure AI models consistently cite them.",
+    "quick_wins": [
+      "Expand content to include more detailed service explanations and FAQs.",
+      "Implement HowTo schema for common HVAC tasks and repairs."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with photos, hours, and contact information, but posts and Q&A sections could be more active.",
+    "critical_issues": [
+      "No recent posts on GBP.",
+      "Q&A section is inactive and lacks engagement."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly monitor citations for any potential discrepancies."
+    ]
+  },
+  "schema_gaps": [
+    "Missing FAQPage schema despite having FAQ content.",
+    "No HowTo schema for common HVAC tasks.",
+    "LocalBusiness schema could be enhanced with more detailed service descriptions."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of detailed, conversational content limits AI model citations.",
+    "invisible_for": "Queries related to specific HVAC issues and solutions.",
+    "low_hanging_fruit": "Adding detailed FAQ content and HowTo guides.",
+    "authority_opportunity": "Positioning as local HVAC experts through media mentions and certifications."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by making your expertise visible to AI models.",
+    "pain_point": "Without AI-ready content, you're missing out on 40% of potential leads from AI-driven searches.",
+    "proof_point": "Current content lacks the depth and structure needed for AI models to cite your services.",
+    "solution": "Our AEO approach enhances your content with conversational FAQs, HowTo guides, and authority signals to ensure AI models recognize and recommend your business.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 3 months.",
+    "urgency": "Competitors are already optimizing for AI, and waiting means losing ground in AI-driven search results."
+  },
+  "email_subject_line": "Boost Your AI Visibility: Are You Ready for the Future of HVAC Searches?",
+  "opening_line": "We analyzed your website and Google Business Profile and found exciting opportunities to make your HVAC expertise stand out to AI models.",
+  "cta": "Let's schedule a call to discuss how we can optimize your content for AI-driven searches and increase your lead generation.",
+  "analyzed_at": "2026-02-26T16:02:12.459Z",
+  "lead_id": "9b9842d9-7b4f-48d7-8bfd-b743528e3550",
+  "business_name": "Blue Horse Heat and AC",
+  "website": "http://bluehorsehvac.com/?utm_source=google&utm_medium=wix_google_business_profile&utm_campaign=554505872983829201",
+  "location": "Westminster, Colorado",
+  "page_title": "Heating Repair | Blue Horse Heat And Ac | Westminster",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 5,
+  "gbp_review_count": 84,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

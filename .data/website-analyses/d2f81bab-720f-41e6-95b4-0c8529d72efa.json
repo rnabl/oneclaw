@@ -1,0 +1,55 @@
+{
+  "overall_aeo_score": 55,
+  "aeo_readiness": {
+    "score": 60,
+    "summary": "The business has some foundational elements for AEO but lacks critical optimizations for better search visibility and user engagement.",
+    "quick_wins": [
+      "Implement a review generation strategy to build Google reviews and improve local trust.",
+      "Optimize website metadata with targeted keywords for HVAC services in Eden Prairie, MN.",
+      "Enhance content with location-specific keywords and service-related long-tail queries."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 40,
+    "found": "The website includes basic GBP elements like location and service information but lacks structured data for rich results.",
+    "summary": "The business has not optimized its Google Business Profile, missing opportunities for local search visibility and customer engagement.",
+    "critical_issues": [
+      "No Google reviews, which impacts local search ranking and customer trust.",
+      "Incomplete or missing GBP categories and attributes for HVAC services.",
+      "Lack of posts or updates on GBP to engage with local customers."
+    ]
+  },
+  "nap_citations": {
+    "score": 50,
+    "summary": "The business has some online citations but lacks consistency and completeness across directories.",
+    "action_items": [
+      "Audit and update NAP (Name, Address, Phone Number) information across all major directories and platforms.",
+      "Ensure consistency in NAP format and details across all citations.",
+      "Claim and verify the business on key local directories and industry-specific platforms."
+    ]
+  },
+  "schema_gaps": [
+    "ServiceAreaSchema",
+    "LocalBusinessSchema with detailed attributes",
+    "ReviewSchema for customer testimonials",
+    "FAQPageSchema for common customer questions"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and local SEO optimization.",
+    "invisible_for": "Local customers searching for HVAC services in Eden Prairie, MN.",
+    "low_hanging_fruit": "Implementing LocalBusinessSchema and ServiceSchema to improve search engine understanding of the business offerings.",
+    "authority_opportunity": "Creating high-quality, locally-focused content and earning backlinks from local business directories and industry associations."
+  },
+  "analyzed_at": "2026-02-27T03:50:02.383Z",
+  "lead_id": "d2f81bab-720f-41e6-95b4-0c8529d72efa",
+  "business_name": "Aire Serv of The South Metro",
+  "website": "https://www.aireserv.com/the-south-metro?utm_source=google&utm_medium=organic&utm_campaign=gbp_listing",
+  "location": "Eden Prairie, Minnesota",
+  "page_title": "HVAC & AC Repair Services in Eden Prairie, MN | Aire Serv",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

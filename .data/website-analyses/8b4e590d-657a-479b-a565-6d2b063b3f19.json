@@ -1,0 +1,55 @@
+{
+  "overall_aeo_score": 55,
+  "aeo_readiness": {
+    "score": 60,
+    "summary": "The website has basic AEO elements in place, such as schema markup, but lacks depth in content and optimization for AI search. The site needs improvements in content relevance, keyword targeting, and user engagement signals.",
+    "quick_wins": [
+      "Optimize meta titles and descriptions with relevant keywords for HVAC services in San Diego.",
+      "Expand service pages with detailed content and FAQs to improve keyword targeting and user engagement.",
+      "Implement local business schema to enhance local search visibility."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 40,
+    "found": false,
+    "summary": "The website does not have a clear Google Business Profile (GBP) strategy. There are no reviews or GBP-related content, which is critical for local search visibility.",
+    "critical_issues": [
+      "No Google Business Profile (GBP) found.",
+      "Lack of customer reviews and ratings.",
+      "No GBP posts or updates to engage with local customers."
+    ]
+  },
+  "nap_citations": {
+    "score": 50,
+    "summary": "The business has inconsistent NAP (Name, Address, Phone) citations across the web. While the website lists a phone number and address, there is no evidence of widespread citation in local directories.",
+    "action_items": [
+      "Ensure consistent NAP information across all online platforms and directories.",
+      "List the business in local directories such as Yelp, Yellow Pages, and local chamber of commerce websites.",
+      "Monitor and manage online reviews and ratings to improve local search presence."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "FAQPage"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of depth in content and keyword targeting for AI search algorithms.",
+    "invisible_for": "AI search algorithms due to insufficient content and lack of structured data for AI to understand the business context.",
+    "low_hanging_fruit": "Implement FAQ schema and expand service pages with detailed content.",
+    "authority_opportunity": "Build authority by creating blog content on HVAC topics, local news, and customer testimonials."
+  },
+  "analyzed_at": "2026-02-27T03:10:24.344Z",
+  "lead_id": "8b4e590d-657a-479b-a565-6d2b063b3f19",
+  "business_name": "HVAC San Diego King",
+  "website": "/url?q=https://topcoolingguys.com/&opi=79508299&sa=U&ved=0ahUKEwiG7cKF2Z2SAxU6VTABHTklFY8Q61gIjgEoDQ&usg=AOvVaw2yr0HhBis5H-nTajMGmhtx",
+  "location": "San Diego, California",
+  "page_title": "#1 HVAC of San Diego, CA! Air Conditioning &amp; Heating Repair Contractor!",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

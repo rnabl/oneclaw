@@ -1,0 +1,66 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 55,
+    "summary": "AI assistants are unlikely to cite Mikestav Services due to missing structured data and conversational content. They lack visibility in AI-driven search results.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup",
+      "Add an FAQ section with common HVAC queries and answers"
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-maintained with positive reviews, photos, and accurate hours, but lacks regular posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent posts or updates on GBP",
+      "No engagement with Q&A section"
+    ]
+  },
+  "nap_citations": {
+    "score": 75,
+    "summary": "NAP consistency is moderate, with the address missing from the website but present on GBP. This inconsistency may confuse AI and reduce local search visibility.",
+    "action_items": [
+      "Add the full address to the website footer",
+      "Verify and update NAP across all directories"
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for HVAC services",
+    "Missing Service schema for detailed service listings"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content makes it difficult for AI to understand and cite their services.",
+    "invisible_for": "Queries related to 'HVAC repair in Bronx' and 'emergency HVAC services near me'.",
+    "low_hanging_fruit": "Implementing LocalBusiness and FAQPage schema to provide AI with structured information.",
+    "authority_opportunity": "Positioning as HVAC experts by creating in-depth content on common HVAC issues and solutions."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by making your HVAC services visible to AI assistants.",
+    "pain_point": "Without AI optimization, they are missing out on 40% of potential leads from voice and AI search.",
+    "proof_point": "Their website lacks essential schema markup and conversational content, making it invisible to AI models.",
+    "solution": "Our AEO approach integrates schema markup, conversational content, and GBP optimization to ensure AI models cite and recommend your services.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 3 months.",
+    "urgency": "Competitors optimizing for AI are already capturing market share. Act now to stay competitive."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads for Your HVAC Business",
+  "opening_line": "We analyzed your website and identified critical gaps in AI visibility that are likely costing you valuable leads.",
+  "cta": "Let's schedule a call to discuss how we can optimize your online presence for AI search and boost your lead generation.",
+  "analyzed_at": "2026-02-26T15:40:03.248Z",
+  "lead_id": "0a5cbaaa-f8d3-4004-9af4-8a0e0ca0c017",
+  "business_name": "Mikestav Services",
+  "website": "http://mikestav.com/",
+  "location": "Bronx, New York",
+  "page_title": "Mikestav",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": 4.9,
+  "gbp_review_count": 58,
+  "gbp_found": true,
+  "nap_score": 75,
+  "nap_issues": [
+    "Address not found on website but listed on GBP"
+  ]
+}

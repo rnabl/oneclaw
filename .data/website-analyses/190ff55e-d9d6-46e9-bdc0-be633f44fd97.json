@@ -1,0 +1,54 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "The business has a basic foundation for AEO readiness with a clear service offering and contact information but lacks depth in content, reviews, and structured data implementation.",
+    "quick_wins": [
+      "Add customer reviews and testimonials to build trust and improve local SEO.",
+      "Expand website content to include detailed service descriptions, benefits, and keyword-rich blog posts.",
+      "Implement a review generation strategy to increase the number of Google reviews."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 50,
+    "found": "The business has a Google Business Profile (GBP) but lacks reviews and engagement.",
+    "summary": "The GBP is not fully optimized. It has no reviews, which significantly impacts local search visibility and customer trust.",
+    "critical_issues": [
+      "No customer reviews or ratings.",
+      "Insufficient business information and details in the GBP.",
+      "Lack of regular updates or posts on the GBP."
+    ]
+  },
+  "nap_citations": {
+    "score": 60,
+    "summary": "The business has consistent NAP (Name, Address, Phone Number) information on its website but lacks citations on major directories and platforms.",
+    "action_items": [
+      "Create and verify listings on major directories such as Yelp, Bing Places, and Apple Maps.",
+      "Ensure NAP consistency across all online platforms and directories.",
+      "Submit the business to local Seattle-specific directories and industry-related platforms."
+    ]
+  },
+  "schema_gaps": [
+    "Service schema for detailed service listings.",
+    "Review schema to highlight customer testimonials.",
+    "FAQ schema to address common customer queries."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of customer reviews and engagement on the GBP and website.",
+    "invisible_for": "Users searching for HVAC and electrical services in Seattle due to low local SEO and review signals.",
+    "low_hanging_fruit": "Implementing a review generation strategy and optimizing the GBP with relevant keywords and detailed business information.",
+    "authority_opportunity": "Creating high-quality, keyword-rich content and earning backlinks from local and industry-related websites to boost domain authority."
+  },
+  "analyzed_at": "2026-02-27T04:04:46.084Z",
+  "lead_id": "190ff55e-d9d6-46e9-bdc0-be633f44fd97",
+  "business_name": "Energy Technologies",
+  "website": "https://www.energytechnologiesllc.com/",
+  "location": "Seattle, Washington",
+  "page_title": "HVAC and Electrical Services in Seattle, WA | Energy Technologies LLC",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

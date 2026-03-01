@@ -1,0 +1,54 @@
+{
+  "overall_aeo_score": 55,
+  "aeo_readiness": {
+    "score": 60,
+    "summary": "The business has basic AEO elements in place, such as a website and contact information, but lacks significant optimizations for search engines and AI-driven search platforms.",
+    "quick_wins": [
+      "Implement structured data for services and business information to improve search visibility.",
+      "Increase the number of online reviews to build trust and improve local search rankings.",
+      "Optimize website content with relevant keywords and location-based terms to enhance search engine performance."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 40,
+    "found": "The business has a physical presence in St. Paul, Minnesota, and serves the Minneapolis area.",
+    "summary": "The business has a clear local presence but lacks a strong Google Business Profile (GBP), which is crucial for local search visibility.",
+    "critical_issues": [
+      "No active GBP listing found.",
+      "Lack of customer reviews and engagement on review platforms.",
+      "Insufficient local content and keywords on the website."
+    ]
+  },
+  "nap_citations": {
+    "score": 50,
+    "summary": "The business has consistent NAP (Name, Address, Phone) information on its website but lacks citations on other platforms.",
+    "action_items": [
+      "Create and verify a Google Business Profile with accurate NAP information.",
+      "List the business on local directories and citation sites such as Yelp, Bing Places, and Yellow Pages.",
+      "Ensure NAP consistency across all online platforms and directories."
+    ]
+  },
+  "schema_gaps": [
+    "Service schema for each specific service offered (e.g., Air Duct Cleaning, Chimney Cleaning).",
+    "Review schema to highlight customer testimonials and ratings.",
+    "LocalBusiness schema with detailed business hours and contact information."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and AI-friendly content.",
+    "invisible_for": "Voice search and AI-driven search platforms due to insufficient optimization.",
+    "low_hanging_fruit": "Implement schema markup and optimize for conversational keywords.",
+    "authority_opportunity": "Build content that establishes the business as an expert in air duct and chimney cleaning by creating blog posts, how-to guides, and video content."
+  },
+  "analyzed_at": "2026-02-27T04:05:09.051Z",
+  "lead_id": "1c5d2556-3d71-4b2a-ac7d-7bc6d36f9d49",
+  "business_name": "Ultimate Air Duct Cleaning",
+  "website": "https://ultimateairductcleaning.com/",
+  "location": "St Paul, Minnesota",
+  "page_title": "Duct Cleaning Minneapolis | Ultimate Air Duct Cleaning",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

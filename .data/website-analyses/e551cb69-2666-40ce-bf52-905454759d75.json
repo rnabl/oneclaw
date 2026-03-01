@@ -1,0 +1,55 @@
+{
+  "overall_aeo_score": 55,
+  "aeo_readiness": {
+    "score": 60,
+    "summary": "The website has basic AEO elements in place, such as schema markup, but lacks depth in content optimization, keyword targeting, and user engagement features.",
+    "quick_wins": [
+      "Optimize page titles and meta descriptions with relevant keywords (e.g., 'HVAC Services in Concord, NC').",
+      "Add more localized content to improve regional search visibility.",
+      "Implement a review generation strategy to build Google Business Profile (GBP) reviews."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 20,
+    "found": false,
+    "summary": "No active Google Business Profile (GBP) was found for Subzero Mechanical LLC. This is a critical gap in local search visibility.",
+    "critical_issues": [
+      "Lack of GBP means the business is invisible in Google Maps and local search results.",
+      "No customer reviews or ratings to build trust and credibility."
+    ]
+  },
+  "nap_citations": {
+    "score": 40,
+    "summary": "The business has inconsistent or incomplete Name, Address, Phone (NAP) citations across the web, which harms local SEO.",
+    "action_items": [
+      "Audit and update NAP information across all online directories and platforms.",
+      "Ensure NAP consistency on the website, social media, and local directories.",
+      "Claim and verify the business on major citation sites like Yelp, Bing Places, and Apple Maps."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "Product",
+    "ContactPoint"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of localized content and targeted keywords",
+    "invisible_for": "Local search users and potential customers searching for HVAC services in Concord, NC",
+    "low_hanging_fruit": "Creating location-specific service pages and optimizing existing content with local keywords",
+    "authority_opportunity": "Building backlinks from local business directories and industry-related websites to improve domain authority"
+  },
+  "analyzed_at": "2026-02-27T03:13:54.266Z",
+  "lead_id": "e551cb69-2666-40ce-bf52-905454759d75",
+  "business_name": "Subzero Mechanical LLC",
+  "website": "https://subzeromechanicalnc.com/",
+  "location": "Concord, North Carolina",
+  "page_title": "Pipe with escaping air, possibly a leak.",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

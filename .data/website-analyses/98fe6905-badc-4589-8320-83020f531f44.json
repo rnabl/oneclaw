@@ -1,0 +1,56 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "The business has a basic level of AEO readiness with some foundational elements in place, such as schema markup and localized contact information. However, there are significant gaps in online reputation and content depth.",
+    "quick_wins": [
+      "Encourage customers to leave Google reviews to build a reputation and improve visibility.",
+      "Expand website content to include detailed service descriptions, customer testimonials, and a blog with relevant industry topics.",
+      "Optimize meta tags and headers with targeted keywords related to AC repair and maintenance in Miami."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 50,
+    "found": [
+      "Local phone numbers",
+      "Miami location mentioned"
+    ],
+    "summary": "The business has some localized elements, such as phone numbers and a Miami location, but lacks a comprehensive Google Business Profile (GBP). This is a critical issue as it directly impacts local search visibility.",
+    "critical_issues": [
+      "No active Google Business Profile.",
+      "Lack of local keywords and content targeting Miami and surrounding areas."
+    ]
+  },
+  "nap_citations": {
+    "score": 60,
+    "summary": "The business has consistent NAP (Name, Address, Phone) information on its website, but there is no evidence of widespread citations across local directories and platforms.",
+    "action_items": [
+      "Create and verify a Google Business Profile with accurate NAP information.",
+      "Submit the business to relevant local directories and citation sites, such as Yelp, Yellow Pages, and local chamber of commerce websites.",
+      "Ensure NAP consistency across all online platforms and directories."
+    ]
+  },
+  "schema_gaps": [
+    "No Organization schema",
+    "No LocalBusiness schema with detailed address and service area information",
+    "No Product or Service schema for specific HVAC services offered"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of online reputation and customer reviews",
+    "invisible_for": "Users searching for AC repair services in Miami on Google",
+    "low_hanging_fruit": "Implementing a strategy to generate customer reviews and testimonials",
+    "authority_opportunity": "Creating high-quality, informative content that establishes the business as an industry expert, such as blog posts, how-to guides, and video tutorials on HVAC maintenance and repair."
+  },
+  "analyzed_at": "2026-02-27T02:23:11.147Z",
+  "lead_id": "98fe6905-badc-4589-8320-83020f531f44",
+  "business_name": "Cool Solution Services",
+  "website": "http://www.coolsolutionservices.com/",
+  "location": "Miami, Florida",
+  "page_title": "Miami AC Repair Service | Cool Solution Services",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

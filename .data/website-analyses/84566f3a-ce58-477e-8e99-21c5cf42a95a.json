@@ -1,0 +1,60 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "The business has a basic level of AEO readiness with some critical areas for improvement. The website has relevant content and schema markup but lacks reviews and local citations.",
+    "quick_wins": [
+      "Encourage customers to leave Google reviews to build credibility and improve local search visibility.",
+      "Expand local citation listings on platforms like Yelp, Yellow Pages, and local directories.",
+      "Optimize meta tags and headings with targeted keywords related to plumbing and HVAC services in Marietta, GA."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 50,
+    "found": [
+      "Service area",
+      "Contact information",
+      "Business name"
+    ],
+    "summary": "The Google Business Profile (GBP) has not been claimed or optimized. Basic information like the business name and contact details are present on the website but not in a GBP.",
+    "critical_issues": [
+      "GBP not claimed or verified.",
+      "Lack of customer reviews and engagement on GBP.",
+      "Incomplete business information and absence of photos or service listings."
+    ]
+  },
+  "nap_citations": {
+    "score": 40,
+    "summary": "The business has inconsistent or missing NAP (Name, Address, Phone Number) citations across local directories and platforms. This inconsistency affects local search visibility.",
+    "action_items": [
+      "Claim and verify the business on Google Business Profile.",
+      "Ensure consistent NAP information across all online platforms and directories.",
+      "List the business on high-authority local directories such as Yelp, Yellow Pages, and local chamber of commerce websites."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "Product",
+    "FAQPage"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of customer reviews and engagement",
+    "invisible_for": "Local search users and potential customers searching for plumbing and HVAC services in Marietta, GA",
+    "low_hanging_fruit": "Claiming and optimizing Google Business Profile and encouraging customer reviews",
+    "authority_opportunity": "Building local citations and backlinks from local business associations and industry-related websites"
+  },
+  "analyzed_at": "2026-02-27T02:53:06.399Z",
+  "lead_id": "84566f3a-ce58-477e-8e99-21c5cf42a95a",
+  "business_name": "1-800-PLUMBER +AIR",
+  "website": "https://1800plumber.com/locations/marietta-ga",
+  "location": "Marietta, Georgia",
+  "page_title": "Plumbing, Heating &amp; Air Conditioning | 1-800-Plumber +Air",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

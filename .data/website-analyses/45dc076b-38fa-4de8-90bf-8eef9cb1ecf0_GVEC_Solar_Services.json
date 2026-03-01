@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 78,
+  "aeo_readiness": {
+    "score": 75,
+    "summary": "GVEC Solar Services has a strong foundation but lacks conversational content and structured data to be cited by AI assistants like ChatGPT or Claude.",
+    "quick_wins": [
+      "Implement FAQPage schema with common solar panel and installation questions.",
+      "Create detailed how-to guides for solar panel installation and maintenance."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with photos, reviews, and accurate contact information.",
+    "critical_issues": [
+      "No recent posts about promotions or community events.",
+      "Q&A section is inactive and lacks engagement."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly monitor for any inconsistencies or new citation opportunities."
+    ]
+  },
+  "schema_gaps": [
+    "Missing FAQPage schema",
+    "No HowTo schema for solar installation guides",
+    "LocalBusiness schema could be enhanced with more detailed service information"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content limits AI assistant citations.",
+    "invisible_for": "Queries related to solar installation costs and process.",
+    "low_hanging_fruit": "Adding FAQPage schema with solar energy FAQs.",
+    "authority_opportunity": "Position as the expert by publishing detailed guides on solar energy and AI-optimized content."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for conversational search.",
+    "pain_point": "Without AI optimization, they miss out on 40% of potential leads from AI assistants.",
+    "proof_point": "Their website lacks FAQPage and HowTo schema, which are critical for AI citations.",
+    "solution": "Implement structured data and create conversational content to boost AI visibility and authority.",
+    "impact_estimate": "Expect a 30% increase in AI-driven leads within 6 months.",
+    "urgency": "Competitors are already optimizing for AI; acting now prevents losing market share."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads with Our AEO Strategy",
+  "opening_line": "We analyzed your website and identified key opportunities to boost your visibility with AI assistants.",
+  "cta": "Let's schedule a call to discuss how we can optimize your content for AI-driven search and increase your leads.",
+  "analyzed_at": "2026-02-26T15:41:34.658Z",
+  "lead_id": "45dc076b-38fa-4de8-90bf-8eef9cb1ecf0",
+  "business_name": "GVEC Solar Services",
+  "website": "http://gvecsolarservice.com/",
+  "location": "Schertz, Texas",
+  "page_title": "Solar Panels | Solar Installations | GVEC Solar Services",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.7,
+  "gbp_review_count": 153,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

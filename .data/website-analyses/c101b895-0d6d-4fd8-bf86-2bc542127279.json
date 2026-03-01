@@ -1,0 +1,55 @@
+{
+  "overall_aeo_score": 55,
+  "aeo_readiness": {
+    "score": 60,
+    "summary": "The business has basic AEO elements in place, such as a website with service details and contact information. However, it lacks critical components like customer reviews, localized content, and a strong backlink profile.",
+    "quick_wins": [
+      "Generate and showcase customer reviews/testimonials to build trust and improve local search presence.",
+      "Create localized content targeting specific service areas like The Woodlands, Spring, and other nearby locations.",
+      "Improve the website's internal linking structure to highlight key services and service areas."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 40,
+    "found": "The website has a Google Business Profile (GBP) placeholder as there are no reviews or GBP-specific content integrated.",
+    "summary": "The business does not appear to have an optimized GBP. The lack of reviews and GBP-specific content significantly impacts local search visibility.",
+    "critical_issues": [
+      "No active GBP or integration with the website.",
+      "Missing customer reviews and engagement on GBP.",
+      "Lack of GBP posts or updates for services and promotions."
+    ]
+  },
+  "nap_citations": {
+    "score": 50,
+    "summary": "The business has consistent NAP (Name, Address, Phone Number) information on its website, but it is not widely cited across other directories and platforms.",
+    "action_items": [
+      "List the business on major directories such as Yelp, Yellow Pages, and Bing Places with consistent NAP information.",
+      "Ensure NAP consistency across all online platforms, including social media profiles.",
+      "Submit the business to local citation sites and industry-specific directories."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "Product",
+    "BreadcrumbList"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of customer reviews and GBP optimization",
+    "invisible_for": "Users searching for HVAC services in The Woodlands and surrounding areas",
+    "low_hanging_fruit": "Implementing schema markup for services and reviews",
+    "authority_opportunity": "Creating high-quality, localized content and building backlinks from local businesses and industry websites"
+  },
+  "analyzed_at": "2026-02-27T02:26:14.710Z",
+  "lead_id": "c101b895-0d6d-4fd8-bf86-2bc542127279",
+  "business_name": "The Woodlands Comfort King Air Conditioning & Heating",
+  "website": "https://comfortkingac.com/",
+  "location": "The Woodlands, Texas",
+  "page_title": "Heating and Cooling | The Woodlands Comfort King Air Conditioning & Heating",
+  "has_schema": true,
+  "detected_schemas": [
+    "Microdata"
+  ],
+  "gbp_found": false
+}

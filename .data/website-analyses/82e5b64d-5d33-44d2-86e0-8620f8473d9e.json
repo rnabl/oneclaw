@@ -1,0 +1,52 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "The business has a basic foundation for AEO with some structured data and service information but lacks depth in content and user engagement.",
+    "quick_wins": [
+      "Add more detailed service pages with location-specific keywords.",
+      "Implement a review generation strategy to increase the number of Google reviews.",
+      "Optimize website metadata with targeted keywords for HVAC and plumbing services in Atlanta."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 50,
+    "found": "The website has a Google Business Profile (GBP) but lacks reviews and detailed business information.",
+    "summary": "The GBP is not fully utilized, with no reviews and incomplete business information, which affects local search visibility.",
+    "critical_issues": [
+      "No Google reviews, which impacts trust and local search ranking.",
+      "Incomplete business information, such as hours of operation and service areas."
+    ]
+  },
+  "nap_citations": {
+    "score": 60,
+    "summary": "The business has consistent NAP (Name, Address, Phone) information on the website but lacks citations on other platforms.",
+    "action_items": [
+      "Create and verify listings on major directories like Yelp, Yellow Pages, and local business directories.",
+      "Ensure NAP consistency across all online platforms and directories."
+    ]
+  },
+  "schema_gaps": [
+    "ServiceArea schema is missing, which is important for local service businesses.",
+    "Review schema is not implemented to showcase customer testimonials.",
+    "LocalBusiness schema could be enhanced with more detailed business information."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of user-generated content and reviews.",
+    "invisible_for": "Users searching for HVAC and plumbing services in Atlanta due to low local search visibility.",
+    "low_hanging_fruit": "Implementing a review generation strategy and enhancing local SEO with targeted keywords.",
+    "authority_opportunity": "Building authority through content marketing, such as blog posts on common HVAC and plumbing issues and solutions."
+  },
+  "analyzed_at": "2026-02-27T02:20:50.357Z",
+  "lead_id": "82e5b64d-5d33-44d2-86e0-8620f8473d9e",
+  "business_name": "Excel Mechanical Solutions",
+  "website": "http://excelhvacga.com/",
+  "location": "Marietta, Georgia",
+  "page_title": "Excel Mechanical Solutions: HVAC and Plumbing in Atlanta",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

@@ -1,0 +1,55 @@
+{
+  "overall_aeo_score": 55,
+  "aeo_readiness": {
+    "score": 50,
+    "summary": "The business has basic AEO elements in place, such as a clear service structure and location information, but lacks depth in content, reviews, and keyword optimization.",
+    "quick_wins": [
+      "Implement a review generation strategy to build Google reviews and improve local search presence.",
+      "Optimize meta titles and descriptions with relevant keywords for each service page.",
+      "Create location-specific service pages for high-demand areas like Phoenix and Scottsdale."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 40,
+    "found": "Google Business Profile (GBP) is not explicitly mentioned or linked on the website.",
+    "summary": "The absence of a GBP or its integration on the website is a significant gap. GBP is crucial for local search visibility and customer engagement.",
+    "critical_issues": [
+      "No evidence of an active GBP linked to the website.",
+      "Lack of customer reviews and engagement metrics.",
+      "Missing location-specific service details that could be highlighted in GBP."
+    ]
+  },
+  "nap_citations": {
+    "score": 60,
+    "summary": "The business name, address, and phone number (NAP) are present on the website but lack consistency and broader citation across local directories.",
+    "action_items": [
+      "Ensure NAP consistency across all online platforms and local directories.",
+      "List the business in relevant local directories such as Yelp, Yellow Pages, and industry-specific sites.",
+      "Monitor and update NAP information regularly to maintain accuracy."
+    ]
+  },
+  "schema_gaps": [
+    "ServiceAreaSchema",
+    "LocalBusinessSchema with detailed attributes",
+    "ReviewSchema for customer testimonials",
+    "ProductSchema for specific services offered"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of content depth and keyword optimization for AI-driven search algorithms.",
+    "invisible_for": "Voice search and conversational AI due to the absence of FAQ sections and structured data for AI consumption.",
+    "low_hanging_fruit": "Incorporate an FAQ section addressing common customer queries related to AC repair and plumbing services.",
+    "authority_opportunity": "Develop blog content that establishes the business as an authority in HVAC and plumbing, targeting long-tail keywords and local search terms."
+  },
+  "analyzed_at": "2026-02-27T03:58:17.040Z",
+  "lead_id": "81efba5d-9ef3-4390-915b-7b4c218de481",
+  "business_name": "AZ Home Services Group AC Repair & Plumbing Services of Scottsdale",
+  "website": "https://azhomeservices.group/service-areas/scottsdale-arizona-air-conditioner-plumbing-services/",
+  "location": "Scottsdale, Arizona",
+  "page_title": "AZ Home Services Group - AC Repair &amp; Plumbing Services - Scottsdale, Arizona",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

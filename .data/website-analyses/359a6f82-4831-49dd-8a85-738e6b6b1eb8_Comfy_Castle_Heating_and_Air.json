@@ -1,0 +1,92 @@
+{
+  "overall_aeo_score": 70,
+  "aeo_readiness": {
+    "strengths": [
+      "The website includes an FAQ section, which is beneficial for AEO.",
+      "Contact options like click-to-call, booking, and chat are available, enhancing user experience.",
+      "The Google Business Profile has a strong rating of 4.8 with 183 reviews, indicating good customer satisfaction."
+    ],
+    "weaknesses": [
+      "The website title and meta description are not fully optimized for AEO, as they lack focus on long-tail keywords and specific service areas.",
+      "H1 and H2 tags are missing, which are crucial for structuring content and improving search visibility.",
+      "The NAP (Name, Address, Phone Number) consistency score is low at 50/100, which can affect local search rankings."
+    ],
+    "opportunities": [
+      "Improving the website's content structure with proper H1 and H2 tags can enhance SEO and AEO performance.",
+      "Expanding the FAQ section with more targeted questions and answers can increase visibility in answer engines.",
+      "Enhancing NAP consistency across all platforms can improve local search performance."
+    ],
+    "threats": [
+      "Competitors with stronger local SEO and AEO strategies may outrank Comfy Castle in search results.",
+      "Inconsistent NAP information can lead to confusion and loss of potential customers."
+    ]
+  },
+  "gbp_analysis": {
+    "rating": 4.8,
+    "review_count": 183,
+    "opportunities": [
+      "Encouraging more customer reviews can further boost the Google Business Profile.",
+      "Responding to reviews, especially negative ones, can show engagement and improve customer trust."
+    ],
+    "threats": [
+      "Negative reviews, if not addressed, can harm the business's reputation."
+    ]
+  },
+  "nap_citations": {
+    "score": 50,
+    "recommendations": [
+      "Conduct a thorough audit of all online platforms to ensure NAP consistency.",
+      "Update any outdated or incorrect information on directories, social media, and other online listings."
+    ]
+  },
+  "schema_gaps": {
+    "current_schemas": [
+      "JSON-LD"
+    ],
+    "missing_schemas": [
+      "LocalBusiness",
+      "Service",
+      "FAQPage",
+      "Review",
+      "BreadcrumbList"
+    ],
+    "recommendations": [
+      "Implement LocalBusiness schema to provide search engines with detailed information about the business.",
+      "Add Service schema to highlight the specific HVAC services offered.",
+      "Use FAQPage schema to enhance the visibility of the FAQ section in search results.",
+      "Incorporate Review schema to display customer reviews directly in search results.",
+      "Implement BreadcrumbList schema to improve website navigation and SEO."
+    ]
+  },
+  "ai_visibility_gap": {
+    "current_visibility": "Moderate",
+    "recommendations": [
+      "Optimize content with long-tail keywords and phrases that align with user search queries.",
+      "Enhance the website's content with more detailed and informative articles and guides.",
+      "Utilize AI-driven tools to analyze user behavior and optimize content accordingly."
+    ]
+  },
+  "agency_pitch": "Comfy Castle Heating and Air is poised to dominate the Denver HVAC market with a strategic focus on AEO and AI-driven search optimization. By enhancing NAP consistency, implementing missing schemas, and expanding our FAQ section, we can significantly improve our local search visibility and customer engagement. Our strong Google Business Profile and commitment to customer satisfaction provide a solid foundation for growth. Let's work together to refine our AEO strategy and ensure Comfy Castle is the top choice for HVAC services in Denver.",
+  "email_subject_line": "Boost Your HVAC Business with Our AEO and AI Search Optimization Services",
+  "opening_line": "Dear [Client's Name], I hope this message finds you well. As the Senior Digital Marketing Strategist at Comfy Castle Heating and Air, I am excited to share our strategic plan to enhance your online presence and drive more customers to your business.",
+  "cta": "Let's schedule a call to discuss how we can optimize your AEO strategy and boost your HVAC business. Click here to book a meeting: [Booking Link]",
+  "analyzed_at": "2026-02-26T16:34:34.687Z",
+  "lead_id": "359a6f82-4831-49dd-8a85-738e6b6b1eb8",
+  "business_name": "Comfy Castle Heating and Air",
+  "website": "http://www.comfycastlehvac.com/",
+  "location": "Denver, CO",
+  "page_title": "\r\n    Home HVAC | Commerce City, CO | Comfy Castle Heating\r\n  ",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.8,
+  "gbp_review_count": 183,
+  "gbp_found": true,
+  "nap_score": 50,
+  "nap_issues": [
+    "Phone mismatch",
+    "Address not on website"
+  ],
+  "used_proxy": true
+}

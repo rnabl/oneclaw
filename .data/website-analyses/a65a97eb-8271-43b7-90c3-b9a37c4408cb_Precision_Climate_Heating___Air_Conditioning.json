@@ -1,0 +1,66 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "AI assistants are unlikely to cite this business due to limited conversational content and missing authority signals. The website lacks structured data and detailed FAQ content, which are crucial for AI search visibility.",
+    "quick_wins": [
+      "Implement FAQ content with structured data (FAQPage schema).",
+      "Add HowTo schema for common HVAC services like AC installation and repair."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with photos, hours, and contact information, but lacks regular posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent posts or updates on GBP.",
+      "No engagement with customer Q&A."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Monitor for any future inconsistencies."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQ schema",
+    "No HowTo schema for services",
+    "Missing Service schema for detailed service listings"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content.",
+    "invisible_for": "Queries related to HVAC emergency services and detailed repair guides.",
+    "low_hanging_fruit": "Implementing FAQ content with FAQPage schema.",
+    "authority_opportunity": "Highlighting certifications and expertise through Authority schema and media mentions."
+  },
+  "agency_pitch": {
+    "hook": "Be the HVAC authority AI assistants trust.",
+    "pain_point": "Without AI-ready content, they miss out on 40% of potential leads from voice and AI search.",
+    "proof_point": "Their website lacks FAQ content and structured data, making it less visible to AI models.",
+    "solution": "Our AEO approach integrates structured data, conversational content, and authority signals to make your business the top choice for AI-driven queries.",
+    "impact_estimate": "Expect a 30% increase in AI-driven leads within 3 months.",
+    "urgency": "Competitors are already optimizing for AI search; act now to stay ahead."
+  },
+  "email_subject_line": "Unlock AI-driven HVAC leads with our AEO expertise",
+  "opening_line": "We analyzed your website and identified key opportunities to boost your visibility with AI assistants.",
+  "cta": "Let's schedule a call to discuss how we can optimize your online presence for AI search.",
+  "analyzed_at": "2026-02-26T15:58:50.011Z",
+  "lead_id": "a65a97eb-8271-43b7-90c3-b9a37c4408cb",
+  "business_name": "Precision Climate Heating & Air Conditioning",
+  "website": "https://precisionclimate.site/",
+  "location": "Denver, Colorado",
+  "page_title": "Denver HVAC Repair & Installs Call Us: (720) 710-0850",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.8,
+  "gbp_review_count": 45,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

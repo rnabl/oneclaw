@@ -1,0 +1,55 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "The business has a basic foundation for AEO but lacks critical elements for strong search optimization.",
+    "quick_wins": [
+      "Implement a review generation strategy to build Google reviews.",
+      "Optimize website content with targeted local keywords (e.g., Arvada, CO).",
+      "Enhance meta tags and descriptions for better search visibility."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 50,
+    "found": "Google Business Profile (GBP) not claimed or optimized.",
+    "summary": "The business lacks a claimed and optimized GBP, which is crucial for local search visibility.",
+    "critical_issues": [
+      "GBP not claimed.",
+      "No customer reviews on GBP.",
+      "Incomplete business information (e.g., hours, services)."
+    ]
+  },
+  "nap_citations": {
+    "score": 60,
+    "summary": "The business has inconsistent or incomplete Name, Address, Phone (NAP) citations across the web.",
+    "action_items": [
+      "Audit and update NAP citations on major directories (e.g., Yelp, Yellow Pages).",
+      "Ensure NAP consistency across all online platforms.",
+      "Claim and verify business listings on relevant local directories."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "Product"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of localized content and optimization for voice search.",
+    "invisible_for": "Local customers searching for heating and cooling services in Arvada, CO.",
+    "low_hanging_fruit": "Add location-specific content and FAQs targeting common customer queries.",
+    "authority_opportunity": "Publish blog posts or guides on HVAC maintenance and repair to establish industry authority."
+  },
+  "analyzed_at": "2026-02-27T03:50:54.986Z",
+  "lead_id": "dc92a65e-eff5-430c-93fb-621335854c85",
+  "business_name": "My Dad Can Fix Anything LLC, Heating and Air",
+  "website": "https://www.dadfixanythingmechanical.com/",
+  "location": "Arvada, Colorado",
+  "page_title": "Heating and Cooling | Loveland | My Dad Can Fix Anything",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

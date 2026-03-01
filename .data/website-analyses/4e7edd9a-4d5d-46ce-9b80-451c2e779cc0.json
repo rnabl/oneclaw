@@ -1,0 +1,56 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "FutureWay Mechanical has a decent foundation for AEO with clear service offerings and contact information, but lacks depth in content and user engagement features.",
+    "quick_wins": [
+      "Add customer reviews and testimonials to build trust and provide fresh content.",
+      "Incorporate location-based keywords and phrases to improve local search visibility.",
+      "Enhance the website with a blog or resources section to target long-tail keywords and demonstrate expertise."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 60,
+    "found": "The website includes basic business information such as contact details and service descriptions, but lacks structured data for Google Business Profile (GBP) optimization.",
+    "summary": "The business has the essential information for GBP but needs to improve the structured data and local SEO signals to align with GBP requirements.",
+    "critical_issues": [
+      "No clear NAP (Name, Address, Phone number) consistency across the site.",
+      "Missing GBP-specific schema markup.",
+      "Lack of localized content and keywords."
+    ]
+  },
+  "nap_citations": {
+    "score": 55,
+    "summary": "The NAP information is present but not consistently formatted or utilized across the website, which can hinder local search performance.",
+    "action_items": [
+      "Ensure consistent NAP information across all pages and in the footer.",
+      "List the business on local directories and citation sites with accurate NAP details.",
+      "Use schema markup to explicitly define NAP information for search engines."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "AggregateRating",
+    "ContactPoint"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of localized and conversational content.",
+    "invisible_for": "Voice search and AI-driven search queries due to the absence of structured data and natural language content.",
+    "low_hanging_fruit": "Implement FAQ schema and add conversational FAQs related to HVAC services.",
+    "authority_opportunity": "Create detailed, informative content that answers common HVAC-related questions to establish the website as an authority in the field."
+  },
+  "analyzed_at": "2026-02-27T03:38:37.186Z",
+  "lead_id": "4e7edd9a-4d5d-46ce-9b80-451c2e779cc0",
+  "business_name": "FutureWay Mechanical, Inc.",
+  "website": "http://www.futurewaymechanical.com/",
+  "location": "Mesa, Arizona",
+  "page_title": "Heating And Air Repair Services At FutureWay Mechanical",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

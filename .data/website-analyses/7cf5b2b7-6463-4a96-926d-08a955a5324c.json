@@ -1,0 +1,52 @@
+{
+  "overall_aeo_score": 68,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "The business has a basic level of AEO readiness with some critical gaps in local SEO and content optimization.",
+    "quick_wins": [
+      "Implement a review generation strategy to build Google reviews and improve local SEO.",
+      "Optimize website content with targeted keywords for better search visibility.",
+      "Enhance the website's metadata and headings to align with SEO best practices."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 55,
+    "found": "The business has NAP consistency on the website but lacks structured citations across directories.",
+    "summary": "The business has a Good Business Profile (GBP) foundation but needs to improve local citations and reviews.",
+    "critical_issues": [
+      "No Google reviews, which impacts local search ranking and trust.",
+      "Lack of structured citations on major directories like Yelp, Bing, and Apple Maps."
+    ]
+  },
+  "nap_citations": {
+    "score": 60,
+    "summary": "NAP consistency is present on the website but is not validated across major directories.",
+    "action_items": [
+      "Audit and update NAP information on major directories such as Yelp, Bing, and Apple Maps.",
+      "Use a local listing service to manage and monitor NAP consistency across platforms."
+    ]
+  },
+  "schema_gaps": [
+    "No Organization schema beyond basic JSON-LD and Microdata.",
+    "Missing Service schema for detailed service listings.",
+    "No Review schema to highlight customer testimonials and ratings."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of customer reviews and local citations.",
+    "invisible_for": "Users searching for local AC repair services on Google Maps and local search results.",
+    "low_hanging_fruit": "Implementing a review generation strategy and updating local directory listings.",
+    "authority_opportunity": "Creating high-quality, localized content that targets Arlington, TX, and surrounding areas to improve search rankings."
+  },
+  "analyzed_at": "2026-02-27T03:44:44.567Z",
+  "lead_id": "7cf5b2b7-6463-4a96-926d-08a955a5324c",
+  "business_name": "Golden Air Conditioning",
+  "website": "http://www.goldenmechanical.com/",
+  "location": "Arlington, Texas",
+  "page_title": "AC Repair Arlington TX | Air Conditioning Company | Golden Air Conditioning",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

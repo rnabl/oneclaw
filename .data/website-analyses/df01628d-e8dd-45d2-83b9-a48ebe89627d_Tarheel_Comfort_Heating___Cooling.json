@@ -1,0 +1,64 @@
+{
+  "overall_aeo_score": 55,
+  "aeo_readiness": {
+    "score": 45,
+    "summary": "AI assistants are unlikely to cite Tarheel Comfort due to the lack of structured data and conversational content, but there is potential for improvement.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup",
+      "Add FAQ content with structured FAQPage schema"
+    ]
+  },
+  "gbp_analysis": {
+    "score": 75,
+    "found": true,
+    "summary": "The Google Business Profile is well-maintained but lacks regular posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent posts on GBP",
+      "Q&A section is inactive or not utilized"
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms",
+      "Regularly monitor citations for any potential discrepancies"
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for common HVAC tasks",
+    "Missing Product or Service schema for specific offerings"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content",
+    "invisible_for": "Local HVAC service queries and 'best HVAC in Gastonia' type searches",
+    "low_hanging_fruit": "Implementing LocalBusiness and FAQPage schema",
+    "authority_opportunity": "Showcasing certifications, customer testimonials, and detailed service explanations to establish expertise"
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for answer engines.",
+    "pain_point": "Missing out on 40% of potential leads from AI assistants like ChatGPT and Claude.",
+    "proof_point": "The website lacks essential schema markup and conversational content, making it less likely to be cited by AI models.",
+    "solution": "Our AEO approach includes implementing structured data, creating FAQ content, and enhancing GBP engagement to make your business the top choice for AI-driven searches.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 3 months.",
+    "urgency": "Waiting means losing ground to competitors who are already optimizing for AI search."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads for Your HVAC Business in Gastonia",
+  "opening_line": "We analyzed your website and identified key opportunities to improve your visibility with AI assistants.",
+  "cta": "Let's schedule a call to discuss how we can optimize your online presence for AI-driven searches.",
+  "analyzed_at": "2026-02-26T16:24:01.604Z",
+  "lead_id": "df01628d-e8dd-45d2-83b9-a48ebe89627d",
+  "business_name": "Tarheel Comfort Heating & Cooling",
+  "website": "https://tarheelcomfort.com/",
+  "location": "Gastonia, North Carolina",
+  "page_title": "TarheelComfort | HVAC Services in the Gaston County region",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": 5,
+  "gbp_review_count": 80,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

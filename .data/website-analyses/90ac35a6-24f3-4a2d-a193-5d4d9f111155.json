@@ -1,0 +1,55 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "Montes Roofing has a basic level of AEO readiness with some critical areas for improvement. The website includes essential contact information and service details but lacks depth in content and user engagement features.",
+    "quick_wins": [
+      "Add customer reviews and testimonials to build trust and provide unique content.",
+      "Optimize meta tags and headers with relevant keywords to improve search visibility.",
+      "Implement a blog section to regularly publish content related to roofing services and industry trends."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 60,
+    "found": "The website includes basic business information such as address and phone number, but there is no explicit mention of a Google Business Profile (GBP).",
+    "summary": "While the business information is present on the website, the lack of a GBP integration may hinder local search performance and customer engagement.",
+    "critical_issues": [
+      "No evidence of an active Google Business Profile.",
+      "Missing GBP categories and attributes that could enhance local search presence."
+    ]
+  },
+  "nap_citations": {
+    "score": 55,
+    "summary": "The business has consistent NAP (Name, Address, Phone Number) information on its website but lacks citations across major local directories and platforms.",
+    "action_items": [
+      "Create and verify a Google Business Profile with accurate NAP information.",
+      "List the business on popular directories such as Yelp, Bing Places, and industry-specific platforms.",
+      "Ensure NAP consistency across all online platforms and citations."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "Product",
+    "FAQPage"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of customer reviews and testimonials to build trust and provide unique content.",
+    "invisible_for": "Potential customers searching for roofing services who rely on reviews and ratings to make decisions.",
+    "low_hanging_fruit": "Implementing a review collection strategy and showcasing them on the website.",
+    "authority_opportunity": "Publishing high-quality, informative content related to roofing services and industry trends to establish the business as an authority in the field."
+  },
+  "analyzed_at": "2026-02-27T02:22:14.525Z",
+  "lead_id": "90ac35a6-24f3-4a2d-a193-5d4d9f111155",
+  "business_name": "Montes Roofing",
+  "website": "https://montesroofingsystems.com/",
+  "location": "Oak Lawn, Illinois",
+  "page_title": "Montes Roofing | Chicago Roofing &amp; Tuckpointing Company",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

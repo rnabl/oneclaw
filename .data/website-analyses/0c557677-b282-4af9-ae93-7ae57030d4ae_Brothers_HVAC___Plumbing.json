@@ -1,0 +1,64 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 65,
+    "summary": "AI assistants are unlikely to cite Brothers HVAC & Plumbing due to a lack of structured data and insufficient authority signals, despite having decent content and reviews.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup to provide AI with structured business information.",
+      "Expand FAQ content with schema to address common HVAC queries and improve AI visibility."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with a 5-star rating, photos, and hours listed, but the missing phone number is a critical issue.",
+    "critical_issues": [
+      "Phone number not listed on GBP.",
+      "Lack of regular posts or Q&A engagement to boost visibility."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Consider adding the phone number to GBP to enhance contact options."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for common HVAC tasks",
+    "No review schema to highlight customer testimonials"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of schema markup prevents AI from understanding and citing their services effectively.",
+    "invisible_for": "Queries related to 'HVAC services in Olathe, Kansas' where AI may prioritize more structured data-rich competitors.",
+    "low_hanging_fruit": "Adding LocalBusiness and FAQ schema to provide AI with the necessary structured data.",
+    "authority_opportunity": "Highlighting certifications, partnerships, and detailed service explanations to establish expertise."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing your digital presence for answer engines.",
+    "pain_point": "Without proper schema and authority signals, AI assistants overlook Brothers HVAC, costing them potential leads and market share.",
+    "proof_point": "Despite a 5-star GBP rating and strong reviews, the business is not cited by AI models due to lacking structured data.",
+    "solution": "Our AEO approach integrates strategic schema markup, authority-building content, and GBP optimization to make Brothers HVAC the go-to HVAC provider in AI searches.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 3 months.",
+    "urgency": "Competitors are already leveraging AI, and waiting means losing ground in an increasingly AI-driven search landscape."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads: Optimize Your HVAC Business for 2026",
+  "opening_line": "We analyzed your website and Google Business Profile and identified key opportunities to enhance your visibility with AI assistants.",
+  "cta": "Let's schedule a call to discuss how we can make your business the top choice for AI-driven HVAC searches.",
+  "analyzed_at": "2026-02-26T15:40:25.745Z",
+  "lead_id": "0c557677-b282-4af9-ae93-7ae57030d4ae",
+  "business_name": "Brothers HVAC & Plumbing",
+  "website": "http://www.brothers-hvac.com/",
+  "location": "Olathe, Kansas",
+  "page_title": "Brothers HVAC &amp; Plumbing",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": 5,
+  "gbp_review_count": 116,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

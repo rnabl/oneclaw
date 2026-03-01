@@ -1,0 +1,39 @@
+{
+  "overall_aeo_score": 60,
+  "aeo_readiness": {
+    "title": "The current title is optimized for local SEO with relevant keywords like 'Roofing Nashville' and a call-to-action 'Get A Free Inspection'. However, it could be improved by incorporating more specific services and location-based keywords to enhance visibility.",
+    "meta_description": "The meta description is concise and includes relevant information about the company's experience and service area. It could be further optimized by highlighting unique selling points and incorporating more targeted keywords.",
+    "headings": "The website lacks H1 and H2 tags, which are crucial for organizing content and improving SEO. Implementing these tags with relevant keywords will enhance readability and search engine ranking.",
+    "schema_markup": "The website uses JSON-LD schema, which is good for SEO. However, expanding the schema to include more detailed information about services, reviews, and business details can improve visibility.",
+    "faq_section": "The website does not have an FAQ section. Adding an FAQ with commonly asked questions and answers can improve search engine ranking and provide valuable information to potential customers.",
+    "content_quality": "The content is informative but lacks depth. Adding detailed service descriptions, customer testimonials, and blog posts can improve engagement and SEO."
+  },
+  "gbp_analysis": {
+    "rating": "The Google Business Profile has a 5-star rating with 64 reviews, which is excellent. Encouraging more reviews and responding to existing ones can further enhance credibility.",
+    "nap_consistency": "The NAP (Name, Address, Phone Number) is 100/100, indicating perfect consistency across all platforms. This is crucial for local SEO and should be maintained.",
+    "additional_optimizations": "Adding more photos, updating business hours, and utilizing Google Posts can improve engagement and visibility."
+  },
+  "nap_citations": "The NAP citations are perfect. Regular monitoring and updating of citations across various platforms will help maintain this high standard.",
+  "schema_gaps": "While JSON-LD schema is implemented, it could be expanded to include more detailed information such as service areas, specific services offered, customer reviews, and business hours. This will provide search engines with more context and improve visibility.",
+  "ai_visibility_gap": "The website could benefit from AI-driven content optimization tools to identify and target high-impact keywords. Additionally, implementing AI chatbots for customer service can improve user experience and engagement.",
+  "agency_pitch": "Acclaimed Roofing has a strong foundation with a 5-star Google rating and perfect NAP citations. To further enhance their online presence, we recommend implementing a comprehensive AEO strategy that includes optimizing headings, expanding schema markup, adding an FAQ section, and utilizing AI tools for content optimization. Additionally, leveraging AI for customer service can improve user experience and engagement. Our agency can provide a tailored strategy to boost their visibility and drive more leads.",
+  "email_subject_line": "Boost Your Roofing Business with Our Expert AEO Strategy",
+  "opening_line": "Dear [Recipient Name], I hope this message finds you well. At Acclaimed Roofing, you have already established a strong reputation with a 5-star rating and excellent NAP consistency. To further enhance your online presence and drive more leads, we propose a comprehensive AEO strategy tailored to your business needs.",
+  "cta": "Let's schedule a call to discuss how we can elevate your roofing business to new heights. Click here to book a time that works for you!",
+  "analyzed_at": "2026-02-26T16:36:56.561Z",
+  "lead_id": "396d4eb1-e470-4d48-9230-f0fb58ebb1c8",
+  "business_name": "Acclaimed Roofing",
+  "website": "http://acclaimedroofingtn.com/",
+  "location": "Brentwood, Tennessee",
+  "page_title": "Acclaimed Roofing | Roofing Nashville | Get A Free Inspection",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 5,
+  "gbp_review_count": 64,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": [],
+  "used_proxy": true
+}

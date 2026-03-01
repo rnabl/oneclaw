@@ -1,0 +1,57 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "Tucfrez has a basic foundation for AEO readiness with structured content, schema markup, and localized information. However, there are significant gaps in reviews, citations, and AI visibility.",
+    "quick_wins": [
+      "Implement a strategy to generate Google reviews to build trust and improve local SEO.",
+      "Optimize meta tags and headings with relevant HVAC and local service keywords.",
+      "Enhance the 'About Us' section with more detailed service areas and unique selling propositions."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 50,
+    "found": [
+      "Hablamos Español",
+      "Free Estimate",
+      "Central Florida"
+    ],
+    "summary": "The website includes some localized elements, such as language and service location, but lacks comprehensive GBP optimization, including reviews and detailed service area information.",
+    "critical_issues": [
+      "No Google reviews, which are crucial for local search ranking and trust-building.",
+      "Missing detailed service area information, which affects local search visibility."
+    ]
+  },
+  "nap_citations": {
+    "score": 40,
+    "summary": "The business has not established a strong presence across major citation platforms. This lack of consistent NAP (Name, Address, Phone Number) information can hinder local search performance.",
+    "action_items": [
+      "Create and verify listings on Google Business Profile, Yelp, and Bing Places.",
+      "Ensure consistent NAP information across all online directories and social media profiles."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "FAQPage"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of AI-friendly content and structured data for AI-driven search features.",
+    "invisible_for": "Voice search, AI-powered rich results, and conversational search.",
+    "low_hanging_fruit": "Add FAQ schema to address common HVAC queries and improve voice search visibility.",
+    "authority_opportunity": "Develop content that showcases expertise in HVAC services, such as blog posts or guides, to establish authority and improve AI-driven search rankings."
+  },
+  "analyzed_at": "2026-02-27T03:41:43.349Z",
+  "lead_id": "59a09353-38e5-48ef-a911-bec4b0cfae54",
+  "business_name": "Tucfrez",
+  "website": "http://www.tucfrez.com/",
+  "location": "Kissimmee, Florida",
+  "page_title": "Home - Tucfrez",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

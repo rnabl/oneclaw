@@ -1,0 +1,52 @@
+{
+  "overall_aeo_score": 62,
+  "aeo_readiness": {
+    "score": 65,
+    "summary": "The website has basic AEO elements in place, such as structured schema markup and localized content. However, it lacks depth in content optimization, user engagement features, and review generation.",
+    "quick_wins": [
+      "Implement a review generation strategy to build Google reviews and enhance local SEO.",
+      "Optimize meta titles and descriptions with targeted keywords for better search visibility.",
+      "Enhance content with location-specific service pages and FAQs to address user queries."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 55,
+    "found": "The website has localized service information for Phoenix and surrounding areas.",
+    "summary": "The business has a good local presence with multiple location references. However, the lack of Google Business Profile (GBP) and customer reviews significantly impacts local search visibility.",
+    "critical_issues": [
+      "No active Google Business Profile (GBP) found.",
+      "Zero customer reviews on Google."
+    ]
+  },
+  "nap_citations": {
+    "score": 50,
+    "summary": "The business name, address, and phone number (NAP) are consistent on the website but lack external citations on major directories and local listings.",
+    "action_items": [
+      "Create and verify NAP citations on Google, Yelp, Bing, and other relevant local directories.",
+      "Ensure NAP consistency across all online platforms and social media profiles."
+    ]
+  },
+  "schema_gaps": [
+    "No Organization schema found.",
+    "No LocalBusiness schema with detailed business hours and service area.",
+    "No FAQPage or QAPage schema for addressing common customer queries."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of customer reviews and engagement signals.",
+    "invisible_for": "Users searching for HVAC services with local intent and seeking trusted providers.",
+    "low_hanging_fruit": "Implementing a review generation strategy and optimizing existing content for local SEO.",
+    "authority_opportunity": "Establishing the business as a local authority by publishing informative content, such as blog posts on HVAC maintenance and energy efficiency."
+  },
+  "analyzed_at": "2026-02-27T03:24:46.852Z",
+  "lead_id": "6aca0ce2-f92d-4dd8-a023-176ff95ffda0",
+  "business_name": "Four Seasons Home Services - Phoenix, AZ",
+  "website": "https://fourseasonshs.com/",
+  "location": "Phoenix, Arizona",
+  "page_title": "Heating Service, AC Service, Plumber &amp; Heating Repair | Cave Creek, AZ, Deer Valley, AZ, Phoenix, AZ, Paradise Valley, AZ, Sun City, AZ &amp; New River, AZ | Four Seasons Home Services",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

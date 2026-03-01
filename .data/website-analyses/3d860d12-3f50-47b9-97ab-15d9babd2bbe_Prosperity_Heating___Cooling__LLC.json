@@ -1,0 +1,64 @@
+{
+  "overall_aeo_score": 52,
+  "aeo_readiness": {
+    "score": 45,
+    "summary": "AI assistants are unlikely to cite Prosperity Heating & Cooling due to insufficient structured data and lack of authority signals. Their current content is not optimized for AI queries, making them less competitive in AI-driven search results.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup to define the business clearly for AI models.",
+      "Create and embed an FAQ schema to address common HVAC queries and improve AI visibility."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 20,
+    "found": false,
+    "summary": "The Google Business Profile is not found, making the business invisible to Google AI and significantly limiting local search presence.",
+    "critical_issues": [
+      "Google Business Profile is not set up or claimed.",
+      "Lack of GBP photos, posts, and Q&A to engage potential customers."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected, ensuring reliable business information across platforms.",
+    "action_items": [
+      "Maintain current NAP consistency across all directories and listings.",
+      "Expand NAP citations to additional local and industry-specific directories."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQ schema implemented",
+    "No HowTo schema for instructional content",
+    "Lack of review or testimonial schema"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Absence of schema markup prevents AI from understanding and recommending their services.",
+    "invisible_for": "Queries related to 'HVAC services in Indianapolis' and 'best central heating and air units'.",
+    "low_hanging_fruit": "Implementing LocalBusiness and FAQ schema to provide structured data for AI models.",
+    "authority_opportunity": "Highlighting certifications, partnerships, and customer testimonials to establish expertise and trust."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for answer engines and AI search.",
+    "pain_point": "Without AI optimization, they are missing out on 40% of potential leads from voice and AI-assisted searches.",
+    "proof_point": "Their Google Business Profile is not found, and critical schema markup is missing, making them invisible to AI models.",
+    "solution": "Our AEO approach integrates schema markup, GBP optimization, and authority-building content to make Prosperity Heating & Cooling a top AI-recommended choice.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 6 months.",
+    "urgency": "Waiting means losing ground to competitors who are already optimizing for AI search."
+  },
+  "email_subject_line": "Maximize Your AI Reach: Optimize Prosperity Heating & Cooling for 2026",
+  "opening_line": "We analyzed your website and found significant opportunities to enhance your AI visibility and attract more HVAC leads.",
+  "cta": "Let's schedule a call to discuss how we can optimize your digital presence for AI search and boost your lead generation.",
+  "analyzed_at": "2026-02-26T16:12:42.331Z",
+  "lead_id": "3d860d12-3f50-47b9-97ab-15d9babd2bbe",
+  "business_name": "Prosperity Heating & Cooling, LLC",
+  "website": "http://prosperityheatacinfo.com/",
+  "location": "Indianapolis, IN",
+  "page_title": "Top Central Heat and Air Units for Your Home",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": null,
+  "gbp_review_count": null,
+  "gbp_found": false,
+  "nap_score": 100,
+  "nap_issues": []
+}

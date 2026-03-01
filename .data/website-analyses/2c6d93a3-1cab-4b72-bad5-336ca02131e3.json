@@ -1,0 +1,52 @@
+{
+  "overall_aeo_score": 58,
+  "aeo_readiness": {
+    "score": 60,
+    "summary": "The website has basic AEO elements in place but lacks depth in content, keyword optimization, and user engagement features.",
+    "quick_wins": [
+      "Expand service pages with detailed content and relevant keywords.",
+      "Add customer reviews and testimonials to build trust and improve engagement.",
+      "Implement location-based keywords to target local search queries."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 40,
+    "found": "The website has a Google Business Profile (GBP) but lacks reviews and complete information.",
+    "summary": "The GBP is not fully optimized, with no reviews and incomplete business information, which affects local search visibility.",
+    "critical_issues": [
+      "No customer reviews on GBP.",
+      "Incomplete business information (e.g., missing business hours, services, photos)."
+    ]
+  },
+  "nap_citations": {
+    "score": 50,
+    "summary": "The business has inconsistent NAP (Name, Address, Phone) citations across directories, which can confuse search engines and affect local SEO.",
+    "action_items": [
+      "Audit and update NAP information across all online directories to ensure consistency.",
+      "Claim and verify the business on major citation sites like Yelp, Bing, and Apple Maps."
+    ]
+  },
+  "schema_gaps": [
+    "Service schema for specific HVAC services (e.g., heating installation, air conditioning repair).",
+    "Review schema to highlight customer testimonials and ratings.",
+    "FAQ schema to address common customer questions about HVAC services."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of detailed, keyword-rich content on service pages.",
+    "invisible_for": "Local customers searching for specific HVAC services in San Diego.",
+    "low_hanging_fruit": "Adding location-based keywords and detailed service descriptions.",
+    "authority_opportunity": "Creating blog content on HVAC maintenance tips and local San Diego climate considerations to establish expertise and improve search visibility."
+  },
+  "analyzed_at": "2026-02-27T02:35:53.215Z",
+  "lead_id": "2c6d93a3-1cab-4b72-bad5-336ca02131e3",
+  "business_name": "Air Quality Control Heating and Air conditioning",
+  "website": "https://airqualitycontrolheating.com/",
+  "location": "San Diego, CA",
+  "page_title": "Experienced HVAC Contractors | Air Quality Control Heating and Air conditioning | Escondido, CA",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

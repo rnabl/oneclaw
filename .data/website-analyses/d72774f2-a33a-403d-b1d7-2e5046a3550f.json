@@ -1,0 +1,53 @@
+{
+  "overall_aeo_score": 55,
+  "aeo_readiness": {
+    "score": 60,
+    "summary": "The business has a basic online presence but lacks critical elements for strong AEO readiness, such as structured data and comprehensive content.",
+    "quick_wins": [
+      "Implement schema markup to enhance search engine understanding of the business.",
+      "Expand website content to include detailed service descriptions and customer testimonials.",
+      "Optimize for local SEO by ensuring consistent NAP (Name, Address, Phone) citations across the web."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 40,
+    "found": "The website has a Google Business Profile (GBP) but lacks reviews and engagement.",
+    "summary": "The business has a GBP but it is not actively managed, with no reviews and minimal engagement.",
+    "critical_issues": [
+      "No customer reviews on GBP.",
+      "Lack of regular updates or posts on GBP.",
+      "No images or videos showcasing services or team."
+    ]
+  },
+  "nap_citations": {
+    "score": 50,
+    "summary": "NAP citations are inconsistent and need improvement to boost local SEO.",
+    "action_items": [
+      "Audit and correct NAP citations across all major directories and platforms.",
+      "Ensure NAP consistency on the website and social media profiles.",
+      "Actively manage and update NAP information on Google Business Profile and other key platforms."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "ContactPoint",
+    "OpeningHoursSpecification"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and comprehensive content.",
+    "invisible_for": "Search engines and AI tools that rely on structured data to understand and rank content.",
+    "low_hanging_fruit": "Implement basic schema markup for LocalBusiness and Service types.",
+    "authority_opportunity": "Enhance content with detailed service descriptions, customer testimonials, and case studies to establish authority and improve visibility."
+  },
+  "analyzed_at": "2026-02-27T02:46:35.861Z",
+  "lead_id": "d72774f2-a33a-403d-b1d7-2e5046a3550f",
+  "business_name": "Manuel and Sons Service Co.",
+  "website": "https://manuelandsons.com/",
+  "location": "San Antonio, Texas",
+  "page_title": "Manuel &amp; Sons &#8211; Over three decades of A/C repair experience.",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_found": false
+}

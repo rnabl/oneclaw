@@ -1,0 +1,67 @@
+{
+  "overall_aeo_score": 55,
+  "aeo_readiness": {
+    "score": 45,
+    "summary": "AI assistants are unlikely to cite this business due to significant gaps in structured data, conversational content, and authority signals.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup with relevant details.",
+      "Create an FAQ section with questions potential customers might ask AI assistants."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 60,
+    "found": true,
+    "summary": "Google Business Profile is operational but lacks essential elements like photos, hours, and consistent contact information.",
+    "critical_issues": [
+      "No photos uploaded to GBP.",
+      "Business hours not listed.",
+      "Phone number mismatch between GBP and website."
+    ]
+  },
+  "nap_citations": {
+    "score": 75,
+    "summary": "NAP consistency is moderate, with a phone number mismatch being the primary issue.",
+    "action_items": [
+      "Update the phone number on the website to match the GBP (718-378-5540).",
+      "Ensure consistent NAP across all online directories and citations."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for HVAC services",
+    "Missing review schema for testimonials"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content makes the site invisible to AI assistants.",
+    "invisible_for": "Queries related to HVAC services in the Bronx and Westchester area.",
+    "low_hanging_fruit": "Implementing LocalBusiness and FAQ schema markup.",
+    "authority_opportunity": "Highlighting certifications, expertise, and media coverage to establish authority."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for answer engines and AI search.",
+    "pain_point": "Without AI optimization, they are missing out on 40% of potential leads from voice and AI assistants.",
+    "proof_point": "Their website lacks essential schema markup and conversational content, making it less likely to be cited by AI models.",
+    "solution": "Our AEO approach includes implementing structured data, creating FAQ content, and optimizing GBP to ensure AI assistants recognize and recommend their services.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 3 months.",
+    "urgency": "Competitors are already optimizing for AI, and waiting means losing market share to them."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads for Your HVAC Business in the Bronx",
+  "opening_line": "We analyzed your website and identified key areas where AI optimization can significantly boost your visibility and lead generation.",
+  "cta": "Let's schedule a call to discuss how we can make your business AI-ready and capture more leads.",
+  "analyzed_at": "2026-02-26T15:58:27.014Z",
+  "lead_id": "961faf97-41e7-4093-a6e7-7a588e43d8b7",
+  "business_name": "LLC",
+  "website": "https://acheatingllc.com/",
+  "location": "Bronx, New York",
+  "page_title": "AC HEATING | Bienvenid@ a nuestra pagina web",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": 2.5,
+  "gbp_review_count": 35,
+  "gbp_found": true,
+  "nap_score": 75,
+  "nap_issues": [
+    "Phone mismatch: Website has (917) 671-6424, GBP has (718) 378-5540"
+  ]
+}

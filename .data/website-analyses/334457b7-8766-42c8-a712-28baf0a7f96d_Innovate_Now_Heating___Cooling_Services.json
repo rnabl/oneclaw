@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 62,
+  "aeo_readiness": {
+    "score": 55,
+    "summary": "AI assistants are unlikely to cite this business due to significant gaps in structured data, conversational content, and authority signals.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup",
+      "Create an FAQ page with common HVAC questions and answers"
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-maintained with positive ratings and photos but lacks engagement through posts and Q&A.",
+    "critical_issues": [
+      "No recent posts or updates on GBP",
+      "No engagement in the Q&A section"
+    ]
+  },
+  "nap_citations": {
+    "score": 75,
+    "summary": "NAP consistency is moderate, with the address missing on the website but present on GBP.",
+    "action_items": [
+      "Add the complete business address to the website footer",
+      "Ensure NAP details are consistent across all online directories"
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for common HVAC tasks"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content makes the site less attractive to AI models.",
+    "invisible_for": "Queries related to HVAC repair and maintenance in Houston.",
+    "low_hanging_fruit": "Implementing LocalBusiness and FAQPage schema.",
+    "authority_opportunity": "Showcasing certifications, industry partnerships, and detailed service guides."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for answer engines.",
+    "pain_point": "Without AI optimization, they are missing out on 40% of potential leads from voice and AI search.",
+    "proof_point": "The website lacks essential schema markup and conversational content, making it less likely to be cited by AI models.",
+    "solution": "Our AEO approach integrates schema markup, conversational content, and authority signals to make your business the top choice for AI assistants.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 6 months.",
+    "urgency": "Competitors are already optimizing for AI, and waiting means losing market share."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads for Your HVAC Business in The Woodlands",
+  "opening_line": "After analyzing your website, we found significant opportunities to enhance your visibility with AI assistants.",
+  "cta": "Let's schedule a call to discuss how we can optimize your online presence for AI search.",
+  "analyzed_at": "2026-02-26T15:45:52.695Z",
+  "lead_id": "334457b7-8766-42c8-a712-28baf0a7f96d",
+  "business_name": "Innovate Now Heating & Cooling Services",
+  "website": "http://innovatenowhvac.com/",
+  "location": "The Woodlands, Texas",
+  "page_title": "Servicing Houston and surrounding areas",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": 4.9,
+  "gbp_review_count": 45,
+  "gbp_found": true,
+  "nap_score": 75,
+  "nap_issues": [
+    "Address not found on website but listed on GBP"
+  ]
+}

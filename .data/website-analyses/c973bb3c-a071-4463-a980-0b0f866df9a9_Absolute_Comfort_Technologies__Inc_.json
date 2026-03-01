@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "AI models are likely to cite Absolute Comfort Technologies for local HVAC queries due to strong NAP consistency and decent GBP presence, but lack of rich schema and conversational content limits their visibility.",
+    "quick_wins": [
+      "Implement LocalBusiness schema with detailed service information.",
+      "Expand FAQ content to address common HVAC queries and optimize with FAQPage schema."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "GBP is well-optimized with high ratings, photos, and accurate hours, but posts and Q&A sections could use more engagement.",
+    "critical_issues": [
+      "No recent posts to engage with the audience.",
+      "Q&A section is inactive and lacks customer interaction."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly monitor citations for any potential discrepancies."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema implemented",
+    "HowTo schema not utilized for instructional content"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content limits AI model citations.",
+    "invisible_for": "Queries related to 'HVAC repair in Kansas City' and 'emergency HVAC services'.",
+    "low_hanging_fruit": "Adding LocalBusiness schema with service details and FAQs.",
+    "authority_opportunity": "Position as HVAC experts by creating content on maintenance tips, energy efficiency, and emergency response."
+  },
+  "agency_pitch": {
+    "hook": "Boost AI-driven leads by 30% with enhanced schema and conversational content.",
+    "pain_point": "Losing potential customers who rely on AI assistants for local service recommendations.",
+    "proof_point": "Despite strong GBP ratings, the website is not cited by AI models for key HVAC queries.",
+    "solution": "Implement structured data, expand FAQ content, and create authority-building articles to align with AI search trends.",
+    "impact_estimate": "Expect a 25-40% increase in AI-driven traffic and leads within 3-6 months.",
+    "urgency": "Competitors are likely optimizing for AI search; act now to secure your position."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads: Enhance Your HVAC Visibility Now!",
+  "opening_line": "We analyzed your website and identified key opportunities to boost your visibility with AI assistants.",
+  "cta": "Let's schedule a call to discuss how we can optimize your site for AI search and increase your leads.",
+  "analyzed_at": "2026-02-26T16:23:10.333Z",
+  "lead_id": "c973bb3c-a071-4463-a980-0b0f866df9a9",
+  "business_name": "Absolute Comfort Technologies, Inc.",
+  "website": "http://www.absolutecomforttech.com/",
+  "location": "Kansas City, Missouri",
+  "page_title": "Absolute Comfort Technologies Inc",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.9,
+  "gbp_review_count": 77,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

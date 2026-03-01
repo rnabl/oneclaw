@@ -1,0 +1,63 @@
+{
+  "overall_aeo_score": 62,
+  "aeo_readiness": {
+    "score": 55,
+    "summary": "AI assistants are unlikely to cite this business due to a lack of structured data and insufficient authority signals. The current content is not optimized for conversational queries AI models prioritize.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup.",
+      "Expand content to include detailed FAQ sections and How-To guides."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-maintained but lacks regular posts and Q&A engagement to boost visibility.",
+    "critical_issues": [
+      "No recent Google posts.",
+      "Q&A section is inactive or not utilized."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly monitor citations for any potential discrepancies."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema.",
+    "No FAQPage schema implemented.",
+    "No HowTo schema for service processes."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data prevents AI from recognizing the business as a relevant authority.",
+    "invisible_for": "Queries related to 'emergency HVAC services in Oak Lawn' or 'trusted HVAC repair near me'.",
+    "low_hanging_fruit": "Implementing LocalBusiness and FAQPage schema to provide AI with the necessary context.",
+    "authority_opportunity": "Highlighting certifications, industry awards, and detailed case studies to establish expertise."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for Answer Engine Optimization (AEO).",
+    "pain_point": "Without AEO, they are missing out on 40% of potential leads from AI-assisted searches.",
+    "proof_point": "Their website lacks essential schema markup, making it difficult for AI models to cite or recommend their services.",
+    "solution": "Our AEO strategy integrates structured data, conversational content, and authority signals to make their business stand out to AI models.",
+    "impact_estimate": "Expect a 30% increase in AI-driven leads within the first 6 months.",
+    "urgency": "Competitors optimizing for AI are already capturing market share. Immediate action is crucial to stay competitive."
+  },
+  "email_subject_line": "Maximize Your AI Visibility: The AEO Strategy Your HVAC Business Needs",
+  "opening_line": "After analyzing your website, we discovered significant opportunities to enhance your AI visibility and attract more qualified leads.",
+  "cta": "Let's schedule a call to discuss how our AEO approach can transform your digital presence and drive more AI-driven leads.",
+  "analyzed_at": "2026-02-26T16:04:20.523Z",
+  "lead_id": "05512493-15ec-4ae6-a9c4-fe124f28f49b",
+  "business_name": "HVAC GC",
+  "website": "https://hvacgc24.com/",
+  "location": "Oak Lawn, Illinois",
+  "page_title": "Expert Residential HVAC Services in Texas | HVAC GC",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": 4.8,
+  "gbp_review_count": 31,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

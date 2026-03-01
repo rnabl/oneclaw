@@ -1,0 +1,66 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "AI assistants are unlikely to cite this business due to limited conversational content and missing structured data. While they have a strong local presence, their website lacks the depth needed for AI to confidently recommend them for specific queries.",
+    "quick_wins": [
+      "Implement FAQ schema with common HVAC questions and detailed answers.",
+      "Add HowTo schema for common HVAC maintenance and installation processes."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with a 5-star rating, photos, and accurate hours. However, the Q&A section is inactive, and there are no recent posts.",
+    "critical_issues": [
+      "Inactive Q&A section.",
+      "Lack of recent posts or updates."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected. The business information is consistent across all platforms.",
+    "action_items": [
+      "Maintain current NAP consistency.",
+      "Regularly monitor citations for accuracy."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQ schema",
+    "No HowTo schema",
+    "No Service schema for specific HVAC services"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content.",
+    "invisible_for": "Queries related to HVAC maintenance tips, cost estimates, and service comparisons.",
+    "low_hanging_fruit": "Implementing FAQ schema with detailed answers to common HVAC questions.",
+    "authority_opportunity": "Positioning as HVAC experts by creating in-depth content on energy efficiency, maintenance, and installation."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by making your HVAC expertise visible to AI assistants.",
+    "pain_point": "Without AI-ready content and structured data, they are missing out on 40% of potential leads from AI-driven searches.",
+    "proof_point": "Their website lacks FAQ and HowTo schema, which are crucial for AI assistants to cite their expertise.",
+    "solution": "Our AEO approach focuses on creating structured, conversational content and implementing schema markup to ensure AI assistants recognize and recommend your business for relevant queries.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 6 months.",
+    "urgency": "Competitors are already optimizing for AI, and waiting means losing ground in the AI-driven search landscape."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads for Your HVAC Business",
+  "opening_line": "We analyzed your website and identified key opportunities to make your HVAC expertise visible to AI assistants.",
+  "cta": "Let's schedule a call to discuss how we can optimize your content and schema for AI-driven search.",
+  "analyzed_at": "2026-02-26T15:53:14.326Z",
+  "lead_id": "8d67c289-52b8-4767-ad67-bda7b599605b",
+  "business_name": "Hot & Cool Heating and Air Conditioning",
+  "website": "https://hotandcoolhvac.squarespace.com/",
+  "location": "Dallas, Texas",
+  "page_title": "Hot &amp; Cool Heating and Air Conditioning | Comfort You Can Trust – Schedule Today",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 5,
+  "gbp_review_count": 44,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

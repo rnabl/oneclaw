@@ -1,0 +1,56 @@
+{
+  "overall_aeo_score": 62,
+  "aeo_readiness": {
+    "score": 65,
+    "summary": "The business has basic AEO elements in place, such as structured content and contact information, but lacks depth in content, reviews, and structured data implementation.",
+    "quick_wins": [
+      "Add customer reviews to build trust and improve local search presence.",
+      "Expand service descriptions with targeted keywords to enhance relevance for search engines.",
+      "Implement more detailed schema markup, including review and service-specific schemas."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 50,
+    "found": [
+      "NAP information is present",
+      "Basic contact information is available"
+    ],
+    "summary": "The business has fundamental Google Business Profile (GBP) elements, such as NAP (Name, Address, Phone Number) and contact details, but lacks a GBP listing and online reviews.",
+    "critical_issues": [
+      "No active GBP listing, which is crucial for local search visibility.",
+      "Lack of customer reviews and engagement metrics."
+    ]
+  },
+  "nap_citations": {
+    "score": 70,
+    "summary": "The NAP information is consistent within the website, but there is no evidence of citations on external platforms or directories.",
+    "action_items": [
+      "Create and verify GBP listing with consistent NAP information.",
+      "List the business on local directories and citation sites like Yelp, Bing Places, and industry-specific platforms.",
+      "Ensure NAP consistency across all external platforms."
+    ]
+  },
+  "schema_gaps": [
+    "Review schema is missing, which is essential for displaying star ratings in search results.",
+    "Service schema is not fully utilized; individual services should have their own schema markup.",
+    "Local business schema could be enhanced with more detailed information, such as opening hours and geo-coordinates."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of customer reviews and engagement metrics",
+    "invisible_for": "Users searching for handyman services with local intent who rely on reviews and ratings for decision-making",
+    "low_hanging_fruit": "Implementing review schema and actively soliciting customer reviews",
+    "authority_opportunity": "Building a strong GBP presence and generating backlinks from local and industry-related websites"
+  },
+  "analyzed_at": "2026-02-27T02:38:43.497Z",
+  "lead_id": "58c46aa7-5d72-4ba0-a125-2ee2e8478585",
+  "business_name": "Alsolut Handyman",
+  "website": "https://alsoluthandyman.com/",
+  "location": "Plano, Texas",
+  "page_title": "Handyman Services in Plano, TX - Alsolut Handyman",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

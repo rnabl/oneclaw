@@ -1,0 +1,54 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "The business has a basic foundation for AEO with a clear service offering and contact information but lacks content depth, reviews, and structured data optimization.",
+    "quick_wins": [
+      "Generate and showcase customer reviews to build trust and improve local search presence.",
+      "Expand website content to include detailed service descriptions, benefits, and keyword-rich blog posts.",
+      "Implement a clear call-to-action on the homepage to capture leads and improve conversion rates."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 60,
+    "found": true,
+    "summary": "The website includes location-specific information and service areas, but lacks depth in local content and structured data for GBP.",
+    "critical_issues": [
+      "No Google Business Profile (GBP) reviews or engagement.",
+      "Missing GBP-specific schema markup.",
+      "Lack of localized content targeting San Jose and Morgan Hill areas."
+    ]
+  },
+  "nap_citations": {
+    "score": 50,
+    "summary": "The business has consistent NAP (Name, Address, Phone) information on its website but lacks citations across major directories and local listings.",
+    "action_items": [
+      "Create and verify listings on major directories such as Yelp, Yellow Pages, and Bing Places.",
+      "Ensure NAP consistency across all online platforms, including social media and local directories.",
+      "Encourage customers to leave reviews on citation sites to boost local search visibility."
+    ]
+  },
+  "schema_gaps": [
+    "Service area schema",
+    "Local business schema with detailed address and service information",
+    "Review schema to showcase customer testimonials"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of localized content and structured data for AI-driven search algorithms.",
+    "invisible_for": "Voice search and AI-driven local search queries due to insufficient structured data and content depth.",
+    "low_hanging_fruit": "Implement local business schema and expand content to include location-specific keywords and phrases.",
+    "authority_opportunity": "Leverage customer reviews and testimonials to build authority and improve AI-driven search rankings."
+  },
+  "analyzed_at": "2026-02-27T02:29:03.526Z",
+  "lead_id": "fac5d9e8-9f6e-481b-8aef-2490597b707c",
+  "business_name": "Pelle Heating & Air Conditioning",
+  "website": "https://www.pelleheatandairconditioning.com/?utm_source=google&utm_medium=organic&utm_campaign=gbp-san-jose&utm_id=local&utm_content=san-jose",
+  "location": "San Jose, California",
+  "page_title": "San Jose, CA HVAC Service - Pelle Heating &amp; Air Conditioning",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

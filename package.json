@@ -23,23 +23,32 @@
   },
   "devDependencies": {
     "@supabase/supabase-js": "^2.43.0",
-    "turbo": "^2.0.0",
-    "typescript": "^5.3.0",
-    "prettier": "^3.2.0",
-    "eslint": "^8.56.0",
     "@types/node": "^20.11.0",
+    "dotenv": "^16.6.1",
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.0",
     "tsx": "^4.7.0",
-    "dotenv": "^16.4.0"
+    "turbo": "^2.0.0",
+    "typescript": "^5.3.0"
   },
   "packageManager": "pnpm@8.15.0",
   "engines": {
     "node": ">=18.0.0"
   },
   "dependencies": {
+    "csv-parse": "^6.1.0",
+    "csv-stringify": "^6.6.0",
     "eslint-scope": "^7.2.2",
-    "eslint-visitor-keys": "^3.4.3"
+    "eslint-visitor-keys": "^3.4.3",
+    "https-proxy-agent": "^7.0.6"
   },
-  "keywords": ["ai", "agents", "workflows", "restate", "durable-execution"],
+  "keywords": [
+    "ai",
+    "agents",
+    "workflows",
+    "restate",
+    "durable-execution"
+  ],
   "author": "",
   "license": "ISC"
 }

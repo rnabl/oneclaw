@@ -1,0 +1,53 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "The business has a decent foundation for AEO readiness with some structured data and localized content but lacks comprehensive optimization and review signals.",
+    "quick_wins": [
+      "Generate and manage Google reviews to build trust and improve local search visibility.",
+      "Enhance NAP (Name, Address, Phone Number) consistency across all online platforms.",
+      "Expand schema markup to include more specific service and location details."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 40,
+    "found": "Google Business Profile (GBP) not explicitly mentioned or linked on the website.",
+    "summary": "The absence of a GBP or its active management is a significant gap. GBP is crucial for local SEO and customer engagement.",
+    "critical_issues": [
+      "No evidence of an active GBP linked or mentioned on the website.",
+      "Missing opportunities to leverage GBP for local search and customer interaction."
+    ]
+  },
+  "nap_citations": {
+    "score": 55,
+    "summary": "The NAP information is present on the website but lacks consistency and broader citation across directories and platforms.",
+    "action_items": [
+      "Audit and ensure NAP consistency across the website, social media, and local directories.",
+      "Claim and update profiles on major citation platforms like Yelp, Yellow Pages, and local business directories.",
+      "Regularly monitor and manage NAP citations to maintain accuracy."
+    ]
+  },
+  "schema_gaps": [
+    "ServiceArea schema",
+    "LocalBusiness schema with detailed address and service information",
+    "Review schema for aggregating reviews and ratings"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of comprehensive local SEO strategy and GBP optimization.",
+    "invisible_for": "Users searching for local plumbing services in Tempe, Arizona.",
+    "low_hanging_fruit": "Implementing structured data for services and location, and actively managing GBP.",
+    "authority_opportunity": "Building local backlinks and partnerships with local businesses to enhance authority and visibility."
+  },
+  "analyzed_at": "2026-02-27T03:53:42.223Z",
+  "lead_id": "ecf3731a-7f76-4231-b7fb-0aa788c76cf4",
+  "business_name": "Rooter Hero Plumbing & Air of Tempe",
+  "website": "https://rooterhero.com/plumber-tempe-az-plumbing-repair-service",
+  "location": "Tempe, Arizona",
+  "page_title": "Top Rated Plumber in Tempe, AZ | Rooter Hero",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

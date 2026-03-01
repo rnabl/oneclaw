@@ -1,0 +1,55 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "The business has a basic foundation for AEO with some structured content and relevant services listed. However, there is a lack of detailed content, customer reviews, and local SEO optimization.",
+    "quick_wins": [
+      "Add customer reviews and testimonials to build trust and improve local SEO.",
+      "Optimize meta tags and headers with relevant keywords like 'HVAC Austin, TX'.",
+      "Create location-specific service pages for better local targeting."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 50,
+    "found": "The website has a Google Business Profile (GBP) placeholder as it is not linked or mentioned.",
+    "summary": "The business lacks a fully optimized and active GBP, which is crucial for local search visibility.",
+    "critical_issues": [
+      "No active GBP listing linked to the website.",
+      "Missing GBP categories and attributes specific to HVAC services."
+    ]
+  },
+  "nap_citations": {
+    "score": 60,
+    "summary": "The business has consistent NAP (Name, Address, Phone Number) on the website but lacks citations on major local directories and platforms.",
+    "action_items": [
+      "Create and verify NAP citations on Google My Business, Yelp, and Bing Places.",
+      "Ensure NAP consistency across all online platforms and directories.",
+      "Submit the business to local Austin, TX business directories."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "Product",
+    "Offer"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of customer reviews and testimonials.",
+    "invisible_for": "Local search users and potential customers looking for HVAC services in Austin, TX.",
+    "low_hanging_fruit": "Implementing a review generation strategy and optimizing meta tags.",
+    "authority_opportunity": "Building local backlinks and partnerships with local businesses or organizations."
+  },
+  "analyzed_at": "2026-02-27T02:42:30.414Z",
+  "lead_id": "95041cd3-ded4-42c0-be17-6065f8fac0da",
+  "business_name": "Alpine Heating & Air Conditioning",
+  "website": "https://www.austinalpine.com/",
+  "location": "Austin, Texas",
+  "page_title": "HVAC Services Austin, TX | Alpine Heating &amp; Air Conditioning",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

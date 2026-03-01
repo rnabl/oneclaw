@@ -1,0 +1,54 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "Matthews Mechanical has a basic foundation for AEO readiness but requires improvements to enhance visibility and user engagement.",
+    "quick_wins": [
+      "Implement a review generation strategy to build a Google Business Profile with positive reviews.",
+      "Optimize website content with targeted HVAC-related keywords for better search visibility.",
+      "Add a clear and concise website title to improve search engine understanding of the business."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 30,
+    "found": false,
+    "summary": "The business lacks a Google Business Profile, which significantly impacts local search visibility and customer engagement.",
+    "critical_issues": [
+      "No Google Business Profile exists for Matthews Mechanical.",
+      "Missing opportunities to showcase reviews, photos, and business information on Google."
+    ]
+  },
+  "nap_citations": {
+    "score": 50,
+    "summary": "The business has inconsistent NAP (Name, Address, Phone Number) citations across the web, which affects local SEO performance.",
+    "action_items": [
+      "Audit and update existing citations to ensure consistency in NAP information.",
+      "Submit the business to reputable local directories and citation sites.",
+      "Monitor and manage citations regularly to maintain accuracy."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "ContactPoint"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data for services and reviews",
+    "invisible_for": "Local search users and potential customers searching for HVAC services in Washington, D.C.",
+    "low_hanging_fruit": "Implement LocalBusiness and Service schemas to provide search engines with detailed business information.",
+    "authority_opportunity": "Leverage community involvement and mentorship programs to create content that highlights the business's local impact and authority."
+  },
+  "analyzed_at": "2026-02-27T03:12:01.501Z",
+  "lead_id": "d1d2c21e-005f-4bb1-83a3-c874e10b29d8",
+  "business_name": "Matthews Mechanical",
+  "website": "https://matthewsmechanical.net/",
+  "location": "Washington, District of Columbia",
+  "page_title": "N/A",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

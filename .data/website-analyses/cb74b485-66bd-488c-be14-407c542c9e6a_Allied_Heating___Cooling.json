@@ -1,0 +1,66 @@
+{
+  "overall_aeo_score": 68,
+  "aeo_readiness": {
+    "score": 60,
+    "summary": "AI assistants are unlikely to cite Allied Heating & Cooling due to a lack of structured content and conversational authority signals.",
+    "quick_wins": [
+      "Implement FAQ content with structured data (FAQPage schema).",
+      "Add HowTo schema for common HVAC services like AC repair and installation."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "Google Business Profile is well-optimized but can benefit from more posts and Q&A engagement.",
+    "critical_issues": [
+      "Limited recent posts.",
+      "No active management of Q&A section."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly monitor for any inconsistencies or new citation opportunities."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQ schema",
+    "No HowTo schema for services",
+    "No Service schema for detailed service listings"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content limits AI recognition.",
+    "invisible_for": "Queries related to 'best HVAC repair in Arvada' and 'emergency AC services near me'.",
+    "low_hanging_fruit": "Implementing FAQ schema with common customer questions and detailed answers.",
+    "authority_opportunity": "Highlighting NATE certification and emergency services to establish expertise."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by making your HVAC expertise unmistakably visible to AI assistants.",
+    "pain_point": "Without AI-ready content, Allied Heating & Cooling misses out on 40% of potential leads from voice and AI searches.",
+    "proof_point": "Competitors with structured data and FAQ content rank higher in AI-driven search results.",
+    "solution": "Our AEO approach integrates schema markup, conversational content, and authority signals to ensure AI models cite your services.",
+    "impact_estimate": "Expect a 30% increase in AI-driven leads within the first 3 months.",
+    "urgency": "Competitors are already optimizing for AI search—act now to claim your share of voice-driven traffic."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads for Your HVAC Business in Arvada",
+  "opening_line": "We analyzed your website and identified key opportunities to make your HVAC services stand out to AI assistants.",
+  "cta": "Let's schedule a call to discuss how we can optimize your online presence for AI search and boost your lead generation.",
+  "analyzed_at": "2026-02-26T16:03:05.462Z",
+  "lead_id": "cb74b485-66bd-488c-be14-407c542c9e6a",
+  "business_name": "Allied Heating & Cooling",
+  "website": "https://alliedheatingcooling.best/",
+  "location": "Arvada, Colorado",
+  "page_title": "HVAC Repair & Installs for Arvada Call (720) 807-7720",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.8,
+  "gbp_review_count": 60,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

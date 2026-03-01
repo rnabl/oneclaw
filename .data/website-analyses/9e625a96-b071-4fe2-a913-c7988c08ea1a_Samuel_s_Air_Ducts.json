@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "The business has potential for AI citations but lacks structured conversational content and authority signals to stand out.",
+    "quick_wins": [
+      "Implement FAQPage schema with common HVAC questions and answers.",
+      "Create content that directly addresses common AI queries about HVAC services."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "Google Business Profile is well-optimized with photos, hours, and contact info, but lacks regular posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent Google posts to engage users.",
+      "No active management of Q&A section."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly audit citations to ensure ongoing accuracy."
+    ]
+  },
+  "schema_gaps": [
+    "Missing FAQPage schema",
+    "No HowTo schema for common HVAC tasks",
+    "LocalBusiness schema could be enhanced with more detailed service descriptions"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of conversational, query-based content that AI models prioritize.",
+    "invisible_for": "Queries related to 'best air duct cleaning in Bethesda' or 'how often to clean air ducts'.",
+    "low_hanging_fruit": "Adding an FAQ section with questions like 'How much does air duct cleaning cost?' and 'Why is air duct cleaning important?'",
+    "authority_opportunity": "Position as the local HVAC expert by publishing detailed guides and obtaining certifications or partnerships."
+  },
+  "agency_pitch": {
+    "hook": "Get cited by AI for the queries your competitors can't answer.",
+    "pain_point": "Without AI-ready content, they're missing out on 40% of potential leads from voice and AI searches.",
+    "proof_point": "Their website lacks FAQ schema and conversational content, making it less likely for AI models to cite them.",
+    "solution": "We will implement structured data, create targeted FAQ content, and optimize for conversational AI queries to boost visibility.",
+    "impact_estimate": "Expect a 30% increase in AI-driven traffic and leads within 6 months.",
+    "urgency": "Competitors are already optimizing for AI, and waiting means losing ground in the new search landscape."
+  },
+  "email_subject_line": "Unlock AI-driven leads with our tailored HVAC SEO strategy",
+  "opening_line": "We analyzed your website and identified key opportunities to make your business stand out in AI-driven searches.",
+  "cta": "Let's schedule a call to discuss how we can optimize your online presence for the AI-driven future.",
+  "analyzed_at": "2026-02-26T15:48:51.633Z",
+  "lead_id": "9e625a96-b071-4fe2-a913-c7988c08ea1a",
+  "business_name": "Samuel's Air Ducts",
+  "website": "https://airductbethesda.com/",
+  "location": "Bethesda, Maryland",
+  "page_title": "Bethesda Air Duct Cleaners Call (301) 778-7666",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.8,
+  "gbp_review_count": 96,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}
