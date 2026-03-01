@@ -10,7 +10,6 @@
  */
 
 use serde::{Deserialize, Serialize};
-use std::sync::Arc;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct JobPlan {
@@ -29,7 +28,7 @@ pub struct JobStep {
 
 /// Detect if a user request requires multi-step autonomous execution
 /// vs simple single-tool execution
-pub fn is_complex_request(user_message: &str, tool_results: &[serde_json::Value]) -> bool {
+pub fn is_complex_request(user_message: &str, tool_results_count: usize) -> bool {
     let message_lower = user_message.to_lowercase();
     
     // Explicit multi-step indicators
@@ -86,7 +85,7 @@ pub fn is_complex_request(user_message: &str, tool_results: &[serde_json::Value]
     }
     
     // If the LLM already called multiple tools, it's complex
-    if tool_results.len() > 1 {
+    if tool_results_count > 1 {
         return true;
     }
     

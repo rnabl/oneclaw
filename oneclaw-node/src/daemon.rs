@@ -262,7 +262,7 @@ pub async fn start(port: u16) -> anyhow::Result<()> {
                             typing_task.abort();
                             
                             // Check if this is a complex multi-step request requiring autonomous job
-                            let is_complex = crate::autonomous_jobs::is_complex_request(&msg.content, &tool_results);
+                            let is_complex = crate::autonomous_jobs::is_complex_request(&msg.content, tool_results.len());
                             
                             if is_complex {
                                 tracing::info!("🤖 Complex request detected, creating autonomous job plan");
