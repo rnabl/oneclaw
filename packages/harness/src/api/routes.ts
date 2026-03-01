@@ -263,21 +263,7 @@ app.post('/execute', async (c) => {
         return c.json({ error: `Tool not found: ${tool}` }, 404);
       }
 
-      // Check if tool has a direct handler (like send-gmail)
-      if (toolInstance.handler) {
-        // Direct tool execution
-        try {
-          const result = await toolInstance.handler(params, {
-            tenantId: tenantId || session.tenantId,
-            sessionKey: token,
-          });
-          return c.json(result);
-        } catch (error) {
-          return c.json({ error: String(error) }, 500);
-        }
-      }
-
-      // Otherwise, execute via workflow runner (for workflows like discover-businesses)
+      // Execute via workflow runner
       try {
         const job = await runner.execute(tool, params, {
           tenantId: tenantId || session.tenantId,
@@ -798,9 +784,11 @@ async function executeStep(step: any, db: any, jobId: string) {
   });
 
   if (job.status === 'completed') {
+    const output = job.output as Record<string, any> | undefined;
+    
     // Store businesses if this is a discovery step
-    if (action === 'discover' && job.output?.businesses) {
-      const businesses = job.output.businesses.map((b: any) => ({
+    if (action === 'discover' && output?.businesses && Array.isArray(output.businesses)) {
+      const businesses = output.businesses.map((b: any) => ({
         jobId,
         name: b.title || b.name,
         address: b.address,
@@ -820,9 +808,9 @@ async function executeStep(step: any, db: any, jobId: string) {
     }
 
     // Store contacts if this is an enrichment step
-    if (action === 'enrich' && job.output?.contacts) {
-      const contacts = job.output.contacts.map((c: any) => ({
-        businessId: c.businessId, // This needs to be mapped from step params
+    if (action === 'enrich' && output?.contacts && Array.isArray(output.contacts)) {
+      const contacts = output.contacts.map((c: any) => ({
+        businessId: c.businessId,
         name: c.name,
         email: c.email,
         phone: c.phone,
@@ -836,7 +824,7 @@ async function executeStep(step: any, db: any, jobId: string) {
       db.createContacts(contacts);
     }
 
-    return job.output;
+    return output;
   } else {
     throw new Error(job.error || `Workflow ${workflowId} failed`);
   }
@@ -1151,6 +1139,7 @@ app.post('/schedules', async (c) => {
       workflow,
       params,
       tenantId,
+      enabled: true,
       ...parsedSchedule
     });
 

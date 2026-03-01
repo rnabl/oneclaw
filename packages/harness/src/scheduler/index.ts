@@ -52,7 +52,7 @@ export interface ScheduleExecution {
  * Parse natural language schedule into structured format
  */
 export function parseSchedule(input: string): {
-  interval?: string;
+  interval?: 'hourly' | 'daily' | 'weekly' | 'monthly';
   dayOfWeek?: number;
   timeOfDay?: string;
   cron?: string;

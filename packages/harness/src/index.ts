@@ -120,4 +120,10 @@ export * from './pricing';
 
 // Database (Autonomous Job System)
 export { JobDatabase, getDatabase, closeDatabase } from './database';
-export type { Job, JobStep, Business, Contact, JobLog } from './database/schema';
+export type { 
+  Job as DbJob, 
+  JobStep as DbJobStep, 
+  Business as DbBusiness, 
+  Contact as DbContact, 
+  JobLog as DbJobLog 
+} from './database/schema';

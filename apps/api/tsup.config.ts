@@ -11,6 +11,8 @@ export default defineConfig({
     '@anthropic-ai/sdk',
     'hono',
     '@hono/node-server',
+    'playwright-core',
+    'chromium-bidi',
   ],
   noExternal: [
     '@oneclaw/harness',

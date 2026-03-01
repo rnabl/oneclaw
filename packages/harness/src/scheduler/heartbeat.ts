@@ -160,7 +160,7 @@ export class SchedulerHeartbeat {
    * Execute outreach workflow via sub-agent
    */
   private async executeOutreachWorkflow(schedule: Schedule): Promise<{ runId: string; status: string }> {
-    const params = schedule.params as OutreachParams;
+    const params = schedule.params as unknown as OutreachParams;
     const runId = `scheduled-${nanoid(8)}`;
     
     console.log(`[Scheduler] Launching outreach sub-agent: ${runId}`);
@@ -260,7 +260,7 @@ export class SchedulerHeartbeat {
     const result = await workflowExecutor.executeStateLevelDiscovery({
       state: params.location,
       niche: params.niche,
-      maxCities: params.limit || 10,
+      limit: params.limit || 10,
       tenantId: schedule.tenantId
     });
     
