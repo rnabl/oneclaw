@@ -155,15 +155,28 @@ registry.register({
   name: 'send-gmail',
   description: 'Send an email via Gmail using connected OAuth account',
   version: '1.0.0',
-  costClass: 'free' as const,
+  costClass: 'cheap',
   estimatedCostUsd: 0,
-  requiredSecrets: ['google'], // Requires Google OAuth tokens
+  requiredSecrets: ['google'],
   tags: ['email', 'gmail', 'communication'],
   inputSchema: SendGmailInputSchema,
-  handler: async (input, context) => {
-    const validated = SendGmailInputSchema.parse(input);
-    return sendGmailHandler(validated, { tenantId: context.tenantId });
+  outputSchema: SendGmailOutputSchema,
+  networkPolicy: {
+    allowedDomains: ['gmail.googleapis.com', 'oauth2.googleapis.com'],
+    blockedDomains: [],
+    allowLocalhost: false,
   },
+  retryPolicy: {
+    maxAttempts: 2,
+    backoffMs: 1000,
+    backoffMultiplier: 2,
+    retryableErrors: ['TIMEOUT', 'RATE_LIMITED', 'NETWORK_ERROR'],
+  },
+  timeoutMs: 30000,
+  idempotent: false,
+  isPublic: false,
+  createdAt: new Date(),
+  updatedAt: new Date(),
 });
 
 export { SendGmailInputSchema, SendGmailOutputSchema, sendGmailHandler };
