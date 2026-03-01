@@ -170,6 +170,19 @@ registry.register(GET_JOB_TOOL);
 registry.register(LIST_JOBS_TOOL);
 registry.register(SEARCH_BUSINESSES_TOOL);
 
+// Self-improvement tools (import and register)
+import { EXECUTE_CODE_TOOL } from '../tools/execute-code';
+import { WRITE_FILE_TOOL } from '../tools/write-file';
+import { READ_FILE_TOOL } from '../tools/read-file';
+import { DATABASE_TOOL } from '../tools/database';
+import { INIT_DATABASE_TOOL } from '../tools/init-database';
+
+registry.register(EXECUTE_CODE_TOOL as any);
+registry.register(WRITE_FILE_TOOL as any);
+registry.register(READ_FILE_TOOL as any);
+registry.register(DATABASE_TOOL as any);
+registry.register(INIT_DATABASE_TOOL as any);
+
 // =============================================================================
 // EXPORTS
 // =============================================================================

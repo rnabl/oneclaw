@@ -121,3 +121,13 @@ export * from './pricing';
 // Database (Autonomous Job System)
 export { JobDatabase, getDatabase, closeDatabase } from './database';
 export type { Job, JobStep, Business, Contact, JobLog } from './database/schema';
+
+// Security
+export { pathValidator, PathValidator } from './security';
+export type { PathValidationResult } from './security';
+
+// Self-Improvement Tools
+export { executeCodeHandler } from './tools/execute-code';
+export { writeFileHandler } from './tools/write-file';
+export { readFileHandler } from './tools/read-file';
+export { databaseHandler, getDatabasePath, closeDatabaseConnections } from './tools/database';
