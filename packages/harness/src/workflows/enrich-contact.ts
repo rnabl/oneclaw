@@ -114,43 +114,8 @@ async function enrichViaPerplexity(
 }
 
 /**
- * Method 2: DataForSEO SERP - $0.10-0.15 per search
- * Rich SERP data (AI Overview, Featured Snippets, Knowledge Graph)
- */
-async function enrichViaDataForSEO(
-  ctx: StepContext,
-  businessName: string,
-  city?: string,
-  state?: string
-): Promise<{ owner: ContactPerson | null; sources: string[] } | null> {
-  
-  await ctx.log('info', `Searching DataForSEO SERP for ${businessName} owner`);
-  
-  try {
-    const result = await dataForSEOOwnerSearch({ businessName, city, state });
-    
-    if (!result.ownerName) {
-      return null;
-    }
-    
-    return {
-      owner: {
-        name: result.ownerName,
-        title: result.ownerRole || 'Owner',
-        seniorityLevel: 'owner',
-      },
-      sources: result.allMentions.map(m => m.source),
-    };
-    
-  } catch (error) {
-    await ctx.log('warn', `DataForSEO search failed: ${error}`);
-    throw error;
-  }
-}
-
-/**
- * Method 3: Apify LinkedIn (code_crafter/leads-finder) - $0.15+ per search
- * Full LinkedIn profile enrichment
+ * Method 2: Apify LinkedIn (code_crafter/leads-finder) - $1.50 per 1000
+ * Full LinkedIn profile enrichment with verified emails
  */
 async function enrichViaApifyLeadFinder(
   ctx: StepContext,
