@@ -328,6 +328,68 @@ async function businessDiscoveryHandler(
   await ctx.log('info', `Discovery complete: ${businesses.length} businesses, ${stats.enriched} enriched in ${searchTimeMs}ms`);
   await ctx.log('info', `Stats: ${stats.withAds} with ads, ${stats.withBooking} with booking, ${stats.withChatbot} with chatbot`);
   
+  // ==========================================================================
+  // STEP 4: Store in Supabase (Production Database)
+  // ==========================================================================
+  
+  if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    await ctx.log('info', 'Storing leads in Supabase production database...');
+    
+    try {
+      const supabase = createClient(
+        process.env.SUPABASE_URL,
+        process.env.SUPABASE_SERVICE_ROLE_KEY
+      );
+      
+      const leadRecords = businesses.map(b => {
+        const signals = b.signals || {};
+        
+        // Auto-calculate scores from signals
+        let score = 50;
+        if (b.website) score += 20;
+        if (signals.hasAds) score += 10;
+        if (!signals.aiReadable) score += 15; // Low AI visibility = bigger opportunity
+        if (b.reviewCount && b.reviewCount > 20) score += 5;
+        
+        return {
+          company_name: b.name,
+          website: b.website,
+          phone: b.phone,
+          industry: niche,
+          address: b.address,
+          city: b.city,
+          state: b.state,
+          zip_code: b.zipCode,
+          google_place_id: b.googlePlaceId || b.placeId,
+          google_rating: b.rating,
+          google_reviews: b.reviewCount,
+          google_maps_url: b.googleMapsUrl,
+          image_url: b.imageUrl,
+          website_signals: signals,
+          lead_score: Math.min(score, 100),
+          geo_readiness_score: signals.seoOptimized ? 7.0 : 3.0,
+          aeo_readiness_score: signals.aiReadable ? 7.0 : 2.0,
+          stage: 'discovered',
+          source_job_id: ctx.jobId,
+        };
+      });
+      
+      const { data, error } = await supabase
+        .from('crm.leads')
+        .insert(leadRecords)
+        .select('id');
+      
+      if (error) {
+        await ctx.log('warn', `Supabase storage failed: ${error.message}`);
+      } else {
+        await ctx.log('info', `✅ Stored ${data?.length || 0} leads in Supabase crm.leads table`);
+      }
+    } catch (error) {
+      await ctx.log('warn', `Supabase error: ${error}. Continuing without Supabase storage.`);
+      // Don't fail workflow if Supabase unavailable
+    }
+  }
+  
   // Build formatted response for chat display
   const formattedResponse = formatDiscoveryForChat(businesses, stats, niche, location, searchTimeMs);
   
