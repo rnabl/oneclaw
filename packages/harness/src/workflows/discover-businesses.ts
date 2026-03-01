@@ -9,6 +9,7 @@ import type { StepContext } from '../execution/runner';
 import { runner } from '../execution/runner';
 import { z } from 'zod';
 import { scanWebsite, type WebsiteScanResult } from '../scanners/website-scanner';
+import { createClient } from '@supabase/supabase-js';
 
 const BusinessDiscoveryInput = z.object({
   niche: z.string(),

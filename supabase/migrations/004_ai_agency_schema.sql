@@ -73,13 +73,35 @@ CREATE TABLE crm.leads (
   phone TEXT,
   email TEXT,
   industry TEXT,
+  
+  -- Location
+  address TEXT,
   city TEXT,
   state TEXT,
+  zip_code TEXT,
+  country TEXT DEFAULT 'US',
   
-  -- Google data
+  -- Google data (from Apify)
   google_place_id TEXT,
   google_rating REAL,
   google_reviews INTEGER,
+  google_maps_url TEXT,
+  image_url TEXT,
+  
+  -- LinkedIn (from Apify Leads Finder)
+  linkedin_url TEXT,
+  owner_name TEXT,
+  owner_title TEXT,
+  owner_linkedin TEXT,
+  
+  -- Company data (from Apify)
+  company_size TEXT,
+  company_revenue TEXT,
+  company_description TEXT,
+  
+  -- Website signals (from scanner - JSONB for flexibility)
+  website_signals JSONB DEFAULT '{}'::jsonb,
+  -- Structure: { hasSSL, hasAds, aiReadable, aiReadabilityScore, etc. }
   
   -- AEO/GEO opportunity scoring
   lead_score INTEGER CHECK (lead_score >= 0 AND lead_score <= 100),
@@ -94,6 +116,9 @@ CREATE TABLE crm.leads (
   -- Enrichment data (flexible JSON storage)
   audit_data JSONB,
   contact_data JSONB,
+  
+  -- Job tracking (which autonomous job found this)
+  source_job_id TEXT,
   
   -- Conversion
   converted_to_client_id UUID REFERENCES public.clients(id),
