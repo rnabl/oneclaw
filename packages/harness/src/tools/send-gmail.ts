@@ -155,7 +155,7 @@ registry.register({
   name: 'send-gmail',
   description: 'Send an email via Gmail using connected OAuth account',
   version: '1.0.0',
-  costClass: 'low',
+  costClass: 'free' as const,
   estimatedCostUsd: 0,
   requiredSecrets: ['google'], // Requires Google OAuth tokens
   tags: ['email', 'gmail', 'communication'],

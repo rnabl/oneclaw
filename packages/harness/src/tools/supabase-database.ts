@@ -90,7 +90,7 @@ async function supabaseDatabaseHandler(
 
         return {
           success: true,
-          data: data as Record<string, unknown>[],
+          data: (data || []) as any as Record<string, unknown>[],
           count: count || data?.length || 0,
         };
       }

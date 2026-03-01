@@ -264,10 +264,10 @@ app.post('/execute', async (c) => {
       }
 
       // Check if tool has a direct handler (like send-gmail)
-      if (toolInstance.handler) {
+      if ('handler' in toolInstance && typeof toolInstance.handler === 'function') {
         // Direct tool execution
         try {
-          const result = await toolInstance.handler(params, {
+          const result = await (toolInstance as any).handler(params, {
             tenantId: tenantId || session.tenantId,
             sessionKey: token,
           });
@@ -800,7 +800,7 @@ async function executeStep(step: any, db: any, jobId: string) {
   if (job.status === 'completed') {
     // Store businesses if this is a discovery step
     if (action === 'discover' && job.output?.businesses) {
-      const businesses = job.output.businesses.map((b: any) => ({
+      const businesses = (job.output.businesses as any[]).map((b: any) => ({
         jobId,
         name: b.title || b.name,
         address: b.address,
@@ -821,7 +821,7 @@ async function executeStep(step: any, db: any, jobId: string) {
 
     // Store contacts if this is an enrichment step
     if (action === 'enrich' && job.output?.contacts) {
-      const contacts = job.output.contacts.map((c: any) => ({
+      const contacts = (job.output.contacts as any[]).map((c: any) => ({
         businessId: c.businessId, // This needs to be mapped from step params
         name: c.name,
         email: c.email,
@@ -1151,6 +1151,7 @@ app.post('/schedules', async (c) => {
       workflow,
       params,
       tenantId,
+      enabled: true,
       ...parsedSchedule
     });
 
