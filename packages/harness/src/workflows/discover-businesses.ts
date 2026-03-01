@@ -402,7 +402,8 @@ async function businessDiscoveryHandler(
       });
       
       const { data, error } = await supabase
-        .from('crm.leads')
+        .schema('crm')
+        .from('leads')
         .insert(leadRecords)
         .select('id');
       

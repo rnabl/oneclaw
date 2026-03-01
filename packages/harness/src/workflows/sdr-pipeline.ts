@@ -108,7 +108,8 @@ async function sdrPipelineHandler(
     const initialScore = (hasWebsite ? 30 : 0) + (hasReviews ? 20 : 0);
     
     const { data, error } = await supabase
-      .from('crm.leads')
+      .schema('crm')
+      .from('leads')
       .insert({
         company_name: business.name,
         website: business.website,
@@ -179,7 +180,8 @@ async function sdrPipelineHandler(
         
         // Update lead in Supabase
         await supabase
-          .from('crm.leads')
+          .schema('crm')
+          .from('leads')
           .update({
             lead_score: Math.max(overallScore, 50), // Minimum 50 if has website
             geo_readiness_score: geoScore,
@@ -203,7 +205,8 @@ async function sdrPipelineHandler(
   
   // Get top scored leads
   const { data: topLeads } = await supabase
-    .from('crm.leads')
+    .schema('crm')
+    .from('leads')
     .select('id, company_name, website')
     .order('lead_score', { ascending: false })
     .limit(params.auditTop);
@@ -228,7 +231,8 @@ async function sdrPipelineHandler(
           
           // Update lead with contact info
           await supabase
-            .from('crm.leads')
+            .schema('crm')
+            .from('leads')
             .update({
               email: contactData.email || null,
               contact_data: contactData,
@@ -251,7 +255,8 @@ async function sdrPipelineHandler(
   if (params.generateEmails) {
     // Get qualified leads with email
     const { data: qualifiedLeads } = await supabase
-      .from('crm.leads')
+      .schema('crm')
+      .from('leads')
       .select('*')
       .eq('stage', 'qualified')
       .not('email', 'is', null)
@@ -284,7 +289,8 @@ Best regards`;
 
         // Store email in campaigns table
         const { data: emailRecord, error } = await supabase
-          .from('crm.email_campaigns')
+          .schema('crm')
+          .from('email_campaigns')
           .insert({
             lead_id: lead.id,
             campaign_type: 'cold_outreach',
@@ -299,7 +305,8 @@ Best regards`;
         if (!error && emailRecord) {
           // Add to approval queue
           await supabase
-            .from('platform.approvals_queue')
+            .schema('platform')
+            .from('approvals_queue')
             .insert({
               approval_type: 'email',
               reference_table: 'crm.email_campaigns',

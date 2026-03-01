@@ -12,7 +12,8 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 const SupabaseDatabaseInputSchema = z.object({
   action: z.enum(['query', 'insert', 'update', 'delete', 'upsert']).describe('Database operation'),
-  table: z.string().describe('Table name'),
+  table: z.string().describe('Table name (can include schema prefix like "crm.leads")'),
+  schema: z.string().optional().describe('Schema name (e.g., "crm", "content", "platform"). If table includes schema prefix like "crm.leads", this is extracted automatically.'),
   data: z.record(z.unknown()).optional().describe('Data to insert/update'),
   where: z.record(z.unknown()).optional().describe('WHERE conditions'),
   select: z.string().optional().default('*').describe('Columns to select'),
@@ -49,17 +50,27 @@ function getSupabaseClient(): SupabaseClient {
   return supabaseClient;
 }
 
+function parseTableName(table: string, inputSchema?: string): { schema: string | null; tableName: string } {
+  if (table.includes('.')) {
+    const [schema, tableName] = table.split('.');
+    return { schema, tableName };
+  }
+  return { schema: inputSchema || null, tableName: table };
+}
+
 async function supabaseDatabaseHandler(
   input: SupabaseDatabaseInput,
   context: { tenantId: string }
 ): Promise<SupabaseDatabaseOutput> {
   try {
     const supabase = getSupabaseClient();
+    const { schema, tableName } = parseTableName(input.table, input.schema);
 
     switch (input.action) {
       case 'query': {
-        let query = supabase
-          .from(input.table)
+        let baseQuery = schema ? supabase.schema(schema) : supabase;
+        let query = baseQuery
+          .from(tableName)
           .select(input.select || '*');
 
         // Apply WHERE conditions
@@ -107,8 +118,9 @@ async function supabaseDatabaseHandler(
           // tenant_id: context.tenantId,
         };
 
-        const { data, error } = await supabase
-          .from(input.table)
+        let insertBase = schema ? supabase.schema(schema) : supabase;
+        const { data, error } = await insertBase
+          .from(tableName)
           .insert(dataWithTenant)
           .select();
 
@@ -131,8 +143,9 @@ async function supabaseDatabaseHandler(
           return { success: false, error: 'Data is required for update' };
         }
 
-        let query = supabase
-          .from(input.table)
+        let updateBase = schema ? supabase.schema(schema) : supabase;
+        let query = updateBase
+          .from(tableName)
           .update(input.data);
 
         // Apply WHERE conditions
@@ -164,7 +177,8 @@ async function supabaseDatabaseHandler(
       }
 
       case 'delete': {
-        let query = supabase.from(input.table).delete();
+        let deleteBase = schema ? supabase.schema(schema) : supabase;
+        let query = deleteBase.from(tableName).delete();
 
         // Apply WHERE conditions
         if (input.where) {
@@ -199,8 +213,9 @@ async function supabaseDatabaseHandler(
           return { success: false, error: 'Data is required for upsert' };
         }
 
-        const { data, error } = await supabase
-          .from(input.table)
+        let upsertBase = schema ? supabase.schema(schema) : supabase;
+        const { data, error } = await upsertBase
+          .from(tableName)
           .upsert(input.data)
           .select();
 

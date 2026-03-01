@@ -212,7 +212,8 @@ async function volumeOutreachHandler(
   });
   
   const { data: storedLeads, error } = await supabase
-    .from('crm.leads')
+    .schema('crm')
+    .from('leads')
     .insert(leadRecords)
     .select('id, company_name, email');
   
@@ -250,7 +251,8 @@ async function volumeOutreachHandler(
           
           // Update lead with email
           await supabase
-            .from('crm.leads')
+            .schema('crm')
+            .from('leads')
             .update({
               email: contactData.email || null,
               contact_data: contactData,
@@ -272,7 +274,8 @@ async function volumeOutreachHandler(
   
   // Get leads with email addresses
   const { data: leadsWithEmail } = await supabase
-    .from('crm.leads')
+    .schema('crm')
+    .from('leads')
     .select('*')
     .not('email', 'is', null)
     .eq('stage', 'discovered')
@@ -294,7 +297,8 @@ async function volumeOutreachHandler(
       
       // Store email campaign
       const { data: campaign, error } = await supabase
-        .from('crm.email_campaigns')
+        .schema('crm')
+        .from('email_campaigns')
         .insert({
           lead_id: lead.id,
           campaign_type: 'cold_outreach',
@@ -320,7 +324,8 @@ async function volumeOutreachHandler(
   
   // Create one approval for the entire batch
   const { data: batchApproval } = await supabase
-    .from('platform.approvals_queue')
+    .schema('platform')
+    .from('approvals_queue')
     .insert({
       approval_type: 'email_batch',
       reference_table: 'crm.email_campaigns',

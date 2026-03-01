@@ -22,7 +22,8 @@ export async function generateBlinkApproval(approvalId: string): Promise<string>
   
   // Get approval details
   const { data: approval, error } = await supabase
-    .from('platform.approvals_queue')
+    .schema('platform')
+    .from('approvals_queue')
     .select('*')
     .eq('id', approvalId)
     .single();
@@ -34,10 +35,11 @@ export async function generateBlinkApproval(approvalId: string): Promise<string>
   // Get sample emails to preview
   const sampleIds = approval.preview_data.sample_emails || [];
   const { data: sampleEmails } = await supabase
-    .from('crm.email_campaigns')
+    .schema('crm')
+    .from('email_campaigns')
     .select(`
       *,
-      lead:crm.leads!inner(company_name, email, lead_score, city, state)
+      lead:leads!inner(company_name, email, lead_score, city, state)
     `)
     .in('id', sampleIds);
   
@@ -309,7 +311,8 @@ export async function processApprovalDecision(
   
   // Update approval record
   await supabase
-    .from('platform.approvals_queue')
+    .schema('platform')
+    .from('approvals_queue')
     .update({
       status: decision === 'approved' ? 'approved' : 'rejected',
       approved_by_user: approvedBy,
@@ -321,7 +324,8 @@ export async function processApprovalDecision(
   if (decision === 'approved') {
     // Get all campaign IDs from this batch
     const { data: approval } = await supabase
-      .from('platform.approvals_queue')
+      .schema('platform')
+      .from('approvals_queue')
       .select('preview_data')
       .eq('id', approvalId)
       .single();
@@ -330,7 +334,8 @@ export async function processApprovalDecision(
     
     // Update all campaigns to approved
     await supabase
-      .from('crm.email_campaigns')
+      .schema('crm')
+      .from('email_campaigns')
       .update({
         approval_status: 'approved',
         approved_by: approvedBy,

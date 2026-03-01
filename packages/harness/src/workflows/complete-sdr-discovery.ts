@@ -269,7 +269,8 @@ async function completeSDRDiscoveryHandler(
   });
   
   const { data: storedLeads, error: leadsError } = await supabase
-    .from('crm.leads')
+    .schema('crm')
+    .from('leads')
     .insert(leadRecords)
     .select('id, company_name');
   
@@ -304,7 +305,8 @@ async function completeSDRDiscoveryHandler(
   
   if (visibilityRecords.length > 0) {
     const { error: visError } = await supabase
-      .from('analytics.ai_visibility_tracking')
+      .schema('analytics')
+      .from('ai_visibility_tracking')
       .insert(visibilityRecords);
     
     if (visError) {
