@@ -1,0 +1,52 @@
+{
+  "overall_aeo_score": 45,
+  "aeo_readiness": {
+    "score": 40,
+    "summary": "The website has minimal AEO readiness with a lack of structured data, limited content depth, and no visible Google Business Profile. The focus should be on foundational elements to improve search visibility.",
+    "quick_wins": [
+      "Implement basic schema markup (e.g., LocalBusiness, Service) to provide search engines with structured data.",
+      "Create and verify a Google Business Profile to improve local search presence.",
+      "Enhance website content with location-specific keywords and detailed service descriptions."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 0,
+    "found": false,
+    "summary": "No Google Business Profile (GBP) was found for Vets for You Plumbing. This is a critical issue as it significantly impacts local search visibility.",
+    "critical_issues": [
+      "Lack of a verified Google Business Profile.",
+      "No customer reviews or engagement on GBP (due to absence)."
+    ]
+  },
+  "nap_citations": {
+    "score": 30,
+    "summary": "The business name, address, and phone number (NAP) are partially consistent across the website but lack citations on external platforms.",
+    "action_items": [
+      "Ensure NAP consistency across the website and all online directories.",
+      "List the business on relevant local directories and citation sites (e.g., Yelp, Yellow Pages).",
+      "Monitor and manage online citations to correct any inconsistencies."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "BreadcrumbList",
+    "FAQPage"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and Google Business Profile",
+    "invisible_for": "Local search users and voice search queries",
+    "low_hanging_fruit": "Implement basic schema markup and create a Google Business Profile",
+    "authority_opportunity": "Establish the business as a local authority by generating customer reviews and publishing locally relevant content"
+  },
+  "analyzed_at": "2026-02-27T03:21:07.713Z",
+  "lead_id": "0f6341df-ddcb-49cf-b27a-ae42e0f28a69",
+  "business_name": "Vets for You Plumbing",
+  "website": "https://personalplumbingsandiego.com/warranties-and-company-acquisition/",
+  "location": "Oceanside, California",
+  "page_title": "Vets For You Plumbing by Personal Plumbing",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_found": false
+}

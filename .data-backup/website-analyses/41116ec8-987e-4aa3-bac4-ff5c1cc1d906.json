@@ -1,0 +1,56 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 65,
+    "summary": "The business has a basic level of AEO readiness with some foundational elements in place, such as schema markup and a service-oriented website structure. However, there are significant gaps in reviews, local SEO, and content depth.",
+    "quick_wins": [
+      "Implement a strategy to generate Google reviews to build credibility and improve local search presence.",
+      "Expand website content to include detailed service descriptions, location-specific pages, and FAQs to target relevant keywords.",
+      "Optimize meta tags and headers with location-based keywords to improve search visibility."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 50,
+    "found": "The business has a Google Business Profile (GBP) but lacks reviews and engagement.",
+    "summary": "The GBP is not actively managed, with no reviews and minimal information. This significantly impacts local search visibility and customer trust.",
+    "critical_issues": [
+      "No customer reviews, which are crucial for local SEO and trust building.",
+      "Incomplete business information, such as hours of operation and service areas.",
+      "Lack of regular posts or updates to engage with potential customers."
+    ]
+  },
+  "nap_citations": {
+    "score": 60,
+    "summary": "The business has consistent NAP (Name, Address, Phone Number) information on its website but lacks citations on major local directories and platforms.",
+    "action_items": [
+      "Create and verify listings on major local directories such as Yelp, Yellow Pages, and Bing Places.",
+      "Ensure NAP consistency across all online platforms, including social media and industry-specific directories.",
+      "Monitor and respond to any existing citations to maintain accuracy and improve local SEO."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "Product",
+    "FAQPage"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of customer reviews and engagement on Google Business Profile",
+    "invisible_for": "Local search users and potential customers looking for reviews and social proof",
+    "low_hanging_fruit": "Implement a review generation strategy and optimize GBP with relevant keywords and images",
+    "authority_opportunity": "Create high-quality, location-specific content and engage with local communities to build authority and improve search rankings"
+  },
+  "analyzed_at": "2026-02-27T04:08:33.126Z",
+  "lead_id": "41116ec8-987e-4aa3-bac4-ff5c1cc1d906",
+  "business_name": "Heart Heating, Cooling, Plumbing & Electric",
+  "website": "https://servicebyheart.com/",
+  "location": "Aurora, Colorado",
+  "page_title": "Heart Heating Cooling Plumbing &amp; Electrical | Denver, CO",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

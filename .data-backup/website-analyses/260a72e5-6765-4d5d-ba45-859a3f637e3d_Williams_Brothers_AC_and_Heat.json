@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "AI assistants are unlikely to cite this business due to a lack of structured content and conversational authority signals. While they have a strong local presence, their online footprint lacks the depth needed for AI to confidently recommend them.",
+    "quick_wins": [
+      "Implement FAQPage schema with common HVAC questions and detailed answers.",
+      "Expand content to include HowTo guides for common HVAC issues and solutions."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with photos, accurate hours, and a high rating, but it lacks regular posts and active Q&A engagement.",
+    "critical_issues": [
+      "No recent Google posts to engage with the local audience.",
+      "Q&A section is inactive and could be leveraged for more visibility."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected across all platforms.",
+    "action_items": [
+      "Continue monitoring NAP consistency proactively.",
+      "Expand citations to industry-specific directories for added authority."
+    ]
+  },
+  "schema_gaps": [
+    "Missing FAQPage schema",
+    "No HowTo schema implemented",
+    "LocalBusiness schema lacks detailed service descriptions"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured, conversational content that AI models prioritize for citations.",
+    "invisible_for": "Queries related to emergency HVAC services and DIY troubleshooting in Pasadena.",
+    "low_hanging_fruit": "Implementing FAQPage schema with Pasadena-specific HVAC questions.",
+    "authority_opportunity": "Positioning as local HVAC experts by creating in-depth content on energy efficiency and local climate considerations."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by becoming the go-to HVAC expert in Pasadena.",
+    "pain_point": "Without AI-ready content, they miss out on 40% of potential leads from voice and AI search users.",
+    "proof_point": "Their website lacks FAQ and HowTo schema, which are critical for AI to recognize them as an authority.",
+    "solution": "Our AEO strategy will optimize their content with schema markup, create conversational FAQs, and establish them as local HVAC authorities.",
+    "impact_estimate": "Expect a 30% increase in AI-driven traffic and leads within 6 months.",
+    "urgency": "Competitors are already optimizing for AI search—waiting means losing ground in the AI-driven landscape."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads for Your HVAC Business in Pasadena",
+  "opening_line": "We analyzed your website and identified key opportunities to make your HVAC services stand out to AI search users.",
+  "cta": "Let’s schedule a call to discuss how we can optimize your online presence for AI search and boost your lead generation.",
+  "analyzed_at": "2026-02-26T15:45:53.523Z",
+  "lead_id": "260a72e5-6765-4d5d-ba45-859a3f637e3d",
+  "business_name": "Williams Brothers AC and Heat",
+  "website": "https://williamsbrothersacandheat.com/pasadena-2-california/",
+  "location": "Pasadena, California",
+  "page_title": "Pasadena HVAC Repair & Installs | (213) 658-6100 Call Us",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.8,
+  "gbp_review_count": 69,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

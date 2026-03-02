@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 78,
+  "aeo_readiness": {
+    "score": 72,
+    "summary": "Reliable Standard has a strong foundation for AEO but needs to enhance AI-specific content and authority signals to ensure AI assistants cite them as a top recommendation.",
+    "quick_wins": [
+      "Expand conversational content to address common HVAC queries in a Q&A format.",
+      "Implement HowTo schema for step-by-step HVAC repair and maintenance guides."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "Google Business Profile is well-optimized with high ratings, photos, and accurate information, but lacks regular posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent posts or updates on GBP.",
+      "Q&A section is inactive with no engagement."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected across all platforms.",
+    "action_items": [
+      "Maintain current NAP consistency.",
+      "Regularly audit citations to ensure ongoing accuracy."
+    ]
+  },
+  "schema_gaps": [
+    "Missing FAQPage schema for existing FAQ content.",
+    "No HowTo schema for step-by-step HVAC guides.",
+    "LocalBusiness schema could be enhanced with more detailed service information."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of conversational, AI-friendly content that addresses common HVAC queries.",
+    "invisible_for": "Queries related to 'HVAC repair tips' or 'how to choose an HVAC contractor'.",
+    "low_hanging_fruit": "Adding FAQ schema and expanding FAQ content to cover more specific HVAC topics.",
+    "authority_opportunity": "Positioning as HVAC experts by publishing detailed guides and earning backlinks from industry publications."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by making your HVAC expertise AI-friendly.",
+    "pain_point": "Without AI-optimized content, you're missing out on 40% of potential leads from voice and AI search.",
+    "proof_point": "Competitors with AI-optimized content are appearing in AI search results for key HVAC queries.",
+    "solution": "Our AEO approach integrates conversational content, strategic schema markup, and authority-building tactics to ensure AI models cite you as the top HVAC expert.",
+    "impact_estimate": "Expect a 30% increase in AI-driven leads within 6 months.",
+    "urgency": "Waiting means losing ground to competitors who are already optimizing for AI search."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads: Your HVAC Expertise Deserves to Be Seen",
+  "opening_line": "After analyzing your site, it's clear you have the expertise, but AI models need more conversational content to cite you as a top HVAC authority.",
+  "cta": "Let's schedule a call to discuss how we can optimize your site for AI search and boost your lead generation.",
+  "analyzed_at": "2026-02-26T16:00:33.733Z",
+  "lead_id": "026a2cad-108e-4146-8127-1ad2b181d900",
+  "business_name": "Reliable Standard Heating & Air",
+  "website": "http://reliablestandard.com/",
+  "location": "San Diego, California",
+  "page_title": "San Diego Air Conditioning Heating HVAC Repair | Reliable Standard",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 5,
+  "gbp_review_count": 106,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

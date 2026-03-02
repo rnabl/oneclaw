@@ -1,0 +1,66 @@
+{
+  "overall_aeo_score": 58,
+  "aeo_readiness": {
+    "score": 45,
+    "summary": "AI assistants are unlikely to cite Custom Air Works due to significant gaps in structured data and conversational content. Their online presence lacks the necessary signals for AI models to confidently recommend them as a top HVAC provider.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup",
+      "Add FAQ schema to address common customer queries"
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-maintained with a high rating, photos, and accurate hours, but posts and Q&A sections could be better utilized for engagement.",
+    "critical_issues": [
+      "No recent posts to engage potential customers",
+      "Q&A section is inactive and lacks responses to common queries"
+    ]
+  },
+  "nap_citations": {
+    "score": 75,
+    "summary": "NAP consistency is moderate, with the address missing from the website but present on GBP. This inconsistency may confuse AI models and reduce trust in the business's contact information.",
+    "action_items": [
+      "Add the complete address to the website footer",
+      "Verify and update NAP information across all online directories"
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQ schema",
+    "No HowTo schema for common HVAC tasks",
+    "Lack of Service schema for specific HVAC services"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Absence of structured data prevents AI from recognizing them as a reliable local HVAC provider.",
+    "invisible_for": "Queries related to 'HVAC services in Gulfport, FL' and 'emergency HVAC repair near me'",
+    "low_hanging_fruit": "Implementing LocalBusiness and FAQ schema to improve AI recognition",
+    "authority_opportunity": "Highlighting certifications, awards, and expertise in content and schema to position them as HVAC experts"
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing your online presence for voice and chat search.",
+    "pain_point": "Without AI optimization, they are missing out on 40% of potential leads from voice and chat queries.",
+    "proof_point": "Their website lacks essential schema markup, making it difficult for AI models to cite them in search results.",
+    "solution": "Our AEO approach includes implementing structured data, enhancing GBP engagement, and creating conversational content to boost AI visibility and drive more qualified leads.",
+    "impact_estimate": "Expect a 30% increase in AI-driven leads within the first 3 months.",
+    "urgency": "Competitors are already optimizing for AI, and waiting means losing ground in the voice and chat search landscape."
+  },
+  "email_subject_line": "Boost Your HVAC Business with AI-Ready Optimization!",
+  "opening_line": "We analyzed your website and found significant opportunities to enhance your AI visibility and attract more qualified leads.",
+  "cta": "Let's schedule a call to discuss how we can optimize your online presence for AI-driven growth.",
+  "analyzed_at": "2026-02-26T15:44:58.699Z",
+  "lead_id": "02db751f-5219-4326-b463-a4d5c3793b7a",
+  "business_name": "Custom Air Works HVAC",
+  "website": "http://customairworks.com/",
+  "location": "Gulfport, Florida",
+  "page_title": "Home",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": 4.9,
+  "gbp_review_count": 43,
+  "gbp_found": true,
+  "nap_score": 75,
+  "nap_issues": [
+    "Address not found on website but listed on GBP"
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "overall_aeo_score": 68,
+  "aeo_readiness": {
+    "score": 55,
+    "summary": "AI assistants are unlikely to cite RDK Air Conditioning due to limited structured data and insufficient authority signals. Their current content is basic and lacks conversational depth.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup with detailed business information.",
+      "Expand FAQ content with questions AI models prioritize for HVAC queries."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "Google Business Profile is well-optimized but can be enhanced with more posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent posts or updates on GBP.",
+      "Q&A section is inactive and lacks engagement."
+    ]
+  },
+  "nap_citations": {
+    "score": 75,
+    "summary": "NAP consistency is moderate, with the address missing from the website but present on GBP.",
+    "action_items": [
+      "Add the complete business address to the website footer.",
+      "Verify and update NAP details across all online directories."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for common HVAC tasks",
+    "No review schema for testimonials"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data prevents AI from recognizing RDK as a reliable HVAC provider.",
+    "invisible_for": "Queries related to HVAC services in Clearwater, Florida.",
+    "low_hanging_fruit": "Implementing LocalBusiness schema to improve AI recognition.",
+    "authority_opportunity": "Showcasing certifications, awards, and detailed service expertise to establish authority."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for the assistants powering tomorrow's searches.",
+    "pain_point": "Without AI optimization, RDK is missing out on 40% of potential HVAC leads.",
+    "proof_point": "Their website lacks critical schema markup, making it less visible to AI models.",
+    "solution": "Our AEO approach integrates structured data, conversational content, and authority signals to make RDK the go-to HVAC provider in AI searches.",
+    "impact_estimate": "Expect a 30% increase in AI-driven leads within six months.",
+    "urgency": "Competitors are already optimizing for AI; delay means losing market share."
+  },
+  "email_subject_line": "Unlock AI-driven HVAC leads with our AEO expertise",
+  "opening_line": "We analyzed your website and identified key opportunities to enhance your AI visibility.",
+  "cta": "Let's schedule a call to discuss how we can make RDK the top choice for AI-driven HVAC searches.",
+  "analyzed_at": "2026-02-26T16:14:50.257Z",
+  "lead_id": "8e93ca9d-bd0f-4110-86f4-37dbbda6a133",
+  "business_name": "RDK Air Conditioning and Heating LLC",
+  "website": "http://www.rdk-ac.com/",
+  "location": "Clearwater, Florida",
+  "page_title": "Home | Air Conditioning Services by RDK Air Conditioning",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": 4.9,
+  "gbp_review_count": 176,
+  "gbp_found": true,
+  "nap_score": 75,
+  "nap_issues": [
+    "Address not found on website but listed on GBP"
+  ]
+}

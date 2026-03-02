@@ -1,0 +1,54 @@
+{
+  "overall_aeo_score": 55,
+  "aeo_readiness": {
+    "score": 60,
+    "summary": "The website has basic AEO elements in place, such as schema markup, but lacks depth in content, reviews, and structured data optimization.",
+    "quick_wins": [
+      "Add customer reviews and testimonials to build trust and improve local SEO.",
+      "Optimize meta tags, headers, and content with relevant keywords for HVAC services in Round Rock, Texas.",
+      "Implement FAQ schema to address common customer queries and improve search visibility."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 40,
+    "found": "The website has a Google Business Profile (GBP) opportunity but lacks a verified and optimized profile.",
+    "summary": "The business is not leveraging GBP effectively, which is crucial for local search visibility and customer engagement.",
+    "critical_issues": [
+      "No verified GBP listing.",
+      "Missing essential business information such as hours of operation, services, and photos.",
+      "Lack of customer reviews and engagement on GBP."
+    ]
+  },
+  "nap_citations": {
+    "score": 50,
+    "summary": "The business has inconsistent or incomplete NAP (Name, Address, Phone Number) citations across the web.",
+    "action_items": [
+      "Ensure consistent NAP information across all online directories and platforms.",
+      "Claim and update business listings on major citation sites like Yelp, Bing, and Yellow Pages.",
+      "Monitor and manage citations regularly to maintain accuracy."
+    ]
+  },
+  "schema_gaps": [
+    "Service schema to detail the specific HVAC services offered.",
+    "Review schema to showcase customer feedback and ratings.",
+    "FAQ schema to address common customer questions."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of customer reviews and testimonials.",
+    "invisible_for": "Local search users and potential customers searching for HVAC services in Round Rock, Texas.",
+    "low_hanging_fruit": "Implementing a review generation strategy and optimizing existing content with relevant keywords.",
+    "authority_opportunity": "Creating high-quality, informative content about HVAC maintenance, repair, and energy efficiency to establish the business as a local authority."
+  },
+  "analyzed_at": "2026-02-27T03:28:52.305Z",
+  "lead_id": "9c03e6d3-d82c-41b8-987e-3ca10ebae2ff",
+  "business_name": "PT Maintenance. Air Conditioning & Heating Services",
+  "website": "http://www.ptmandm.com/",
+  "location": "Round Rock, Texas",
+  "page_title": "Air Conditioning and Heating - PT Maintenance &amp; Mechanical",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

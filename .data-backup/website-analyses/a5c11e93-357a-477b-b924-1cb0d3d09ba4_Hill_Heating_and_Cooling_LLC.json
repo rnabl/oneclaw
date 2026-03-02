@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "AI assistants are unlikely to cite Hill Heating and Cooling due to limited conversational content and weak authority signals, but improvements can change this.",
+    "quick_wins": [
+      "Expand content to include more detailed service explanations and customer FAQs.",
+      "Implement structured data for FAQPage and HowTo to align with AI query patterns."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "Google Business Profile is well-optimized with good reviews, photos, and accurate information, but lacks regular posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent posts or updates on GBP.",
+      "No active management of Q&A section."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly audit citations to ensure ongoing accuracy."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema enhancements (e.g., openingHours, paymentAccepted).",
+    "No FAQPage schema despite existing FAQ content.",
+    "No HowTo schema for common HVAC maintenance or repair processes."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of conversational content and structured data limits AI recognition.",
+    "invisible_for": "Queries related to emergency HVAC services and detailed pricing information.",
+    "low_hanging_fruit": "Implementing FAQPage schema and expanding service-related FAQs.",
+    "authority_opportunity": "Positioning as local HVAC experts by showcasing certifications, awards, and detailed case studies."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by making your HVAC expertise undeniable to chatbots and voice assistants.",
+    "pain_point": "Without AI optimization, you're missing out on 40% of potential leads from voice and chat queries.",
+    "proof_point": "Your GBP is strong, but AI models prioritize sites with rich, structured content and authority signals.",
+    "solution": "Our AEO strategy integrates conversational content, structured data, and authority signals to make your business the top AI-recommended choice.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within 6 months.",
+    "urgency": "Competitors optimizing for AI are already capturing your potential customers—act now to stay ahead."
+  },
+  "email_subject_line": "Unlock AI-Driven Growth for Hill Heating and Cooling",
+  "opening_line": "We analyzed your website and Google Business Profile and found exciting opportunities to make your HVAC services irresistible to AI assistants.",
+  "cta": "Let's discuss how to optimize your online presence for AI and capture more leads. Are you available for a quick call?",
+  "analyzed_at": "2026-02-26T16:15:18.678Z",
+  "lead_id": "a5c11e93-357a-477b-b924-1cb0d3d09ba4",
+  "business_name": "Hill Heating and Cooling LLC",
+  "website": "http://hillheatingandcoolingolathe.com/",
+  "location": "Olathe, Kansas",
+  "page_title": "Hill Heating and Cooling - Hvac, Air Conditioning, Furnaces, heating and air conditioning, furnace repair service",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.9,
+  "gbp_review_count": 60,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

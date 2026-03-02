@@ -1,0 +1,53 @@
+{
+  "overall_aeo_score": 55,
+  "aeo_readiness": {
+    "score": 60,
+    "summary": "The business has some foundational elements for AEO but lacks critical optimizations in content, reviews, and local SEO.",
+    "quick_wins": [
+      "Add a descriptive and keyword-rich title tag to improve search engine visibility.",
+      "Implement a review generation strategy to build credibility and improve local search rankings.",
+      "Optimize website content with relevant HVAC keywords and location-specific terms."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 40,
+    "found": "Business name, address, and phone number (NAP) are present on the website but not consistently formatted.",
+    "summary": "The NAP information is available but lacks consistency and proper formatting, which can hinder local search performance.",
+    "critical_issues": [
+      "Inconsistent NAP formatting across the website.",
+      "Missing structured citations on external directories and platforms."
+    ]
+  },
+  "nap_citations": {
+    "score": 30,
+    "summary": "NAP citations are not effectively utilized, with no presence on major directories and inconsistent formatting.",
+    "action_items": [
+      "Create and verify listings on major directories such as Google My Business, Yelp, and Bing Places.",
+      "Ensure consistent NAP formatting across all online platforms and directories."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "OpeningHoursSpecification"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of keyword optimization and content depth for HVAC services.",
+    "invisible_for": "Users searching for specific HVAC services and location-based queries.",
+    "low_hanging_fruit": "Incorporate relevant HVAC keywords and location-specific terms into website content and meta tags.",
+    "authority_opportunity": "Develop high-quality, informative content such as blog posts or guides on HVAC topics to establish authority and improve search rankings."
+  },
+  "analyzed_at": "2026-02-27T03:20:17.229Z",
+  "lead_id": "e634c1a6-673f-4d59-ae41-ce17e5601fe7",
+  "business_name": "Master Cooling Mechanical LLC Air Conditioning and Heating",
+  "website": "https://www.master-cooling.com/",
+  "location": "Kissimmee, FL",
+  "page_title": "N/A",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

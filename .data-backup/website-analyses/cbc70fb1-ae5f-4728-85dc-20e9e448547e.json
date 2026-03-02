@@ -1,0 +1,56 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "The business has a basic level of AEO readiness with some critical areas for improvement. The website includes essential service information and contact details but lacks depth in content and user engagement features.",
+    "quick_wins": [
+      "Enhance website content with location-specific keywords and detailed service descriptions.",
+      "Implement a review generation strategy to build a strong Google Business Profile.",
+      "Optimize for mobile users by ensuring fast load times and a responsive design."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 40,
+    "found": false,
+    "summary": "The business does not have an active Google Business Profile (GBP), which significantly impacts local search visibility.",
+    "critical_issues": [
+      "No GBP listing found.",
+      "Lack of customer reviews and ratings.",
+      "Missing essential business information such as hours of operation and photos."
+    ]
+  },
+  "nap_citations": {
+    "score": 50,
+    "summary": "The business has consistent NAP (Name, Address, Phone number) information on its website but lacks citations on external directories and platforms.",
+    "action_items": [
+      "Create and verify NAP citations on major directories like Yelp, Yellow Pages, and Bing Places.",
+      "Ensure NAP consistency across all online platforms and social media profiles.",
+      "Monitor and update citations regularly to maintain accuracy."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "FAQPage",
+    "BreadcrumbList"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of local SEO optimization and GBP presence",
+    "invisible_for": "Users searching for local HVAC services in Orlando",
+    "low_hanging_fruit": "Claim and optimize a Google Business Profile",
+    "authority_opportunity": "Publish high-quality, locally relevant content and engage with the community through events or sponsorships"
+  },
+  "analyzed_at": "2026-02-27T04:02:04.721Z",
+  "lead_id": "cbc70fb1-ae5f-4728-85dc-20e9e448547e",
+  "business_name": "Advanced",
+  "website": "https://advancedacnow.com/",
+  "location": "Orlando, Florida",
+  "page_title": "Orlando AC Repair - Residential Air Conditioning Service",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

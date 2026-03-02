@@ -7,8 +7,8 @@ name = "iclaw"
 
 [api]
 enabled = true
-schemas = ["public"]
-extra_search_path = ["public"]
+schemas = ["public", "crm", "content", "platform"]
+extra_search_path = ["public", "crm"]
 max_rows = 1000
 
 [db]

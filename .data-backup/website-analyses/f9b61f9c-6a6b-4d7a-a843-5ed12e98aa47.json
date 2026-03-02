@@ -1,0 +1,55 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "The business has a basic foundation for AEO with some structured data and localized content but lacks depth in content optimization and user engagement signals.",
+    "quick_wins": [
+      "Implement a review generation strategy to build a strong Google Business Profile with positive reviews.",
+      "Enhance website content with targeted keywords and location-specific information to improve local search visibility.",
+      "Optimize meta tags and headers with relevant keywords to improve search engine understanding of the site's content."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 40,
+    "found": false,
+    "summary": "The business does not have a visible Google Business Profile, which is crucial for local search visibility and customer engagement.",
+    "critical_issues": [
+      "No Google Business Profile found, leading to missed opportunities for local search presence.",
+      "Lack of customer reviews and engagement metrics that could boost local search rankings."
+    ]
+  },
+  "nap_citations": {
+    "score": 50,
+    "summary": "The business has some basic contact information on the website but lacks consistent NAP (Name, Address, Phone) citations across the web.",
+    "action_items": [
+      "Ensure consistent NAP information across all online directories and platforms.",
+      "List the business in relevant local directories and industry-specific platforms.",
+      "Verify and claim listings in major citation sources like Yelp, Bing Places, and Apple Maps."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "Product",
+    "BreadcrumbList"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of Google Business Profile and customer reviews",
+    "invisible_for": "Local search users and potential customers searching for HVAC services in Gastonia, North Carolina",
+    "low_hanging_fruit": "Setting up and optimizing a Google Business Profile and generating initial customer reviews",
+    "authority_opportunity": "Creating high-quality, localized content and building backlinks from local and industry-relevant websites"
+  },
+  "analyzed_at": "2026-02-27T03:54:32.015Z",
+  "lead_id": "f9b61f9c-6a6b-4d7a-a843-5ed12e98aa47",
+  "business_name": "Quality Pro Services of North Charlotte",
+  "website": "https://www.qualityproservices.com/",
+  "location": "Gastonia, North Carolina",
+  "page_title": "AC &amp; Heating Contractors | Quality Pro Services",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

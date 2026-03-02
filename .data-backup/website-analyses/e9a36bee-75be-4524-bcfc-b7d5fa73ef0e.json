@@ -1,0 +1,53 @@
+{
+  "overall_aeo_score": 55,
+  "aeo_readiness": {
+    "score": 60,
+    "summary": "The business has some foundational elements for AEO but lacks critical optimizations and content depth.",
+    "quick_wins": [
+      "Implement a Google Business Profile and encourage customer reviews.",
+      "Expand service pages with detailed, keyword-rich content.",
+      "Add structured data for FAQs and services to enhance search visibility."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 20,
+    "found": false,
+    "summary": "No evidence of a Google Business Profile (GBP) was found, which is crucial for local search visibility.",
+    "critical_issues": [
+      "Missing GBP listing.",
+      "Lack of customer reviews and ratings on Google."
+    ]
+  },
+  "nap_citations": {
+    "score": 40,
+    "summary": "Inconsistent or missing Name, Address, Phone (NAP) citations across the web could be harming local search performance.",
+    "action_items": [
+      "Audit and update NAP information on major directories (e.g., Yelp, Yellow Pages).",
+      "Ensure NAP consistency across the website and all online platforms.",
+      "Actively manage and respond to customer reviews on citation sites."
+    ]
+  },
+  "schema_gaps": [
+    "ServiceSchema",
+    "FAQPage",
+    "LocalBusiness with GeoCoordinates"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of localized content and structured data for services.",
+    "invisible_for": "Users searching for specific HVAC services in Georgetown, Texas.",
+    "low_hanging_fruit": "Create individual service pages with location-based keywords and FAQ sections.",
+    "authority_opportunity": "Publish blog posts or guides on common HVAC issues and solutions in the Georgetown area to build topical authority."
+  },
+  "analyzed_at": "2026-02-27T02:27:09.460Z",
+  "lead_id": "e9a36bee-75be-4524-bcfc-b7d5fa73ef0e",
+  "business_name": "Cool Kids AC, Heat & Plumbing",
+  "website": "https://coolkidsac.com/ac-repair-georgetown-tx/",
+  "location": "Georgetown, Texas",
+  "page_title": "AC Repair Georgetown | We&#039;ll Fix It Right - Cool Kids",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

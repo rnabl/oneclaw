@@ -1,0 +1,64 @@
+{
+  "overall_aeo_score": 62,
+  "aeo_readiness": {
+    "score": 55,
+    "summary": "AI assistants are unlikely to cite this business due to critical gaps in schema markup, GBP visibility, and conversational content. However, addressing these can significantly boost their AI presence.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup",
+      "Create and integrate FAQPage schema"
+    ]
+  },
+  "gbp_analysis": {
+    "score": 20,
+    "found": false,
+    "summary": "The Google Business Profile is not found, making the business invisible to Google AI and severely limiting local search visibility.",
+    "critical_issues": [
+      "GBP not set up",
+      "Missing photos, posts, and Q&A engagement"
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected, ensuring reliable business information across platforms.",
+    "action_items": [
+      "Maintain current NAP consistency",
+      "Expand NAP listings to additional relevant directories"
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for services",
+    "Missing review schema for testimonials"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of schema markup prevents AI from understanding and recommending their services.",
+    "invisible_for": "Local HVAC service queries and 'best HVAC in Raleigh' searches.",
+    "low_hanging_fruit": "Setting up LocalBusiness and FAQPage schema to provide AI with structured data.",
+    "authority_opportunity": "Highlighting certifications, veteran/senior discounts, and expertise in energy-efficient solutions to establish authority."
+  },
+  "agency_pitch": {
+    "hook": "Dominate AI search by fixing critical schema and GBP gaps.",
+    "pain_point": "Without AI readiness, they are missing out on 40% of potential leads from voice and AI-driven searches.",
+    "proof_point": "Their GBP is not found, and essential schema is absent, making them invisible to AI models.",
+    "solution": "Our AEO strategy will implement structured data, optimize their GBP, and create conversational content to make them the go-to HVAC expert in Raleigh.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 3 months.",
+    "urgency": "Competitors are already optimizing for AI, and waiting means losing ground in the AI-driven search landscape."
+  },
+  "email_subject_line": "Unlock AI-driven growth: Your HVAC business is missing a key opportunity",
+  "opening_line": "We analyzed your website and found critical gaps that are preventing AI from recognizing your HVAC expertise.",
+  "cta": "Let's schedule a call to discuss how we can make your business AI-ready and boost your local search presence.",
+  "analyzed_at": "2026-02-26T15:46:44.144Z",
+  "lead_id": "62a5109f-e663-4200-88aa-8c021d00586f",
+  "business_name": "Intercool Heating and Air Conditioning",
+  "website": "https://www.intercoolheatingandair.com/",
+  "location": "Raleigh, NC",
+  "page_title": "HOME | My Site",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": null,
+  "gbp_review_count": null,
+  "gbp_found": false,
+  "nap_score": 100,
+  "nap_issues": []
+}

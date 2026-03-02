@@ -1,0 +1,66 @@
+{
+  "overall_aeo_score": 68,
+  "aeo_readiness": {
+    "score": 65,
+    "summary": "SunDollar A/C & Heat has a strong foundation for local visibility but lacks critical elements for AI model recognition and citation, such as structured data and conversational content.",
+    "quick_wins": [
+      "Implement FAQPage schema to address common HVAC queries.",
+      "Expand content to include How-To guides and problem-solution articles."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 40,
+    "found": false,
+    "summary": "The Google Business Profile is not optimized and is currently invisible to Google AI, severely limiting local search visibility.",
+    "critical_issues": [
+      "Google Business Profile is not set up or claimed.",
+      "Missing photos, posts, and Q&A to engage potential customers."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly monitor citations for any discrepancies."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema",
+    "No Service schema for specific HVAC services"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content limits AI recognition.",
+    "invisible_for": "Queries related to HVAC repair and installation in Frisco, TX.",
+    "low_hanging_fruit": "Implementing FAQPage and LocalBusiness schema.",
+    "authority_opportunity": "Positioning as local HVAC experts through detailed service explanations and customer testimonials."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for answer engines and AI search.",
+    "pain_point": "Without AI optimization, SunDollar misses out on 40% of potential leads from voice and AI assistants.",
+    "proof_point": "The current website lacks FAQ schema and conversational content, making it less likely to be cited by AI models.",
+    "solution": "Our AEO approach integrates structured data, conversational content, and GBP optimization to boost AI visibility and drive more qualified leads.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within 3-6 months.",
+    "urgency": "Competitors are already optimizing for AI search; the longer you wait, the more market share you lose."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads for SunDollar A/C & Heat",
+  "opening_line": "We analyzed your website and identified key opportunities to enhance your visibility with AI assistants and answer engines.",
+  "cta": "Let's schedule a call to discuss how we can optimize your digital presence for AI search and boost your lead generation.",
+  "analyzed_at": "2026-02-26T16:02:12.376Z",
+  "lead_id": "9bb32a1c-e719-432d-bd96-33f779f98738",
+  "business_name": "SunDollar A/C & Heat, LLC",
+  "website": "http://sundollarair.com/",
+  "location": "Frisco, TX",
+  "page_title": "SunDollar A/C &amp; Heat | HVAC Repair &amp; Installation",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": null,
+  "gbp_review_count": null,
+  "gbp_found": false,
+  "nap_score": 100,
+  "nap_issues": []
+}

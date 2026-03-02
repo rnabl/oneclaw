@@ -2,7 +2,7 @@
 // These routes handle the OAuth flow via browser tap-to-auth
 
 import type { Context } from 'hono';
-import { saveIntegration, updateOnboardingState, getUserById } from '@oneclaw/database';
+import { saveIntegration, saveNodeIntegration, updateOnboardingState, getUserById } from '@oneclaw/database';
 import { ONBOARDING_STATE } from '@oneclaw/core';
 import { encryptToken } from '@oneclaw/harness/gmail/encryption';
 import { createGmailClient } from '@oneclaw/harness/gmail/client';
@@ -178,25 +178,28 @@ export async function googleCallbackHandler(c: Context) {
     const encryptedAccess = encryptToken(tokens.access_token);
     const encryptedRefresh = tokens.refresh_token ? encryptToken(tokens.refresh_token) : null;
 
-    // Save to NEW gmail_accounts table
-    // TODO: Wire up Supabase
-    // const supabase = createServiceClient();
-    // await supabase.from('gmail_accounts').insert({
-    //   user_id: state,
-    //   email: userProfile.email,
-    //   access_token: encryptedAccess,
-    //   refresh_token: encryptedRefresh,
-    //   token_expires_at: expiresAt.toISOString(),
-    //   is_active: true,
-    // });
-
-    // ALSO save to old integrations table for backward compatibility (iMessage)
-    await saveIntegration(state, 'google', {
+    // Save to node_integrations table (uses string node IDs, not UUIDs)
+    await saveNodeIntegration(state, 'google', {
       accessToken: tokens.access_token,
       refreshToken: tokens.refresh_token,
       expiresAt,
       scopes: tokens.scope.split(' '),
     });
+    
+    // Also try to save to old integrations table if state is a valid UUID
+    const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(state);
+    if (isUUID) {
+      try {
+        await saveIntegration(state, 'google', {
+          accessToken: tokens.access_token,
+          refreshToken: tokens.refresh_token,
+          expiresAt,
+          scopes: tokens.scope.split(' '),
+        });
+      } catch (e) {
+        console.log('[OAuth] Could not save to integrations table (user may not exist):', e);
+      }
+    }
 
     console.log(`[OAuth] Successfully saved Google tokens for user ${state} (${userProfile.email})`);
 

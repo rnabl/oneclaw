@@ -1,0 +1,60 @@
+{
+  "overall_aeo_score": 58,
+  "aeo_readiness": {
+    "score": 60,
+    "summary": "The business has basic AEO elements in place but lacks critical components for strong AI search optimization. The website has schema markup and service information but is missing key trust signals and content depth.",
+    "quick_wins": [
+      "Add customer reviews and ratings to establish trust and improve search visibility.",
+      "Expand service pages with more detailed content and relevant keywords.",
+      "Implement a blog strategy to target long-tail keywords and demonstrate expertise."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 50,
+    "found": [
+      "Service information",
+      "Location details",
+      "Basic schema markup"
+    ],
+    "summary": "The website includes essential business information but lacks depth in content and trust signals. The absence of Google reviews is a significant drawback.",
+    "critical_issues": [
+      "No Google reviews or ratings.",
+      "Limited content depth on service pages.",
+      "No clear call to action for customer engagement."
+    ]
+  },
+  "nap_citations": {
+    "score": 40,
+    "summary": "The business has consistent NAP information on its website but lacks external citations and mentions across directories and platforms.",
+    "action_items": [
+      "Create and verify a Google Business Profile.",
+      "List the business on local directories such as Yelp, Angie's List, and HomeAdvisor.",
+      "Ensure NAP consistency across all online platforms and directories."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "BlogPosting",
+    "FAQPage"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of customer reviews and trust signals",
+    "invisible_for": "Users searching for trusted local contractors",
+    "low_hanging_fruit": "Implementing a review generation strategy",
+    "authority_opportunity": "Creating content that showcases expertise, such as detailed case studies and project highlights"
+  },
+  "analyzed_at": "2026-02-27T03:56:51.385Z",
+  "lead_id": "632ba15d-2ce3-4e32-860f-aa3d96cf9c1d",
+  "business_name": "Cechinel Siding & Windows Inc",
+  "website": "http://www.cechinelrenovations.com/",
+  "location": "Somerville, Massachusetts",
+  "page_title": "Black check mark inside a square.",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

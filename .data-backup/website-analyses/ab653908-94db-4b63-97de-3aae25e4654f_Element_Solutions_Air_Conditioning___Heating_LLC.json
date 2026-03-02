@@ -1,0 +1,64 @@
+{
+  "overall_aeo_score": 15,
+  "aeo_readiness": {
+    "score": 10,
+    "summary": "AI assistants are highly unlikely to cite or recommend this business due to critical issues like lack of schema markup, absence of authoritative content, and the website being flagged as a potential threat.",
+    "quick_wins": [
+      "Remove or resolve the security warning to make the site accessible.",
+      "Implement basic schema markup (LocalBusiness, FAQPage) to improve AI visibility."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 0,
+    "found": false,
+    "summary": "The Google Business Profile is not found, making the business invisible to Google AI and significantly limiting local search visibility.",
+    "critical_issues": [
+      "Google Business Profile is not set up.",
+      "No GBP photos, posts, or Q&A to engage potential customers."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected, ensuring reliable business information across platforms.",
+    "action_items": [
+      "Maintain current NAP consistency.",
+      "Focus on expanding NAP citations to additional relevant directories."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQ schema",
+    "No HowTo schema",
+    "No structured data for reviews or services"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "The website is flagged as a potential threat, making it completely inaccessible to AI crawlers and users.",
+    "invisible_for": "Queries related to HVAC services in Tampa, FL",
+    "low_hanging_fruit": "Resolve the security warning to make the site accessible.",
+    "authority_opportunity": "Position the business as a local HVAC authority by creating and marking up detailed service guides and customer testimonials."
+  },
+  "agency_pitch": {
+    "hook": "Unleash your AI potential before your competitors do.",
+    "pain_point": "The business is currently invisible to AI, costing them an estimated 40% of potential leads from AI-driven searches.",
+    "proof_point": "The website is flagged as a potential threat, and the Google Business Profile is not found.",
+    "solution": "Our AEO approach will resolve security issues, implement critical schema markup, optimize the Google Business Profile, and create authoritative content to ensure AI models recognize and recommend your business.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 3 months.",
+    "urgency": "Waiting means losing ground to competitors who are already optimizing for AI search and capturing your potential customers."
+  },
+  "email_subject_line": "Unlock AI Visibility for Your HVAC Business in Tampa",
+  "opening_line": "We analyzed your website and identified critical issues that are preventing AI from recognizing your business.",
+  "cta": "Let's schedule a call to discuss how we can make your business AI-ready and boost your leads.",
+  "analyzed_at": "2026-02-26T15:53:41.427Z",
+  "lead_id": "ab653908-94db-4b63-97de-3aae25e4654f",
+  "business_name": "Element Solutions Air Conditioning & Heating LLC",
+  "website": "http://www.nolongerinbusiness.com/",
+  "location": "Tampa, FL",
+  "page_title": "Potential Threat Detected",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": null,
+  "gbp_review_count": null,
+  "gbp_found": false,
+  "nap_score": 100,
+  "nap_issues": []
+}

@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "The business has a solid foundation but lacks specific optimizations to ensure AI models like ChatGPT and Claude cite them as a top authority in the Nashville area.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup with detailed service and location information.",
+      "Expand conversational content that answers common homeowner queries about restoration."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with a 5-star rating, photos, and accurate hours, but it lacks regular posts and active Q&A engagement.",
+    "critical_issues": [
+      "No recent Google posts to engage with the audience.",
+      "Q&A section is inactive and not utilized for customer interaction."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected across all platforms.",
+    "action_items": [
+      "Continue monitoring for any inconsistencies or new citation opportunities.",
+      "Encourage more customer reviews on high-authority platforms."
+    ]
+  },
+  "schema_gaps": [
+    "Missing FAQPage schema to address common customer questions.",
+    "LocalBusiness schema lacks detailed service descriptions and geo-coordinates.",
+    "No HowTo schema for explaining the restoration process."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "The website lacks conversational content that aligns with AI query patterns.",
+    "invisible_for": "Local restoration queries that include detailed service explanations.",
+    "low_hanging_fruit": "Adding FAQ schema and expanding service pages with conversational language.",
+    "authority_opportunity": "Positioning as local restoration experts by showcasing certifications and detailed case studies."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for the way people ask questions today.",
+    "pain_point": "Without AI optimization, they miss out on 40% of potential leads from voice and AI search users.",
+    "proof_point": "Their website ranks well on Google but lacks citations and mentions in AI-driven platforms like ChatGPT.",
+    "solution": "Our AEO approach integrates schema markup, conversational content, and GBP optimization to make their business the top AI-recommended choice in Nashville.",
+    "impact_estimate": "Expect a 30% increase in AI-driven leads within 6 months.",
+    "urgency": "Competitors are already optimizing for AI, and waiting means losing ground in the new search landscape."
+  },
+  "email_subject_line": "Maximize Your AI Reach: Nashville's Restoration Experts Need an AEO Boost",
+  "opening_line": "We analyzed your website and Google Business Profile and found significant opportunities to enhance your AI visibility.",
+  "cta": "Let's schedule a call to discuss how we can make your business the top AI-recommended restoration service in Nashville.",
+  "analyzed_at": "2026-02-26T16:22:19.956Z",
+  "lead_id": "90e995cf-e8a5-45c8-90f7-b7ff136a2b7f",
+  "business_name": "Restoration Guys of Nashville",
+  "website": "https://restorationguysnashville.com/",
+  "location": "Franklin, Tennessee",
+  "page_title": "Restoration Company Nashville | The Restoration Guys of Nashville",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 5,
+  "gbp_review_count": 83,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

@@ -1,0 +1,64 @@
+{
+  "overall_aeo_score": 68,
+  "aeo_readiness": {
+    "score": 55,
+    "summary": "AI assistants are unlikely to cite Paradise Heating & Cooling due to the lack of structured data and conversational content, but there is potential for improvement with targeted optimizations.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup",
+      "Create an FAQ section with common HVAC queries and answers"
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "Google Business Profile is well-optimized with positive reviews, photos, and accurate hours, but lacks regular posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent posts or updates on GBP",
+      "No engagement with customer Q&A"
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms",
+      "Regularly monitor for any inconsistencies"
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for common HVAC tasks",
+    "No Product or Service schema for specific offerings"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data prevents AI from identifying them as a reliable local HVAC provider.",
+    "invisible_for": "Queries related to 'HVAC repair in Lakewood, CO' and 'trusted heating services near me'.",
+    "low_hanging_fruit": "Implementing LocalBusiness schema to improve AI recognition.",
+    "authority_opportunity": "Positioning as local HVAC experts by adding detailed service pages and FAQ content."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for answer engines and AI search.",
+    "pain_point": "Without AI optimization, they are missing out on 40% of potential leads from voice and AI searches.",
+    "proof_point": "Their website lacks essential schema markup and conversational content, making it less visible to AI models.",
+    "solution": "Our AEO approach integrates schema markup, FAQ content, and GBP optimization to boost AI visibility and drive more qualified leads.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 3 months.",
+    "urgency": "Competitors are already optimizing for AI, so acting now is crucial to stay ahead in the local HVAC market."
+  },
+  "email_subject_line": "Boost Your AI Visibility: Optimize for ChatGPT & Voice Search Today!",
+  "opening_line": "We analyzed your website and identified key opportunities to enhance your visibility with AI assistants and voice search.",
+  "cta": "Let's schedule a call to discuss how we can optimize your online presence for AI-driven growth.",
+  "analyzed_at": "2026-02-26T15:55:24.969Z",
+  "lead_id": "29a7e234-0898-4132-a460-a1337bdcf533",
+  "business_name": "Paradise Heating & Cooling",
+  "website": "http://www.paradiseheatingandcooling.com/",
+  "location": "Lakewood, Colorado",
+  "page_title": "Lakewood, CO - Heating and Cooling Service and Repair | Paradise Heating and Cooling",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": 4.8,
+  "gbp_review_count": 31,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

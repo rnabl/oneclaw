@@ -1,0 +1,90 @@
+{
+  "overall_aeo_score": 60,
+  "aeo_readiness": {
+    "strengths": [
+      "High NAP consistency (100/100)",
+      "Strong Google Business Profile rating (4.9 with 36 reviews)",
+      "Comprehensive service offerings listed on the website"
+    ],
+    "weaknesses": [
+      "Missing FAQ section on the website",
+      "Limited use of schema markup beyond JSON-LD",
+      "Opportunity to improve H1 and H2 tags for better keyword targeting"
+    ],
+    "recommendations": [
+      "Implement an FAQ section to address common customer queries and improve SEO",
+      "Expand schema markup to include more detailed service and location information",
+      "Optimize H1 and H2 tags with targeted keywords to improve search visibility"
+    ]
+  },
+  "gbp_analysis": {
+    "strengths": [
+      "Excellent NAP consistency and accuracy",
+      "High customer rating indicating strong service quality",
+      "Good use of categories and service listings"
+    ],
+    "weaknesses": [
+      "Limited engagement with customer reviews (only 36 reviews)",
+      "Opportunity to add more photos and videos to showcase services"
+    ],
+    "recommendations": [
+      "Actively engage with customer reviews by responding to feedback",
+      "Encourage more customer reviews to build social proof",
+      "Add more visual content to the GBP to enhance engagement"
+    ]
+  },
+  "nap_citations": {
+    "status": "Excellent",
+    "details": "NAP citations are 100/100, indicating perfect consistency across all platforms"
+  },
+  "schema_gaps": {
+    "issues": [
+      "Only basic JSON-LD schema is implemented",
+      "Missing service-specific schema markup",
+      "No local business schema for detailed location information"
+    ],
+    "recommendations": [
+      "Implement service-specific schema markup for each HVAC service offered",
+      "Add local business schema to provide search engines with more detailed location information",
+      "Use schema markup to highlight customer reviews and ratings"
+    ]
+  },
+  "ai_visibility_gap": {
+    "current_visibility": "Moderate",
+    "recommendations": [
+      "Leverage AI-driven content generation to create more dynamic and engaging content",
+      "Use AI tools to analyze customer search patterns and optimize content accordingly",
+      "Implement AI-powered chatbots to improve customer service and engagement"
+    ]
+  },
+  "agency_pitch": {
+    "subject": "Enhancing HVAC Pilot's Digital Presence with AEO and AI Strategies",
+    "key_points": [
+      "Improve search engine visibility through targeted AEO techniques",
+      "Leverage AI to create personalized and engaging customer experiences",
+      "Enhance GBP engagement and visual content to attract more customers",
+      "Implement advanced schema markup to provide search engines with detailed information",
+      "Focus on customer review management to build trust and credibility"
+    ],
+    "call_to_action": "Contact us today to discuss how we can elevate your digital marketing strategy and drive more leads to your HVAC business."
+  },
+  "email_subject_line": "Boost Your HVAC Business with Our Advanced AEO and AI Strategies",
+  "opening_line": "Dear [Client's Name], I hope this message finds you well. As a leading HVAC contractor in Chula Vista, your commitment to quality service is evident. Let's take your digital presence to the next level with our advanced AEO and AI strategies.",
+  "cta": "Ready to elevate your digital marketing strategy? Contact us today to schedule a consultation and discover how we can help your HVAC business grow!",
+  "analyzed_at": "2026-02-26T16:36:26.353Z",
+  "lead_id": "1819375b-16bc-41f2-91ca-ce1d20a7b821",
+  "business_name": "HVAC Pilot Air Conditioning & Heating Services",
+  "website": "https://hvacpilot.com/?utm_source=googlebusinessprofile&utm_medium=organic&utm_campaign=Google+Business+Profile",
+  "location": "Chula Vista, California",
+  "page_title": "HVAC Contractor in Chula Vista | HVAC Pilot Air Conditioning &amp; Heating Services",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.9,
+  "gbp_review_count": 36,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": [],
+  "used_proxy": true
+}

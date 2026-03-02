@@ -1,0 +1,51 @@
+{
+  "overall_aeo_score": 35,
+  "aeo_readiness": {
+    "score": 20,
+    "summary": "The website has minimal content and lacks essential elements for AEO readiness, such as structured data and informative content.",
+    "quick_wins": [
+      "Add relevant and informative content about heating and cooling services.",
+      "Implement schema markup to provide search engines with structured data.",
+      "Encourage customer reviews to build credibility and improve local SEO."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 10,
+    "found": false,
+    "summary": "No Google Business Profile (GBP) was found for Duke's Heating and Cooling. This is a critical issue for local search visibility.",
+    "critical_issues": [
+      "No GBP exists for the business.",
+      "Lack of local search presence and customer engagement."
+    ]
+  },
+  "nap_citations": {
+    "score": 15,
+    "summary": "There is no evidence of consistent Name, Address, and Phone Number (NAP) citations across the web. This inconsistency can harm local search rankings.",
+    "action_items": [
+      "Create and verify a Google Business Profile with accurate NAP information.",
+      "Ensure consistent NAP information across all online directories and platforms.",
+      "Monitor and update NAP citations regularly to maintain accuracy."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "ContactPoint"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and informative content.",
+    "invisible_for": "Local search users and potential customers searching for heating and cooling services in Littleton, Colorado.",
+    "low_hanging_fruit": "Implement schema markup and create a Google Business Profile.",
+    "authority_opportunity": "Build content around common HVAC issues and solutions to establish expertise and improve search rankings."
+  },
+  "analyzed_at": "2026-02-27T03:15:23.201Z",
+  "lead_id": "c6a72586-c358-41ea-9999-195c2a1e3cb7",
+  "business_name": "Duke's Heating and Cooling",
+  "website": "https://www.fixitdukes.com/",
+  "location": "Littleton, Colorado",
+  "page_title": "fixitdukes.com",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_found": false
+}

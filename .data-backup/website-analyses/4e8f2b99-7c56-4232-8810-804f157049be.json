@@ -1,0 +1,54 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "Johnny's Air Conditioning has a decent foundation for AEO readiness but requires improvements in several areas to enhance visibility and engagement.",
+    "quick_wins": [
+      "Implement a review generation strategy to build up Google reviews and ratings.",
+      "Optimize meta tags and headers with targeted keywords like 'HVAC Pasadena' and 'AC repair Pasadena'.",
+      "Add more detailed service descriptions and unique selling propositions to differentiate from competitors."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 50,
+    "found": "The website has basic schema markup (JSON-LTD and Microdata) but lacks comprehensive structured data for local business and service offerings.",
+    "summary": "The current schema markup is a good start but does not fully leverage Google's Business Profile features or detailed service-related schemas.",
+    "critical_issues": [
+      "Missing Google Business Profile (GBP) listing or integration.",
+      "Lack of detailed service-area information in schema.",
+      "No schema markup for reviews or ratings."
+    ]
+  },
+  "nap_citations": {
+    "score": 40,
+    "summary": "The business lacks consistent Name, Address, Phone (NAP) citations across directories, which is crucial for local SEO.",
+    "action_items": [
+      "Create and verify a Google Business Profile listing with accurate NAP information.",
+      "Ensure consistent NAP information across Yelp, Bing Places, and other relevant directories.",
+      "Monitor and update NAP citations regularly to maintain accuracy."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness schema is not fully utilized; missing properties like address, geo, and opening hours.",
+    "No schema markup for specific services offered (e.g., HVACInstallation, HVACMaintenance).",
+    "Missing schema for reviews and ratings to showcase customer feedback."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of customer reviews and ratings, which are critical for local search visibility and trust-building.",
+    "invisible_for": "Customers searching for HVAC services in Pasadena who rely on reviews and ratings to make decisions.",
+    "low_hanging_fruit": "Implementing a review generation strategy and integrating schema markup for reviews.",
+    "authority_opportunity": "Establishing the business as a local authority by publishing informative content about HVAC maintenance, energy efficiency, and local regulations."
+  },
+  "analyzed_at": "2026-02-27T03:39:05.048Z",
+  "lead_id": "4e8f2b99-7c56-4232-8810-804f157049be",
+  "business_name": "Johnny's Air Conditioning",
+  "website": "https://johnnysac.com/",
+  "location": "Pasadena, California",
+  "page_title": "Pasadena HVAC Technicians: AC &amp; Heating Services: Indoor Air Quality",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

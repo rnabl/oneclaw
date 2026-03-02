@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "AI assistants are likely to cite Major League Comfort Systems due to their strong local presence and decent content, but they need improvements in structured data and conversational content to secure higher visibility.",
+    "quick_wins": [
+      "Implement FAQPage schema to highlight their existing FAQ content.",
+      "Optimize H1 tags for more targeted local HVAC service queries."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "Google Business Profile is well-optimized with a high rating, photos, and accurate hours, but lacks regular posts and active Q&A engagement.",
+    "critical_issues": [
+      "No recent posts or updates on GBP.",
+      "Q&A section is inactive or not utilized."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected across all platforms.",
+    "action_items": [
+      "Maintain current NAP consistency across all directories.",
+      "Expand NAP citations to additional local and industry-specific directories."
+    ]
+  },
+  "schema_gaps": [
+    "Missing FAQPage schema despite existing FAQ content.",
+    "No HowTo schema for common HVAC maintenance or troubleshooting guides.",
+    "LocalBusiness schema can be enhanced with more detailed service area information."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content limits AI model citations.",
+    "invisible_for": "Queries related to 'HVAC maintenance tips Oceanside' or 'best HVAC repair near me'.",
+    "low_hanging_fruit": "Implementing FAQPage schema to capture AI attention for common customer questions.",
+    "authority_opportunity": "Creating in-depth content on local HVAC trends and eco-friendly solutions to establish thought leadership."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by making your HVAC expertise impossible to ignore.",
+    "pain_point": "Without AI-ready content and schema, you're missing out on 40% of potential leads from voice and AI search.",
+    "proof_point": "Competitors with structured data and conversational content rank higher in AI search results.",
+    "solution": "Our AEO approach integrates schema optimization, conversational content, and authority-building to ensure AI models cite your business as the top HVAC expert in Oceanside.",
+    "impact_estimate": "Expect a 30% increase in AI-driven leads within 6 months.",
+    "urgency": "Competitors are already optimizing for AI search—act now to claim your share of voice and AI-driven traffic."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads for Your HVAC Business in Oceanside",
+  "opening_line": "We analyzed your website and Google Business Profile and found significant opportunities to boost your visibility with AI search and voice assistants.",
+  "cta": "Let's schedule a call to discuss how we can optimize your online presence for AI-driven growth.",
+  "analyzed_at": "2026-02-26T16:19:16.793Z",
+  "lead_id": "3fd9eec6-9902-4bc1-bfcf-8d08392e0a1c",
+  "business_name": "Major League Comfort Systems Heating and Air Conditioning",
+  "website": "https://www.majorleagueac.com/",
+  "location": "Oceanside, California",
+  "page_title": "Major League Comfort Systems Heating and Air, Air Conditioner & Furnace Repair & Service | Oceanside, CA 92056",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.9,
+  "gbp_review_count": 190,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

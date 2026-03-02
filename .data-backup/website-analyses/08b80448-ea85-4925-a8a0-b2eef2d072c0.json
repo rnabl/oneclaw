@@ -1,0 +1,57 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "The business has a basic foundation for AEO with structured content and schema markup but lacks reviews and detailed localized content.",
+    "quick_wins": [
+      "Generate and display customer reviews to build trust and improve local SEO.",
+      "Expand content to include detailed service descriptions and location-specific keywords.",
+      "Implement a blog or resource section to target long-tail keywords and establish authority."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 60,
+    "found": [
+      "Local service pages",
+      "Contact information",
+      "Schema markup"
+    ],
+    "summary": "The website has local service pages and contact information but lacks a comprehensive Google Business Profile (GBP) and customer reviews.",
+    "critical_issues": [
+      "No active GBP listing found.",
+      "Lack of customer reviews and testimonials."
+    ]
+  },
+  "nap_citations": {
+    "score": 50,
+    "summary": "The business has consistent NAP (Name, Address, Phone number) information on its website but lacks citations on external directories and platforms.",
+    "action_items": [
+      "Create and verify listings on major directories like Yelp, Yellow Pages, and Bing Places.",
+      "Ensure NAP consistency across all online platforms and directories.",
+      "Encourage customers to leave reviews on external platforms."
+    ]
+  },
+  "schema_gaps": [
+    "No Organization schema found.",
+    "No LocalBusiness schema with detailed address and service area.",
+    "No Review schema to display customer testimonials."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of customer reviews and testimonials",
+    "invisible_for": "Local search users and potential customers seeking social proof",
+    "low_hanging_fruit": "Implementing a review generation strategy and displaying reviews prominently on the website",
+    "authority_opportunity": "Creating high-quality, localized content and establishing a strong presence on social media and local directories"
+  },
+  "analyzed_at": "2026-02-27T03:32:56.023Z",
+  "lead_id": "08b80448-ea85-4925-a8a0-b2eef2d072c0",
+  "business_name": "Air Comfort Experts",
+  "website": "https://www.aircomfortexperts.com/",
+  "location": "Pasadena, California",
+  "page_title": "Pasadena HVAC Services | Air Comfort Experts",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

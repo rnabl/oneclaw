@@ -1,0 +1,53 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "The business has a good foundation for AEO with a clear service focus and some technical optimizations, but lacks comprehensive content and user engagement strategies.",
+    "quick_wins": [
+      "Implement a review generation strategy to build Google reviews.",
+      "Expand website content to include detailed service pages and location-specific keywords.",
+      "Enhance metadata with targeted keywords and location information."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 50,
+    "found": "The website has basic local business schema but lacks comprehensive GBP optimization.",
+    "summary": "The business has not fully leveraged Google Business Profile (GBP) opportunities, which are crucial for local search visibility.",
+    "critical_issues": [
+      "No GBP listing found, indicating a missed opportunity for local search presence.",
+      "Lack of customer reviews and engagement on Google."
+    ]
+  },
+  "nap_citations": {
+    "score": 60,
+    "summary": "The business has consistent NAP (Name, Address, Phone Number) information on its website but lacks widespread citations across directories.",
+    "action_items": [
+      "Create and verify listings on major directories such as Yelp, Bing Places, and Apple Maps.",
+      "Ensure NAP consistency across all online platforms and directories."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "Product"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of comprehensive local SEO strategy and GBP optimization.",
+    "invisible_for": "Users searching for local heat pump installation services in Westminster, Colorado.",
+    "low_hanging_fruit": "Claim and optimize Google Business Profile and build local citations.",
+    "authority_opportunity": "Publish high-quality, locally-focused content and engage with local community events or partnerships to build authority."
+  },
+  "analyzed_at": "2026-02-27T04:13:04.500Z",
+  "lead_id": "6b3f1281-c594-44fd-9552-7c30db63cd10",
+  "business_name": "Colorado Eco-Mechanical",
+  "website": "http://www.coloradoecomechanical.com/",
+  "location": "Westminster, Colorado",
+  "page_title": "Heat Pump Installer: Custom Solutions for Homes",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

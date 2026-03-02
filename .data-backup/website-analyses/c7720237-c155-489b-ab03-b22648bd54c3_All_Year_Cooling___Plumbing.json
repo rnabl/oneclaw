@@ -1,0 +1,67 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "AI assistants are unlikely to cite this business due to missing structured data and conversational content, but there is potential for improvement.",
+    "quick_wins": [
+      "Implement FAQPage schema with common HVAC questions and answers.",
+      "Add LocalBusiness schema to provide detailed business information."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "Google Business Profile is well-optimized with photos, hours, and a high rating, but Q&A engagement is lacking.",
+    "critical_issues": [
+      "No active management of Q&A section.",
+      "Missing regular posts to engage with potential customers."
+    ]
+  },
+  "nap_citations": {
+    "score": 75,
+    "summary": "NAP consistency is moderate, with the address missing on the website but present on GBP.",
+    "action_items": [
+      "Add the complete address to the website footer.",
+      "Verify and update NAP details across all online directories."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for common HVAC tasks"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content makes it difficult for AI to understand and recommend the business.",
+    "invisible_for": "Queries related to emergency HVAC services and detailed service explanations.",
+    "low_hanging_fruit": "Implementing FAQPage schema with common HVAC questions and answers.",
+    "authority_opportunity": "Creating detailed HowTo guides and showcasing certifications to establish expertise."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by making your business the go-to HVAC expert.",
+    "pain_point": "Without AI optimization, you're missing out on 40% of potential leads from voice and AI search.",
+    "proof_point": "Your website lacks structured data and conversational content, making it less visible to AI assistants.",
+    "solution": "Our AEO approach integrates schema markup, conversational content, and authority signals to make your business stand out to AI models.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 6 months.",
+    "urgency": "Competitors are already optimizing for AI search—act now to stay ahead."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads for Your HVAC Business",
+  "opening_line": "We analyzed your website and identified key opportunities to boost your visibility with AI assistants.",
+  "cta": "Let's schedule a call to discuss how we can optimize your online presence for AI search.",
+  "analyzed_at": "2026-02-26T15:59:19.924Z",
+  "lead_id": "c7720237-c155-489b-ab03-b22648bd54c3",
+  "business_name": "All Year Cooling & Plumbing",
+  "website": "http://www.allyearcooling.com/?utm_source=google&utm_medium=organic&utm_campaign=google_business_profile",
+  "location": "Hollywood, Florida",
+  "page_title": "\nFlorida AC &amp; Plumbing Services | All Year Cooling &amp; Plumbing\t",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.9,
+  "gbp_review_count": 82,
+  "gbp_found": true,
+  "nap_score": 75,
+  "nap_issues": [
+    "Address not found on website but listed on GBP"
+  ]
+}

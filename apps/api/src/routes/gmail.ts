@@ -6,7 +6,7 @@
  */
 
 import type { Context } from 'hono';
-import { getIntegration, getUserIntegrations, saveIntegration } from '@oneclaw/database';
+import { getNodeIntegration, getNodeIntegrations, saveNodeIntegration, deleteNodeIntegration } from '@oneclaw/database';
 import { createGmailClient } from '@oneclaw/harness/gmail/client';
 
 // Simple in-memory cache for tokens (valid for ~1 hour)
@@ -41,7 +41,7 @@ export async function getGoogleTokenHandler(c: Context) {
       });
     }
     
-    const integration = await getIntegration(user_id, 'google');
+    const integration = await getNodeIntegration(user_id, 'google');
     
     if (!integration) {
       return c.json({ 
@@ -62,7 +62,7 @@ export async function getGoogleTokenHandler(c: Context) {
         expiresAt = new Date(Date.now() + refreshed.expires_in * 1000);
         
         // Update in database
-        await saveIntegration(user_id, 'google', {
+        await saveNodeIntegration(user_id, 'google', {
           accessToken: refreshed.access_token,
           refreshToken: integration.refresh_token,
           expiresAt,
@@ -136,7 +136,7 @@ export async function getGmailStatusHandler(c: Context) {
       return c.json({ error: 'user_id required' }, 400);
     }
     
-    const integration = await getIntegration(user_id, 'google');
+    const integration = await getNodeIntegration(user_id, 'google');
     
     if (integration) {
       return c.json({
@@ -170,7 +170,7 @@ export async function getGmailAccountHandler(c: Context) {
       return c.json({ error: 'user_id required' }, 400);
     }
     
-    const integration = await getIntegration(user_id, 'google');
+    const integration = await getNodeIntegration(user_id, 'google');
     
     if (!integration) {
       return c.json({ error: 'Gmail not connected' }, 404);
@@ -178,6 +178,7 @@ export async function getGmailAccountHandler(c: Context) {
     
     return c.json({
       id: integration.id,
+      node_id: integration.node_id,
       provider: integration.provider,
       connected_at: integration.created_at,
       expires_at: integration.token_expires_at,
@@ -193,7 +194,7 @@ export async function getGmailAccountHandler(c: Context) {
 /**
  * GET /api/v1/oauth/google/accounts
  * 
- * Get all Gmail accounts for a user (supports multiple accounts)
+ * Get all Gmail accounts for a node
  */
 export async function getGmailAccountsHandler(c: Context) {
   try {
@@ -203,12 +204,13 @@ export async function getGmailAccountsHandler(c: Context) {
       return c.json({ error: 'user_id required' }, 400);
     }
     
-    const integrations = await getUserIntegrations(user_id);
+    const integrations = await getNodeIntegrations(user_id);
     const googleAccounts = integrations.filter(i => i.provider === 'google');
     
     return c.json({
       accounts: googleAccounts.map(a => ({
         id: a.id,
+        node_id: a.node_id,
         connected_at: a.created_at,
         expires_at: a.token_expires_at,
         scopes: a.scopes,
@@ -223,7 +225,7 @@ export async function getGmailAccountsHandler(c: Context) {
 }
 
 /**
- * DELETE /api/v1/oauth/google/disconnect
+ * POST /api/v1/oauth/google/disconnect
  * 
  * Disconnect a Gmail account
  */
@@ -235,8 +237,7 @@ export async function disconnectGmailHandler(c: Context) {
       return c.json({ error: 'user_id required' }, 400);
     }
     
-    const { deleteIntegration } = await import('@oneclaw/database');
-    await deleteIntegration(user_id, 'google');
+    await deleteNodeIntegration(user_id, 'google');
     
     return c.json({ success: true, message: 'Gmail disconnected' });
     
@@ -258,7 +259,7 @@ export async function sendGmailHandler(c: Context) {
     }
     
     // Get integration with tokens
-    const integration = await getIntegration(user_id, 'google');
+    const integration = await getNodeIntegration(user_id, 'google');
     
     if (!integration) {
       return c.json({
@@ -275,7 +276,7 @@ export async function sendGmailHandler(c: Context) {
       const refreshed = await refreshAccessToken(integration.refresh_token);
       if (refreshed) {
         accessToken = refreshed.access_token;
-        await saveIntegration(user_id, 'google', {
+        await saveNodeIntegration(user_id, 'google', {
           accessToken: refreshed.access_token,
           refreshToken: integration.refresh_token,
           expiresAt: new Date(Date.now() + refreshed.expires_in * 1000),

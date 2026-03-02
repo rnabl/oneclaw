@@ -1,0 +1,55 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "The business has some foundational elements for AEO readiness, such as schema markup and localized content, but lacks reviews, NAP consistency, and authority signals.",
+    "quick_wins": [
+      "Implement a strategy to collect and display customer reviews on Google and the website.",
+      "Ensure consistent NAP (Name, Address, Phone Number) across all online platforms.",
+      "Enhance content with location-specific keywords and service details."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 50,
+    "found": "The website has localized content for Raleigh and Charlotte, but lacks detailed service area information and geo-specific keywords.",
+    "summary": "The business has made an effort to target local areas but needs to improve geo-specific content and service area details.",
+    "critical_issues": [
+      "Missing detailed service area information.",
+      "Lack of geo-specific keywords and content optimization."
+    ]
+  },
+  "nap_citations": {
+    "score": 40,
+    "summary": "NAP consistency is unclear without additional citation analysis. The business likely needs to audit and update citations across directories.",
+    "action_items": [
+      "Audit current NAP citations across major directories and platforms.",
+      "Ensure consistent NAP information on the website, Google Business Profile, and all online directories.",
+      "Claim and update listings on key local business directories."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "Product",
+    "Offer"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of customer reviews and ratings.",
+    "invisible_for": "Users searching for HVAC services with a focus on reputation and customer satisfaction.",
+    "low_hanging_fruit": "Implementing a review collection strategy and displaying reviews on the website.",
+    "authority_opportunity": "Creating high-quality, localized content that establishes the business as an HVAC expert in the Charlotte and Raleigh areas."
+  },
+  "analyzed_at": "2026-02-27T02:23:59.498Z",
+  "lead_id": "a0b06d89-84cc-49c8-89a5-22a0035c83da",
+  "business_name": "Comfort Monster Heating & Air",
+  "website": "https://comfortmonster.com/?utm_source=google&utm_medium=gmb&utm_campaign=&utm_content=clt&utm_term=",
+  "location": "Charlotte, North Carolina",
+  "page_title": "HVAC Raleigh, NC - Comfort Monster AC Repair and Install Service",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

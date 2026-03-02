@@ -375,6 +375,126 @@ export async function deleteIntegration(
   return true;
 }
 
+// ============================================
+// Node Integration operations (string-based node IDs)
+// ============================================
+
+export interface NodeIntegration {
+  id: string;
+  node_id: string;
+  provider: 'google' | 'apple' | 'microsoft';
+  access_token: string;
+  refresh_token: string | null;
+  token_expires_at: string | null;
+  scopes: string[];
+  created_at: string;
+  updated_at: string;
+}
+
+/**
+ * Save or update a node integration (OAuth tokens for nodes)
+ */
+export async function saveNodeIntegration(
+  nodeId: string,
+  provider: 'google' | 'apple' | 'microsoft',
+  tokens: {
+    accessToken: string;
+    refreshToken?: string;
+    expiresAt?: Date;
+    scopes: string[];
+  }
+): Promise<NodeIntegration> {
+  const supabase = getSupabaseAdminClient();
+
+  const { data, error } = await supabase
+    .from('node_integrations')
+    .upsert({
+      node_id: nodeId,
+      provider,
+      access_token: tokens.accessToken,
+      refresh_token: tokens.refreshToken || null,
+      token_expires_at: tokens.expiresAt?.toISOString() || null,
+      scopes: tokens.scopes,
+    }, {
+      onConflict: 'node_id,provider',
+    })
+    .select()
+    .single();
+
+  if (error) {
+    console.error('[DB] Error saving node integration:', error);
+    throw error;
+  }
+
+  return data as NodeIntegration;
+}
+
+/**
+ * Get node's integration by provider
+ */
+export async function getNodeIntegration(
+  nodeId: string,
+  provider: 'google' | 'apple' | 'microsoft'
+): Promise<NodeIntegration | null> {
+  const supabase = getSupabaseAdminClient();
+
+  const { data, error } = await supabase
+    .from('node_integrations')
+    .select('*')
+    .eq('node_id', nodeId)
+    .eq('provider', provider)
+    .single();
+
+  if (error && error.code !== 'PGRST116') {
+    console.error('[DB] Error fetching node integration:', error);
+    throw error;
+  }
+
+  return data as NodeIntegration | null;
+}
+
+/**
+ * Get all integrations for a node
+ */
+export async function getNodeIntegrations(nodeId: string): Promise<NodeIntegration[]> {
+  const supabase = getSupabaseAdminClient();
+
+  const { data, error } = await supabase
+    .from('node_integrations')
+    .select('*')
+    .eq('node_id', nodeId);
+
+  if (error) {
+    console.error('[DB] Error fetching node integrations:', error);
+    throw error;
+  }
+
+  return (data || []) as NodeIntegration[];
+}
+
+/**
+ * Delete a node integration
+ */
+export async function deleteNodeIntegration(
+  nodeId: string,
+  provider: 'google' | 'apple' | 'microsoft'
+): Promise<boolean> {
+  const supabase = getSupabaseAdminClient();
+
+  const { error } = await supabase
+    .from('node_integrations')
+    .delete()
+    .eq('node_id', nodeId)
+    .eq('provider', provider);
+
+  if (error) {
+    console.error('[DB] Error deleting node integration:', error);
+    throw error;
+  }
+
+  return true;
+}
+
 /**
  * Save OpenClaw instance config for a user
  */

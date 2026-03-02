@@ -1,0 +1,54 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "The business has a basic foundation for AEO with some structured content and a focus on local services, but lacks comprehensive optimization and user engagement features.",
+    "quick_wins": [
+      "Implement a review generation strategy to build Google reviews and improve trust signals.",
+      "Optimize meta tags and headings with targeted local keywords (e.g., 'HVAC services in Gilbert, AZ').",
+      "Enhance the website's mobile responsiveness and page load speed."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 50,
+    "found": "The website includes UTM parameters in the URL, indicating some understanding of tracking marketing efforts.",
+    "summary": "The business has not fully leveraged Google Business Profile (GBP) opportunities, as there are no reviews or GBP-specific optimizations evident.",
+    "critical_issues": [
+      "No active GBP listing or reviews, which are crucial for local search visibility.",
+      "Lack of GBP posts or updates to engage with potential customers."
+    ]
+  },
+  "nap_citations": {
+    "score": 60,
+    "summary": "The business name, address, and phone number (NAP) are present on the website, but there is no evidence of consistent citations across directories.",
+    "action_items": [
+      "Audit and ensure consistent NAP information across all online directories and platforms.",
+      "Claim and update profiles on major local business directories (e.g., Yelp, Yellow Pages).",
+      "Incorporate structured citations with schema markup to enhance local SEO."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "AggregateRating"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data for services and customer interactions (e.g., reviews, ratings).",
+    "invisible_for": "Local searchers and potential customers who rely on reviews and detailed service information.",
+    "low_hanging_fruit": "Implement review schema and service-specific schema to improve search engine understanding.",
+    "authority_opportunity": "Create and publish high-quality, locally-focused content (e.g., blog posts on HVAC tips for Arizona homeowners) to establish expertise and improve search rankings."
+  },
+  "analyzed_at": "2026-02-27T03:36:44.358Z",
+  "lead_id": "34bcc119-08db-4e52-8fb6-b0dbb438354c",
+  "business_name": "Around the Sun Heating and Cooling",
+  "website": "http://www.aroundthesunaz.com/?utm_source=organic&utm_medium=gbp",
+  "location": "Gilbert, Arizona",
+  "page_title": "Around the Sun Heating &amp; Cooling | Heating &amp; Cooling Company",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

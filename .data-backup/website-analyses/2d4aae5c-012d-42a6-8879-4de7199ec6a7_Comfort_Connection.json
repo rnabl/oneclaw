@@ -1,0 +1,64 @@
+{
+  "overall_aeo_score": 68,
+  "aeo_readiness": {
+    "score": 55,
+    "summary": "AI assistants are unlikely to cite Comfort Connection due to missing structured data and conversational content. Their current site lacks the elements needed for AI models to confidently recommend them as a top choice.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup",
+      "Add an FAQ section with structured data"
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "Google Business Profile is well-optimized with high ratings, photos, and accurate information, but lacks regular posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent posts or updates",
+      "No active management of Q&A section"
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms",
+      "Regularly monitor for any inconsistencies"
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for common HVAC tasks",
+    "Missing review schema for testimonials"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data prevents AI from recognizing their expertise.",
+    "invisible_for": "Queries related to 'HVAC services in Gresham, Oregon'",
+    "low_hanging_fruit": "Implementing LocalBusiness and FAQ schema to provide AI with recognizable content.",
+    "authority_opportunity": "Highlighting certifications, awards, and detailed service explanations to establish authority."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by making your expertise visible to AI assistants.",
+    "pain_point": "Without AI-ready content, they miss out on 40% of potential leads from voice and AI search.",
+    "proof_point": "Their site lacks critical schema markup, causing AI models to overlook them in search results.",
+    "solution": "Our AEO strategy integrates schema markup, conversational content, and authority signals to ensure AI models recognize and recommend Comfort Connection.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within 6 months.",
+    "urgency": "Competitors optimizing for AI will capture market share if they delay implementation."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads for Comfort Connection",
+  "opening_line": "We analyzed your website and identified key opportunities to make your HVAC services visible to AI assistants.",
+  "cta": "Let's schedule a call to discuss how we can optimize your site for AI search and boost your lead generation.",
+  "analyzed_at": "2026-02-26T16:18:23.254Z",
+  "lead_id": "2d4aae5c-012d-42a6-8879-4de7199ec6a7",
+  "business_name": "Comfort Connection",
+  "website": "https://comfortco.com/?utm_source=gbp&utm_medium=organic&utm_campaign=website&utm_content=web-cta&utm_term=gresham-or",
+  "location": "Gresham, Oregon",
+  "page_title": "HVAC, Heating, Cooling &amp; Electrical Services | Experts You Can Trust",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": 4.9,
+  "gbp_review_count": 128,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

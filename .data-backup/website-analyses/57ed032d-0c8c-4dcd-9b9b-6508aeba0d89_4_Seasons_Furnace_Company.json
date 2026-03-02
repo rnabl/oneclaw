@@ -1,0 +1,66 @@
+{
+  "overall_aeo_score": 68,
+  "aeo_readiness": {
+    "score": 55,
+    "summary": "AI assistants are unlikely to cite this business due to a lack of structured content and conversational authority signals. Their current content is keyword-focused but doesn't align with AI query patterns.",
+    "quick_wins": [
+      "Implement FAQ content with structured data (FAQPage schema).",
+      "Enhance content with HowTo schema for common HVAC tasks."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with high ratings, photos, and accurate hours, but lacks regular posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent Google posts to engage users.",
+      "No active management of Q&A section."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly audit citations to prevent future inconsistencies."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema",
+    "No Service schema for specific HVAC services"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content.",
+    "invisible_for": "Queries related to HVAC troubleshooting and maintenance tips.",
+    "low_hanging_fruit": "Adding FAQ content with FAQPage schema to address common customer questions.",
+    "authority_opportunity": "Positioning as HVAC experts by creating detailed HowTo guides and obtaining relevant certifications."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for answer engines.",
+    "pain_point": "Missing out on 40% of potential leads from AI assistants like ChatGPT and Claude.",
+    "proof_point": "Current website lacks FAQ content and structured data, making it less likely to be cited by AI models.",
+    "solution": "Implement AEO strategies, including structured data, conversational content, and authority signals, to boost AI visibility and drive more qualified leads.",
+    "impact_estimate": "20-30% increase in AI-driven traffic and leads within 3-6 months.",
+    "urgency": "Competitors are already optimizing for AI, and waiting means losing market share."
+  },
+  "email_subject_line": "Boost Your HVAC Business with AI-Ready Strategies",
+  "opening_line": "We analyzed your website and identified key opportunities to enhance your visibility with AI assistants.",
+  "cta": "Let's schedule a call to discuss how we can make your business AI-ready and capture more leads.",
+  "analyzed_at": "2026-02-26T16:20:27.942Z",
+  "lead_id": "57ed032d-0c8c-4dcd-9b9b-6508aeba0d89",
+  "business_name": "4-Seasons Furnace Company",
+  "website": "http://www.fourseasonshvacr.com/",
+  "location": "Ann Arbor, Michigan",
+  "page_title": "Efficient HVAC Services - Four Seasons HVHCR",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.9,
+  "gbp_review_count": 65,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

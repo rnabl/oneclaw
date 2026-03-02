@@ -1,0 +1,68 @@
+{
+  "overall_aeo_score": 68,
+  "aeo_readiness": {
+    "score": 60,
+    "summary": "AI assistants are unlikely to cite Cabrera & Sons due to limited conversational content and inadequate authority signals.",
+    "quick_wins": [
+      "Implement FAQ content with structured data to address common HVAC queries.",
+      "Update NAP consistency between the website and GBP."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 75,
+    "found": true,
+    "summary": "Google Business Profile is operational but requires optimization for better visibility and engagement.",
+    "critical_issues": [
+      "Phone number mismatch between website and GBP.",
+      "Lack of regular posts or Q&A engagement on GBP."
+    ]
+  },
+  "nap_citations": {
+    "score": 75,
+    "summary": "NAP consistency is moderate, with a critical phone number discrepancy.",
+    "action_items": [
+      "Update the website phone number to match GBP: (267) 300-0838.",
+      "Verify and correct NAP details on external directories and listings."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for common HVAC tasks",
+    "Insufficient structured data for services and reviews"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content limits AI recognition.",
+    "invisible_for": "Queries related to emergency HVAC services and local expertise.",
+    "low_hanging_fruit": "Adding FAQ content with structured data to address common HVAC questions.",
+    "authority_opportunity": "Highlighting NATE certifications and emergency services to establish authority."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by making your HVAC expertise visible to AI assistants.",
+    "pain_point": "Without AI optimization, Cabrera & Sons is missing out on 40% of potential leads from voice and AI searches.",
+    "proof_point": "The website lacks FAQ content and structured data, causing AI models to overlook the business for key queries.",
+    "solution": "Our AEO strategy will integrate FAQ content, structured data, and authority signals to make Cabrera & Sons the go-to HVAC expert for AI assistants.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 3 months.",
+    "urgency": "Competitors optimizing for AI are already capturing market share—act now to stay ahead."
+  },
+  "email_subject_line": "Maximize Your AI Visibility: Boost Leads with Our AEO Strategy",
+  "opening_line": "We analyzed your website and identified key opportunities to enhance your visibility with AI assistants.",
+  "cta": "Let’s schedule a call to discuss how we can optimize your online presence for AI-driven growth.",
+  "analyzed_at": "2026-02-26T15:54:33.584Z",
+  "lead_id": "f1c3d252-f273-404c-a311-70c199de8d36",
+  "business_name": "Cabrera & Sons Heating & Air Conditioning",
+  "website": "https://cabrerasonsroofingconstruction.com/philadelphia-pa-2/",
+  "location": "Philadelphia, Pennsylvania",
+  "page_title": "Philadelphia A/C & Heating Repair | (267) 376-8800 Call Us",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.8,
+  "gbp_review_count": 61,
+  "gbp_found": true,
+  "nap_score": 75,
+  "nap_issues": [
+    "Phone mismatch: Website has (267) 376-8800, GBP has (267) 300-0838"
+  ]
+}

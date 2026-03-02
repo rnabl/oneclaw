@@ -1,0 +1,54 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "The HVAC Army LLC has a decent foundation for AEO readiness with clear service offerings and contact information. However, there is room for improvement in content depth, keyword optimization, and local SEO signals.",
+    "quick_wins": [
+      "Optimize service pages with targeted keywords related to HVAC services in Denver.",
+      "Add more detailed content to service pages and the blog to improve search visibility.",
+      "Implement a review generation strategy to build Google reviews and improve local SEO."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 50,
+    "found": "The website includes NAP (Name, Address, Phone) information, but there is no clear mention of a Google Business Profile (GBP).",
+    "summary": "The business lacks a GBP, which is crucial for local search visibility and customer engagement.",
+    "critical_issues": [
+      "No GBP listing found.",
+      "Missing opportunities for customer reviews and local search presence."
+    ]
+  },
+  "nap_citations": {
+    "score": 60,
+    "summary": "The website has consistent NAP information, but it needs to be reinforced through external citations and directories.",
+    "action_items": [
+      "Create and verify GBP listing with accurate NAP information.",
+      "List the business in local directories and industry-specific platforms.",
+      "Ensure NAP consistency across all online platforms and citations."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "Product"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of local SEO optimization and GBP listing.",
+    "invisible_for": "Users searching for local HVAC services in Denver.",
+    "low_hanging_fruit": "Implementing a GBP listing and optimizing service pages with local keywords.",
+    "authority_opportunity": "Building backlinks from local business directories and industry-related websites to enhance domain authority."
+  },
+  "analyzed_at": "2026-02-27T04:08:02.019Z",
+  "lead_id": "3fa7837a-0eea-4d28-8afa-48d7fdcac460",
+  "business_name": "The HVAC Army LLC",
+  "website": "http://thehvacarmy.com/",
+  "location": "Aurora, Colorado",
+  "page_title": "Quality Air Conditioning &amp; Heating Service | HVAC Services Denver",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

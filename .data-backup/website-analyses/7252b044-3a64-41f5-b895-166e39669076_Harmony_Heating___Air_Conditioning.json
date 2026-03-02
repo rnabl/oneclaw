@@ -1,0 +1,66 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "AI assistants are unlikely to cite Harmony Heating & Air Conditioning due to limited conversational content and missing structured data. Their current site lacks the depth and format to stand out in AI-driven search results.",
+    "quick_wins": [
+      "Implement FAQPage schema with common HVAC questions and detailed answers.",
+      "Add HowTo schema for common HVAC maintenance and repair processes."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "Google Business Profile is well-optimized but can improve with more regular posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent posts or updates on GBP.",
+      "Q&A section is inactive and lacks engagement."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly monitor citations for any potential discrepancies."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQ schema",
+    "No HowTo schema",
+    "No Product or Service schema for specific HVAC services"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content limits AI recognition.",
+    "invisible_for": "Queries related to 'best HVAC repair in Denver' or 'emergency AC service near me'.",
+    "low_hanging_fruit": "Implementing FAQPage schema with HVAC-specific questions and answers.",
+    "authority_opportunity": "Positioning as local HVAC experts by showcasing certifications, customer testimonials, and detailed service explanations."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by making Harmony Heating & Air Conditioning the top Denver HVAC authority.",
+    "pain_point": "Without AI optimization, they are missing out on 40% of potential leads from voice and AI search queries.",
+    "proof_point": "Their site lacks FAQ and HowTo schema, which are critical for AI to recognize and cite their expertise.",
+    "solution": "Our AEO approach integrates structured data, conversational content, and authority signals to ensure AI models cite Harmony as a top HVAC provider.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within 3-6 months.",
+    "urgency": "Competitors are already optimizing for AI search; delaying action will result in lost market share."
+  },
+  "email_subject_line": "Unlock AI-driven growth for Harmony Heating & Air Conditioning",
+  "opening_line": "We analyzed your website and identified key opportunities to enhance your visibility with AI search and voice assistants.",
+  "cta": "Let's schedule a call to discuss how we can optimize your site for AI and boost your HVAC leads.",
+  "analyzed_at": "2026-02-26T15:52:16.392Z",
+  "lead_id": "7252b044-3a64-41f5-b895-166e39669076",
+  "business_name": "Harmony Heating & Air Conditioning",
+  "website": "https://harmonyheatingairconditioning.site/",
+  "location": "Denver, Colorado",
+  "page_title": "Denver A/C & Heating Repair | (720) 790-7767 Call Us",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.8,
+  "gbp_review_count": 48,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

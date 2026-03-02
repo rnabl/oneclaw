@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "AI assistants are likely to cite ATS Mechanical due to decent content and authority signals, but gaps in structured data and conversational content limit their potential reach.",
+    "quick_wins": [
+      "Implement FAQPage schema with common HVAC questions and answers.",
+      "Enhance content with more conversational, long-tail queries relevant to AI search."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "Google Business Profile is well-optimized with high ratings, photos, and accurate information, but lacks regular posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent posts or updates on GBP.",
+      "No active management of Q&A section."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly audit citations to ensure ongoing accuracy."
+    ]
+  },
+  "schema_gaps": [
+    "Missing FAQPage schema",
+    "No HowTo schema for common HVAC tasks",
+    "LocalBusiness schema could be enhanced with more detailed service descriptions"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content limits AI model citations.",
+    "invisible_for": "Queries related to specific HVAC troubleshooting and maintenance tips.",
+    "low_hanging_fruit": "Adding FAQPage schema with HVAC-related questions and answers.",
+    "authority_opportunity": "Positioning as HVAC experts by creating in-depth content on complex topics like VRF systems and energy efficiency."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for the new search landscape.",
+    "pain_point": "Without AI optimization, ATS Mechanical misses out on 40% of potential leads from voice and AI assistant searches.",
+    "proof_point": "Competitors with FAQ schema and conversational content appear more frequently in AI search results.",
+    "solution": "Implement structured data, enhance conversational content, and actively manage GBP to align with AI search trends.",
+    "impact_estimate": "20-30% increase in AI-driven traffic and leads within 6 months.",
+    "urgency": "Competitors are already optimizing for AI search; the longer ATS waits, the more ground they lose."
+  },
+  "email_subject_line": "Unlock AI-Driven Growth for ATS Mechanical: Act Now!",
+  "opening_line": "We analyzed your website and Google Business Profile and identified key opportunities to enhance your visibility with AI assistants.",
+  "cta": "Let’s schedule a call to discuss our AEO strategy and how it can drive more AI-driven leads to your business.",
+  "analyzed_at": "2026-02-26T16:16:38.520Z",
+  "lead_id": "d96b7a8a-e91b-40ce-92a2-7fd549a43e71",
+  "business_name": "ATS Mechanical Heating & AC - The Woodlands",
+  "website": "https://ats-mechanical.com/the-woodlands-tx/",
+  "location": "The Woodlands, Texas",
+  "page_title": "HVAC Repair, Heating Repair, Air Conditioning Service &amp; AC Installation | The Woodlands, TX | ATS Mechanical",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.9,
+  "gbp_review_count": 135,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

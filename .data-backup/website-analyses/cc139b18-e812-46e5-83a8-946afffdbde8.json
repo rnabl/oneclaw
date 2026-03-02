@@ -1,0 +1,59 @@
+{
+  "overall_aeo_score": 55,
+  "aeo_readiness": {
+    "score": 60,
+    "summary": "The business has basic AEO elements in place, such as contact information and service details, but lacks depth in content, reviews, and structured data implementation.",
+    "quick_wins": [
+      "Add customer reviews and testimonials to build trust and improve local search presence.",
+      "Optimize meta tags and headers with relevant keywords like 'AC repair Pearland TX' and 'heating services Pearland'.",
+      "Implement a blog section with informative content about HVAC maintenance and energy efficiency."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 40,
+    "found": [
+      "Service area",
+      "Contact information",
+      "Basic services"
+    ],
+    "summary": "The website provides essential business information but lacks detailed service descriptions, pricing, and a clear value proposition.",
+    "critical_issues": [
+      "No detailed service descriptions or pricing information.",
+      "Missing a clear call to action for potential customers.",
+      "Lack of content targeting local HVAC needs and trends."
+    ]
+  },
+  "nap_citations": {
+    "score": 50,
+    "summary": "The business has consistent NAP (Name, Address, Phone number) information on the website but lacks citations on external platforms.",
+    "action_items": [
+      "Create and verify a Google Business Profile.",
+      "List the business on local directories such as Yelp, Yellow Pages, and local chamber of commerce websites.",
+      "Ensure NAP consistency across all online platforms."
+    ]
+  },
+  "schema_gaps": [
+    "No Organization schema",
+    "No LocalBusiness schema",
+    "No Service schema",
+    "No Review schema"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of customer reviews and testimonials",
+    "invisible_for": "Users searching for HVAC services in Pearland, Texas",
+    "low_hanging_fruit": "Implementing a review collection strategy and adding structured data for reviews",
+    "authority_opportunity": "Establishing the business as a local authority by publishing informative content and engaging with the community through social media and local events"
+  },
+  "analyzed_at": "2026-02-27T02:45:42.384Z",
+  "lead_id": "cc139b18-e812-46e5-83a8-946afffdbde8",
+  "business_name": "Stalwart Air Conditioning & Heating Services LLC",
+  "website": "http://www.stalwartacandheating.com/",
+  "location": "Pearland, Texas",
+  "page_title": "Air Conditioning Pearland TX | AC Repair Installation | Stalwart AC and Heating",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

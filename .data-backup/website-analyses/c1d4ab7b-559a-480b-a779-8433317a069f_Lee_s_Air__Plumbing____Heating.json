@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 78,
+  "aeo_readiness": {
+    "score": 75,
+    "summary": "The business has a strong foundation but lacks specific optimizations to ensure AI models prioritize it in search results and recommendations.",
+    "quick_wins": [
+      "Implement FAQPage schema to highlight common questions and answers.",
+      "Expand on conversational content that aligns with AI query patterns."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 90,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with high ratings, photos, and accurate information.",
+    "critical_issues": [
+      "No recent posts or updates on GBP.",
+      "Limited engagement in the Q&A section."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly audit citations to ensure ongoing accuracy."
+    ]
+  },
+  "schema_gaps": [
+    "Missing HowTo schema for common HVAC tasks.",
+    "FAQPage schema could be more detailed.",
+    "LocalBusiness schema lacks depth in service descriptions."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "The website lacks content that directly answers conversational AI queries.",
+    "invisible_for": "Queries related to emergency HVAC services and DIY troubleshooting.",
+    "low_hanging_fruit": "Adding structured data for FAQs and HowTo guides.",
+    "authority_opportunity": "Positioning the business as a local HVAC authority through detailed content and expert-backed insights."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for conversational search.",
+    "pain_point": "Without AI optimization, they miss out on 40% of potential leads from voice and AI assistant users.",
+    "proof_point": "Their website lacks FAQPage and HowTo schema, which are critical for AI model citations.",
+    "solution": "Implement a targeted AEO strategy with schema enhancements, conversational content, and authority-building tactics.",
+    "impact_estimate": "Expect a 30% increase in AI-driven traffic and leads within six months.",
+    "urgency": "Competitors are already optimizing for AI, making swift action crucial to maintain market share."
+  },
+  "email_subject_line": "Unlock AI-Driven Growth for Lee's Air with Our AEO Expertise",
+  "opening_line": "We analyzed Lee's Air website and identified key opportunities to enhance visibility with AI search and assistants.",
+  "cta": "Let's discuss how our AEO strategy can position Lee's Air as the go-to HVAC authority in AI search.",
+  "analyzed_at": "2026-02-26T15:49:14.215Z",
+  "lead_id": "c1d4ab7b-559a-480b-a779-8433317a069f",
+  "business_name": "Lee's Air, Plumbing, & Heating",
+  "website": "https://leesair.com/",
+  "location": "Folsom, California",
+  "page_title": "Heating, Cooling &amp; Plumbing Services in Fresno &amp; Sacramento",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.9,
+  "gbp_review_count": 74,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

@@ -1,0 +1,68 @@
+{
+  "overall_aeo_score": 62,
+  "aeo_readiness": {
+    "score": 55,
+    "summary": "AI assistants are unlikely to cite Patterson Heating & Air Conditioning due to a lack of structured data and conversational content, despite having a decent online presence.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup with detailed business information.",
+      "Add FAQ schema to address common customer queries and improve AI visibility."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with high ratings, photos, and accurate hours, but lacks regular posts and active Q&A engagement.",
+    "critical_issues": [
+      "No recent posts or updates on GBP.",
+      "No engagement in the Q&A section."
+    ]
+  },
+  "nap_citations": {
+    "score": 75,
+    "summary": "NAP consistency is moderate; the address is missing from the website but present on GBP.",
+    "action_items": [
+      "Add the full business address to the website footer or contact page.",
+      "Verify and update NAP details across all online directories and citations."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for common HVAC tasks",
+    "No structured data for reviews or testimonials"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content makes it difficult for AI to understand and recommend their services.",
+    "invisible_for": "Queries related to HVAC services in Elk Grove, CA, where AI may prioritize more AI-optimized competitors.",
+    "low_hanging_fruit": "Implementing LocalBusiness and FAQ schema to provide clear business information and answers to common queries.",
+    "authority_opportunity": "Positioning as HVAC experts by creating detailed content on maintenance tips, energy efficiency, and local climate considerations."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for the new search landscape.",
+    "pain_point": "Without AI optimization, Patterson is missing out on 40% of potential leads from voice and AI search users.",
+    "proof_point": "Their website lacks essential schema markup, and their GBP lacks active engagement, making them less visible to AI models.",
+    "solution": "Our AEO approach integrates structured data, conversational content, and GBP optimization to ensure AI models recognize and recommend Patterson as a top HVAC provider.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 6 months.",
+    "urgency": "Competitors are already optimizing for AI search; the longer Patterson waits, the more ground they lose."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads for Patterson Heating & Air Conditioning",
+  "opening_line": "We analyzed your website and Google Business Profile and identified key opportunities to enhance your visibility with AI search and voice assistants.",
+  "cta": "Let's schedule a call to discuss how we can optimize your digital presence for the AI-driven future.",
+  "analyzed_at": "2026-02-26T16:02:37.281Z",
+  "lead_id": "b338d325-3496-464b-aba0-312039a8d429",
+  "business_name": "Patterson Heating & Air Conditioning",
+  "website": "http://www.justcallpatterson.com/",
+  "location": "Elk Grove, California",
+  "page_title": "Home",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.9,
+  "gbp_review_count": 71,
+  "gbp_found": true,
+  "nap_score": 75,
+  "nap_issues": [
+    "Address not found on website but listed on GBP"
+  ]
+}

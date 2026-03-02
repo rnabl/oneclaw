@@ -1,0 +1,63 @@
+{
+  "overall_aeo_score": 55,
+  "aeo_readiness": {
+    "score": 40,
+    "summary": "AI assistants are unlikely to cite Blow Heating and Air due to a lack of structured data, conversational content, and authority signals.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup",
+      "Add an FAQ section with relevant HVAC questions and answers"
+    ]
+  },
+  "gbp_analysis": {
+    "score": 20,
+    "found": false,
+    "summary": "Google Business Profile is not optimized and not found, making the business invisible to Google AI.",
+    "critical_issues": [
+      "Google Business Profile not found",
+      "Missing photos, posts, and Q&A engagement"
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms",
+      "Expand NAP citations to additional relevant directories"
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQ schema",
+    "No HowTo schema for maintenance or installation guides"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and authority signals",
+    "invisible_for": "Local HVAC service queries and maintenance advice",
+    "low_hanging_fruit": "Implementing LocalBusiness and FAQ schema",
+    "authority_opportunity": "Highlighting certifications, partnerships, and detailed service expertise"
+  },
+  "agency_pitch": {
+    "hook": "Get cited by AI with our AEO strategy tailored for HVAC businesses.",
+    "pain_point": "Without AI visibility, Blow Heating and Air misses out on 40% of potential leads from voice and AI searches.",
+    "proof_point": "The business is not found on Google Business Profile and lacks essential schema markup.",
+    "solution": "We will optimize your GBP, implement schema markup, and create conversational content to make your business stand out to AI models.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within 3 months.",
+    "urgency": "Competitors are already optimizing for AI; the longer you wait, the more market share you lose."
+  },
+  "email_subject_line": "Unlock AI-driven leads for Blow Heating and Air today!",
+  "opening_line": "We analyzed your website and found significant opportunities to boost your visibility with AI assistants.",
+  "cta": "Let's schedule a call to discuss how we can make your business stand out to AI models and capture more leads.",
+  "analyzed_at": "2026-02-26T16:13:28.051Z",
+  "lead_id": "58dc61d1-d8eb-43b9-93a4-aa2fe05969c7",
+  "business_name": "Blow Heating and Air",
+  "website": "https://blowhvac.com/",
+  "location": "Atlanta, GA",
+  "page_title": "HOME",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": null,
+  "gbp_review_count": null,
+  "gbp_found": false,
+  "nap_score": 100,
+  "nap_issues": []
+}

@@ -71,10 +71,10 @@ export async function sendGmailHandler(
 ): Promise<SendGmailOutput> {
   try {
     // Dynamic import to avoid circular dependency issues
-    const { getIntegration, saveIntegration } = await import('@oneclaw/database');
+    const { getNodeIntegration, saveNodeIntegration } = await import('@oneclaw/database');
     
-    // Get integration from database
-    const integration = await getIntegration(context.tenantId, 'google');
+    // Get integration from database (uses node_integrations table with string IDs)
+    const integration = await getNodeIntegration(context.tenantId, 'google');
     
     if (!integration) {
       return {
@@ -93,7 +93,7 @@ export async function sendGmailHandler(
       if (refreshed) {
         accessToken = refreshed.access_token;
         // Update in database
-        await saveIntegration(context.tenantId, 'google', {
+        await saveNodeIntegration(context.tenantId, 'google', {
           accessToken: refreshed.access_token,
           refreshToken: integration.refresh_token,
           expiresAt: new Date(Date.now() + refreshed.expires_in * 1000),

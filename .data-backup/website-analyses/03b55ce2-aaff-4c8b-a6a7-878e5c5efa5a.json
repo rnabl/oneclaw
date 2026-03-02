@@ -1,0 +1,54 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "Calvey Heating and Air has a basic foundation for AEO readiness, with a functional website and some schema markup in place. However, there is a lack of customer reviews and limited localized content, which are critical for AEO success.",
+    "quick_wins": [
+      "Encourage satisfied customers to leave reviews on Google and other platforms to build credibility and improve local search presence.",
+      "Expand the website with localized content, such as service area details, neighborhood-specific landing pages, and customer testimonials.",
+      "Optimize the website's metadata and headings with relevant HVAC and local keywords to improve search visibility."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 50,
+    "found": "The website includes basic business information such as address and phone number, but lacks a consistent Google Business Profile (GBP) listing.",
+    "summary": "The absence of a GBP listing is a significant gap. A GBP is essential for local search visibility and provides a platform for customer reviews and engagement.",
+    "critical_issues": [
+      "No active GBP listing found.",
+      "Lack of customer reviews and engagement on other platforms."
+    ]
+  },
+  "nap_citations": {
+    "score": 60,
+    "summary": "The business has its NAP (Name, Address, Phone number) information on the website, but it needs to be consistently cited across other online directories and platforms.",
+    "action_items": [
+      "Create and verify a Google Business Profile listing with accurate NAP information.",
+      "Audit and update NAP citations across major directories such as Yelp, Bing Places, and industry-specific platforms.",
+      "Ensure NAP consistency across all online mentions, including social media profiles."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "Product"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of customer reviews and engagement signals.",
+    "invisible_for": "Users searching for HVAC services in San Jose and Mountain View due to low local search visibility.",
+    "low_hanging_fruit": "Implementing a review generation strategy and optimizing the website for local SEO.",
+    "authority_opportunity": "Establishing the business as a local authority by publishing informative HVAC-related content and engaging with the community through social media and local events."
+  },
+  "analyzed_at": "2026-02-27T02:33:12.876Z",
+  "lead_id": "03b55ce2-aaff-4c8b-a6a7-878e5c5efa5a",
+  "business_name": "Calvey Heating and Air",
+  "website": "https://www.calveyheatingandair.com/?utm_source=google&utm_medium=organic&utm_campaign=gmb",
+  "location": "San Jose, California",
+  "page_title": "San Jose Heating and Cooling: HVAC Pros | Calvey Heating &amp; Air",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

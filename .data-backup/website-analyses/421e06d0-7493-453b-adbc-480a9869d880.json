@@ -1,0 +1,56 @@
+{
+  "overall_aeo_score": 68,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "Kittrell Services LLC has a decent foundation for AEO readiness with a clear service offering and contact information. However, there is room for improvement in local SEO, content depth, and review generation.",
+    "quick_wins": [
+      "Generate and showcase customer reviews on Google and other platforms to build trust and improve local SEO.",
+      "Expand the website content to include detailed service descriptions, pricing information, and a blog with HVAC tips and insights.",
+      "Optimize the website for mobile devices to enhance user experience and improve search rankings."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 60,
+    "found": "The website has a clear Google Business Profile (GBP) opportunity but lacks a verified GBP listing.",
+    "summary": "The business would benefit from creating and verifying a GBP listing to improve local search visibility and attract more customers in Gilbert, Arizona.",
+    "critical_issues": [
+      "No verified GBP listing found.",
+      "Missing location-specific content and keywords.",
+      "Lack of customer reviews and engagement on GBP."
+    ]
+  },
+  "nap_citations": {
+    "score": 50,
+    "summary": "The business has inconsistent or missing Name, Address, and Phone (NAP) citations across the web, which can hinder local search performance.",
+    "action_items": [
+      "Ensure consistent NAP information across all online directories and platforms.",
+      "Claim and update business listings on major local directories such as Yelp, Bing Places, and Yellow Pages.",
+      "Monitor and manage NAP citations regularly to maintain accuracy."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "Product",
+    "FAQPage"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of customer reviews and engagement.",
+    "invisible_for": "Potential customers searching for HVAC services in Gilbert, Arizona.",
+    "low_hanging_fruit": "Creating and managing a GBP listing and generating customer reviews.",
+    "authority_opportunity": "Publishing high-quality, informative content on the website and blog to establish the business as an authority in the HVAC industry."
+  },
+  "analyzed_at": "2026-02-27T03:22:58.617Z",
+  "lead_id": "421e06d0-7493-453b-adbc-480a9869d880",
+  "business_name": "Kittrell Services, LLC",
+  "website": "http://www.kittrellservicesllc.com/",
+  "location": "Gilbert, Arizona",
+  "page_title": "Kittrell Services LLC - Arizona HVAC Services",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

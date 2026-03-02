@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "AI assistants are likely to cite Tempra HVAC for local HVAC services, but gaps in structured data and conversational content limit their visibility.",
+    "quick_wins": [
+      "Implement FAQPage schema with common HVAC questions and answers.",
+      "Enhance content with conversational language focused on user queries."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "Google Business Profile is well-optimized with photos, reviews, and accurate information, but lacks regular posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent posts on GBP.",
+      "No active management of Q&A section."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly monitor for any inconsistencies or new citation opportunities."
+    ]
+  },
+  "schema_gaps": [
+    "Missing FAQPage schema",
+    "No HowTo schema for common HVAC tasks",
+    "LocalBusiness schema could be enhanced with more detailed service information"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content limits AI model citations.",
+    "invisible_for": "Queries related to detailed HVAC installation processes and troubleshooting.",
+    "low_hanging_fruit": "Implementing FAQPage schema with HVAC-specific questions and answers.",
+    "authority_opportunity": "Positioning as HVAC experts by creating in-depth content on installation, maintenance, and energy efficiency."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for answer engines and AI search.",
+    "pain_point": "Missing out on 40% of potential leads from AI assistants like ChatGPT and Claude.",
+    "proof_point": "Current website lacks FAQ schema and conversational content, making it less visible to AI models.",
+    "solution": "Enhance website with structured data, conversational content, and authority signals to boost AI citations and drive more leads.",
+    "impact_estimate": "20-30% increase in AI-driven leads within 3-6 months.",
+    "urgency": "Competitors are already optimizing for AI search, making it critical to act now to stay ahead."
+  },
+  "email_subject_line": "Boost your AI visibility: Optimize for ChatGPT & other AI assistants today!",
+  "opening_line": "We analyzed your website and identified key opportunities to enhance your visibility with AI assistants like ChatGPT and Claude.",
+  "cta": "Let's schedule a call to discuss how we can optimize your site for AI-driven lead generation.",
+  "analyzed_at": "2026-02-26T16:09:03.512Z",
+  "lead_id": "adc1dd08-f50c-4bf1-9b91-a49eaa41f64b",
+  "business_name": "Tempra HVAC",
+  "website": "https://temprahvac.com/",
+  "location": "Bellevue, Washington",
+  "page_title": "Heat Pump, Mini-Split, Furnace, A/C Installation & Repair Bellevue, Redmond, Sammamish, Kirkland, Seattle | King & Snohomish County | Tempra HVAC",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 5,
+  "gbp_review_count": 45,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

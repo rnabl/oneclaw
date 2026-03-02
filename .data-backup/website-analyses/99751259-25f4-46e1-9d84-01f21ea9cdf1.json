@@ -1,0 +1,53 @@
+{
+  "overall_aeo_score": 45,
+  "aeo_readiness": {
+    "score": 40,
+    "summary": "The website has minimal AEO readiness with a lack of structured data, inconsistent NAP, and limited content depth.",
+    "quick_wins": [
+      "Implement schema markup to provide search engines with structured data about the business.",
+      "Ensure consistent NAP (Name, Address, Phone number) across the website and online directories.",
+      "Expand website content to include detailed service descriptions, customer testimonials, and a blog section."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 30,
+    "found": "The website has a Google Business Profile (GBP) placeholder with no reviews and incomplete information.",
+    "summary": "The GBP is not fully optimized, lacking reviews, photos, and detailed business information.",
+    "critical_issues": [
+      "No customer reviews or ratings.",
+      "Incomplete business information (e.g., hours of operation, services).",
+      "Lack of photos and virtual tours."
+    ]
+  },
+  "nap_citations": {
+    "score": 25,
+    "summary": "NAP citations are inconsistent and limited across the web, impacting local search visibility.",
+    "action_items": [
+      "Audit and update NAP information on major directories (e.g., Yelp, Yellow Pages, Bing Places).",
+      "Ensure NAP consistency across all online platforms, including social media profiles.",
+      "Encourage customers to leave reviews on authoritative platforms to boost local search presence."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Product",
+    "Review",
+    "AggregateRating"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and content depth",
+    "invisible_for": "Voice search and AI-driven search features",
+    "low_hanging_fruit": "Implement schema markup and expand website content",
+    "authority_opportunity": "Engage with local community and industry forums to build online authority and backlinks"
+  },
+  "analyzed_at": "2026-02-27T03:28:26.295Z",
+  "lead_id": "99751259-25f4-46e1-9d84-01f21ea9cdf1",
+  "business_name": "Best Comfort Heating Cooling",
+  "website": "https://bestcomforthvacservices.com/",
+  "location": "Chicago, Illinois",
+  "page_title": "Boiler Heating Furnace Service - Best COMFORT Hvac EAST SIDE",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_found": false
+}

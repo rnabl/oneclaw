@@ -1,0 +1,64 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "AI assistants are unlikely to cite JR Heating & Cooling due to missing key schema markup and a lack of conversational content that aligns with AI query patterns.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup.",
+      "Add FAQPage schema to capture common HVAC queries."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with a high rating, photos, and accurate hours, but lacks regular posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent posts or updates on GBP.",
+      "Q&A section is inactive or not utilized."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly monitor for any inconsistencies or new citation opportunities."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for common HVAC tasks",
+    "Missing review schema for testimonials"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content tailored for AI queries.",
+    "invisible_for": "Queries related to 'emergency HVAC services in Bronx' and 'HVAC compliance solutions'.",
+    "low_hanging_fruit": "Implementing LocalBusiness and FAQPage schema to capture immediate AI attention.",
+    "authority_opportunity": "Position as the expert in government and industrial HVAC by creating content around compliance, certifications, and technical expertise."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for the new search landscape.",
+    "pain_point": "Missing out on 40% of potential leads from AI assistants like ChatGPT and Google Bard.",
+    "proof_point": "No schema markup or conversational content to capture AI-driven queries.",
+    "solution": "Our AEO approach integrates strategic schema implementation, authority-building content, and AI query alignment to ensure your business is cited and recommended by AI models.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 6 months.",
+    "urgency": "Competitors are already optimizing for AI search—waiting means losing ground and market share."
+  },
+  "email_subject_line": "Unlock AI-driven growth for JR Heating & Cooling",
+  "opening_line": "We analyzed your website and identified key opportunities to enhance your visibility with AI search and assistants.",
+  "cta": "Let's schedule a call to discuss how we can optimize your digital presence for AI-driven growth.",
+  "analyzed_at": "2026-02-26T15:57:09.781Z",
+  "lead_id": "54e19431-1762-4314-aab9-af8bffd4ea8a",
+  "business_name": "JR Heating & Cooling Maintenance Corp.",
+  "website": "https://jrheatingcoolingmultiservice.com/",
+  "location": "Bronx, New York",
+  "page_title": "HVAC Services for Government &amp; Industrial Facilities | JR Heating &amp; Cooling",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": 4.9,
+  "gbp_review_count": 45,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

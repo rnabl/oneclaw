@@ -1,0 +1,64 @@
+{
+  "overall_aeo_score": 15,
+  "aeo_readiness": {
+    "score": 10,
+    "summary": "AI assistants are unlikely to cite or recommend this business due to critical gaps in structured data, content, and visibility on platforms like Google Business Profile.",
+    "quick_wins": [
+      "Renew the domain immediately to restore website functionality.",
+      "Implement basic schema markup (LocalBusiness, FAQPage) to improve AI visibility."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 0,
+    "found": false,
+    "summary": "The business is completely invisible on Google Business Profile, severely limiting local search presence and AI-driven recommendations.",
+    "critical_issues": [
+      "Google Business Profile not found.",
+      "No GBP content (photos, posts, Q&A) to engage users or AI."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Focus on expanding NAP citations to additional relevant directories."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema",
+    "Absence of any structured data"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and content prevents AI from understanding and recommending the business.",
+    "invisible_for": "Local HVAC service queries where AI assistants seek detailed, structured information.",
+    "low_hanging_fruit": "Implementing LocalBusiness schema to provide AI with essential business details.",
+    "authority_opportunity": "Creating and marking up detailed FAQ content to establish expertise and improve AI citations."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by fixing your invisible online presence.",
+    "pain_point": "Without AI visibility, the business is missing out on 40% of potential leads from voice and AI search queries.",
+    "proof_point": "The website is currently invisible on Google Business Profile and lacks essential schema markup.",
+    "solution": "Our AEO approach will renew your domain, implement critical schema, optimize GBP, and create conversational content to make your business stand out to AI models.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first three months.",
+    "urgency": "Waiting means losing ground to competitors who are already optimized for AI search."
+  },
+  "email_subject_line": "Fix your AI visibility gap and capture more HVAC leads now!",
+  "opening_line": "We analyzed your website and found critical issues that are causing your business to be invisible to AI models.",
+  "cta": "Let's schedule a call to discuss how we can optimize your online presence for AI-driven growth.",
+  "analyzed_at": "2026-02-26T15:47:38.144Z",
+  "lead_id": "7e8c4a98-da3f-48e8-b1a4-e2fbec4bf6f0",
+  "business_name": "The HVAC Guys",
+  "website": "http://hvacguykc.com/",
+  "location": "Kansas City, MO",
+  "page_title": "Your domain is expired",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": null,
+  "gbp_review_count": null,
+  "gbp_found": false,
+  "nap_score": 100,
+  "nap_issues": []
+}

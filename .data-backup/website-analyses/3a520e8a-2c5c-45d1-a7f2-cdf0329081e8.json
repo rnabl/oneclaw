@@ -1,0 +1,53 @@
+{
+  "overall_aeo_score": 45,
+  "aeo_readiness": {
+    "score": 40,
+    "summary": "The website lacks essential AEO elements such as structured data, NAP consistency, and unique content. The repetitive content and lack of schema markup significantly hinder its search engine optimization potential.",
+    "quick_wins": [
+      "Implement structured data (Schema.org) to provide search engines with context about the business.",
+      "Create unique, descriptive content for each service page to improve relevance and keyword targeting.",
+      "Ensure NAP (Name, Address, Phone number) consistency across the website and all online directories."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 30,
+    "found": "The website has a Google Business Profile (GBP) placeholder with no reviews and incomplete information.",
+    "summary": "The GBP is not fully optimized. It lacks reviews, business hours, and other critical information that could improve local search visibility.",
+    "critical_issues": [
+      "No customer reviews, which are crucial for trust and local SEO.",
+      "Incomplete business information, such as missing attributes and descriptions.",
+      "Lack of regular updates or posts to engage with potential customers."
+    ]
+  },
+  "nap_citations": {
+    "score": 50,
+    "summary": "The NAP information is present on the website but may not be consistent across all online directories and platforms.",
+    "action_items": [
+      "Audit and verify NAP consistency across all online platforms, including social media, directories, and the website.",
+      "Claim and update profiles on major citation sites like Yelp, Yellow Pages, and local business directories.",
+      "Ensure the NAP information is up-to-date and matches the website exactly."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "ContactPoint",
+    "OpeningHoursSpecification"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and unique content",
+    "invisible_for": "Local search and voice search due to incomplete GBP and lack of schema markup",
+    "low_hanging_fruit": "Implement basic schema markup and update the GBP with complete information",
+    "authority_opportunity": "Build authority by generating customer reviews and publishing relevant, localized content"
+  },
+  "analyzed_at": "2026-02-27T03:09:30.809Z",
+  "lead_id": "3a520e8a-2c5c-45d1-a7f2-cdf0329081e8",
+  "business_name": "Castle Comfort HVAC",
+  "website": "/url?q=http://castlecomfort.com/&opi=79508299&sa=U&ved=0ahUKEwiG7cKF2Z2SAxU6VTABHTklFY8Q61gIbygN&usg=AOvVaw0UmTJbH87euVZ26H9UGxzl",
+  "location": "San Diego, California",
+  "page_title": "Castle Comfort Heating, Cooling, and Plumbing",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_found": false
+}

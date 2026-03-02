@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "AI assistants are likely to cite Temperature Select Air LLC due to their strong local presence and decent content, but improvements in schema markup and conversational content can significantly boost their visibility.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup with detailed service information.",
+      "Expand conversational content to address common HVAC queries and solutions."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "Google Business Profile is well-optimized with positive reviews, photos, and accurate information, but lacks regular posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent posts or updates on GBP.",
+      "No active management of Q&A section."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected across platforms.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly monitor for any inconsistencies or new citation opportunities."
+    ]
+  },
+  "schema_gaps": [
+    "Missing FAQPage schema to address common customer queries.",
+    "Incomplete LocalBusiness schema with missing service details.",
+    "No HowTo schema for explaining HVAC maintenance or installation processes."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of detailed service information and conversational content limits AI citations.",
+    "invisible_for": "Queries related to specific HVAC problems and solutions.",
+    "low_hanging_fruit": "Adding FAQ schema and expanding service-related content.",
+    "authority_opportunity": "Positioning as local HVAC experts by showcasing certifications, case studies, and detailed service explanations."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for the way customers ask questions today.",
+    "pain_point": "Without AI optimization, they miss out on 40% of potential leads from voice and AI search queries.",
+    "proof_point": "Their GBP is strong, but AI assistants rarely cite them for service-specific queries due to lacking schema and conversational content.",
+    "solution": "Enhance schema markup, develop conversational content, and actively manage GBP to align with AI search trends.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within 3-6 months.",
+    "urgency": "Competitors optimizing for AI are capturing market share—act now to stay competitive."
+  },
+  "email_subject_line": "Unlock AI-Driven Growth for Temperature Select Air LLC",
+  "opening_line": "We analyzed your website and GBP and identified key opportunities to boost your visibility with AI assistants.",
+  "cta": "Let's schedule a call to discuss how we can optimize your online presence for AI-driven growth.",
+  "analyzed_at": "2026-02-26T16:00:56.744Z",
+  "lead_id": "24f39874-3f90-4ee9-ba08-8a056c62889a",
+  "business_name": "Temperature Select Air LLC",
+  "website": "http://tempselectair.com/",
+  "location": "Aurora, Colorado",
+  "page_title": "Temperature Select Air LLC",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.8,
+  "gbp_review_count": 62,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

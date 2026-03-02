@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "AI assistants are unlikely to cite AC Mechanical Construction as a top recommendation due to limited conversational content and missing FAQ schemas. However, with targeted improvements, they can become a more prominent authority in AI search results.",
+    "quick_wins": [
+      "Implement FAQPage schema with common customer questions and answers.",
+      "Create content that directly addresses common queries about generator installation and repair."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with a strong rating, photos, and accurate hours, but lacks depth in Q&A and regular posts.",
+    "critical_issues": [
+      "No recent posts or updates on GBP.",
+      "Limited engagement in the Q&A section."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly monitor citations for any potential discrepancies."
+    ]
+  },
+  "schema_gaps": [
+    "Missing FAQPage schema",
+    "No HowTo schema for installation guides",
+    "LocalBusiness schema could be enhanced with more detailed properties"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of conversational content and structured data limits AI recognition.",
+    "invisible_for": "Queries related to generator installation, repair, and maintenance tips.",
+    "low_hanging_fruit": "Adding FAQPage schema and creating an FAQ section on the website.",
+    "authority_opportunity": "Position as the go-to expert by publishing detailed guides and tutorials on generator usage and maintenance."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by making your expertise visible to the chatbots and AI assistants powering modern search.",
+    "pain_point": "Without AI optimization, 40% of potential leads from AI-driven searches are being missed.",
+    "proof_point": "Current website lacks FAQ schema and conversational content, which are critical for AI visibility.",
+    "solution": "Our AEO approach integrates schema markup, conversational content, and authority-building strategies to ensure AI models recognize and recommend your business.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 6 months.",
+    "urgency": "Competitors are already optimizing for AI search; the longer you wait, the more ground you lose."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads for AC Mechanical Construction",
+  "opening_line": "We analyzed your website and identified key opportunities to enhance your visibility with AI search and chatbots.",
+  "cta": "Let's schedule a call to discuss how we can optimize your digital presence for AI-driven search and boost your lead generation.",
+  "analyzed_at": "2026-02-26T16:18:01.956Z",
+  "lead_id": "1d509810-a5b9-48b4-9d04-69e156f21ca4",
+  "business_name": "AC Mechanical Construction",
+  "website": "https://acmechanicalsc.com/",
+  "location": "Rock Hill, South Carolina",
+  "page_title": "AC Mechanical Construction | Rock Hill, SC | Generac Power Systems",
+  "has_schema": true,
+  "detected_schemas": [
+    "LocalBusiness"
+  ],
+  "gbp_rating": 4.8,
+  "gbp_review_count": 68,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

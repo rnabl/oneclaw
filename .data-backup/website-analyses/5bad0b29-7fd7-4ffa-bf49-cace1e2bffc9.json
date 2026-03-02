@@ -1,0 +1,55 @@
+{
+  "overall_aeo_score": 68,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "East Hill Heating & Cooling has a decent foundation for AEO readiness, with a long history and clear service offerings. However, there are significant gaps in online presence and customer engagement.",
+    "quick_wins": [
+      "Encourage satisfied customers to leave Google reviews to build credibility and improve local search visibility.",
+      "Optimize website content with targeted keywords related to HVAC services in Kent, Maple Valley, and South King County.",
+      "Implement a blog or resource section on the website to provide valuable content and improve SEO."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 60,
+    "found": "The website includes basic business information such as location and services, but lacks detailed location-specific content and structured data for GBP.",
+    "summary": "The business has a physical presence in Kent, WA, but the website does not fully leverage Google Business Profile (GBP) opportunities. The absence of Google reviews is a critical issue.",
+    "critical_issues": [
+      "No Google reviews, which significantly impacts local search rankings and customer trust.",
+      "Lack of detailed location-specific content for each service area (Kent, Maple Valley, South King County)."
+    ]
+  },
+  "nap_citations": {
+    "score": 55,
+    "summary": "The business has consistent NAP (Name, Address, Phone number) information on its website, but lacks widespread citations across local directories and platforms.",
+    "action_items": [
+      "Create and verify a Google Business Profile to ensure accurate NAP information is available on Google.",
+      "List the business on major local directories such as Yelp, Bing Places, and Yellow Pages.",
+      "Ensure NAP consistency across all online platforms, including social media profiles."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "Product",
+    "FAQPage"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of customer reviews and engagement on Google.",
+    "invisible_for": "Potential customers searching for HVAC services in South King County who rely on reviews and local search results.",
+    "low_hanging_fruit": "Implementing a review generation strategy to quickly increase the number of Google reviews.",
+    "authority_opportunity": "Creating high-quality, locally-focused content to establish the business as a trusted authority in the HVAC industry."
+  },
+  "analyzed_at": "2026-02-27T03:42:35.511Z",
+  "lead_id": "5bad0b29-7fd7-4ffa-bf49-cace1e2bffc9",
+  "business_name": "East Hill Heating & Cooling",
+  "website": "http://www.easthill.com/?utm_source=Google&utm_medium=Website&utm_campaign=Google_NEXT",
+  "location": "Kent, WA",
+  "page_title": "HVAC Repair &amp; Maintenance Services in Kent, Maple Valley, &amp; South King County, WA | East Hill Heating &amp; Cooling",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

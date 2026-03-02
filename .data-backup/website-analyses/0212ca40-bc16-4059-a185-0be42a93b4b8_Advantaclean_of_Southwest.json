@@ -1,0 +1,67 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "The business has foundational elements for AEO but lacks critical optimizations to ensure AI models cite them as a top recommendation. AI visibility is hindered by inconsistent NAP and insufficient authority signals.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup with accurate NAP details.",
+      "Expand conversational FAQs to align with common AI-driven queries."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-maintained but can be further optimized with more posts and Q&A engagement.",
+    "critical_issues": [
+      "Inconsistent NAP between website and GBP.",
+      "Limited recent posts or Q&A activity."
+    ]
+  },
+  "nap_citations": {
+    "score": 75,
+    "summary": "NAP consistency requires improvement as the address is missing from the website despite being listed on GBP.",
+    "action_items": [
+      "Add the complete address to the website footer or contact page.",
+      "Verify and update NAP details across all online directories and citations."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema markup.",
+    "No FAQPage schema despite existing FAQ content.",
+    "No HowTo schema for instructional content related to services."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content limits AI recognition.",
+    "invisible_for": "Local service queries such as 'best water damage restoration in Eden Prairie'.",
+    "low_hanging_fruit": "Implementing LocalBusiness schema and expanding FAQ content.",
+    "authority_opportunity": "Highlighting certifications, partnerships, and detailed case studies to establish expertise."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by bridging the visibility gap in local search.",
+    "pain_point": "Without AEO optimizations, they miss out on 40% of potential leads from AI assistants.",
+    "proof_point": "Their NAP inconsistency and lack of schema markup prevent AI models from confidently citing them.",
+    "solution": "Our AEO strategy integrates schema markup, enhances conversational content, and optimizes GBP to ensure AI models recognize and recommend their services.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within 6 months.",
+    "urgency": "Competitors optimizing for AI are already capturing market share—act now to stay competitive."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads: Optimize Your Online Presence Today",
+  "opening_line": "We analyzed your website and GBP and identified key opportunities to enhance your visibility with AI assistants.",
+  "cta": "Let's schedule a call to discuss how our AEO strategy can boost your AI-driven lead generation.",
+  "analyzed_at": "2026-02-26T16:04:27.117Z",
+  "lead_id": "0212ca40-bc16-4059-a185-0be42a93b4b8",
+  "business_name": "Advantaclean of Southwest",
+  "website": "https://advantaclean.com/minneapolis-mn",
+  "location": "Eden Prairie, Minnesota",
+  "page_title": "Water Damage Restoration &amp; Air Duct Cleaning | Lightspeed Restoration of the Twin Cities East Metro",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.7,
+  "gbp_review_count": 40,
+  "gbp_found": true,
+  "nap_score": 75,
+  "nap_issues": [
+    "Address not found on website but listed on GBP"
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 78,
+  "aeo_readiness": {
+    "score": 75,
+    "summary": "Briggs AC Services has a strong foundation for AEO with good content and schema usage, but lacks conversational content and authority signals to ensure AI models cite them as a top choice.",
+    "quick_wins": [
+      "Expand FAQ content with more detailed, conversational answers.",
+      "Incorporate structured data for HowTo guides related to common HVAC issues."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 90,
+    "found": true,
+    "summary": "Google Business Profile is well-optimized with high ratings, photos, and accurate information, but lacks regular posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent posts or updates on GBP.",
+      "No engagement with customer Q&A."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected across all platforms.",
+    "action_items": [
+      "Maintain current NAP consistency.",
+      "Regularly audit citations to ensure ongoing accuracy."
+    ]
+  },
+  "schema_gaps": [
+    "Missing FAQPage schema despite having FAQ content.",
+    "No HowTo schema for common HVAC maintenance or troubleshooting tasks.",
+    "LocalBusiness schema could be enhanced with more detailed service descriptions."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of conversational content and authority signals makes AI models less likely to cite them.",
+    "invisible_for": "Queries related to emergency HVAC services or detailed troubleshooting advice.",
+    "low_hanging_fruit": "Adding structured data for FAQs and HowTo guides.",
+    "authority_opportunity": "Highlighting certifications, partnerships, and detailed case studies to establish expertise."
+  },
+  "agency_pitch": {
+    "hook": "Be the HVAC authority AI models trust and recommend.",
+    "pain_point": "Without AI-ready content and authority signals, they miss out on 40% of potential leads from voice and AI search.",
+    "proof_point": "Their high GBP rating and strong NAP consistency show they are trusted locally, but AI models need more detailed, structured content to cite them.",
+    "solution": "Implement conversational content, enhance schema markup, and showcase authority signals to make Briggs AC Services the top choice for AI-driven queries.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within 3-6 months.",
+    "urgency": "Competitors are already optimizing for AI search—waiting means losing ground in the new search landscape."
+  },
+  "email_subject_line": "Unlock AI-driven growth for Briggs AC Services",
+  "opening_line": "We analyzed your website and identified key opportunities to make Briggs AC Services the top choice for AI-driven HVAC queries.",
+  "cta": "Let’s schedule a call to discuss how we can optimize your content and schema for AI search.",
+  "analyzed_at": "2026-02-26T15:43:58.977Z",
+  "lead_id": "29c81e0f-ef52-4c00-aa72-ad8824bc5a2a",
+  "business_name": "Briggs AC Services",
+  "website": "https://briggsacstafford.com/",
+  "location": "Somerville, Massachusetts",
+  "page_title": "Briggs AC Services - Somerville, MA",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 5,
+  "gbp_review_count": 39,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

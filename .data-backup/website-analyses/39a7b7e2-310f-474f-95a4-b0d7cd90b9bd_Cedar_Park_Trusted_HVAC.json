@@ -1,0 +1,63 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 65,
+    "summary": "While the business has a strong local presence, it lacks the necessary structured data and conversational content to be cited by AI models effectively.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup.",
+      "Create and publish an FAQ page with common HVAC questions and detailed answers."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with photos, accurate hours, and a high rating, but it could benefit from more Q&A engagement and regular posts.",
+    "critical_issues": [
+      "Lack of recent posts or updates on GBP.",
+      "No active management of Q&A section."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly monitor citations for any potential discrepancies."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema.",
+    "No FAQPage schema.",
+    "No HowTo schema for common HVAC tasks."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content.",
+    "invisible_for": "Queries related to emergency HVAC services and detailed how-to guides.",
+    "low_hanging_fruit": "Adding FAQ schema and creating content that answers common HVAC queries.",
+    "authority_opportunity": "Positioning the business as the go-to expert by publishing detailed guides and obtaining relevant certifications."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for Answer Engine Optimization.",
+    "pain_point": "Without AEO, the business misses out on 40% of potential leads from AI assistants and conversational searches.",
+    "proof_point": "The absence of schema markup and FAQ content significantly limits AI model citations.",
+    "solution": "Our AEO approach integrates structured data, conversational content, and authority signals to make your business the top choice for AI recommendations.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 3 months.",
+    "urgency": "Competitors are already optimizing for AI, so acting now is crucial to stay ahead."
+  },
+  "email_subject_line": "Boost Your AI Visibility: The AEO Strategy Your HVAC Business Needs",
+  "opening_line": "After analyzing your website, it's clear that optimizing for AI assistants is the next big step for your HVAC business.",
+  "cta": "Let's schedule a call to discuss how we can implement an AEO strategy tailored to your needs.",
+  "analyzed_at": "2026-02-26T15:46:18.397Z",
+  "lead_id": "39a7b7e2-310f-474f-95a4-b0d7cd90b9bd",
+  "business_name": "Cedar Park Trusted HVAC",
+  "website": "https://cedarparktrustedhvac.com/",
+  "location": "Cedar Park, Texas",
+  "page_title": "Expert HVAC Services Cedar Park TX | Cedar Park Trusted HVAC",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": 5,
+  "gbp_review_count": 30,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

@@ -1,0 +1,55 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "Salt River Air has a decent foundation for AEO with structured content and service pages, but lacks depth in content and user engagement features.",
+    "quick_wins": [
+      "Create a blog with localized, keyword-rich content to boost SEO and provide value to users.",
+      "Add customer testimonials and reviews to build trust and improve engagement.",
+      "Implement a clear call-to-action on service pages to drive conversions."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 60,
+    "found": "The website has structured service pages and a clear service area, but lacks detailed location-specific content.",
+    "summary": "The website is somewhat optimized for Google Business Profile (GBP) with a focus on local service areas, but it needs more localized content and engagement features.",
+    "critical_issues": [
+      "No customer reviews or testimonials are present on the website.",
+      "Lack of detailed, location-specific content for each service area.",
+      "No clear integration with GBP for reviews and business information."
+    ]
+  },
+  "nap_citations": {
+    "score": 55,
+    "summary": "The business has a consistent NAP (Name, Address, Phone Number) on the website, but lacks citations on external platforms.",
+    "action_items": [
+      "Create and verify a Google Business Profile listing.",
+      "List the business on local directories and citation sites such as Yelp, Yellow Pages, and Bing Places.",
+      "Ensure NAP consistency across all external platforms and the website."
+    ]
+  },
+  "schema_gaps": [
+    "No Organization schema",
+    "No LocalBusiness schema with detailed address and service area information",
+    "No Review schema for customer testimonials",
+    "No FAQPage schema for common questions"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of localized, keyword-rich content and user engagement features",
+    "invisible_for": "Users searching for detailed HVAC services in specific locations",
+    "low_hanging_fruit": "Implement a blog with localized content and customer testimonials",
+    "authority_opportunity": "Develop detailed, authoritative content on HVAC services and energy efficiency to establish the business as a local expert"
+  },
+  "analyzed_at": "2026-02-27T03:37:45.477Z",
+  "lead_id": "42e944b6-2be1-4ae6-9250-7ff0aaadb259",
+  "business_name": "Salt River Air",
+  "website": "https://www.saltriverair.com/",
+  "location": "Mesa, Arizona",
+  "page_title": "A hand is holding a box with a price tag attached to it.",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

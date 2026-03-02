@@ -1,0 +1,54 @@
+{
+  "overall_aeo_score": 55,
+  "aeo_readiness": {
+    "score": 60,
+    "summary": "The business has some foundational elements for AEO readiness but lacks critical optimizations in content, reviews, and local SEO.",
+    "quick_wins": [
+      "Add a descriptive and keyword-rich title tag to improve search engine visibility.",
+      "Encourage customers to leave Google reviews to build credibility and improve local search rankings.",
+      "Optimize website content with location-specific keywords to target the Aurora, CO market more effectively."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 40,
+    "found": "The business has a physical presence in Aurora, CO, but lacks structured Google Business Profile (GBP) information.",
+    "summary": "The absence of a GBP limits the business's visibility in local search results and misses opportunities for customer engagement.",
+    "critical_issues": [
+      "No active GBP listing found.",
+      "Lack of customer reviews and ratings on Google."
+    ]
+  },
+  "nap_citations": {
+    "score": 50,
+    "summary": "The business name, address, and phone number (NAP) are present on the website but need consistent citations across directories.",
+    "action_items": [
+      "Ensure NAP consistency across all online directories and platforms.",
+      "List the business in local directories and industry-specific platforms.",
+      "Verify and update NAP information on the website to match directory listings."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "Product"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of customer reviews and GBP listing severely impacts local search visibility.",
+    "invisible_for": "Users searching for HVAC services in Aurora, CO on Google Maps and local search results.",
+    "low_hanging_fruit": "Creating and optimizing a GBP listing and actively managing customer reviews.",
+    "authority_opportunity": "Establishing the business as a local authority by publishing relevant, high-quality content on the blog and engaging with the local community."
+  },
+  "analyzed_at": "2026-02-27T03:12:31.570Z",
+  "lead_id": "1491c998-d144-4c46-930a-2f4b5258d6d1",
+  "business_name": "303 Heating & Air, Inc",
+  "website": "https://www.303heatingandair.com/",
+  "location": "Aurora, CO",
+  "page_title": "N/A",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

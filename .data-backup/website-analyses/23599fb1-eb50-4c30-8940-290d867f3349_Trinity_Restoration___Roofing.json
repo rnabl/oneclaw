@@ -1,0 +1,67 @@
+{
+  "overall_aeo_score": 42,
+  "aeo_readiness": {
+    "score": 35,
+    "summary": "AI assistants are unlikely to cite this business as it lacks relevant content and proper optimization for AI queries related to HVAC services. The website content is irrelevant to the business and misaligned with AI search behavior.",
+    "quick_wins": [
+      "Remove irrelevant content about 'PanenTogel' and replace it with HVAC-focused content.",
+      "Implement structured data markup for LocalBusiness and FAQPage."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with a high rating, photos, and accurate contact information, but it lacks regular posts and active Q&A engagement.",
+    "critical_issues": [
+      "No recent posts or updates on GBP.",
+      "No engagement in the Q&A section."
+    ]
+  },
+  "nap_citations": {
+    "score": 75,
+    "summary": "NAP consistency is moderate, with the address missing from the website but present on GBP. This inconsistency may confuse AI models and reduce trust.",
+    "action_items": [
+      "Add the complete business address to the website footer.",
+      "Ensure the NAP details are consistent across all online directories and citations."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for common HVAC services"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "The website content is irrelevant to HVAC services, causing AI models to overlook the business for related queries.",
+    "invisible_for": "Queries related to HVAC services in Brentwood, TN",
+    "low_hanging_fruit": "Add a dedicated HVAC services page with structured data markup.",
+    "authority_opportunity": "Publish expert articles on common HVAC issues and solutions to establish authority."
+  },
+  "agency_pitch": {
+    "hook": "Transform your online presence to become the go-to HVAC expert in AI search results.",
+    "pain_point": "AI-driven leads are being lost because your website doesn't align with AI search behavior.",
+    "proof_point": "The website's current content is unrelated to HVAC, and critical schema markup is missing.",
+    "solution": "Our AEO approach will optimize your site with relevant HVAC content, structured data, and authority-building strategies to ensure AI models recognize you as a top choice.",
+    "impact_estimate": "Expect a 30-50% increase in AI-driven leads within 3-6 months.",
+    "urgency": "Waiting means losing ground to competitors who are already optimizing for AI search."
+  },
+  "email_subject_line": "Unlock AI-driven HVAC leads with our AEO expertise",
+  "opening_line": "We analyzed your website and identified critical gaps in AI search readiness for HVAC services.",
+  "cta": "Let's schedule a call to discuss how we can optimize your online presence for AI search and boost your lead generation.",
+  "analyzed_at": "2026-02-26T15:55:26.131Z",
+  "lead_id": "23599fb1-eb50-4c30-8940-290d867f3349",
+  "business_name": "Trinity Restoration & Roofing",
+  "website": "https://trinityrestorationtenn.com/",
+  "location": "Brentwood, Tennessee",
+  "page_title": "PanenTogeL # Situs Terpercaya Togel Online & Prediksi Angka Paling Jitu 2025",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.9,
+  "gbp_review_count": 132,
+  "gbp_found": true,
+  "nap_score": 75,
+  "nap_issues": [
+    "Address not found on website but listed on GBP"
+  ]
+}

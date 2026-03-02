@@ -1,0 +1,53 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "The business has a decent foundation for AEO with a clear service focus and some customer testimonials mentioned, but lacks detailed content and structured data implementation.",
+    "quick_wins": [
+      "Expand website content to include detailed service descriptions, benefits, and unique selling propositions.",
+      "Implement FAQ schema to address common customer queries and improve search visibility.",
+      "Encourage satisfied customers to leave reviews on Google and Yelp to build social proof."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 50,
+    "found": "The website mentions the business name, address, and phone number (NAP) but lacks consistency and prominence.",
+    "summary": "The NAP information is present but not optimized for local search. The website lacks a dedicated contact page with a structured address.",
+    "critical_issues": [
+      "Inconsistent NAP information across the website.",
+      "No structured local business schema to highlight NAP details."
+    ]
+  },
+  "nap_citations": {
+    "score": 60,
+    "summary": "The NAP information is present on the website but needs consistency and better placement. External citations on directories and social platforms are not mentioned.",
+    "action_items": [
+      "Ensure NAP consistency across the website, including the footer and contact page.",
+      "Create and verify Google Business Profile listing with accurate NAP details.",
+      "Audit and update NAP information on external directories and social media platforms."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness schema with detailed address and service area information.",
+    "FAQPage schema to address common customer questions.",
+    "Review schema to highlight customer testimonials and ratings."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of detailed, keyword-rich content and structured data to improve search engine understanding.",
+    "invisible_for": "Voice search and featured snippets due to insufficient structured data and concise answers to common queries.",
+    "low_hanging_fruit": "Implement FAQ and HowTo schema to capture voice search queries and featured snippets.",
+    "authority_opportunity": "Publish high-quality, informative blog posts and guides related to HVAC services to establish industry authority and improve search rankings."
+  },
+  "analyzed_at": "2026-02-27T03:56:28.376Z",
+  "lead_id": "5e454ab7-ac68-4956-81ad-b17cc898d72c",
+  "business_name": "Bryant Heating & Air Conditioning",
+  "website": "https://www.bryantheatandair.com/?utm_source=google&utm_medium=organic&utm_campaign=GMBListing-Pasadena-CA",
+  "location": "Pasadena, California",
+  "page_title": "Heating and Air Conditioning Pasadena CA | Bryant",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

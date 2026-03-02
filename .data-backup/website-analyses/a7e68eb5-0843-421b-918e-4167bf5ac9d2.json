@@ -1,0 +1,52 @@
+{
+  "overall_aeo_score": 58,
+  "aeo_readiness": {
+    "score": 60,
+    "summary": "The website has basic AEO elements in place, such as schema markup and service pages, but lacks depth in content and user engagement features.",
+    "quick_wins": [
+      "Implement a review generation strategy to build Google reviews.",
+      "Enhance service pages with unique, detailed content and FAQs.",
+      "Optimize metadata and headings with targeted keywords."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 40,
+    "found": "Google Business Profile (GBP) is not optimized or actively managed.",
+    "summary": "The business lacks a GBP, which is crucial for local search visibility and customer engagement.",
+    "critical_issues": [
+      "No GBP listing found.",
+      "Missing local business information and customer reviews."
+    ]
+  },
+  "nap_citations": {
+    "score": 50,
+    "summary": "The business has inconsistent or limited NAP (Name, Address, Phone Number) citations across the web.",
+    "action_items": [
+      "Audit and update NAP information on major directories like Yelp, Yellow Pages, and Bing Places.",
+      "Ensure NAP consistency across all online platforms and social media profiles."
+    ]
+  },
+  "schema_gaps": [
+    "No Organization schema found.",
+    "Missing Service schema details such as service area and price range.",
+    "No Review schema implemented to showcase customer testimonials."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of localized content and user-generated content (e.g., reviews, testimonials).",
+    "invisible_for": "Users searching for local HVAC services in Seattle and surrounding areas.",
+    "low_hanging_fruit": "Creating localized service pages and adding customer reviews.",
+    "authority_opportunity": "Establishing the business as a local authority by publishing HVAC tips, guides, and industry news."
+  },
+  "analyzed_at": "2026-02-27T03:59:18.114Z",
+  "lead_id": "a7e68eb5-0843-421b-918e-4167bf5ac9d2",
+  "business_name": "Allred Heating Cooling Electric",
+  "website": "https://trustallred.com/",
+  "location": "Seattle, Washington",
+  "page_title": "Allred Heating Cooling Electric | HVAC Contractor Everett WA",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

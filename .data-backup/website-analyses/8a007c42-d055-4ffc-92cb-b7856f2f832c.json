@@ -1,0 +1,53 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "The business has a basic level of AEO readiness with some critical gaps in local SEO and online reputation management.",
+    "quick_wins": [
+      "Encourage customers to leave Google reviews to build a credible online presence.",
+      "Optimize the website's metadata and headings with relevant local HVAC keywords.",
+      "Expand the 'Service Areas' section with detailed location-based content."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 40,
+    "found": "Google Business Profile (GBP) not analyzed due to lack of information about its existence.",
+    "summary": "The absence of a GBP or related data makes it difficult to assess local search performance and customer engagement.",
+    "critical_issues": [
+      "No evidence of an active GBP listing.",
+      "Missing GBP insights and local search performance data."
+    ]
+  },
+  "nap_citations": {
+    "score": 55,
+    "summary": "The business has consistent NAP (Name, Address, Phone) information on its website but lacks widespread citations across directories.",
+    "action_items": [
+      "Create and verify listings on major directories like Yelp, Yellow Pages, and Bing Places.",
+      "Ensure NAP consistency across all online platforms and local directories.",
+      "Monitor and update citations regularly to maintain accuracy."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness schema is missing detailed service area information.",
+    "Review schema is absent, which could help display customer testimonials.",
+    "FAQPage schema could be added to address common customer queries."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of customer reviews and GBP listing severely limits local search visibility.",
+    "invisible_for": "Users searching for HVAC services in the Twin Cities area on Google Maps and local search results.",
+    "low_hanging_fruit": "Setting up and optimizing a GBP listing to capture local search traffic.",
+    "authority_opportunity": "Publishing high-quality, locally relevant content and building backlinks from local organizations or news outlets."
+  },
+  "analyzed_at": "2026-02-27T02:41:38.311Z",
+  "lead_id": "8a007c42-d055-4ffc-92cb-b7856f2f832c",
+  "business_name": "Ray N. Welter Heating Company",
+  "website": "https://welterheating.com/?utm_source=local&utm_campaign=google%20my%20business&utm_medium=organic",
+  "location": "Minneapolis, Minnesota",
+  "page_title": "Homepage - | Ray N. Welter Heating Company",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

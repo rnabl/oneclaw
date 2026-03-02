@@ -1,0 +1,66 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "AI assistants are unlikely to cite Script Heating and AC Thornton due to insufficient conversational content and missing structured data. However, with targeted improvements, they can become a strong contender for AI-driven recommendations.",
+    "quick_wins": [
+      "Implement FAQPage schema with common HVAC questions and answers.",
+      "Add HowTo schema for common HVAC maintenance and installation processes."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "Google Business Profile is well-optimized with a high rating, photos, and accurate hours, but lacks regular posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent Google posts to engage with local audience.",
+      "Q&A section is inactive and not utilized for customer interaction."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected across all citations.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly monitor citations for any potential discrepancies."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQ schema",
+    "No HowTo schema",
+    "No JobPosting schema for career opportunities"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content limits AI recognition.",
+    "invisible_for": "Queries related to HVAC maintenance tips and local service recommendations.",
+    "low_hanging_fruit": "Implementing FAQPage schema with HVAC-specific questions and answers.",
+    "authority_opportunity": "Positioning as local HVAC experts by creating detailed content on regional climate challenges and solutions."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by making your HVAC expertise visible to ChatGPT and Google Bard.",
+    "pain_point": "Without AI optimization, they are missing out on 40% of potential leads from voice and AI search.",
+    "proof_point": "Their website lacks FAQ and HowTo schema, which are critical for AI to cite their expertise.",
+    "solution": "Our AEO approach enhances their content with structured data and conversational keywords, making them a top choice for AI recommendations.",
+    "impact_estimate": "Expect a 30% increase in AI-driven leads within the first 6 months.",
+    "urgency": "Competitors are already optimizing for AI; waiting means losing market share to them."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads for Your HVAC Business in Thornton",
+  "opening_line": "We analyzed your website and found significant opportunities to make your HVAC expertise stand out to AI assistants like ChatGPT and Google Bard.",
+  "cta": "Let's schedule a call to discuss how we can optimize your online presence for AI-driven growth.",
+  "analyzed_at": "2026-02-26T15:55:54.414Z",
+  "lead_id": "35e0161a-b1bf-438d-b661-310a6819b4a9",
+  "business_name": "Script Heating and AC Thornton",
+  "website": "https://www.scriptheatingandacthornton.homes/",
+  "location": "Thornton, Colorado",
+  "page_title": "Script Heating and AC Thornton | HVAC Company",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 5,
+  "gbp_review_count": 34,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

@@ -1,0 +1,56 @@
+{
+  "overall_aeo_score": 55,
+  "aeo_readiness": {
+    "score": 60,
+    "summary": "The website has basic AEO elements in place, such as schema markup, but lacks depth in content and optimization for AI search. The focus on local services is a strength, but more structured data and detailed content are needed.",
+    "quick_wins": [
+      "Expand service pages with detailed content and relevant keywords.",
+      "Implement FAQ schema to address common customer queries.",
+      "Add customer reviews and testimonials to build trust and provide fresh content."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 40,
+    "found": "The website includes location-based keywords like 'Heath & Rockwall, TX' and a list of service areas.",
+    "summary": "The business has a clear local focus, but the Google Business Profile (GBP) is likely not optimized. There are no reviews on Google, which significantly impacts local search visibility.",
+    "critical_issues": [
+      "No GBP setup or optimization is evident.",
+      "Lack of customer reviews on Google.",
+      "Insufficient local content and backlinks."
+    ]
+  },
+  "nap_citations": {
+    "score": 50,
+    "summary": "The business name, address, and phone number (NAP) are present on the website, but there is no evidence of consistent citations across other platforms.",
+    "action_items": [
+      "Ensure consistent NAP information across all online directories and platforms.",
+      "Create and verify profiles on major citation sites like Yelp, Bing Places, and Apple Maps.",
+      "Monitor and manage online reviews and ratings."
+    ]
+  },
+  "schema_gaps": [
+    "FAQPage",
+    "Review",
+    "LocalBusiness",
+    "Service",
+    "BreadcrumbList"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of detailed, keyword-rich content on service pages.",
+    "invisible_for": "AI search engines due to insufficient structured data and content depth.",
+    "low_hanging_fruit": "Implement FAQ and HowTo schema to provide more context and information to AI search engines.",
+    "authority_opportunity": "Develop a content strategy that includes blog posts, case studies, and detailed service descriptions to establish the business as an authority in the roofing and home improvement niche."
+  },
+  "analyzed_at": "2026-02-27T03:17:45.442Z",
+  "lead_id": "903553f0-b68a-41f2-96e0-efe19721a092",
+  "business_name": "Patriot Roofing and Staining, LLC",
+  "website": "https://www.patriotroofingandstaining.com/",
+  "location": "Dallas, TX",
+  "page_title": "(469) 497-7233",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

@@ -1,0 +1,54 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "The business has a basic level of AEO readiness with some foundational elements in place, such as schema markup and contact information. However, there are significant gaps in online presence and customer engagement.",
+    "quick_wins": [
+      "Encourage customers to leave Google reviews to build credibility and improve local search visibility.",
+      "Optimize website content with targeted keywords related to HVAC services in New York City.",
+      "Implement a blog section to regularly publish relevant content and improve SEO."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 50,
+    "found": "The website includes basic business information and contact details, but lacks detailed service descriptions and location-specific content.",
+    "summary": "The business has some Google Business Profile (GBP) elements present, but it is not fully optimized for local search. The absence of Google reviews is a significant drawback.",
+    "critical_issues": [
+      "No Google reviews, which impacts local search ranking and customer trust.",
+      "Inconsistent NAP (Name, Address, Phone Number) information across the website and potential external citations.",
+      "Lack of detailed service and location-specific content."
+    ]
+  },
+  "nap_citations": {
+    "score": 60,
+    "summary": "The business has consistent NAP information on its website, but it is unclear if this information is consistently cited across other online platforms and directories.",
+    "action_items": [
+      "Audit and ensure consistent NAP information across all online platforms, including social media, directories, and industry-specific sites.",
+      "Claim and verify the business on Google My Business and other major directories.",
+      "Regularly update and monitor NAP information to maintain accuracy."
+    ]
+  },
+  "schema_gaps": [
+    "No Organization schema for better search engine understanding of the business.",
+    "Missing LocalBusiness schema with detailed address and service area information.",
+    "No Review schema to highlight customer testimonials and ratings."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of customer engagement and online reviews.",
+    "invisible_for": "Customers searching for HVAC services in New York City who rely on reviews and detailed service information.",
+    "low_hanging_fruit": "Implementing a review generation strategy and optimizing website content with local keywords.",
+    "authority_opportunity": "Establishing the business as a local authority by publishing expert articles and engaging with the community through social media and local events."
+  },
+  "analyzed_at": "2026-02-27T02:32:43.504Z",
+  "lead_id": "cb4af5df-0ef8-45f3-804b-8a9412f1d2a0",
+  "business_name": "Arnica Heating and Air Conditioning Inc",
+  "website": "https://arnicaheatingandair.com/",
+  "location": "Brooklyn, New York",
+  "page_title": "Arnica Heating & Air Conditioning Inc: HVAC Contractor NY",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

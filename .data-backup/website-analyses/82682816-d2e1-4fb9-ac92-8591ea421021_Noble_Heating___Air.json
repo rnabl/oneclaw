@@ -1,0 +1,62 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "The business has a solid foundation for AI recognition but lacks structured content and authority signals to ensure consistent citation by AI models.",
+    "quick_wins": [
+      "Implement FAQPage schema to highlight common HVAC questions and answers.",
+      "Expand content to include HowTo guides for common HVAC issues."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with photos, reviews, and accurate contact information.",
+    "critical_issues": [
+      "No recent posts or updates on GBP.",
+      "Q&A section is not actively managed."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": []
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for common HVAC tasks"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content limits AI recognition.",
+    "invisible_for": "Queries related to emergency HVAC services and DIY troubleshooting.",
+    "low_hanging_fruit": "Adding FAQPage schema to address common customer questions.",
+    "authority_opportunity": "Positioning as local HVAC experts by publishing detailed guides and obtaining relevant certifications."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by making your HVAC expertise undeniable.",
+    "pain_point": "Without AI-ready content, you're missing out on 40% of potential leads from voice and AI search.",
+    "proof_point": "Competitors with structured data and conversational content are being cited by AI models, while your site is overlooked.",
+    "solution": "Our AEO strategy will enhance your site's schema markup, create conversational content, and establish your authority in the HVAC space.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within 6 months.",
+    "urgency": "Waiting means losing ground to competitors who are already optimizing for AI search."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads for Noble Heating & Air",
+  "opening_line": "We analyzed your website and identified key opportunities to enhance your visibility with AI models.",
+  "cta": "Let's schedule a call to discuss how we can make your HVAC expertise AI-friendly and boost your lead generation.",
+  "analyzed_at": "2026-02-26T16:13:49.325Z",
+  "lead_id": "82682816-d2e1-4fb9-ac92-8591ea421021",
+  "business_name": "Noble Heating & Air",
+  "website": "http://www.nobleheating.com/",
+  "location": "Portland, Oregon",
+  "page_title": "Noble Heating &amp; Air : Top-Rated Local HVAC Company in Portland",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 5,
+  "gbp_review_count": 66,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

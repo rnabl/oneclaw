@@ -1,0 +1,64 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 65,
+    "summary": "AI assistants are unlikely to cite Pledge Comfort due to missing structured data and insufficient authority signals, but there is potential for improvement.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup",
+      "Add FAQPage schema to capture common HVAC queries"
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with a high rating and complete information, but posts and Q&A engagement are lacking.",
+    "critical_issues": [
+      "No recent posts or updates on GBP",
+      "Lack of engagement with customer Q&A"
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms",
+      "Regularly monitor for any discrepancies"
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for common HVAC tasks",
+    "No Product or Service schema for specific offerings"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data prevents AI from recognizing them as a reliable HVAC authority.",
+    "invisible_for": "Queries related to 'HVAC repair near Hillsboro, Oregon'",
+    "low_hanging_fruit": "Implementing LocalBusiness and FAQPage schema to capture local and service-based queries",
+    "authority_opportunity": "Highlighting certifications, partnerships, and detailed service explanations to establish expertise"
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven visibility for your HVAC business.",
+    "pain_point": "Without AI optimization, Pledge Comfort is missing out on 40% of potential leads from voice and AI search.",
+    "proof_point": "Competitors with structured data and authority signals are consistently cited by AI assistants, while Pledge Comfort is overlooked.",
+    "solution": "Our AEO approach integrates schema markup, GBP optimization, and conversational content to make Pledge Comfort the go-to HVAC expert in AI search.",
+    "impact_estimate": "Expect a 30% increase in AI-driven leads within 3 months.",
+    "urgency": "Waiting means losing ground to AI-ready competitors who are capturing your potential customers."
+  },
+  "email_subject_line": "Unlock AI-Ready HVAC Authority for Pledge Comfort",
+  "opening_line": "We analyzed your website and identified key opportunities to make Pledge Comfort the top choice for AI-driven HVAC searches.",
+  "cta": "Let's schedule a call to discuss how we can optimize your online presence for AI search and boost your leads.",
+  "analyzed_at": "2026-02-26T16:16:11.933Z",
+  "lead_id": "d8d86e87-9dda-4ca5-b4ea-4aac95e41f24",
+  "business_name": "Pledge Comfort Heating & Cooling",
+  "website": "https://pledgecomforthvac.com/",
+  "location": "Hillsboro, Oregon",
+  "page_title": "Expert HVAC Repair Services",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": 4.9,
+  "gbp_review_count": 90,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

@@ -1,0 +1,55 @@
+{
+  "overall_aeo_score": 62,
+  "aeo_readiness": {
+    "score": 65,
+    "summary": "The business has basic AEO elements in place, such as a clear website structure and some schema markup. However, there are significant gaps in local SEO, review generation, and content depth.",
+    "quick_wins": [
+      "Generate and showcase customer reviews on Google and the website to build trust and improve local SEO.",
+      "Expand website content to include detailed service descriptions, location-specific pages, and a blog with relevant HVAC topics.",
+      "Optimize meta tags and headers with targeted keywords related to HVAC services in Elkridge & Columbia, MD."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 50,
+    "found": "The business has a Google Business Profile (GBP) but lacks reviews and detailed information.",
+    "summary": "The GBP is not fully optimized. It lacks customer reviews, photos, and detailed service information, which are crucial for local search visibility.",
+    "critical_issues": [
+      "No customer reviews on GBP.",
+      "Incomplete business information, such as lack of photos and detailed service descriptions.",
+      "No posts or updates on GBP to engage with potential customers."
+    ]
+  },
+  "nap_citations": {
+    "score": 70,
+    "summary": "The business has consistent NAP (Name, Address, Phone Number) information on its website and likely on major directories, but there is room for improvement in citation volume and accuracy across other platforms.",
+    "action_items": [
+      "Audit and ensure NAP consistency across all major directories, including Yelp, Bing, and industry-specific platforms.",
+      "Increase the number of citations on local and industry-specific directories to improve local search presence.",
+      "Regularly monitor and update NAP information to maintain accuracy."
+    ]
+  },
+  "schema_gaps": [
+    "No Organization schema for the business.",
+    "No LocalBusiness schema with detailed address and service area information.",
+    "No FAQPage or QAPage schema to address common customer queries.",
+    "No Review schema to showcase customer testimonials."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of customer reviews and detailed content limits AI-driven search visibility.",
+    "invisible_for": "Users searching for HVAC services in Elkridge & Columbia, MD who rely on reviews and detailed service information.",
+    "low_hanging_fruit": "Implementing a review generation strategy and adding location-specific content.",
+    "authority_opportunity": "Creating high-quality, informative content (e.g., blog posts, guides) to establish the business as an authority in the HVAC industry."
+  },
+  "analyzed_at": "2026-02-27T03:30:42.589Z",
+  "lead_id": "ce3ddfd5-1e4d-40df-9e39-69862a5cb683",
+  "business_name": "SG Heating & Cooling, Inc",
+  "website": "https://sgheatac.com/",
+  "location": "Columbia, Maryland",
+  "page_title": "SG Heating & Cooling | HVAC Installation & Repair in Elkridge & Columbia, MD",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

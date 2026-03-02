@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 78,
+  "aeo_readiness": {
+    "score": 75,
+    "summary": "The business has a strong foundation for AI visibility with good content and schema usage, but conversational depth and authority signals are lacking.",
+    "quick_wins": [
+      "Expand conversational content to address common HVAC queries in a Q&A format.",
+      "Enhance authority signals by showcasing certifications and industry partnerships."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with photos, reviews, and accurate information.",
+    "critical_issues": [
+      "No recent posts or updates on GBP.",
+      "Q&A section is underutilized."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly monitor for any inconsistencies or new citation opportunities."
+    ]
+  },
+  "schema_gaps": [
+    "Missing FAQPage schema despite having FAQ content.",
+    "No HowTo schema for common HVAC maintenance or repair processes.",
+    "LocalBusiness schema could be enhanced with more detailed service area information."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of conversational content limits AI model citations.",
+    "invisible_for": "Queries related to specific HVAC troubleshooting and maintenance tips.",
+    "low_hanging_fruit": "Implementing FAQPage schema and expanding FAQ content.",
+    "authority_opportunity": "Highlighting industry certifications and publishing expert-backed articles."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by making your expertise more visible to AI models.",
+    "pain_point": "Without conversational content and enhanced authority signals, AI assistants overlook your business for key queries.",
+    "proof_point": "Your FAQ content is not leveraging by FAQPage schema, missing out on AI citations.",
+    "solution": "We will optimize your schema, expand conversational content, and amplify your authority signals to ensure AI models recognize and recommend your expertise.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within 3-6 months.",
+    "urgency": "Competitors are already optimizing for AI visibility; act now to secure your position."
+  },
+  "email_subject_line": "Unlock AI-Driven Growth for Your HVAC Business",
+  "opening_line": "We analyzed your website and identified key opportunities to enhance your visibility with AI models.",
+  "cta": "Let's schedule a call to discuss how we can optimize your digital presence for AI-driven growth.",
+  "analyzed_at": "2026-02-26T15:51:05.582Z",
+  "lead_id": "e91b49df-2448-40c4-9cbb-b58e48644db6",
+  "business_name": "R&C Heating and Cooling Service",
+  "website": "https://www.rchvacservices.com/",
+  "location": "Santa Monica, California",
+  "page_title": "#1 Santa Monica HVAC Company | 24/7 AC &amp; Heating Repairs",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 5,
+  "gbp_review_count": 98,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

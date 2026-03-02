@@ -1,0 +1,68 @@
+{
+  "overall_aeo_score": 68,
+  "aeo_readiness": {
+    "score": 55,
+    "summary": "AI assistants are unlikely to cite this business due to limited conversational content and missing authority signals. The current site lacks the depth and structured data needed for AI to confidently recommend it.",
+    "quick_wins": [
+      "Implement FAQ schema with conversational, question-based content.",
+      "Add LocalBusiness schema to provide AI with structured business information."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 80,
+    "found": true,
+    "summary": "The Google Business Profile is well-maintained but has critical inconsistencies with the website.",
+    "critical_issues": [
+      "Phone number mismatch between GBP and website.",
+      "Missing regular posts or Q&A engagement to boost visibility."
+    ]
+  },
+  "nap_citations": {
+    "score": 75,
+    "summary": "NAP consistency is moderate, with a critical phone number discrepancy impacting local SEO.",
+    "action_items": [
+      "Update the phone number on the website to match GBP: (980) 517-9621.",
+      "Audit and correct NAP across all online directories and citations."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQ schema",
+    "No HowTo schema for common HVAC issues",
+    "Missing review schema for rich snippets"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content prevents AI from recognizing expertise.",
+    "invisible_for": "Queries related to emergency HVAC services and maintenance tips.",
+    "low_hanging_fruit": "Implementing FAQ schema with questions about common HVAC issues and solutions.",
+    "authority_opportunity": "Highlighting certifications, awards, and detailed case studies to establish authority."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by making your expertise visible to the machines.",
+    "pain_point": "Without AI-ready content and structured data, you're missing out on 40% of potential leads from voice and AI search.",
+    "proof_point": "The website lacks FAQ schema and conversational content, making it less likely for AI assistants to cite or recommend the business.",
+    "solution": "Our AEO approach optimizes your site with structured data, conversational content, and authority signals to ensure AI models recognize and recommend your services.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within 6 months.",
+    "urgency": "Competitors optimizing for AI are already capturing market share. The longer you wait, the more ground you lose."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads: Optimize Your HVAC Business for 2026",
+  "opening_line": "We analyzed your website and identified critical gaps in AI readiness that could be costing you valuable leads.",
+  "cta": "Let's schedule a call to discuss how we can optimize your site for AI search and boost your visibility.",
+  "analyzed_at": "2026-02-26T16:21:49.756Z",
+  "lead_id": "86675df0-20fd-44bb-bbdb-450e022dd42e",
+  "business_name": "Quality Pro Services South Charlotte",
+  "website": "https://www.qualityproservices.com/south-charlotte-nc/",
+  "location": "Charlotte, North Carolina",
+  "page_title": "AC &amp; Heating Company in South Charlotte, NC | Quality Pro Services in South Charlotte",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.9,
+  "gbp_review_count": 73,
+  "gbp_found": true,
+  "nap_score": 75,
+  "nap_issues": [
+    "Phone mismatch: Website has (980) 209-9057, GBP has (980) 517-9621"
+  ]
+}

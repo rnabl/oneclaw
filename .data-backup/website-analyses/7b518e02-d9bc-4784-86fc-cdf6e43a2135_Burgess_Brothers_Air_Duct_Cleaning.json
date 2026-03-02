@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 78,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "AI assistants are likely to cite Burgess Brothers Air Duct Cleaning due to their strong local presence and high GBP rating, but improvements in structured data and conversational content are needed to secure top recommendations.",
+    "quick_wins": [
+      "Implement FAQPage schema with common air duct cleaning questions and detailed answers.",
+      "Expand on conversational content that AI models can easily extract for responses."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with a high rating, photos, and accurate hours, but lacks regular posts and active Q&A engagement.",
+    "critical_issues": [
+      "No recent posts or updates on GBP.",
+      "No engagement in the Q&A section."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected across all platforms.",
+    "action_items": [
+      "Maintain current NAP consistency across all directories and listings.",
+      "Regularly monitor for any discrepancies or new listings."
+    ]
+  },
+  "schema_gaps": [
+    "Missing FAQPage schema",
+    "Insufficient LocalBusiness schema (missing detailed service descriptions and geo markup)",
+    "No HowTo schema for common air duct cleaning processes"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content limits AI extraction.",
+    "invisible_for": "Queries related to detailed air duct cleaning processes and benefits.",
+    "low_hanging_fruit": "Adding FAQPage schema with common questions and detailed answers.",
+    "authority_opportunity": "Positioning as local HVAC health and safety experts through detailed, authoritative content."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by becoming the go-to expert in air duct cleaning.",
+    "pain_point": "Without AI-ready content and structured data, they miss out on 40% of potential leads from voice and AI searches.",
+    "proof_point": "Competitors with FAQ schema and conversational content rank higher in AI search results.",
+    "solution": "Implement comprehensive schema markup, enhance conversational content, and optimize GBP to dominate AI search results.",
+    "impact_estimate": "Expect a 30% increase in AI-driven leads within the first 3 months.",
+    "urgency": "Competitors are already optimizing for AI search—waiting means losing ground daily."
+  },
+  "email_subject_line": "Dominate AI Search: Your Path to 30% More Leads in 90 Days",
+  "opening_line": "We analyzed your website and GBP and found a clear path to becoming the top air duct cleaning service in AI search results.",
+  "cta": "Let's schedule a call to discuss how we can optimize your site for AI and boost your lead generation.",
+  "analyzed_at": "2026-02-26T15:47:36.412Z",
+  "lead_id": "7b518e02-d9bc-4784-86fc-cdf6e43a2135",
+  "business_name": "Burgess Brothers Air Duct Cleaning",
+  "website": "https://airductarlington.site/",
+  "location": "Arlington, Virginia",
+  "page_title": "Arlington Air Duct Cleaners Call (571) 946-5200",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.9,
+  "gbp_review_count": 60,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

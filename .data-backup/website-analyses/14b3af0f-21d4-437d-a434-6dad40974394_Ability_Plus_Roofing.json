@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "AI assistants are likely to cite Ability Plus Roofing due to their strong local presence and decent content, but improvements in structured data and conversational content are needed to secure top recommendations.",
+    "quick_wins": [
+      "Implement FAQPage schema to highlight common customer questions and answers.",
+      "Expand content to include detailed How-To guides related to roofing services."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with positive ratings, photos, and accurate information, but more posts and Q&A engagement could enhance visibility.",
+    "critical_issues": [
+      "Limited recent posts on GBP.",
+      "No active management of the Q&A section."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected across platforms.",
+    "action_items": [
+      "Maintain current NAP consistency across all directories and platforms.",
+      "Regularly monitor for any discrepancies or new citation opportunities."
+    ]
+  },
+  "schema_gaps": [
+    "Missing FAQPage schema",
+    "No HowTo schema implemented",
+    "LocalBusiness schema could be enhanced with more detailed properties"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content limits AI model citations.",
+    "invisible_for": "Queries related to roofing problems and solutions in the Beaverton area.",
+    "low_hanging_fruit": "Implementing FAQPage and HowTo schema to capture AI attention for common customer questions.",
+    "authority_opportunity": "Position as the local roofing expert by creating in-depth content on roofing maintenance, repair tips, and local weather-related roofing advice."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for the way customers ask questions today.",
+    "pain_point": "Without AI optimization, they miss out on 40% of potential leads from voice and AI search queries.",
+    "proof_point": "Their GBP is strong, but AI models prioritize sites with rich schema and conversational content.",
+    "solution": "Our AEO strategy integrates advanced schema, conversational content, and GBP optimization to make your business the top recommendation for AI searches.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 6 months.",
+    "urgency": "Competitors are already optimizing for AI; act now to secure your position as the local roofing authority."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads for Your Roofing Business",
+  "opening_line": "We analyzed your website and Google Business Profile and identified key opportunities to enhance your visibility with AI search and voice queries.",
+  "cta": "Let's schedule a call to discuss how our AEO strategy can position your business as the top choice for AI-driven roofing searches.",
+  "analyzed_at": "2026-02-26T16:11:45.090Z",
+  "lead_id": "14b3af0f-21d4-437d-a434-6dad40974394",
+  "business_name": "Ability Plus Roofing",
+  "website": "http://www.abilityplusroofing.com/",
+  "location": "Beaverton, Oregon",
+  "page_title": "Beaverton roofing company | United States | AbilityPlusRoofing.com",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.8,
+  "gbp_review_count": 96,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

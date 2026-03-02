@@ -1,0 +1,66 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "Johnson Family Plumbing & HVAC has a strong foundation but lacks critical elements for AI assistants to cite them effectively. Their current content is keyword-focused but lacks conversational depth and structured data.",
+    "quick_wins": [
+      "Implement FAQPage schema with common HVAC questions and answers.",
+      "Add HowTo schema for common HVAC repair and installation processes."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with a high rating, photos, and accurate hours, but lacks regular posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent Google posts.",
+      "No engagement in the Q&A section."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly monitor citations for any discrepancies."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQ schema",
+    "No HowTo schema",
+    "No review schema for testimonials"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content",
+    "invisible_for": "Queries related to emergency HVAC services and detailed repair processes",
+    "low_hanging_fruit": "Implementing FAQPage and HowTo schema",
+    "authority_opportunity": "Highlighting certifications and expertise through detailed service pages and media mentions"
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by making your HVAC expertise visible to AI assistants.",
+    "pain_point": "Without AI-ready content, they miss out on 40% of potential leads from voice and AI search.",
+    "proof_point": "Their website lacks FAQ and HowTo schema, which are crucial for AI to cite them in response to common queries.",
+    "solution": "Our AEO approach integrates structured data, conversational content, and authority signals to position your business as the go-to HVAC expert for AI assistants.",
+    "impact_estimate": "Expect a 30% increase in AI-driven leads within the first 3 months.",
+    "urgency": "Competitors are already optimizing for AI search; waiting means losing ground and potential customers."
+  },
+  "email_subject_line": "Unlock AI-Ready HVAC Expertise in Scottsdale",
+  "opening_line": "We analyzed your website and identified key opportunities to make your HVAC services more visible to AI assistants.",
+  "cta": "Let's schedule a call to discuss how we can optimize your online presence for AI-driven leads.",
+  "analyzed_at": "2026-02-26T15:47:07.948Z",
+  "lead_id": "6a27d96c-b7d1-447a-b66e-5059362a13ea",
+  "business_name": "Johnson Family Plumber & HVAC",
+  "website": "https://johnsonplumbinghvac.site/scottsdale",
+  "location": "Scottsdale, Arizona",
+  "page_title": "HVAC Repair & Installs in Scottsdale (623) 220-5400 Call Us",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.8,
+  "gbp_review_count": 96,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

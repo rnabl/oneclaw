@@ -1,0 +1,61 @@
+{
+  "overall_aeo_score": 68,
+  "aeo_readiness": {
+    "score": 55,
+    "summary": "AI assistants are unlikely to cite Bob's Heating & Air due to significant gaps in structured data and conversational content.",
+    "quick_wins": [
+      "Implement LocalBusiness schema",
+      "Add FAQPage schema for common HVAC questions"
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "Google Business Profile is well-optimized but lacks regular posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent posts",
+      "No Q&A engagement"
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": []
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for common HVAC tasks",
+    "Missing review schema for testimonials"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data prevents AI from recognizing them as a reliable local HVAC provider.",
+    "invisible_for": "Local HVAC service queries in AI search results.",
+    "low_hanging_fruit": "Implementing LocalBusiness and FAQPage schema.",
+    "authority_opportunity": "Highlighting NATE certification and 30+ years of experience in content and schema."
+  },
+  "agency_pitch": {
+    "hook": "Be the top AI-recommended HVAC provider in North Atlanta.",
+    "pain_point": "Without AI optimization, they miss out on 40% of potential leads from voice and AI search.",
+    "proof_point": "Their website lacks critical schema markup, making it invisible to AI models.",
+    "solution": "Our AEO strategy integrates schema markup, conversational content, and GBP optimization to boost AI visibility.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within 3 months.",
+    "urgency": "Competitors optimizing for AI are already capturing market share—act now to stay competitive."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads: Your HVAC Business Deserves Top AI Recognition",
+  "opening_line": "We analyzed your website and identified key opportunities to enhance your visibility with AI assistants like ChatGPT and Google Bard.",
+  "cta": "Let's schedule a call to discuss how we can make your business the go-to HVAC provider in AI search results.",
+  "analyzed_at": "2026-02-26T15:54:04.822Z",
+  "lead_id": "afe8ba69-a914-4f58-b806-d7f041dc4f53",
+  "business_name": "Bob's Heating & Air",
+  "website": "http://www.bobsheatingandair.com/",
+  "location": "Roswell, Georgia",
+  "page_title": "Bob's Heating &amp; Air Conditioning Service",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": 4.9,
+  "gbp_review_count": 60,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

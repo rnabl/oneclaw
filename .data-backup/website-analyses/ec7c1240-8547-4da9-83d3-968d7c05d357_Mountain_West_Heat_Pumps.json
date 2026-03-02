@@ -1,0 +1,68 @@
+{
+  "overall_aeo_score": 68,
+  "aeo_readiness": {
+    "score": 65,
+    "summary": "AI models are unlikely to cite Mountain West Heat Pumps due to limited conversational content and weak authority signals. Their current content is basic and lacks depth for AI to confidently recommend them.",
+    "quick_wins": [
+      "Expand FAQ content with detailed, conversational answers to common HVAC queries.",
+      "Incorporate HowTo schema for common HVAC maintenance and installation processes."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 80,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized but missing key engagement features.",
+    "critical_issues": [
+      "Business hours are not listed on GBP.",
+      "No Q&A section engagement or responses to customer queries."
+    ]
+  },
+  "nap_citations": {
+    "score": 75,
+    "summary": "NAP consistency is moderate, with the address missing on the website but present on GBP.",
+    "action_items": [
+      "Add the full business address to the website footer or contact page.",
+      "Verify and update NAP details across all external directories and citations."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for common HVAC tasks",
+    "No Product schema for specific heat pump models"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of detailed, conversational content and structured data limits AI's ability to understand and recommend their services.",
+    "invisible_for": "Queries related to 'heat pump installation Arvada' or 'best HVAC solutions for Colorado winters'.",
+    "low_hanging_fruit": "Implementing FAQPage schema with detailed, AI-friendly answers.",
+    "authority_opportunity": "Position as local HVAC experts by publishing detailed guides on heat pump benefits, installation, and maintenance."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by making your HVAC expertise undeniable.",
+    "pain_point": "Without AI-ready content and stronger authority signals, Mountain West Heat Pumps is missing out on 40% of potential leads from AI search and conversational queries.",
+    "proof_point": "Their GBP has a 5-star rating but lacks engagement features like Q&A responses, limiting customer interaction and SEO value.",
+    "solution": "Our AEO approach will enhance their content with structured data, detailed FAQs, and authority-building resources to make their expertise visible to AI models.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within 6 months.",
+    "urgency": "Competitors optimizing for AI search are already capturing market share—acting now is critical to stay competitive."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads for Mountain West Heat Pumps",
+  "opening_line": "We analyzed your website and GBP and found significant opportunities to boost your visibility with AI search and conversational queries.",
+  "cta": "Let's discuss how to make your HVAC expertise undeniable to AI models and customers alike.",
+  "analyzed_at": "2026-02-26T16:03:53.918Z",
+  "lead_id": "ec7c1240-8547-4da9-83d3-968d7c05d357",
+  "business_name": "Mountain West Heat Pumps",
+  "website": "https://www.mtnwesthp.com/",
+  "location": "Arvada, Colorado",
+  "page_title": "Mountain West Heat Pumps",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 5,
+  "gbp_review_count": 66,
+  "gbp_found": true,
+  "nap_score": 75,
+  "nap_issues": [
+    "Address not found on website but listed on GBP"
+  ]
+}

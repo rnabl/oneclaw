@@ -1,0 +1,55 @@
+{
+  "overall_aeo_score": 62,
+  "aeo_readiness": {
+    "score": 65,
+    "summary": "Rye Construction CO has a basic foundation for AEO but requires improvements in several areas to enhance visibility and search performance.",
+    "quick_wins": [
+      "Implement a Google Business Profile (GBP) to improve local search presence.",
+      "Increase the number of online reviews to build trust and improve search rankings.",
+      "Optimize website content with targeted keywords related to home remodeling and specific services."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 20,
+    "found": false,
+    "summary": "No Google Business Profile (GBP) was found for Rye Construction CO, which significantly impacts local search visibility.",
+    "critical_issues": [
+      "Lack of GBP limits local search visibility and customer engagement.",
+      "Missing opportunity to showcase reviews, photos, and business information directly in search results."
+    ]
+  },
+  "nap_citations": {
+    "score": 40,
+    "summary": "Inconsistent or missing Name, Address, Phone (NAP) citations across the web may hinder local search performance.",
+    "action_items": [
+      "Ensure consistent NAP information across all online directories and platforms.",
+      "Claim and update business listings on major citation sites like Yelp, Bing, and industry-specific directories.",
+      "Monitor and manage online citations regularly to maintain accuracy."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "Product",
+    "ContactPoint"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of GBP and online reviews",
+    "invisible_for": "Local search users and potential customers searching for home remodeling services in Arvada and Denver.",
+    "low_hanging_fruit": "Creating and optimizing a GBP and actively managing online reviews.",
+    "authority_opportunity": "Establishing the business as a local authority by publishing high-quality, relevant content on the website and engaging with the community through social media and local events."
+  },
+  "analyzed_at": "2026-02-27T02:25:01.309Z",
+  "lead_id": "b7515586-d6ff-44d6-b5be-640c2fe2e4e2",
+  "business_name": "Rye Construction CO",
+  "website": "https://ryeconstructionco.com/?utm_source=google&utm_medium=gbp",
+  "location": "Arvada, Colorado",
+  "page_title": "Home Remodeling Construction Company in Denver, CO - Rye Construction",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}
