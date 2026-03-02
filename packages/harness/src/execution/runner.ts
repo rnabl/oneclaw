@@ -77,6 +77,7 @@ export interface ExecuteOptions {
   sessionKey?: string;      // Alternative to masterKey
   dryRun?: boolean;         // Validate only, don't execute
   webhookUrl?: string;      // Callback on completion
+  secrets?: Record<string, string>;  // Pre-provided secrets (from daemon)
 }
 
 export interface StepContext {

@@ -76,9 +76,17 @@ export type NetworkPolicy = z.infer<typeof NetworkPolicy>;
 // =============================================================================
 
 /**
+ * Tool handler function type
+ */
+export type ToolHandler = (
+  input: unknown,
+  context: { tenantId: string; sessionKey?: string }
+) => Promise<unknown>;
+
+/**
  * Complete tool definition
  */
-export const ToolDefinition = z.object({
+export const ToolDefinitionSchema = z.object({
   // Identity
   id: z.string().regex(/^[a-z0-9-]+$/),  // kebab-case
   name: z.string().min(1).max(100),
@@ -112,8 +120,15 @@ export const ToolDefinition = z.object({
   tags: z.array(z.string()).default([]),
   createdAt: z.date().default(() => new Date()),
   updatedAt: z.date().default(() => new Date()),
+  
+  // Handler (optional - tools without handlers use workflow runner)
+  handler: z.function().optional(),
 });
-export type ToolDefinition = z.infer<typeof ToolDefinition>;
+
+// Extended type that includes the handler (can't be fully represented in Zod)
+export type ToolDefinition = z.infer<typeof ToolDefinitionSchema> & {
+  handler?: ToolHandler;
+};
 
 // =============================================================================
 // COMMON TOOL SCHEMAS (reusable)
