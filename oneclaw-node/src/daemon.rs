@@ -68,46 +68,50 @@ pub async fn start(port: u16) -> anyhow::Result<()> {
         if agent_os.memory.contains("Not Found") { "missing" } else { "loaded" },
     );
     
-    // Fetch tools from harness (run blocking HTTP in spawn_blocking to avoid runtime panic)
+    // Fetch tools from harness with retry logic
     let harness_url = std::env::var("HARNESS_URL")
-        .unwrap_or_else(|_| {
-            if cfg!(debug_assertions) {
-                "http://localhost:9000".to_string()
-            } else {
-                "https://oneclaw.chat".to_string()
-            }
-        });
+        .unwrap_or_else(|_| "http://localhost:8787".to_string());
     let harness_url_clone = harness_url.clone();
     let harness_tools = tokio::task::spawn_blocking(move || {
-        match reqwest::blocking::get(format!("{}/tools", harness_url_clone)) {
-            Ok(resp) => {
-                if let Ok(body) = resp.text() {
-                    if let Ok(parsed) = serde_json::from_str::<serde_json::Value>(&body) {
-                        if let Some(tools_arr) = parsed["tools"].as_array() {
-                            tools_arr.iter().filter_map(|t| {
-                                Some(agent_os::ToolDefinition {
-                                    id: t["id"].as_str()?.to_string(),
-                                    description: t["description"].as_str().unwrap_or("").to_string(),
-                                    params_schema: t.get("paramsSchema").cloned(),
-                                    cost_estimate: t["estimatedCostUsd"].as_f64(),
-                                    tier: t["tier"].as_str().map(|s| s.to_string()),
-                                })
-                            }).collect()
-                        } else {
-                            vec![]
+        let max_retries = 5;
+        let mut retry_delay = std::time::Duration::from_secs(2);
+        
+        for attempt in 1..=max_retries {
+            match reqwest::blocking::get(format!("{}/tools", harness_url_clone)) {
+                Ok(resp) => {
+                    if let Ok(body) = resp.text() {
+                        if let Ok(parsed) = serde_json::from_str::<serde_json::Value>(&body) {
+                            if let Some(tools_arr) = parsed["tools"].as_array() {
+                                let tools: Vec<_> = tools_arr.iter().filter_map(|t| {
+                                    Some(agent_os::ToolDefinition {
+                                        id: t["id"].as_str()?.to_string(),
+                                        description: t["description"].as_str().unwrap_or("").to_string(),
+                                        params_schema: t.get("paramsSchema").cloned(),
+                                        cost_estimate: t["estimatedCostUsd"].as_f64(),
+                                        tier: t["tier"].as_str().map(|s| s.to_string()),
+                                    })
+                                }).collect();
+                                if !tools.is_empty() {
+                                    return tools;
+                                }
+                            }
                         }
-                    } else {
-                        vec![]
                     }
-                } else {
-                    vec![]
+                }
+                Err(e) => {
+                    tracing::warn!("Could not fetch harness tools (attempt {}/{}): {}", attempt, max_retries, e);
                 }
             }
-            Err(e) => {
-                tracing::warn!("Could not fetch harness tools: {}", e);
-                vec![]
+            
+            if attempt < max_retries {
+                tracing::info!("Retrying harness tools fetch in {:?}...", retry_delay);
+                std::thread::sleep(retry_delay);
+                retry_delay *= 2; // exponential backoff
             }
         }
+        
+        tracing::error!("Failed to fetch harness tools after {} attempts", max_retries);
+        vec![]
     })
     .await
     .unwrap_or_else(|_| vec![]);
