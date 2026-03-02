@@ -27,6 +27,20 @@ module.exports = {
       max_restarts: 10,
       kill_timeout: 5000,
     },
+    {
+      name: 'api',
+      cwd: '/opt/oneclaw/apps/api',
+      script: 'npx',
+      args: 'tsx src/index.ts',
+      env: {
+        NODE_ENV: 'production',
+        PORT: '3000',
+      },
+      wait_ready: false,
+      kill_timeout: 5000,
+      restart_delay: 2000,
+      max_restarts: 10,
+    },
   ],
 };
 
