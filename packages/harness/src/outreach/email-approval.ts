@@ -32,6 +32,7 @@ export async function getPendingEmailDrafts(limit = 50) {
   
   // First get email campaigns without the join (cross-schema joins are tricky)
   const { data: campaigns, error } = await supabase
+    .schema('crm')
     .from('email_campaigns')
     .select(`
       id,
@@ -88,6 +89,7 @@ export async function getPendingEmailDrafts(limit = 50) {
 export async function approveEmail(emailId: string, approvedBy: string) {
   const supabase = getSupabaseClient();
   const { data, error } = await supabase
+    .schema('crm')
     .from('email_campaigns')
     .update({
       approval_status: 'approved',
@@ -111,6 +113,7 @@ export async function approveEmail(emailId: string, approvedBy: string) {
 export async function rejectEmail(emailId: string, reason: string, rejectedBy: string) {
   const supabase = getSupabaseClient();
   const { data, error} = await supabase
+    .schema('crm')
     .from('email_campaigns')
     .update({
       approval_status: 'rejected',
@@ -137,6 +140,7 @@ export async function getApprovedEmails(limit = 50) {
   
   // Get approved campaigns
   const { data: campaigns, error } = await supabase
+    .schema('crm')
     .from('email_campaigns')
     .select(`
       id,
@@ -186,6 +190,7 @@ export async function getApprovedEmails(limit = 50) {
 export async function markEmailSent(emailId: string, gmailMessageId?: string) {
   const supabase = getSupabaseClient();
   const { data, error } = await supabase
+    .schema('crm')
     .from('email_campaigns')
     .update({
       sent_at: new Date().toISOString(),
