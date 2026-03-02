@@ -32,7 +32,7 @@ struct Cli {
 enum Commands {
     /// Start the node daemon
     Daemon {
-        #[arg(short, long, default_value = "8787")]
+        #[arg(short, long, default_value = "9000")]
         port: u16,
     },
     /// Interactive onboarding wizard
