@@ -341,6 +341,33 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Compose Email Modal -->
+        <div id="compose-modal" class="modal-overlay">
+            <div class="modal-box" style="max-width: 600px;">
+                <h3>Compose Email</h3>
+                <div style="margin-bottom: 16px;">
+                    <label style="display: block; font-weight: 500; margin-bottom: 4px;">From:</label>
+                    <input type="text" id="compose-from" readonly style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; background: #f5f5f5;">
+                </div>
+                <div style="margin-bottom: 16px;">
+                    <label style="display: block; font-weight: 500; margin-bottom: 4px;">To:</label>
+                    <input type="email" id="compose-to" placeholder="recipient@example.com" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
+                </div>
+                <div style="margin-bottom: 16px;">
+                    <label style="display: block; font-weight: 500; margin-bottom: 4px;">Subject:</label>
+                    <input type="text" id="compose-subject" placeholder="Email subject" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
+                </div>
+                <div style="margin-bottom: 16px;">
+                    <label style="display: block; font-weight: 500; margin-bottom: 4px;">Message:</label>
+                    <textarea id="compose-body" rows="8" placeholder="Type your message here..." style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; resize: vertical;"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeComposeModal()">Cancel</button>
+                    <button type="button" class="btn-primary" onclick="sendComposedEmail()">Send Email</button>
+                </div>
+            </div>
+        </div>
 
         <main>
             <div id="setup-wizard-container"></div>
@@ -589,16 +616,30 @@
                     const statusText = integration.connected ? '✓ Connected' : 'Not Connected';
                     
                     let actions = '';
-                    if (integration.connected) {
+                    if (integration.connected && integration.email) {
                         actions = `
-                            <div class="integration-email">${integration.email || ''}</div>
-                            <div class="integration-details">
+                            <div class="integration-email" style="font-weight: 600; font-size: 16px; margin-bottom: 8px;">${integration.email}</div>
+                            <div class="integration-details" style="color: #666; font-size: 13px; margin-bottom: 12px;">
+                                Connected ${formatDate(integration.connected_at)}
+                            </div>
+                            <div class="integration-actions" style="display: flex; gap: 8px; flex-wrap: wrap;">
+                                <button class="btn-secondary" onclick="sendTestEmail('${integration.email}')">
+                                    Send Test Email
+                                </button>
+                                <button class="btn-secondary" onclick="openComposeModal('${integration.email}')">
+                                    Compose Email
+                                </button>
+                                <button class="btn-secondary" onclick="disconnectIntegration('${integration.id}', '${integration.email}')">
+                                    Disconnect
+                                </button>
+                            </div>
+                        `;
+                    } else if (integration.connected) {
+                        actions = `
+                            <div class="integration-details" style="color: #666; font-size: 13px; margin-bottom: 12px;">
                                 Connected ${formatDate(integration.connected_at)}
                             </div>
                             <div class="integration-actions">
-                                <button class="btn-secondary" onclick="testIntegration('${integration.id}')">
-                                    Test Connection
-                                </button>
                                 <button class="btn-secondary" onclick="disconnectIntegration('${integration.id}')">
                                     Disconnect
                                 </button>
@@ -684,12 +725,90 @@
             setTimeout(() => clearInterval(interval), 5 * 60 * 1000);
         }
         
+        async function sendTestEmail(fromEmail) {
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = 'Sending...';
+            btn.disabled = true;
+            
+            try {
+                const res = await fetch('/integrations/gmail/send-test', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ from_email: fromEmail }),
+                });
+                const data = await res.json();
+                
+                if (res.ok) {
+                    showNotification(`Test email sent to ${fromEmail}!`);
+                } else {
+                    showNotification(`Failed: ${data.error || 'Unknown error'}`, 'error');
+                }
+            } catch (e) {
+                showNotification(`Error: ${e.message}`, 'error');
+            } finally {
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }
+        }
+        
+        function openComposeModal(fromEmail) {
+            document.getElementById('compose-from').value = fromEmail;
+            document.getElementById('compose-to').value = '';
+            document.getElementById('compose-subject').value = '';
+            document.getElementById('compose-body').value = '';
+            document.getElementById('compose-modal').classList.add('show');
+        }
+        
+        function closeComposeModal() {
+            document.getElementById('compose-modal').classList.remove('show');
+        }
+        
+        async function sendComposedEmail() {
+            const fromEmail = document.getElementById('compose-from').value;
+            const to = document.getElementById('compose-to').value;
+            const subject = document.getElementById('compose-subject').value;
+            const body = document.getElementById('compose-body').value;
+            
+            if (!to || !subject || !body) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = 'Sending...';
+            btn.disabled = true;
+            
+            try {
+                const res = await fetch('/integrations/gmail/send', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ from_email: fromEmail, to, subject, body }),
+                });
+                const data = await res.json();
+                
+                if (res.ok) {
+                    showNotification(`Email sent to ${to}!`);
+                    closeComposeModal();
+                } else {
+                    showNotification(`Failed: ${data.error || 'Unknown error'}`, 'error');
+                }
+            } catch (e) {
+                showNotification(`Error: ${e.message}`, 'error');
+            } finally {
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }
+        }
+        
         async function testIntegration(id) {
             alert(`Testing ${id} connection... (not implemented yet)`);
         }
         
-        async function disconnectIntegration(id) {
-            if (!confirm(`Disconnect ${id}?`)) return;
+        async function disconnectIntegration(id, email) {
+            const displayName = email || id;
+            if (!confirm(`Disconnect ${displayName}?`)) return;
             alert(`Disconnect functionality coming soon`);
         }
         
@@ -709,19 +828,21 @@
             return date.toLocaleDateString();
         }
         
-        function showNotification(message) {
+        function showNotification(message, type = 'success') {
             const notification = document.createElement('div');
+            const bgColor = type === 'error' ? '#c62828' : '#2e7d32';
             notification.style.cssText = `
                 position: fixed;
                 top: 20px;
                 right: 20px;
-                background: #2e7d32;
+                background: ${bgColor};
                 color: white;
                 padding: 16px 24px;
                 border-radius: 12px;
                 box-shadow: 0 4px 12px rgba(0,0,0,0.2);
                 z-index: 1000;
                 animation: slideIn 0.3s ease;
+                max-width: 400px;
             `;
             notification.textContent = message;
             document.body.appendChild(notification);
@@ -729,7 +850,7 @@
             setTimeout(() => {
                 notification.style.animation = 'slideOut 0.3s ease';
                 setTimeout(() => notification.remove(), 300);
-            }, 3000);
+            }, 4000);
         }
         
         function toggleAdvancedSetup() {

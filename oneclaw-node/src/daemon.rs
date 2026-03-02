@@ -557,6 +557,9 @@ pub async fn start(port: u16) -> anyhow::Result<()> {
         .route("/integrations", get(get_integrations))
         .route("/integrations/gmail/connect", get(connect_gmail))
         .route("/integrations/gmail/status", get(gmail_status))
+        .route("/integrations/gmail/accounts", get(gmail_accounts))
+        .route("/integrations/gmail/send-test", post(send_test_email))
+        .route("/integrations/gmail/send", post(send_email))
         .route("/api/oauth/config", post(oauth_config::save_oauth_config_handler))
         .layer(CorsLayer::permissive())
         .with_state(state);
@@ -1288,5 +1291,126 @@ async fn gmail_status(
         "connected": connected,
         "user_id": user_id,
     }))
+}
+
+/// GET /integrations/gmail/accounts - Get all connected Gmail accounts
+async fn gmail_accounts(
+    State(state): State<Arc<AppState>>,
+) -> Json<serde_json::Value> {
+    let user_id = &state.config.node.id;
+    let control_plane_url = match state.config.control_plane.url.as_deref() {
+        Some(url) => url,
+        None => return Json(serde_json::json!({ "accounts": [], "error": "No control plane configured" })),
+    };
+    
+    let accounts = integration::get_gmail_accounts(user_id, control_plane_url).await;
+    
+    Json(serde_json::json!({
+        "accounts": accounts,
+        "count": accounts.len(),
+    }))
+}
+
+#[derive(Deserialize)]
+struct SendTestEmailRequest {
+    from_email: String,
+}
+
+/// POST /integrations/gmail/send-test - Send a test email to yourself
+async fn send_test_email(
+    State(state): State<Arc<AppState>>,
+    Json(req): Json<SendTestEmailRequest>,
+) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
+    let control_plane_url = match state.config.control_plane.url.as_deref() {
+        Some(url) => url,
+        None => return Err((StatusCode::BAD_REQUEST, Json(serde_json::json!({ "error": "No control plane configured" })))),
+    };
+    
+    let client = reqwest::Client::new();
+    let response = client
+        .post(format!("{}/api/v1/gmail/send", control_plane_url))
+        .json(&serde_json::json!({
+            "user_id": state.config.node.id,
+            "from_email": req.from_email,
+            "to": req.from_email,
+            "subject": "Test email from OneClaw Node",
+            "body": format!("This is a test email sent from your OneClaw Node ({}) at {}.\n\nIf you received this, your Gmail integration is working correctly!", 
+                state.config.node.name, 
+                chrono::Utc::now().format("%Y-%m-%d %H:%M:%S UTC")),
+        }))
+        .send()
+        .await;
+    
+    match response {
+        Ok(resp) if resp.status().is_success() => {
+            let data: serde_json::Value = resp.json().await.unwrap_or_default();
+            Ok(Json(serde_json::json!({
+                "success": true,
+                "message": format!("Test email sent to {}", req.from_email),
+                "data": data,
+            })))
+        }
+        Ok(resp) => {
+            let status = resp.status();
+            let error_text = resp.text().await.unwrap_or_default();
+            Err((StatusCode::from_u16(status.as_u16()).unwrap_or(StatusCode::INTERNAL_SERVER_ERROR), 
+                Json(serde_json::json!({ "error": error_text }))))
+        }
+        Err(e) => {
+            Err((StatusCode::INTERNAL_SERVER_ERROR, Json(serde_json::json!({ "error": e.to_string() }))))
+        }
+    }
+}
+
+#[derive(Deserialize)]
+struct SendEmailRequest {
+    from_email: String,
+    to: String,
+    subject: String,
+    body: String,
+}
+
+/// POST /integrations/gmail/send - Send an email
+async fn send_email(
+    State(state): State<Arc<AppState>>,
+    Json(req): Json<SendEmailRequest>,
+) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
+    let control_plane_url = match state.config.control_plane.url.as_deref() {
+        Some(url) => url,
+        None => return Err((StatusCode::BAD_REQUEST, Json(serde_json::json!({ "error": "No control plane configured" })))),
+    };
+    
+    let client = reqwest::Client::new();
+    let response = client
+        .post(format!("{}/api/v1/gmail/send", control_plane_url))
+        .json(&serde_json::json!({
+            "user_id": state.config.node.id,
+            "from_email": req.from_email,
+            "to": req.to,
+            "subject": req.subject,
+            "body": req.body,
+        }))
+        .send()
+        .await;
+    
+    match response {
+        Ok(resp) if resp.status().is_success() => {
+            let data: serde_json::Value = resp.json().await.unwrap_or_default();
+            Ok(Json(serde_json::json!({
+                "success": true,
+                "message": format!("Email sent to {}", req.to),
+                "data": data,
+            })))
+        }
+        Ok(resp) => {
+            let status = resp.status();
+            let error_text = resp.text().await.unwrap_or_default();
+            Err((StatusCode::from_u16(status.as_u16()).unwrap_or(StatusCode::INTERNAL_SERVER_ERROR), 
+                Json(serde_json::json!({ "error": error_text }))))
+        }
+        Err(e) => {
+            Err((StatusCode::INTERNAL_SERVER_ERROR, Json(serde_json::json!({ "error": e.to_string() }))))
+        }
+    }
 }
 

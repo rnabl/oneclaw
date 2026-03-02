@@ -257,17 +257,24 @@ export async function disconnectGmailHandler(c: Context) {
 
 /**
  * Send an email via a user's Gmail account.
+ * Supports from_email to pick which account to send from (for multi-account)
  */
 export async function sendGmailHandler(c: Context) {
   try {
-    const { user_id, to, subject, body, from_name } = await c.req.json();
+    const { user_id, to, subject, body, from_name, from_email } = await c.req.json();
     
     if (!user_id || !to || !subject || !body) {
       return c.json({ error: 'Missing required fields: user_id, to, subject, body' }, 400);
     }
     
-    // Get integration with tokens
-    const integration = await getNodeIntegration(user_id, 'google');
+    // Get integration with tokens - if from_email specified, use that account
+    let integration;
+    if (from_email) {
+      const { getNodeIntegrationByEmail } = await import('@oneclaw/database');
+      integration = await getNodeIntegrationByEmail(user_id, 'google', from_email);
+    } else {
+      integration = await getNodeIntegration(user_id, 'google');
+    }
     
     if (!integration) {
       return c.json({

@@ -65,6 +65,7 @@ app.get('/oauth/google/callback', googleCallbackHandler);
 // Gmail API routes - for Node Runtime
 app.post('/api/v1/oauth/google/token', getGoogleTokenHandler);
 app.post('/api/v1/oauth/google/send', sendGmailHandler);
+app.post('/api/v1/gmail/send', sendGmailHandler); // Alias for daemon
 app.get('/api/v1/oauth/google/status', getGmailStatusHandler);
 app.get('/api/v1/oauth/google/account', getGmailAccountHandler);
 app.get('/api/v1/oauth/google/accounts', getGmailAccountsHandler);
