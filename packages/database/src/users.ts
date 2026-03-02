@@ -394,6 +394,7 @@ export interface NodeIntegration {
 
 /**
  * Save or update a node integration (OAuth tokens for nodes)
+ * Supports multiple accounts per node - upserts based on (node_id, provider, email)
  */
 export async function saveNodeIntegration(
   nodeId: string,
@@ -419,7 +420,7 @@ export async function saveNodeIntegration(
       email: tokens.email || null,
       scopes: tokens.scopes,
     }, {
-      onConflict: 'node_id,provider',
+      onConflict: 'node_id,provider,email',
     })
     .select()
     .single();
@@ -433,7 +434,8 @@ export async function saveNodeIntegration(
 }
 
 /**
- * Get node's integration by provider
+ * Get node's integration by provider (returns first one if multiple exist)
+ * For multiple accounts, use getNodeIntegrationByEmail or getNodeIntegrations
  */
 export async function getNodeIntegration(
   nodeId: string,
@@ -446,10 +448,37 @@ export async function getNodeIntegration(
     .select('*')
     .eq('node_id', nodeId)
     .eq('provider', provider)
+    .limit(1)
     .single();
 
   if (error && error.code !== 'PGRST116') {
     console.error('[DB] Error fetching node integration:', error);
+    throw error;
+  }
+
+  return data as NodeIntegration | null;
+}
+
+/**
+ * Get node's integration by provider and email (for multi-account support)
+ */
+export async function getNodeIntegrationByEmail(
+  nodeId: string,
+  provider: 'google' | 'apple' | 'microsoft',
+  email: string
+): Promise<NodeIntegration | null> {
+  const supabase = getSupabaseAdminClient();
+
+  const { data, error } = await supabase
+    .from('node_integrations')
+    .select('*')
+    .eq('node_id', nodeId)
+    .eq('provider', provider)
+    .eq('email', email)
+    .single();
+
+  if (error && error.code !== 'PGRST116') {
+    console.error('[DB] Error fetching node integration by email:', error);
     throw error;
   }
 
