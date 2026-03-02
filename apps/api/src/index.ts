@@ -4,7 +4,9 @@
 import * as dotenv from 'dotenv';
 import * as path from 'path';
 
-// Load environment variables - try multiple locations
+// Load environment variables - try multiple locations including absolute path for VPS
+dotenv.config({ path: '/opt/oneclaw/.env.production' });
+dotenv.config({ path: '/opt/oneclaw/.env.local' });
 dotenv.config({ path: path.resolve(process.cwd(), '.env.production') });
 dotenv.config({ path: path.resolve(process.cwd(), '../../.env.production') });
 dotenv.config({ path: path.resolve(process.cwd(), '.env.local') });
