@@ -610,14 +610,11 @@ impl Executor for HarnessExecutor {
         }
         
         let payload = serde_json::json!({
-            "workflowId": executor_id,
             "input": params,
             "tenantId": tenant_id,
-            "tier": tier,
-            "secrets": secrets,
         });
         
-        let url = format!("{}/execute", self.harness_url);
+        let url = format!("{}/tools/{}/execute", self.harness_url, executor_id);
         
         match client.post(&url)
             .header("Content-Type", "application/json")

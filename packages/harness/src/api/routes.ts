@@ -142,6 +142,87 @@ app.get('/tools/:id', (c) => {
   return c.json({ tool });
 });
 
+/**
+ * Execute a tool directly
+ * POST /tools/:id/execute
+ * Body: { input, tenantId }
+ * 
+ * If tool has a handler, use it directly.
+ * If tool has no handler but is a registered workflow, run it through the runner.
+ */
+app.post('/tools/:id/execute', async (c) => {
+  try {
+    const toolId = c.req.param('id');
+    const tool = registry.get(toolId);
+    
+    if (!tool) {
+      return c.json({ error: `Tool not found: ${toolId}` }, 404);
+    }
+    
+    const body = await c.req.json();
+    const { input, tenantId = 'default' } = body;
+    
+    // Validate input against tool schema if validation exists
+    let validatedInput = input || {};
+    try {
+      const validation = registry.validateInput(toolId, input);
+      if (validation.success) {
+        validatedInput = validation.data;
+      }
+    } catch (e) {
+      // Skip validation if schema doesn't match input structure
+      console.log(`[Tool Execute] Skipping validation for ${toolId}:`, e);
+    }
+    
+    // Option 1: Tool has a direct handler - use it
+    if (tool.handler) {
+      const result = await tool.handler(validatedInput, { tenantId });
+      return c.json({ 
+        success: true,
+        result 
+      });
+    }
+    
+    // Option 2: Tool is a registered workflow - run through runner
+    const { runner } = await import('../execution/runner');
+    const hasWorkflow = runner.hasWorkflow(toolId);
+    
+    if (hasWorkflow) {
+      console.log(`[Tool Execute] Running ${toolId} as workflow`);
+      const job = await runner.execute(toolId, validatedInput, {
+        tenantId,
+        tier: 'free',
+        secrets: {},
+      });
+      
+      if (job.status === 'completed') {
+        return c.json({
+          success: true,
+          result: job.output,
+          steps_completed: job.logs
+            ?.filter((log: any) => log.level === 'info' && log.step)
+            ?.map((log: any) => `${log.step}: ${log.message}`),
+        });
+      } else if (job.error) {
+        return c.json({ error: job.error }, 500);
+      }
+      
+      return c.json({ success: true, result: job });
+    }
+    
+    // Option 3: Neither handler nor workflow - error
+    return c.json({ 
+      error: `Tool ${toolId} has no handler and no registered workflow` 
+    }, 500);
+    
+  } catch (error) {
+    console.error('Tool execution error:', error);
+    return c.json({ 
+      error: error instanceof Error ? error.message : 'Unknown error' 
+    }, 500);
+  }
+});
+
 // =============================================================================
 // SECRETS MANAGEMENT
 // =============================================================================

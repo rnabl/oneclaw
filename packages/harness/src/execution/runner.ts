@@ -120,6 +120,13 @@ export class ExecutionRunner {
   }
 
   /**
+   * Check if a workflow is registered
+   */
+  hasWorkflow(workflowId: string): boolean {
+    return this.workflows.has(workflowId);
+  }
+
+  /**
    * Execute a workflow
    */
   async execute(
