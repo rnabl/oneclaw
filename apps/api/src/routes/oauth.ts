@@ -7,10 +7,14 @@ import { ONBOARDING_STATE } from '@oneclaw/core';
 import { encryptToken } from '@oneclaw/harness/gmail/encryption';
 import { createGmailClient } from '@oneclaw/harness/gmail/client';
 
-// Google OAuth config
-const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || '';
-const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET || '';
-const GOOGLE_REDIRECT_URI = process.env.GOOGLE_REDIRECT_URI || 'http://localhost:3000/oauth/google/callback';
+// Google OAuth config - read at runtime, not import time
+function getGoogleConfig() {
+  return {
+    clientId: process.env.GOOGLE_CLIENT_ID || '',
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
+    redirectUri: process.env.GOOGLE_REDIRECT_URI || 'http://localhost:3000/oauth/google/callback',
+  };
+}
 
 // OpenClaw Droplet config
 const PROVISION_API_URL = process.env.OPENCLAW_PROVISION_URL || 'http://104.131.111.116:3456';
@@ -44,16 +48,15 @@ async function pushTokensToOpenClaw(
  * User taps this link in iMessage, authenticates in browser
  */
 export function getGoogleAuthUrl(userId: string, scopes: string[]): string {
-  const clientId = GOOGLE_CLIENT_ID?.trim() || '';
-  const redirectUri = GOOGLE_REDIRECT_URI?.trim() || 'http://localhost:3000/oauth/google/callback';
+  const config = getGoogleConfig();
   const params = new URLSearchParams({
-    client_id: clientId,
-    redirect_uri: redirectUri,
+    client_id: config.clientId,
+    redirect_uri: config.redirectUri,
     response_type: 'code',
     scope: scopes.join(' '),
     access_type: 'offline',
     prompt: 'consent',
-    state: userId, // Pass user ID through state param
+    state: userId,
   });
 
   return `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`;
@@ -66,10 +69,14 @@ export function getGoogleAuthUrl(userId: string, scopes: string[]): string {
  */
 export async function googleAuthHandler(c: Context) {
   const userId = c.req.query('user');
+  const config = getGoogleConfig();
 
   // Fail fast if OAuth is not configured (avoids Google "Missing client_id" error)
-  if (!GOOGLE_CLIENT_ID?.trim() || !GOOGLE_CLIENT_SECRET?.trim()) {
-    console.error('[OAuth] GOOGLE_CLIENT_ID or GOOGLE_CLIENT_SECRET not set');
+  if (!config.clientId || !config.clientSecret) {
+    console.error('[OAuth] GOOGLE_CLIENT_ID or GOOGLE_CLIENT_SECRET not set. ENV:', {
+      GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID ? 'SET' : 'MISSING',
+      GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET ? 'SET' : 'MISSING',
+    });
     return c.html(`
       <html>
         <head><meta name="viewport" content="width=device-width, initial-scale=1"></head>
@@ -115,6 +122,7 @@ export async function googleCallbackHandler(c: Context) {
   const code = c.req.query('code');
   const state = c.req.query('state'); // This is our userId
   const error = c.req.query('error');
+  const config = getGoogleConfig();
 
   if (error) {
     console.error('[OAuth] Google auth error:', error);
@@ -146,11 +154,11 @@ export async function googleCallbackHandler(c: Context) {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({
-        client_id: GOOGLE_CLIENT_ID,
-        client_secret: GOOGLE_CLIENT_SECRET,
+        client_id: config.clientId,
+        client_secret: config.clientSecret,
         code,
         grant_type: 'authorization_code',
-        redirect_uri: GOOGLE_REDIRECT_URI,
+        redirect_uri: config.redirectUri,
       }),
     });
 

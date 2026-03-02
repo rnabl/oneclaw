@@ -12,9 +12,13 @@ import { createGmailClient } from '@oneclaw/harness/gmail/client';
 // Simple in-memory cache for tokens (valid for ~1 hour)
 const tokenCache = new Map<string, { token: string; expires_at: number }>();
 
-// Google OAuth config
-const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || '';
-const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET || '';
+// Google OAuth config - read at runtime, not import time
+function getGoogleConfig() {
+  return {
+    clientId: process.env.GOOGLE_CLIENT_ID || '',
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
+  };
+}
 
 /**
  * POST /api/v1/oauth/google/token
@@ -95,13 +99,14 @@ export async function getGoogleTokenHandler(c: Context) {
  * Refresh an access token using the refresh token
  */
 async function refreshAccessToken(refreshToken: string): Promise<{ access_token: string; expires_in: number } | null> {
+  const config = getGoogleConfig();
   try {
     const response = await fetch('https://oauth2.googleapis.com/token', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({
-        client_id: GOOGLE_CLIENT_ID,
-        client_secret: GOOGLE_CLIENT_SECRET,
+        client_id: config.clientId,
+        client_secret: config.clientSecret,
         refresh_token: refreshToken,
         grant_type: 'refresh_token',
       }),
