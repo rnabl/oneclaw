@@ -200,13 +200,13 @@ import('@hono/node-server').then(async ({ serve }) => {
   });
   console.log(`✅ Server running on port ${port}`);
   
-  // Start Discord bot if token is configured
-  if (process.env.DISCORD_BOT_TOKEN) {
-    try {
-      await startDiscordBot();
-      console.log('✅ Discord bot started');
-    } catch (error) {
-      console.error('❌ Failed to start Discord bot:', error);
-    }
-  }
+  // Discord bot disabled - using Telegram instead
+  // if (process.env.DISCORD_BOT_TOKEN) {
+  //   try {
+  //     await startDiscordBot();
+  //     console.log('✅ Discord bot started');
+  //   } catch (error) {
+  //     console.error('❌ Failed to start Discord bot:', error);
+  //   }
+  // }
 });
