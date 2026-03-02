@@ -376,10 +376,7 @@ export async function googleCallbackHandler(c: Context) {
           <script>
             setTimeout(() => {
               window.close();
-              // If window.close() fails (not opened by script), redirect
-              setTimeout(() => {
-                window.location.href = 'http://localhost:8787';
-              }, 100);
+              // If window.close() fails (not opened by script), just stay on success page
             }, 5000);
           </script>
         </body>
