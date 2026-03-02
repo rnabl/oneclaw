@@ -387,6 +387,7 @@ export interface NodeIntegration {
   refresh_token: string | null;
   token_expires_at: string | null;
   scopes: string[];
+  email: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -402,6 +403,7 @@ export async function saveNodeIntegration(
     refreshToken?: string;
     expiresAt?: Date;
     scopes: string[];
+    email?: string;
   }
 ): Promise<NodeIntegration> {
   const supabase = getSupabaseAdminClient();
@@ -414,6 +416,7 @@ export async function saveNodeIntegration(
       access_token: tokens.accessToken,
       refresh_token: tokens.refreshToken || null,
       token_expires_at: tokens.expiresAt?.toISOString() || null,
+      email: tokens.email || null,
       scopes: tokens.scopes,
     }, {
       onConflict: 'node_id,provider',

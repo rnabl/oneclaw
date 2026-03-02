@@ -192,6 +192,7 @@ export async function googleCallbackHandler(c: Context) {
       refreshToken: tokens.refresh_token,
       expiresAt,
       scopes: tokens.scope.split(' '),
+      email: userProfile.email,
     });
     
     // Also try to save to old integrations table if state is a valid UUID

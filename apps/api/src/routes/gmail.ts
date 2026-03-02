@@ -146,6 +146,7 @@ export async function getGmailStatusHandler(c: Context) {
     if (integration) {
       return c.json({
         connected: true,
+        email: integration.email,
         has_refresh_token: !!integration.refresh_token,
         expires_at: integration.token_expires_at,
       });
@@ -184,6 +185,7 @@ export async function getGmailAccountHandler(c: Context) {
     return c.json({
       id: integration.id,
       node_id: integration.node_id,
+      email: integration.email,
       provider: integration.provider,
       connected_at: integration.created_at,
       expires_at: integration.token_expires_at,
@@ -216,6 +218,7 @@ export async function getGmailAccountsHandler(c: Context) {
       accounts: googleAccounts.map(a => ({
         id: a.id,
         node_id: a.node_id,
+        email: a.email,
         connected_at: a.created_at,
         expires_at: a.token_expires_at,
         scopes: a.scopes,
