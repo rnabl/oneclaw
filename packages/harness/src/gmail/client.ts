@@ -165,6 +165,44 @@ export class GmailClient {
   }
   
   /**
+   * Send email using just an access token (simpler API)
+   */
+  async sendEmailWithToken(
+    accessToken: string,
+    input: SendEmailInput & { from?: string }
+  ): Promise<{ id: string; threadId: string }> {
+    const oauth2Client = new google.auth.OAuth2();
+    oauth2Client.setCredentials({ access_token: accessToken });
+    
+    const gmail = google.gmail({ version: 'v1', auth: oauth2Client });
+    
+    // Get sender email if not provided
+    let fromEmail = input.from;
+    if (!fromEmail) {
+      const profile = await gmail.users.getProfile({ userId: 'me' });
+      fromEmail = profile.data.emailAddress || '';
+    }
+    
+    const rawMessage = this.createRawEmail(
+      fromEmail,
+      input.to,
+      input.subject,
+      input.body,
+      input.fromName
+    );
+    
+    const response = await gmail.users.messages.send({
+      userId: 'me',
+      requestBody: { raw: rawMessage },
+    });
+    
+    return {
+      id: response.data.id || '',
+      threadId: response.data.threadId || '',
+    };
+  }
+  
+  /**
    * Create RFC 2822 formatted email
    * Returns base64url-encoded email
    */

@@ -2,14 +2,12 @@
  * Send Gmail Tool
  * 
  * Registered tool for sending emails via connected Gmail accounts.
- * Handles account selection, rate limiting, and token refresh.
+ * Uses the integrations table in Supabase for token storage.
  */
 
 import { z } from 'zod';
 import { registry } from '../registry';
 import { createGmailClient } from '../gmail/client';
-import type { GmailAccount } from '../gmail/accounts';
-import { GMAIL_LIMITS } from '../gmail/accounts';
 
 // Input schema
 const SendGmailInputSchema = z.object({
@@ -17,7 +15,6 @@ const SendGmailInputSchema = z.object({
   subject: z.string().min(1).max(200).describe('Email subject line'),
   body: z.string().min(1).max(10000).describe('Email body (plain text)'),
   fromName: z.string().optional().describe('Display name for sender'),
-  accountEmail: z.string().email().optional().describe('Specific Gmail account to send from (uses default if not specified)'),
 });
 
 type SendGmailInput = z.infer<typeof SendGmailInputSchema>;
@@ -27,91 +24,85 @@ const SendGmailOutputSchema = z.object({
   success: z.boolean(),
   messageId: z.string().optional(),
   threadId: z.string().optional(),
-  sentFrom: z.string().optional(),
   sentAt: z.string().optional(),
   error: z.string().optional(),
 });
 
 type SendGmailOutput = z.infer<typeof SendGmailOutputSchema>;
 
-// In-memory account storage (replace with database in production)
-const gmailAccounts = new Map<string, GmailAccount>();
+// Google OAuth config for token refresh
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || '';
+const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET || '';
 
 /**
- * Get a Gmail account for a tenant
- * In production, this would query the database
+ * Refresh an access token
  */
-async function getGmailAccount(tenantId: string, accountEmail?: string): Promise<GmailAccount | null> {
-  // For now, check environment for test credentials
-  const testEmail = process.env.GMAIL_TEST_EMAIL;
-  const testAccessToken = process.env.GMAIL_TEST_ACCESS_TOKEN;
-  const testRefreshToken = process.env.GMAIL_TEST_REFRESH_TOKEN;
-  
-  if (testEmail && testAccessToken && testRefreshToken) {
-    return {
-      id: 'gml_test',
-      user_id: tenantId,
-      email: testEmail,
-      access_token: testAccessToken,
-      refresh_token: testRefreshToken,
-      token_expires_at: new Date(Date.now() + 3600000).toISOString(),
-      is_active: true,
-      daily_send_count: 0,
-      daily_send_reset_at: new Date().toISOString(),
-      last_sent_at: null,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    };
+async function refreshAccessToken(refreshToken: string): Promise<{ access_token: string; expires_in: number } | null> {
+  try {
+    const response = await fetch('https://oauth2.googleapis.com/token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        client_id: GOOGLE_CLIENT_ID,
+        client_secret: GOOGLE_CLIENT_SECRET,
+        refresh_token: refreshToken,
+        grant_type: 'refresh_token',
+      }),
+    });
+    
+    if (!response.ok) {
+      console.error('[Gmail] Token refresh failed:', await response.text());
+      return null;
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('[Gmail] Token refresh error:', error);
+    return null;
   }
-  
-  // Check in-memory storage
-  const key = accountEmail ? `${tenantId}:${accountEmail}` : tenantId;
-  return gmailAccounts.get(key) || null;
 }
 
 /**
- * Register a Gmail account (called after OAuth flow)
+ * Tool handler - uses database for token storage
  */
-export function registerGmailAccount(tenantId: string, account: GmailAccount): void {
-  const key = `${tenantId}:${account.email}`;
-  gmailAccounts.set(key, account);
-  gmailAccounts.set(tenantId, account); // Set as default
-  console.log(`[Gmail] Registered account ${account.email} for tenant ${tenantId}`);
-}
-
-/**
- * Tool handler
- */
-async function sendGmailHandler(
+export async function sendGmailHandler(
   input: SendGmailInput,
   context: { tenantId: string }
 ): Promise<SendGmailOutput> {
   try {
-    // Get Gmail account
-    const account = await getGmailAccount(context.tenantId, input.accountEmail);
+    // Dynamic import to avoid circular dependency issues
+    const { getIntegration, saveIntegration } = await import('@oneclaw/database');
     
-    if (!account) {
+    // Get integration from database
+    const integration = await getIntegration(context.tenantId, 'google');
+    
+    if (!integration) {
       return {
         success: false,
         error: 'No Gmail account connected. Please connect Gmail via OAuth first.',
       };
     }
     
-    // Check rate limits
-    if (account.daily_send_count >= GMAIL_LIMITS.DAILY_SEND_LIMIT_PER_ACCOUNT) {
-      return {
-        success: false,
-        error: `Daily send limit reached (${GMAIL_LIMITS.DAILY_SEND_LIMIT_PER_ACCOUNT} emails/day). Try again tomorrow.`,
-      };
-    }
+    let accessToken = integration.access_token;
+    const expiresAt = integration.token_expires_at ? new Date(integration.token_expires_at) : new Date(0);
     
-    if (account.last_sent_at) {
-      const timeSinceLastSend = Date.now() - new Date(account.last_sent_at).getTime();
-      if (timeSinceLastSend < GMAIL_LIMITS.MIN_SEND_DELAY_MS) {
-        const waitSeconds = Math.ceil((GMAIL_LIMITS.MIN_SEND_DELAY_MS - timeSinceLastSend) / 1000);
+    // Refresh token if expired or expiring soon
+    if (expiresAt.getTime() - Date.now() < 60 * 1000 && integration.refresh_token) {
+      console.log('[Gmail] Refreshing expired access token...');
+      const refreshed = await refreshAccessToken(integration.refresh_token);
+      if (refreshed) {
+        accessToken = refreshed.access_token;
+        // Update in database
+        await saveIntegration(context.tenantId, 'google', {
+          accessToken: refreshed.access_token,
+          refreshToken: integration.refresh_token,
+          expiresAt: new Date(Date.now() + refreshed.expires_in * 1000),
+          scopes: integration.scopes || [],
+        });
+      } else {
         return {
           success: false,
-          error: `Rate limited. Please wait ${waitSeconds} seconds before sending another email.`,
+          error: 'Failed to refresh Gmail token. Please reconnect Gmail.',
         };
       }
     }
@@ -119,23 +110,18 @@ async function sendGmailHandler(
     // Create Gmail client and send
     const gmailClient = createGmailClient();
     
-    const result = await gmailClient.sendEmail(account, {
+    const result = await gmailClient.sendEmailWithToken(accessToken, {
       to: input.to,
       subject: input.subject,
       body: input.body,
       fromName: input.fromName,
     });
     
-    // Update account stats (in production, update database)
-    account.daily_send_count++;
-    account.last_sent_at = result.sent_at;
-    
     return {
       success: true,
-      messageId: result.gmail_message_id,
-      threadId: result.gmail_thread_id,
-      sentFrom: account.email,
-      sentAt: result.sent_at,
+      messageId: result.id,
+      threadId: result.threadId,
+      sentAt: new Date().toISOString(),
     };
     
   } catch (error) {

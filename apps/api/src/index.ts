@@ -15,7 +15,7 @@ import { logger } from 'hono/logger';
 import { healthHandler } from './routes/health';
 import { stripeWebhookHandler } from './routes/stripe';
 import { googleAuthHandler, googleCallbackHandler } from './routes/oauth';
-import { getGoogleTokenHandler, sendGmailHandler, getGmailStatusHandler, getGmailAccountHandler } from './routes/gmail';
+import { getGoogleTokenHandler, sendGmailHandler, getGmailStatusHandler, getGmailAccountHandler, getGmailAccountsHandler, disconnectGmailHandler } from './routes/gmail';
 import { emailQueueCronHandler } from './services/email-queue-processor';
 import { 
   nablWorkflowHandler, 
@@ -63,6 +63,8 @@ app.post('/api/v1/oauth/google/token', getGoogleTokenHandler);
 app.post('/api/v1/oauth/google/send', sendGmailHandler);
 app.get('/api/v1/oauth/google/status', getGmailStatusHandler);
 app.get('/api/v1/oauth/google/account', getGmailAccountHandler);
+app.get('/api/v1/oauth/google/accounts', getGmailAccountsHandler);
+app.post('/api/v1/oauth/google/disconnect', disconnectGmailHandler);
 
 // OneClaw Universal Workflow API - framework agnostic
 app.post('/api/v1/workflow', nablWorkflowHandler);

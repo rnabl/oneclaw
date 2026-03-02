@@ -353,6 +353,29 @@ export async function getUserIntegrations(userId: string): Promise<Integration[]
 }
 
 /**
+ * Delete an integration (disconnect OAuth)
+ */
+export async function deleteIntegration(
+  userId: string,
+  provider: 'google' | 'apple' | 'microsoft'
+): Promise<boolean> {
+  const supabase = getSupabaseAdminClient();
+
+  const { error } = await supabase
+    .from('integrations')
+    .delete()
+    .eq('user_id', userId)
+    .eq('provider', provider);
+
+  if (error) {
+    console.error('[DB] Error deleting integration:', error);
+    throw error;
+  }
+
+  return true;
+}
+
+/**
  * Save OpenClaw instance config for a user
  */
 export async function saveOpenClawConfig(
