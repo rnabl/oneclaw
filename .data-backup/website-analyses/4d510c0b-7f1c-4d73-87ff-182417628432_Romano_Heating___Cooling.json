@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "While Romano Heating & Cooling has a solid foundation with good NAP consistency and some FAQ content, AI assistants are unlikely to cite them prominently due to insufficient authority signals and limited conversational content.",
+    "quick_wins": [
+      "Expand FAQ content with more detailed, conversational queries and answers.",
+      "Implement HowTo schema to demonstrate expertise in common HVAC tasks."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with a high rating, photos, and accurate contact information, but it lacks regular posts and active Q&A engagement.",
+    "critical_issues": [
+      "No recent Google posts to engage users and improve visibility.",
+      "Q&A section is inactive and not utilized to address common customer questions."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected across platforms.",
+    "action_items": [
+      "Maintain current NAP consistency across all directories and platforms.",
+      "Regularly monitor for any inconsistencies or new citation opportunities."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema enhancements (e.g., address, geo-coordinates, opening hours).",
+    "No FAQPage schema to highlight common customer questions and answers.",
+    "No HowTo schema to demonstrate expertise in HVAC services."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content limits AI recognition.",
+    "invisible_for": "Queries related to 'best HVAC services in Roseville' or 'how to fix a furnace'.",
+    "low_hanging_fruit": "Adding FAQPage schema and expanding existing FAQ content.",
+    "authority_opportunity": "Showcase certifications, awards, and detailed case studies to establish authority."
+  },
+  "agency_pitch": {
+    "hook": "Be the HVAC authority AI assistants trust and recommend.",
+    "pain_point": "Without stronger AI visibility, Romano Heating & Cooling misses out on 40% of potential leads from voice and AI-driven searches.",
+    "proof_point": "Competitors with better structured data and conversational content rank higher in AI search results.",
+    "solution": "Our AEO approach integrates enhanced schema markup, conversational content, and authority signals to make Romano the go-to HVAC expert for AI assistants.",
+    "impact_estimate": "Expect a 30% increase in AI-driven leads within six months.",
+    "urgency": "As AI adoption grows, competitors will capture market share if Romano doesn't act now."
+  },
+  "email_subject_line": "Unlock AI-driven growth for Romano Heating & Cooling",
+  "opening_line": "We analyzed your website and identified key opportunities to boost your visibility with AI assistants.",
+  "cta": "Let's discuss how we can enhance your AEO strategy to capture more AI-driven leads.",
+  "analyzed_at": "2026-02-26T16:01:22.400Z",
+  "lead_id": "4d510c0b-7f1c-4d73-87ff-182417628432",
+  "business_name": "Romano Heating & Cooling",
+  "website": "https://www.romanoheatingandcooling.com/",
+  "location": "Roseville, California",
+  "page_title": "&quot;Your Trusted HVAC Partner for Fall Heating | Romano Heating &amp; Cooling services, Roseville, Rocklin, Folsom &amp; Eldorado&quot;",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.7,
+  "gbp_review_count": 89,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 62,
+  "aeo_readiness": {
+    "score": 55,
+    "summary": "AI assistants are unlikely to cite Autumn Heating and Cooling due to low content depth and minimal authority signals, despite having foundational SEO elements in place.",
+    "quick_wins": [
+      "Expand content to include detailed service explanations and unique value propositions.",
+      "Implement a FAQ schema to address common HVAC queries and improve AI visibility."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 30,
+    "found": false,
+    "summary": "Google Business Profile is not optimized or visible, severely limiting local search presence.",
+    "critical_issues": [
+      "GBP not found, making the business invisible in local AI-driven searches.",
+      "Lack of photos, posts, and Q&A to engage potential customers and improve local SEO."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Focus on expanding citations to industry-specific directories for added authority."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for common HVAC tasks"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "The website lacks depth in content and authority signals, making it less likely for AI to recommend it.",
+    "invisible_for": "Queries related to HVAC services in Kansas City, MO.",
+    "low_hanging_fruit": "Implementing FAQ schema and expanding service pages with conversational content.",
+    "authority_opportunity": "Highlighting certifications, partnerships, and customer testimonials to establish expertise."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by making your business the go-to HVAC expert in Kansas City.",
+    "pain_point": "Without AI optimization, you're missing out on 40% of potential leads from voice and AI search users.",
+    "proof_point": "Your GBP is not found, and your website lacks the content depth and schema markup that AI models favor.",
+    "solution": "Our AEO approach will enhance your content, optimize your GBP, and implement strategic schema to make your business stand out to AI models.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 3 months.",
+    "urgency": "Competitors are already optimizing for AI search; the longer you wait, the more ground you lose."
+  },
+  "email_subject_line": "Boost Your AI Visibility: Optimize Your HVAC Business for the Future",
+  "opening_line": "We analyzed your website and found that while you have a solid foundation, there's a significant opportunity to improve your AI search presence.",
+  "cta": "Let's schedule a call to discuss how we can make your business the top choice for AI-driven HVAC searches.",
+  "analyzed_at": "2026-02-26T16:01:01.250Z",
+  "lead_id": "331e50eb-97db-4edb-83f1-1aa02529cf9c",
+  "business_name": "Autumn LLC",
+  "website": "https://autumnheatingandcoolingkc.com/",
+  "location": "Kansas City, MO",
+  "page_title": "Autumn Heating and Cooling LLC | furnace repair | Kansas City, MO, USA",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": null,
+  "gbp_review_count": null,
+  "gbp_found": false,
+  "nap_score": 100,
+  "nap_issues": []
+}

@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "AI assistants are unlikely to cite Lawhon Heating & Air due to insufficient conversational content and missing authority signals.",
+    "quick_wins": [
+      "Implement FAQ content to address common HVAC queries.",
+      "Enhance website with HowTo schema for repair and maintenance guides."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "Google Business Profile is well-optimized but lacks regular posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent posts or updates on GBP.",
+      "Q&A section is inactive and unmanaged."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly audit citations to ensure ongoing accuracy."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema enhancements for service areas and operational hours.",
+    "No FAQPage schema to address common customer queries.",
+    "HowTo schema absent for repair and maintenance guides."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of conversational content and structured data prevents AI from recognizing expertise.",
+    "invisible_for": "Queries related to 'HVAC repair in Georgetown' and 'furnace maintenance tips'.",
+    "low_hanging_fruit": "Adding FAQ content and HowTo schema to address common HVAC issues.",
+    "authority_opportunity": "Positioning as local HVAC experts by showcasing certifications, awards, and detailed service guides."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by making Lawhon Heating & Air the go-to HVAC expert in Georgetown.",
+    "pain_point": "Without AI optimization, they are missing out on 40% of potential leads from voice and AI search.",
+    "proof_point": "Their website lacks FAQ content and structured data, making it less likely for AI assistants to cite them.",
+    "solution": "Implement AEO strategies, including FAQ content, HowTo schema, and GBP engagement to boost AI visibility.",
+    "impact_estimate": "Expect a 30% increase in AI-driven leads within 6 months.",
+    "urgency": "Competitors are already optimizing for AI, so acting now is crucial to stay ahead."
+  },
+  "email_subject_line": "Maximize Your AI Reach: Are You Ready for the Future of HVAC Search?",
+  "opening_line": "We analyzed your website and found that while your services are top-notch, your online presence isn't fully optimized for AI search.",
+  "cta": "Let's schedule a call to discuss how we can make your business the top choice for AI-driven HVAC searches.",
+  "analyzed_at": "2026-02-26T16:09:02.023Z",
+  "lead_id": "b572a54a-f9e4-4808-b56e-75dc8144365e",
+  "business_name": "Lawhon Heating & Air",
+  "website": "https://lawhonhvac.com/",
+  "location": "Georgetown, Texas",
+  "page_title": "Air Conditioner Repair & Furnace Repair Georgetown | Lawhon Heating & Air",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.9,
+  "gbp_review_count": 138,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

@@ -709,3 +709,231 @@ export const SEARCH_BUSINESSES_TOOL: ToolDefinition = {
   createdAt: new Date(),
   updatedAt: new Date(),
 };
+
+// =============================================================================
+// WORKFLOW CHECKPOINT TOOLS
+// =============================================================================
+
+const ResumeWorkflowInput = z.object({
+  userId: z.string().describe('User ID for access control'),
+  runId: z.string().describe('Workflow run ID to resume'),
+});
+
+const ResumeWorkflowOutput = z.object({
+  success: z.boolean(),
+  runId: z.string(),
+  status: z.string(),
+  message: z.string(),
+});
+
+export const RESUME_WORKFLOW_TOOL: ToolDefinition = {
+  id: 'resume-workflow',
+  name: 'Resume Failed Workflow',
+  description: 'Resume a failed workflow from its last checkpoint. Recovers all intermediate data and continues execution.',
+  version: '1.0.0',
+  inputSchema: ResumeWorkflowInput,
+  outputSchema: ResumeWorkflowOutput,
+  requiredSecrets: ['supabase'],
+  networkPolicy: {
+    allowedDomains: ['*.supabase.co'],
+    blockedDomains: [],
+    allowLocalhost: false,
+  },
+  costClass: 'cheap',
+  estimatedCostUsd: 0.001,
+  retryPolicy: {
+    maxAttempts: 2,
+    backoffMs: 1000,
+    backoffMultiplier: 2,
+    retryableErrors: ['NETWORK_ERROR', 'TIMEOUT'],
+  },
+  timeoutMs: 30000,
+  idempotent: true,
+  isPublic: true,
+  tags: ['workflow', 'checkpoint', 'recovery', 'resume'],
+  createdAt: new Date(),
+  updatedAt: new Date(),
+};
+
+const ListResumableWorkflowsInput = z.object({
+  userId: z.string().describe('User ID for access control'),
+  limit: z.number().optional().default(20).describe('Max workflows to return'),
+});
+
+const ListResumableWorkflowsOutput = z.object({
+  workflows: z.array(z.object({
+    runId: z.string(),
+    workflowId: z.string(),
+    status: z.string(),
+    currentStep: z.number(),
+    totalSteps: z.number(),
+    failedAt: z.string(),
+    errorMessage: z.string().nullable(),
+  })),
+  total: z.number(),
+});
+
+export const LIST_RESUMABLE_WORKFLOWS_TOOL: ToolDefinition = {
+  id: 'list-resumable-workflows',
+  name: 'List Resumable Workflows',
+  description: 'List all workflows that failed and can be resumed from checkpoints.',
+  version: '1.0.0',
+  inputSchema: ListResumableWorkflowsInput,
+  outputSchema: ListResumableWorkflowsOutput,
+  requiredSecrets: ['supabase'],
+  networkPolicy: {
+    allowedDomains: ['*.supabase.co'],
+    blockedDomains: [],
+    allowLocalhost: false,
+  },
+  costClass: 'free',
+  estimatedCostUsd: 0,
+  retryPolicy: {
+    maxAttempts: 2,
+    backoffMs: 1000,
+    backoffMultiplier: 2,
+    retryableErrors: ['NETWORK_ERROR', 'TIMEOUT'],
+  },
+  timeoutMs: 10000,
+  idempotent: true,
+  isPublic: true,
+  tags: ['workflow', 'checkpoint', 'list'],
+  createdAt: new Date(),
+  updatedAt: new Date(),
+};
+
+// =============================================================================
+// EMAIL APPROVAL TOOLS
+// =============================================================================
+
+const GetPendingEmailsInput = z.object({
+  userId: z.string().describe('User ID for access control'),
+  limit: z.number().optional().default(50).describe('Max emails to return'),
+});
+
+const GetPendingEmailsOutput = z.object({
+  emails: z.array(z.object({
+    id: z.string(),
+    leadId: z.string(),
+    businessName: z.string(),
+    ownerEmail: z.string(),
+    subject: z.string(),
+    body: z.string(),
+    createdAt: z.string(),
+  })),
+  total: z.number(),
+});
+
+export const GET_PENDING_EMAILS_TOOL: ToolDefinition = {
+  id: 'get-pending-emails',
+  name: 'Get Pending Email Drafts',
+  description: 'Retrieve all pending email drafts awaiting approval for outreach campaigns.',
+  version: '1.0.0',
+  inputSchema: GetPendingEmailsInput,
+  outputSchema: GetPendingEmailsOutput,
+  requiredSecrets: ['supabase'],
+  networkPolicy: {
+    allowedDomains: ['*.supabase.co'],
+    blockedDomains: [],
+    allowLocalhost: false,
+  },
+  costClass: 'free',
+  estimatedCostUsd: 0,
+  retryPolicy: {
+    maxAttempts: 2,
+    backoffMs: 1000,
+    backoffMultiplier: 2,
+    retryableErrors: ['NETWORK_ERROR', 'TIMEOUT'],
+  },
+  timeoutMs: 10000,
+  idempotent: true,
+  isPublic: true,
+  tags: ['email', 'outreach', 'approval', 'campaign'],
+  createdAt: new Date(),
+  updatedAt: new Date(),
+};
+
+const ApproveEmailInput = z.object({
+  userId: z.string().describe('User ID for access control'),
+  emailId: z.string().describe('Email campaign ID to approve'),
+  edits: z.object({
+    subject: z.string().optional(),
+    body: z.string().optional(),
+  }).optional().describe('Optional edits to apply before approval'),
+});
+
+const ApproveEmailOutput = z.object({
+  success: z.boolean(),
+  emailId: z.string(),
+  message: z.string(),
+});
+
+export const APPROVE_EMAIL_TOOL: ToolDefinition = {
+  id: 'approve-email',
+  name: 'Approve Email Draft',
+  description: 'Approve an email draft for sending. Can optionally edit subject/body before approval.',
+  version: '1.0.0',
+  inputSchema: ApproveEmailInput,
+  outputSchema: ApproveEmailOutput,
+  requiredSecrets: ['supabase'],
+  networkPolicy: {
+    allowedDomains: ['*.supabase.co'],
+    blockedDomains: [],
+    allowLocalhost: false,
+  },
+  costClass: 'free',
+  estimatedCostUsd: 0,
+  retryPolicy: {
+    maxAttempts: 2,
+    backoffMs: 1000,
+    backoffMultiplier: 2,
+    retryableErrors: ['NETWORK_ERROR', 'TIMEOUT'],
+  },
+  timeoutMs: 5000,
+  idempotent: true,
+  isPublic: true,
+  tags: ['email', 'outreach', 'approval', 'campaign'],
+  createdAt: new Date(),
+  updatedAt: new Date(),
+};
+
+const RejectEmailInput = z.object({
+  userId: z.string().describe('User ID for access control'),
+  emailId: z.string().describe('Email campaign ID to reject'),
+  reason: z.string().optional().describe('Optional reason for rejection'),
+});
+
+const RejectEmailOutput = z.object({
+  success: z.boolean(),
+  emailId: z.string(),
+  message: z.string(),
+});
+
+export const REJECT_EMAIL_TOOL: ToolDefinition = {
+  id: 'reject-email',
+  name: 'Reject Email Draft',
+  description: 'Reject an email draft. Will not be sent.',
+  version: '1.0.0',
+  inputSchema: RejectEmailInput,
+  outputSchema: RejectEmailOutput,
+  requiredSecrets: ['supabase'],
+  networkPolicy: {
+    allowedDomains: ['*.supabase.co'],
+    blockedDomains: [],
+    allowLocalhost: false,
+  },
+  costClass: 'free',
+  estimatedCostUsd: 0,
+  retryPolicy: {
+    maxAttempts: 2,
+    backoffMs: 1000,
+    backoffMultiplier: 2,
+    retryableErrors: ['NETWORK_ERROR', 'TIMEOUT'],
+  },
+  timeoutMs: 5000,
+  idempotent: true,
+  isPublic: true,
+  tags: ['email', 'outreach', 'approval', 'campaign'],
+  createdAt: new Date(),
+  updatedAt: new Date(),
+};

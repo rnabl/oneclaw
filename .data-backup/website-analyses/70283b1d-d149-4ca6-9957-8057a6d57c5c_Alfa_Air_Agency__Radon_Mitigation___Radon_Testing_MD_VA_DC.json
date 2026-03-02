@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 78,
+  "aeo_readiness": {
+    "score": 75,
+    "summary": "The business has a strong foundation for AI visibility but lacks conversational content and authority signals to ensure AI models prioritize them in search results.",
+    "quick_wins": [
+      "Expand FAQ content with more detailed, conversational answers.",
+      "Implement HowTo schema for radon testing and mitigation processes."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with photos, reviews, and contact information, but lacks regular posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent posts or updates on GBP.",
+      "No engagement with customer Q&A."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly monitor for any inconsistencies or new citation opportunities."
+    ]
+  },
+  "schema_gaps": [
+    "Missing FAQPage schema",
+    "No HowTo schema implemented",
+    "LocalBusiness schema could be enhanced with more detailed service descriptions"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of conversational content and authority signals.",
+    "invisible_for": "Queries related to detailed radon testing and mitigation processes.",
+    "low_hanging_fruit": "Implement FAQPage and HowTo schema to capture AI attention for common user queries.",
+    "authority_opportunity": "Leverage certifications and expertise to create authoritative content that AI models prioritize."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by becoming the authoritative voice in radon testing and mitigation.",
+    "pain_point": "Without AI-ready content and authority signals, they are missing out on 40% of potential leads from AI assistants.",
+    "proof_point": "Their GBP is strong, but AI models prioritize businesses with conversational content and detailed schema markup.",
+    "solution": "Our AEO approach integrates detailed schema, conversational content, and authority signals to ensure AI models cite and recommend their services.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 3 months.",
+    "urgency": "Competitors are already optimizing for AI search; waiting means losing ground and potential customers."
+  },
+  "email_subject_line": "Dominate AI Search for Radon Services in MD, VA, DC",
+  "opening_line": "We analyzed your website and identified key opportunities to enhance your AI visibility and attract more qualified leads.",
+  "cta": "Let’s schedule a call to discuss how we can optimize your site for AI search and position your business as the go-to radon expert.",
+  "analyzed_at": "2026-02-26T16:21:21.559Z",
+  "lead_id": "70283b1d-d149-4ca6-9957-8057a6d57c5c",
+  "business_name": "Alfa Air Agency -Radon Mitigation | Radon Testing MD VA DC",
+  "website": "https://aaaradontesting.com/",
+  "location": "Bethesda, Maryland",
+  "page_title": "Radon Test Montgomery County MD | Radon Mitigation Contractor DMV",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.9,
+  "gbp_review_count": 49,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

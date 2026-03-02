@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "While the website has foundational elements like FAQ content and contact methods, it lacks the depth of conversational content and structured data needed for AI assistants to confidently cite or recommend Aire Serv of North Atlanta.",
+    "quick_wins": [
+      "Implement a dedicated FAQ schema to enhance AI understanding of common customer queries.",
+      "Incorporate more conversational content that aligns with AI query patterns."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with a high rating, photos, and accurate contact information, but it lacks regular posts and active Q&A engagement.",
+    "critical_issues": [
+      "No recent posts or updates on GBP.",
+      "No engagement in the Q&A section to address potential customer concerns."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected across platforms.",
+    "action_items": [
+      "Maintain current NAP consistency across all directories.",
+      "Regularly monitor citations for any discrepancies."
+    ]
+  },
+  "schema_gaps": [
+    "Missing FAQPage schema despite having FAQ content.",
+    "LocalBusiness schema lacks detailed service descriptions.",
+    "No HowTo schema for common HVAC maintenance tasks."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content limits AI's ability to confidently cite Aire Serv.",
+    "invisible_for": "Queries related to 'emergency HVAC services in North Atlanta' or 'best HVAC maintenance tips'.",
+    "low_hanging_fruit": "Adding FAQPage schema and expanding conversational content.",
+    "authority_opportunity": "Positioning as HVAC experts through detailed service descriptions, customer testimonials, and media mentions."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by making Aire Serv the go-to HVAC expert in North Atlanta.",
+    "pain_point": "Without AI-ready content and structured data, Aire Serv misses out on 40% of potential leads from AI assistants.",
+    "proof_point": "Competitors with AI-optimized content and structured data receive higher visibility in AI-driven search results.",
+    "solution": "Our AEO approach integrates structured data, conversational content, and authority signals to ensure Aire Serv is cited by AI assistants and ranks for key queries.",
+    "impact_estimate": "Expect a 30% increase in AI-driven leads within the first 6 months.",
+    "urgency": "Waiting means losing ground to competitors who are already optimizing for AI search."
+  },
+  "email_subject_line": "Unlock AI-Ready HVAC Leads for Aire Serv of North Atlanta",
+  "opening_line": "We analyzed your website and identified key opportunities to enhance your AI visibility and attract more HVAC leads.",
+  "cta": "Let's schedule a call to discuss how we can optimize your online presence for AI-driven search.",
+  "analyzed_at": "2026-02-26T16:24:53.761Z",
+  "lead_id": "ffd10725-cdf3-40da-9493-03dd3e649003",
+  "business_name": "Aire Serv of North Atlanta",
+  "website": "https://www.aireserv.com/north-atlanta//?cid=LSTL_ASV-US000187&utm_source=gmb&utm_campaign=local&utm_medium=organic?cid=LSTL_ASV-US000187&utm_source=gmb&utm_campaign=local&utm_medium=organic",
+  "location": "Sandy Springs, GA",
+  "page_title": "North Atlanta HVAC Services | HVAC in North Atlanta | Aire Serv",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 5,
+  "gbp_review_count": 52,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

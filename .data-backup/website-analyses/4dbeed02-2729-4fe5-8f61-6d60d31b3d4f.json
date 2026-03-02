@@ -1,0 +1,54 @@
+{
+  "overall_aeo_score": 55,
+  "aeo_readiness": {
+    "score": 60,
+    "summary": "The business has basic AEO elements in place, such as schema markup and localized content, but lacks depth in content optimization, reviews, and structured data implementation.",
+    "quick_wins": [
+      "Implement a review generation strategy to build a strong Google Business Profile with positive reviews.",
+      "Optimize website content with location-specific keywords and detailed service descriptions.",
+      "Enhance the website's internal linking structure to improve navigation and SEO."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 30,
+    "found": "The business has a Google Business Profile (GBP) but lacks reviews and detailed information.",
+    "summary": "The GBP is incomplete and underutilized, with no reviews, which significantly impacts local search visibility and customer trust.",
+    "critical_issues": [
+      "No customer reviews, which are crucial for local SEO and trust-building.",
+      "Incomplete business information, such as missing service areas or specific service details.",
+      "Lack of regular updates or posts to engage with potential customers."
+    ]
+  },
+  "nap_citations": {
+    "score": 50,
+    "summary": "The business has consistent NAP (Name, Address, Phone Number) information on its website but lacks citations on major directories and local listings.",
+    "action_items": [
+      "Create and verify listings on major directories such as Yelp, Bing Places, and Apple Maps.",
+      "Ensure NAP consistency across all online platforms, including social media and local directories.",
+      "Monitor and update citations regularly to maintain accuracy."
+    ]
+  },
+  "schema_gaps": [
+    "Service schema for detailed service descriptions and pricing.",
+    "Review schema to highlight customer testimonials and ratings.",
+    "Local business schema with additional details such as opening hours and payment methods."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of customer reviews and detailed content optimization.",
+    "invisible_for": "Users searching for specific HVAC or plumbing services in Georgetown, TX.",
+    "low_hanging_fruit": "Implementing a review generation strategy and optimizing existing content with location-specific keywords.",
+    "authority_opportunity": "Creating high-quality, informative content such as blog posts or guides on common HVAC and plumbing issues to establish the business as a local authority."
+  },
+  "analyzed_at": "2026-02-27T04:09:28.399Z",
+  "lead_id": "4dbeed02-2729-4fe5-8f61-6d60d31b3d4f",
+  "business_name": "Blue Ribbon Cooling, Heating, Plumbing, & Electrical | Plumber and HVAC Contractors Georgetown, TX",
+  "website": "https://www.blueribbonservices.com/plumber-in-georgetown-tx/?utm_source=google&utm_medium=gmb&utm_campaign=brs%20-%20gbp%20-%20georgetown",
+  "location": "Georgetown, Texas",
+  "page_title": "Plumber in Georgetown, TX | Reliable Plumbing Services",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

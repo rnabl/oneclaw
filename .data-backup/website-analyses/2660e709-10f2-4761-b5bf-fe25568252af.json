@@ -1,0 +1,53 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "The website has basic AEO elements in place, such as schema markup and relevant content, but lacks depth in content optimization, keyword targeting, and user engagement features.",
+    "quick_wins": [
+      "Implement a review generation strategy to build Google reviews and improve local SEO.",
+      "Optimize meta tags and headers with targeted keywords related to auto repair and local search terms.",
+      "Enhance content with location-specific information and detailed service descriptions."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 50,
+    "found": "Google Business Profile (GBP) is not fully optimized; the business has no reviews and limited information.",
+    "summary": "The GBP is incomplete and lacks engagement. The absence of reviews and potentially incomplete business information are critical issues.",
+    "critical_issues": [
+      "No Google reviews, which impacts local search visibility and trust.",
+      "Incomplete or unoptimized business description and service listings.",
+      "Lack of regular updates or posts on the GBP."
+    ]
+  },
+  "nap_citations": {
+    "score": 60,
+    "summary": "The business has consistent NAP (Name, Address, Phone Number) information on its website, but citations on other platforms need verification and enhancement.",
+    "action_items": [
+      "Audit and update NAP information on major directories such as Yelp, Bing, and Yellow Pages.",
+      "Ensure NAP consistency across all online platforms, including social media profiles.",
+      "Claim and verify the business on relevant local directories to improve local SEO."
+    ]
+  },
+  "schema_gaps": [
+    "No FAQPage schema to address common customer questions.",
+    "Missing Review schema to highlight customer testimonials and feedback.",
+    "No LocalBusiness schema with detailed service area information."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of comprehensive, SEO-optimized content that targets local search queries and user intent.",
+    "invisible_for": "Users searching for specific auto repair services or local businesses in Georgetown, TX.",
+    "low_hanging_fruit": "Adding location-based keywords and creating blog content focused on common car maintenance issues.",
+    "authority_opportunity": "Developing content that establishes the business as an expert in auto repair, such as guides, tips, and tutorials."
+  },
+  "analyzed_at": "2026-02-27T03:34:51.333Z",
+  "lead_id": "2660e709-10f2-4761-b5bf-fe25568252af",
+  "business_name": "Christian Brothers Automotive Westinghouse Road",
+  "website": "https://www.cbac.com/westinghouse-road/?utm_source=GMB&utm_medium=organic&utm_campaign=westinghouse-road&utm_content=website-cta",
+  "location": "Georgetown, Texas",
+  "page_title": "Car Shop in Georgetown, TX | Christian Brothers Automotive",
+  "has_schema": true,
+  "detected_schemas": [
+    "Microdata"
+  ],
+  "gbp_found": false
+}

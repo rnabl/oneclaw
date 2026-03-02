@@ -1,0 +1,64 @@
+{
+  "overall_aeo_score": 68,
+  "aeo_readiness": {
+    "score": 55,
+    "summary": "AI assistants are unlikely to cite Ethan Clark Air Conditioning due to the absence of structured data and conversational content. They lack visibility in AI-driven search results.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup",
+      "Create an FAQ section with structured data"
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with a high rating, photos, and accurate information, but posts and Q&A engagement are missing.",
+    "critical_issues": [
+      "No recent posts on GBP",
+      "Lack of Q&A engagement"
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Continue monitoring for consistency",
+      "Expand citations to additional local directories"
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for common HVAC tasks",
+    "No Product schema for services offered"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content",
+    "invisible_for": "Queries related to HVAC services in Houston",
+    "low_hanging_fruit": "Adding LocalBusiness and FAQ schema markup",
+    "authority_opportunity": "Positioning as HVAC experts through detailed HowTo guides and rich content"
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for answer engines.",
+    "pain_point": "Without AI optimization, they are missing out on 40% of potential leads from voice and AI search.",
+    "proof_point": "Their website lacks essential schema markup and conversational content, making it invisible to AI assistants.",
+    "solution": "Implement structured data, create FAQ content, and optimize for conversational queries to boost AI visibility.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within 3-6 months.",
+    "urgency": "Competitors are already optimizing for AI, and waiting means losing market share."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads for Your HVAC Business",
+  "opening_line": "We analyzed your website and identified critical gaps in AI optimization that are likely costing you leads.",
+  "cta": "Let's schedule a call to discuss how we can optimize your online presence for AI search and boost your lead generation.",
+  "analyzed_at": "2026-02-26T16:04:20.162Z",
+  "lead_id": "0b941a5c-188c-4144-9605-c073906efae5",
+  "business_name": "Ethan Clark Air Conditioning",
+  "website": "http://www.ethanclark.com/",
+  "location": "Houston, Texas",
+  "page_title": "Houston HVAC and Air Conditioning Company ",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": 5,
+  "gbp_review_count": 172,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 68,
+  "aeo_readiness": {
+    "score": 55,
+    "summary": "AI assistants are unlikely to cite Paschall Air Conditioning & Heating due to a lack of structured data and conversational content. They risk being overlooked in AI-driven search results.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup",
+      "Create an FAQ section with common HVAC queries"
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with high ratings, photos, and accurate hours, but lacks regular posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent Google posts",
+      "No active Q&A section management"
+    ]
+  },
+  "nap_citations": {
+    "score": 75,
+    "summary": "NAP consistency is moderate, with the address missing from the website but present on GBP. This inconsistency may confuse AI and reduce trust.",
+    "action_items": [
+      "Add the full address to the website footer",
+      "Ensure all directory listings match the GBP address"
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for common HVAC tasks"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data prevents AI from understanding and citing their services.",
+    "invisible_for": "Queries related to 'HVAC repair in Keller, TX' and '24-hour HVAC service near me'",
+    "low_hanging_fruit": "Implementing LocalBusiness schema to clarify business details for AI",
+    "authority_opportunity": "Positioning as HVAC experts by adding detailed FAQ content and HowTo guides"
+  },
+  "agency_pitch": {
+    "hook": "Get cited by AI assistants and capture the 40% of leads they're missing.",
+    "pain_point": "Without AI optimization, they're losing visibility and potential customers to competitors who are AI-ready.",
+    "proof_point": "Their website lacks essential schema markup and conversational content, making it less likely for AI to recommend them.",
+    "solution": "Our AEO approach integrates schema markup, creates FAQ content, and optimizes GBP to ensure AI models recognize and recommend their services.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within 3-6 months.",
+    "urgency": "Competitors are already optimizing for AI; the longer they wait, the more ground they lose."
+  },
+  "email_subject_line": "Unlock AI-driven leads for your HVAC business today!",
+  "opening_line": "We analyzed your website and identified critical gaps in AI optimization that could be costing you valuable leads.",
+  "cta": "Let's schedule a call to discuss how we can make your business AI-ready and capture more leads.",
+  "analyzed_at": "2026-02-26T15:52:17.951Z",
+  "lead_id": "59e49828-16ca-49ef-ac3b-0e0b80f49184",
+  "business_name": "Paschall Air Conditioning and Heating",
+  "website": "http://www.paschallairheat.com/",
+  "location": "Fort Worth, Texas",
+  "page_title": "Paschall Air Conditioning & Heating | Keller, TX HVAC Services",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": 4.9,
+  "gbp_review_count": 72,
+  "gbp_found": true,
+  "nap_score": 75,
+  "nap_issues": [
+    "Address not found on website but listed on GBP"
+  ]
+}

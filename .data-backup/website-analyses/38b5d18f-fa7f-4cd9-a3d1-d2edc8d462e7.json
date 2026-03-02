@@ -1,0 +1,59 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "The website has basic AEO elements in place, such as schema markup and some relevant content. However, there is a lack of user reviews, detailed content, and structured keyword optimization.",
+    "quick_wins": [
+      "Implement a strategy to gather and display user reviews on the website and Google.",
+      "Optimize existing content with targeted keywords related to HVAC services in Encinitas.",
+      "Enhance the website's internal linking structure to improve navigation and SEO."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 60,
+    "found": [
+      "JSON-LD",
+      "Microdata"
+    ],
+    "summary": "The website uses JSON-LD and Microdata for schema markup, which is beneficial for AEO. However, the schema implementation could be more comprehensive and detailed.",
+    "critical_issues": [
+      "Lack of detailed business information in the schema (e.g., opening hours, specific services).",
+      "No evidence of FAQ or How-To schema, which could enhance visibility for voice search."
+    ]
+  },
+  "nap_citations": {
+    "score": 50,
+    "summary": "The business has a consistent NAP (Name, Address, Phone number) on its website, but there is no evidence of citations on other platforms or directories.",
+    "action_items": [
+      "Create and verify a Google My Business profile.",
+      "List the business on relevant local directories and citation sites (e.g., Yelp, Bing Places).",
+      "Ensure NAP consistency across all platforms and directories."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "FAQPage",
+    "HowTo",
+    "Service",
+    "Review",
+    "OpeningHoursSpecification"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of user reviews and detailed schema markup.",
+    "invisible_for": "Voice search and AI-driven search features due to insufficient structured data and content.",
+    "low_hanging_fruit": "Implement FAQ and How-To schema to capture voice search queries.",
+    "authority_opportunity": "Establish the business as an authority in the HVAC niche by creating high-quality, informative content and engaging with the local community."
+  },
+  "analyzed_at": "2026-02-27T02:30:05.946Z",
+  "lead_id": "38b5d18f-fa7f-4cd9-a3d1-d2edc8d462e7",
+  "business_name": "Precision Air Inc.",
+  "website": "https://precision-ac.com/locations/encinitas/",
+  "location": "San Diego, CA",
+  "page_title": "Encinitas HVAC: Precision Air Inc. for AC Repair &amp; Install",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

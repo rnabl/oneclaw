@@ -1,0 +1,54 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "The website has basic AEO elements in place, such as schema markup and contact information, but lacks depth in content, reviews, and structured data optimization.",
+    "quick_wins": [
+      "Add customer reviews and ratings to build trust and improve local search presence.",
+      "Enhance content with location-specific keywords and detailed service descriptions.",
+      "Implement FAQ schema to address common customer queries and improve search visibility."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 60,
+    "found": "The website includes NAP (Name, Address, Phone Number) information and has a basic schema implementation.",
+    "summary": "While the NAP is consistent, the lack of Google Business Profile (GBP) and online reviews significantly impacts local search performance.",
+    "critical_issues": [
+      "No active Google Business Profile (GBP) found.",
+      "Zero customer reviews or ratings on Google."
+    ]
+  },
+  "nap_citations": {
+    "score": 75,
+    "summary": "The NAP information is consistent across the website but lacks citations on other authoritative platforms.",
+    "action_items": [
+      "Create and verify a Google Business Profile (GBP) with accurate NAP information.",
+      "List the business on local directories and citation sites like Yelp, Bing Places, and Yellow Pages."
+    ]
+  },
+  "schema_gaps": [
+    "FAQPage",
+    "Review",
+    "LocalBusiness",
+    "Service",
+    "Product"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of customer reviews and GBP listing",
+    "invisible_for": "Local search users and potential customers seeking trusted HVAC services",
+    "low_hanging_fruit": "Implementing FAQ schema and adding customer testimonials",
+    "authority_opportunity": "Engaging with local communities and industry forums to build brand authority and earn backlinks"
+  },
+  "analyzed_at": "2026-02-27T03:36:17.166Z",
+  "lead_id": "3008942f-83e3-4236-ba78-7facb3ed9cb1",
+  "business_name": "VO Heating and Cooling",
+  "website": "https://vohvac.com/",
+  "location": "Thornton, Colorado",
+  "page_title": "Homepage - VO Heating and Cooling",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

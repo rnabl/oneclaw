@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 78,
+  "aeo_readiness": {
+    "score": 75,
+    "summary": "While the website has strong foundational elements, it lacks conversational content and AI-specific optimizations to ensure visibility in AI-driven search results.",
+    "quick_wins": [
+      "Implement FAQPage schema to highlight common customer queries.",
+      "Create content that answers HVAC and plumbing questions conversationally."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with a 5-star rating, photos, and accurate hours, but lacks regular posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent posts on GBP.",
+      "No active management of Q&A section."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly monitor for any discrepancies or new citation opportunities."
+    ]
+  },
+  "schema_gaps": [
+    "Missing HowTo schema for common HVAC/plumbing tasks.",
+    "FAQPage schema could be expanded to cover more customer questions.",
+    "LocalBusiness schema is present but could be enhanced with more detailed service descriptions."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of conversational, AI-optimized content.",
+    "invisible_for": "Queries related to 'emergency HVAC services near me' or 'how to fix a leaky faucet'.",
+    "low_hanging_fruit": "Incorporate FAQ schema and create blog posts answering common HVAC/plumbing questions.",
+    "authority_opportunity": "Position the company as a local HVAC/plumbing expert by publishing detailed guides and tutorials."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for the new search landscape.",
+    "pain_point": "Without AI optimization, they are missing out on 40% of potential leads from voice and AI-assisted searches.",
+    "proof_point": "Their website lacks conversational content and FAQ schema, making it less likely to be cited by AI models.",
+    "solution": "Our AEO approach focuses on creating AI-friendly, conversational content and enhancing schema markup to boost visibility in AI-driven search results.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within 6 months.",
+    "urgency": "Competitors are already optimizing for AI search; waiting means losing ground and potential customers."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads for Warm Welcome Heating & Cooling",
+  "opening_line": "We analyzed your website and identified key opportunities to enhance your visibility in AI-driven search results.",
+  "cta": "Let's schedule a call to discuss how we can optimize your online presence for the AI search landscape.",
+  "analyzed_at": "2026-02-26T15:49:42.365Z",
+  "lead_id": "c52323ea-77f5-442c-90af-8bcd68e0b37b",
+  "business_name": "Warm Welcome Heating, Cooling, & Plumbing",
+  "website": "https://callwarmwelcome.com/",
+  "location": "Littleton, Colorado",
+  "page_title": "Trusted HVAC &amp; Plumbing Services | Warm Welcome Heating, Cooling, &amp; Plumbing",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 5,
+  "gbp_review_count": 98,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

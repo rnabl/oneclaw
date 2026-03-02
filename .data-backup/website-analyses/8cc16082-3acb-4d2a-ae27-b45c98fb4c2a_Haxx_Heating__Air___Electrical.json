@@ -1,0 +1,60 @@
+{
+  "overall_aeo_score": 68,
+  "aeo_readiness": {
+    "score": 55,
+    "summary": "AI assistants are unlikely to cite Haxx Heating due to a lack of structured data and conversational content, but there is potential for improvement with strategic optimizations.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup",
+      "Add an FAQ section with common HVAC and electrical queries"
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with a high rating, photos, and accurate hours, but posts and Q&A sections could be better utilized.",
+    "critical_issues": [
+      "No recent posts on GBP",
+      "Q&A section is not actively managed"
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": []
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for common services"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data prevents AI from recognizing Haxx as a top local service provider.",
+    "invisible_for": "Queries related to 'HVAC repair in San Jose' and 'trusted electrical services Bay Area'",
+    "low_hanging_fruit": "Implementing LocalBusiness schema to improve AI recognition",
+    "authority_opportunity": "Creating content that highlights certifications, expertise, and unique service offerings"
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by making Haxx the go-to HVAC and electrical expert in the Bay Area.",
+    "pain_point": "Without AI optimization, Haxx is missing out on 40% of potential leads from voice and AI search queries.",
+    "proof_point": "The website lacks critical schema markup and conversational content, causing AI assistants to overlook Haxx in relevant searches.",
+    "solution": "Our AEO approach integrates strategic schema implementation, conversational content, and authority-building tactics to ensure Haxx is prominently featured in AI search results.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 3 months.",
+    "urgency": "Competitors are already optimizing for AI search; the longer Haxx waits, the more ground they lose."
+  },
+  "email_subject_line": "Boost your AI visibility: Haxx's path to dominating HVAC & electrical searches",
+  "opening_line": "We analyzed your website and identified key opportunities to enhance your AI search presence and attract more qualified leads.",
+  "cta": "Let's schedule a call to discuss how we can optimize your digital strategy for AI and drive more business your way.",
+  "analyzed_at": "2026-02-26T16:14:23.351Z",
+  "lead_id": "8cc16082-3acb-4d2a-ae27-b45c98fb4c2a",
+  "business_name": "Haxx Heating, Air & Electrical",
+  "website": "https://haxxservice.com/",
+  "location": "San Jose, California",
+  "page_title": "Haxx Heating, Cooling & Electrical | HVAC & Electrical Services in Bay Area",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": 4.9,
+  "gbp_review_count": 111,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

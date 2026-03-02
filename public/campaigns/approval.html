@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Approval Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #1a1a1a;
+        }
+        .header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: #111;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #222;
+            text-align: center;
+        }
+        .stat-card .number {
+            font-size: 28px;
+            font-weight: 700;
+            color: #667eea;
+        }
+        .stat-card .label {
+            color: #888;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+        .email-card {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+        .email-header {
+            background: #1a1a1a;
+            padding: 20px;
+            border-bottom: 1px solid #222;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .business-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+        }
+        .business-details {
+            color: #888;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .score-badge {
+            background: #667eea;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .email-body {
+            padding: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            background: #0d0d0d;
+            border: 1px solid #222;
+            border-radius: 8px;
+            padding: 12px;
+            color: #e0e0e0;
+            font-size: 14px;
+            font-family: inherit;
+            resize: vertical;
+        }
+        input[type="text"]:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        textarea {
+            min-height: 200px;
+        }
+        .actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .btn-approve {
+            background: #10b981;
+            color: white;
+        }
+        .btn-approve:hover {
+            background: #059669;
+        }
+        .btn-reject {
+            background: #ef4444;
+            color: white;
+        }
+        .btn-reject:hover {
+            background: #dc2626;
+        }
+        .btn-save {
+            background: #667eea;
+            color: white;
+        }
+        .btn-save:hover {
+            background: #5568d3;
+        }
+        .btn-secondary {
+            background: #222;
+            color: #e0e0e0;
+        }
+        .btn-secondary:hover {
+            background: #333;
+        }
+        .comments {
+            margin-top: 15px;
+        }
+        .comment-box {
+            background: #0d0d0d;
+            border: 1px solid #222;
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .comment-input {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .comment-input input {
+            flex: 1;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+        }
+        .empty {
+            text-align: center;
+            padding: 60px 20px;
+            color: #888;
+        }
+        .empty h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .header h1 {
+                font-size: 24px;
+            }
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .email-header {
+                padding: 15px;
+            }
+            .business-name {
+                font-size: 18px;
+            }
+            .email-body {
+                padding: 15px;
+            }
+            .actions {
+                flex-direction: column;
+            }
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📧 Email Approval Dashboard</h1>
+            <p style="color: #888; margin-top: 10px;">Review, edit, and approve email campaigns</p>
+        </div>
+
+        <div class="stats" id="stats">
+            <div class="stat-card">
+                <div class="number" id="stat-pending">-</div>
+                <div class="label">Pending</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" id="stat-approved">-</div>
+                <div class="label">Approved</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" id="stat-rejected">-</div>
+                <div class="label">Rejected</div>
+            </div>
+        </div>
+
+        <div id="emails-container">
+            <div class="loading">Loading emails...</div>
+        </div>
+    </div>
+
+    <script>
+        // Supabase config - REPLACE WITH YOUR CREDENTIALS
+        const SUPABASE_URL = 'https://kaqatynbnaqdsfvfjlkt.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImthcWF0eW5ibmFxZHNmdmZqbGt0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA5Mjk5NTYsImV4cCI6MjA4NjUwNTk1Nn0.bVGNPQGqoEa9wEp1DgDgPhmQqqHlL5kyDPSkpZ9vA_s';
+        
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        async function loadEmails() {
+            try {
+                // Get pending emails
+                const { data: emails, error } = await supabase
+                    .from('email_campaigns')
+                    .select(`
+                        *,
+                        lead:lead_id (
+                            company_name,
+                            website,
+                            email,
+                            city,
+                            state,
+                            lead_score
+                        )
+                    `)
+                    .eq('approval_status', 'pending')
+                    .order('created_at', { ascending: false })
+                    .limit(50);
+
+                if (error) throw error;
+
+                // Get stats
+                await loadStats();
+
+                // Render emails
+                const container = document.getElementById('emails-container');
+                
+                if (!emails || emails.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty">
+                            <h2>✅ All caught up!</h2>
+                            <p>No pending emails to review.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = emails.map((email, index) => renderEmailCard(email, index)).join('');
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('emails-container').innerHTML = `
+                    <div class="empty">
+                        <h2>❌ Error loading emails</h2>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        async function loadStats() {
+            const { data: stats } = await supabase
+                .from('email_campaigns')
+                .select('approval_status');
+
+            const pending = stats?.filter(s => s.approval_status === 'pending').length || 0;
+            const approved = stats?.filter(s => s.approval_status === 'approved').length || 0;
+            const rejected = stats?.filter(s => s.approval_status === 'rejected').length || 0;
+
+            document.getElementById('stat-pending').textContent = pending;
+            document.getElementById('stat-approved').textContent = approved;
+            document.getElementById('stat-rejected').textContent = rejected;
+        }
+
+        function renderEmailCard(email, index) {
+            const lead = email.lead || {};
+            return `
+                <div class="email-card" id="email-${email.id}">
+                    <div class="email-header">
+                        <div>
+                            <div class="business-name">${lead.company_name || 'Unknown Business'}</div>
+                            <div class="business-details">
+                                ${lead.city ? lead.city + ', ' : ''}${lead.state || ''}
+                                ${lead.email ? ' • ' + lead.email : ''}
+                            </div>
+                        </div>
+                        <div class="score-badge">Score: ${lead.lead_score || 'N/A'}</div>
+                    </div>
+                    <div class="email-body">
+                        <div class="section">
+                            <div class="section-title">Subject Line</div>
+                            <input type="text" id="subject-${email.id}" value="${email.subject || ''}" placeholder="Email subject...">
+                        </div>
+                        <div class="section">
+                            <div class="section-title">Email Body</div>
+                            <textarea id="body-${email.id}" placeholder="Email body...">${email.body || ''}</textarea>
+                        </div>
+                        <div class="section">
+                            <div class="section-title">Comments / Notes</div>
+                            <div class="comment-input">
+                                <input type="text" id="comment-${email.id}" placeholder="Add a comment...">
+                                <button class="btn-secondary" onclick="addComment('${email.id}')">Add</button>
+                            </div>
+                            <div id="comments-${email.id}"></div>
+                        </div>
+                        <div class="actions">
+                            <button class="btn-save" onclick="saveEdits('${email.id}')">💾 Save Edits</button>
+                            <button class="btn-approve" onclick="approveEmail('${email.id}')">✅ Approve</button>
+                            <button class="btn-reject" onclick="rejectEmail('${email.id}')">❌ Reject</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        async function saveEdits(emailId) {
+            const subject = document.getElementById(`subject-${emailId}`).value;
+            const body = document.getElementById(`body-${emailId}`).value;
+
+            const { error } = await supabase
+                .from('email_campaigns')
+                .update({ subject, body })
+                .eq('id', emailId);
+
+            if (error) {
+                alert('Error saving: ' + error.message);
+            } else {
+                alert('✅ Saved!');
+            }
+        }
+
+        async function approveEmail(emailId) {
+            if (!confirm('Approve this email for sending?')) return;
+
+            const { error } = await supabase
+                .from('email_campaigns')
+                .update({
+                    approval_status: 'approved',
+                    approved_by: 'ryan@nabl.ai', // TODO: Get from auth
+                    approved_at: new Date().toISOString()
+                })
+                .eq('id', emailId);
+
+            if (error) {
+                alert('Error: ' + error.message);
+            } else {
+                document.getElementById(`email-${emailId}`).remove();
+                loadStats();
+            }
+        }
+
+        async function rejectEmail(emailId) {
+            const reason = prompt('Rejection reason:');
+            if (!reason) return;
+
+            const { error } = await supabase
+                .from('email_campaigns')
+                .update({
+                    approval_status: 'rejected',
+                    rejection_reason: reason,
+                    approved_by: 'ryan@nabl.ai',
+                    approved_at: new Date().toISOString()
+                })
+                .eq('id', emailId);
+
+            if (error) {
+                alert('Error: ' + error.message);
+            } else {
+                document.getElementById(`email-${emailId}`).remove();
+                loadStats();
+            }
+        }
+
+        function addComment(emailId) {
+            const input = document.getElementById(`comment-${emailId}`);
+            const comment = input.value.trim();
+            if (!comment) return;
+
+            const commentsDiv = document.getElementById(`comments-${emailId}`);
+            const commentEl = document.createElement('div');
+            commentEl.className = 'comment-box';
+            commentEl.textContent = comment;
+            commentsDiv.appendChild(commentEl);
+
+            input.value = '';
+        }
+
+        // Load on page load
+        loadEmails();
+    </script>
+</body>
+</html>

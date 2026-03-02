@@ -1,0 +1,53 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "The website has basic AEO elements in place, such as schema markup and service pages, but lacks depth in content and user engagement features.",
+    "quick_wins": [
+      "Add customer reviews and testimonials to build trust and improve engagement.",
+      "Expand content on service pages with relevant keywords and detailed information.",
+      "Implement a blog section to target long-tail keywords and establish authority."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 60,
+    "found": "The website has a clear focus on HVAC services in Arizona, with specific location targeting.",
+    "summary": "The website effectively targets its primary service area but lacks detailed location-specific content and geo-targeted keywords.",
+    "critical_issues": [
+      "No dedicated location pages for cities like Gilbert, Mesa, and Tempe.",
+      "Lack of geo-targeted keywords in meta tags and content."
+    ]
+  },
+  "nap_citations": {
+    "score": 50,
+    "summary": "The business has no visible online reviews or citations, which are crucial for local search visibility.",
+    "action_items": [
+      "Create and verify a Google My Business profile.",
+      "Encourage satisfied customers to leave reviews on Google and other platforms.",
+      "Ensure consistent NAP (Name, Address, Phone Number) across all online directories."
+    ]
+  },
+  "schema_gaps": [
+    "No FAQPage schema to address common customer queries.",
+    "Missing Product schema for the HVAC systems listed on the website.",
+    "No LocalBusiness schema with detailed business information."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of user-generated content and engagement features.",
+    "invisible_for": "Users searching for local HVAC services and detailed product information.",
+    "low_hanging_fruit": "Implementing a review system and adding FAQ sections.",
+    "authority_opportunity": "Creating high-quality, informative content that establishes the business as an industry leader."
+  },
+  "analyzed_at": "2026-02-27T03:45:10.189Z",
+  "lead_id": "7e95f09f-0a9a-4a30-8331-1c24b7301798",
+  "business_name": "American Cooling And Heating",
+  "website": "https://www.americancoolingandheating.com/",
+  "location": "Gilbert, Arizona",
+  "page_title": "Arizona Air Conditioning And Heating Service",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

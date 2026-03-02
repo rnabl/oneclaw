@@ -1,0 +1,67 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "AI assistants are unlikely to cite this business due to a lack of structured conversational content and authority signals. While the website has basic SEO elements, it misses opportunities to align with AI-driven search behavior.",
+    "quick_wins": [
+      "Implement FAQ content to address common HVAC queries.",
+      "Add HowTo schema for common HVAC services and installations."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with photos, hours, and contact info, but lacks regular posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent posts or updates on GBP.",
+      "No engagement with customer Q&A on the profile."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected across platforms.",
+    "action_items": [
+      "Maintain current NAP consistency across all directories.",
+      "Regularly monitor for any discrepancies."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema details (e.g., address, geo-coordinates).",
+    "No FAQPage schema to address common customer queries.",
+    "No HowTo schema for explaining HVAC services or installations.",
+    "Missing Service schema to highlight specific HVAC offerings."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured, conversational content tailored for AI queries.",
+    "invisible_for": "Queries related to 'HVAC installation near me' or 'best heat pump services' where AI assistants seek detailed, authoritative answers.",
+    "low_hanging_fruit": "Incorporate FAQ content addressing common HVAC questions and problems.",
+    "authority_opportunity": "Position the company as an expert by publishing detailed guides on HVAC technology and energy efficiency."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by making your HVAC expertise AI-friendly.",
+    "pain_point": "Without AI-ready content, you're missing out on 40% of potential leads from voice and AI search users.",
+    "proof_point": "Competitors with structured FAQ and HowTo content are being cited by AI assistants, while your site is overlooked.",
+    "solution": "Our AEO approach integrates conversational content, strategic schema markup, and authority-building tactics to make your business the go-to HVAC expert for AI assistants.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within 3-6 months.",
+    "urgency": "Waiting means losing ground to competitors who are already optimizing for AI search."
+  },
+  "email_subject_line": "Unlock AI-Driven HVAC Leads with Our AEO Expertise",
+  "opening_line": "We analyzed your website and identified key opportunities to make your HVAC services more visible to AI search users.",
+  "cta": "Let's discuss how to make your business the top choice for AI-driven HVAC queries.",
+  "analyzed_at": "2026-02-26T15:41:57.483Z",
+  "lead_id": "59face9c-b0f6-4071-8e62-8e6e10897f5d",
+  "business_name": "Hi Tech HVAC Services Corp - 美东冷暖空调公司",
+  "website": "https://hitechhvacservices.com/",
+  "location": "Flushing, New York",
+  "page_title": "Hi Tech HVAC Services - Best Heat Pump Install &amp; Service",
+  "has_schema": true,
+  "detected_schemas": [
+    "Organization",
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.8,
+  "gbp_review_count": 152,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

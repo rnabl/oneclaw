@@ -1,0 +1,54 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "The business has a basic foundation for AEO with structured content and schema markup but lacks significant optimizations and user engagement signals.",
+    "quick_wins": [
+      "Implement a review generation strategy to build a presence on Google and other platforms.",
+      "Optimize website content with targeted local HVAC keywords and phrases.",
+      "Enhance the website's mobile responsiveness and page load speed."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 50,
+    "found": "The business has a Google Business Profile (GBP) but lacks reviews and engagement.",
+    "summary": "The GBP is not actively managed, with no reviews and minimal information. This significantly impacts local search visibility.",
+    "critical_issues": [
+      "No customer reviews on GBP.",
+      "Incomplete business information (e.g., hours, services).",
+      "Lack of regular posts or updates on GBP."
+    ]
+  },
+  "nap_citations": {
+    "score": 60,
+    "summary": "The business has consistent NAP (Name, Address, Phone Number) across major directories but lacks citations on niche and local platforms.",
+    "action_items": [
+      "Audit and ensure NAP consistency across all major and local directories.",
+      "Increase the number of citations on niche HVAC and local business directories.",
+      "Claim and update profiles on platforms like Yelp, Angi, and HomeAdvisor."
+    ]
+  },
+  "schema_gaps": [
+    "Service schema for specific HVAC services offered.",
+    "Review schema to highlight customer testimonials.",
+    "FAQ schema to address common customer questions."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of customer engagement and user-generated content.",
+    "invisible_for": "Users searching for local HVAC services with high purchase intent.",
+    "low_hanging_fruit": "Implementing a review generation strategy and optimizing GBP.",
+    "authority_opportunity": "Creating high-quality, locally-focused content and earning backlinks from local business associations or HVAC industry websites."
+  },
+  "analyzed_at": "2026-02-27T03:39:57.646Z",
+  "lead_id": "50ec6107-c791-4c76-aeea-fd1eeb3d8a2c",
+  "business_name": "Hoodview Heating & Air Conditioning",
+  "website": "http://www.hoodviewheating.com/",
+  "location": "Gresham, Oregon",
+  "page_title": "Hoodview Heating and Air Conditioning, Inc",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

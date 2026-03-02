@@ -1,0 +1,53 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "The website has a basic structure for AEO but lacks depth in content and optimization for AI search. The focus on services and locations is clear, but there is room for improvement in user engagement and content richness.",
+    "quick_wins": [
+      "Expand service pages with detailed content, FAQs, and customer testimonials.",
+      "Implement structured data for services and customer reviews to enhance search visibility.",
+      "Optimize meta titles and descriptions with relevant keywords for each service area."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 60,
+    "found": "The website includes location-based keywords in the title and content, but lacks detailed local content and GBP integration.",
+    "summary": "The business has a good foundation for local SEO with its service area coverage, but it needs to improve its local content strategy and Google Business Profile (GBP) engagement.",
+    "critical_issues": [
+      "No active GBP listing or reviews to boost local search presence.",
+      "Lack of localized content beyond service areas, such as city-specific landing pages or blog posts."
+    ]
+  },
+  "nap_citations": {
+    "score": 55,
+    "summary": "The website has consistent NAP (Name, Address, Phone Number) information, but there is no evidence of widespread citations across local directories and platforms.",
+    "action_items": [
+      "Create and verify GBP listing with accurate NAP information.",
+      "Build citations on major local directories such as Yelp, Yellow Pages, and industry-specific platforms.",
+      "Monitor and manage NAP consistency across all online platforms."
+    ]
+  },
+  "schema_gaps": [
+    "ServiceAreaSchema",
+    "LocalBusinessSchema with detailed attributes",
+    "ReviewSchema for customer testimonials"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of rich, AI-friendly content and structured data.",
+    "invisible_for": "Voice search and conversational AI due to the absence of FAQ and detailed service descriptions.",
+    "low_hanging_fruit": "Implement FAQ sections on service pages and use structured data to highlight key information.",
+    "authority_opportunity": "Develop a blog with expert HVAC advice and tips to establish thought leadership and improve AI visibility."
+  },
+  "analyzed_at": "2026-02-27T03:25:13.561Z",
+  "lead_id": "75e6636f-0e34-4502-afd2-64d0e879c6fd",
+  "business_name": "Relentless Cooling & Heating LLC",
+  "website": "https://relentlesscoolingheating.com/",
+  "location": "New Braunfels, Texas",
+  "page_title": "AC Repair, Air Conditioning Service, Heating Service &amp; Heating Repair | New Braunfels, TX, Cibolo, TX, McQueeney, TX, San Marcos, TX, Seguin, TX &amp; Schertz, TX | Relentless Cooling &amp; Heating",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

@@ -1,0 +1,63 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 65,
+    "summary": "While the business has strong local SEO foundations, it lacks the necessary structured data and conversational content to be cited by AI assistants effectively.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup.",
+      "Add an FAQ section with questions relevant to HVAC services."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with a high rating, photos, and accurate hours, but lacks regular posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent posts on GBP.",
+      "No engagement in the Q&A section."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly monitor for any inconsistencies."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema.",
+    "No FAQPage schema.",
+    "No HowTo schema for common HVAC tasks."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Absence of structured data and conversational content makes it difficult for AI models to cite the business.",
+    "invisible_for": "Queries related to emergency HVAC services and troubleshooting tips.",
+    "low_hanging_fruit": "Adding an FAQ section with questions about common HVAC issues and solutions.",
+    "authority_opportunity": "Positioning as the go-to expert by creating detailed content on HVAC maintenance and repair."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for Answer Engine Optimization.",
+    "pain_point": "Without AEO, the business misses out on 40% of potential leads from AI assistants.",
+    "proof_point": "The website lacks essential schema markup and conversational content, making it less visible to AI models.",
+    "solution": "Our AEO approach integrates structured data, FAQ content, and authority-building strategies to enhance AI visibility and drive more leads.",
+    "impact_estimate": "Expect a 30% increase in AI-driven leads within the first three months.",
+    "urgency": "Competitors are already optimizing for AI, so acting now is crucial to stay ahead."
+  },
+  "email_subject_line": "Boost Your HVAC Business with AI-Ready Optimization!",
+  "opening_line": "We analyzed your website and identified key opportunities to enhance your visibility with AI assistants.",
+  "cta": "Let's schedule a call to discuss how we can make your business AI-ready and boost your lead generation.",
+  "analyzed_at": "2026-02-26T15:44:56.032Z",
+  "lead_id": "02164ce4-d811-442e-833f-b243916df5cd",
+  "business_name": "Professional Littleton HVAC Repair",
+  "website": "http://professionallittletonhvacrepair.com/",
+  "location": "Littleton, Colorado",
+  "page_title": "Professional Littleton HVAC Repair | 24/7 Heating & Cooling Service in Littleton, CO",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": 5,
+  "gbp_review_count": 50,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

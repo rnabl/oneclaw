@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "While the website has foundational elements, it lacks the depth and structured content needed for AI assistants to confidently cite or recommend the business in response to user queries.",
+    "quick_wins": [
+      "Implement FAQ content to address common HVAC queries.",
+      "Enhance the website with HowTo schema markup for common HVAC tasks."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with a strong rating, photos, and accurate hours, but it could benefit from more regular posts and active Q&A management.",
+    "critical_issues": [
+      "No recent posts on GBP.",
+      "Lack of engagement in the Q&A section."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected across all citations.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly monitor citations for any potential discrepancies."
+    ]
+  },
+  "schema_gaps": [
+    "Missing FAQPage schema.",
+    "No HowTo schema implemented.",
+    "LocalBusiness schema could be enhanced with more detailed service information."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "The website lacks conversational and structured content tailored for AI queries.",
+    "invisible_for": "Queries related to emergency HVAC services or detailed pricing information.",
+    "low_hanging_fruit": "Adding an FAQ section addressing common HVAC issues and services.",
+    "authority_opportunity": "Positioning as HVAC experts by publishing detailed guides and obtaining certifications."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by making your HVAC services the go-to choice for AI assistants.",
+    "pain_point": "Without AI-optimized content, potential customers are choosing competitors who are AI-ready.",
+    "proof_point": "Competitors with structured content and FAQ sections are appearing more frequently in AI search results.",
+    "solution": "Our AEO approach integrates structured data, conversational content, and authority signals to ensure AI models recognize and recommend your services.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 3 months.",
+    "urgency": "AI adoption is accelerating; waiting means losing ground to competitors who are already optimizing for AI search."
+  },
+  "email_subject_line": "Boost Your HVAC Business with AI-Ready Optimization",
+  "opening_line": "We analyzed your website and identified key opportunities to enhance your visibility with AI assistants.",
+  "cta": "Let's schedule a call to discuss how we can make your HVAC services AI-friendly and boost your lead generation.",
+  "analyzed_at": "2026-02-26T15:53:40.515Z",
+  "lead_id": "9d1e92e0-d4b3-426d-8d94-0139e52451ca",
+  "business_name": "Chavez & Sons",
+  "website": "https://chavezsonshvacservices.com/tampa-fl/",
+  "location": "Tampa, Florida",
+  "page_title": "HVAC Repair & Installs in Tampa Call (813) 640-3400",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.7,
+  "gbp_review_count": 111,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

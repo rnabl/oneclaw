@@ -15,7 +15,12 @@ import {
   ENRICH_CONTACT_TOOL,
   GET_JOB_TOOL,
   LIST_JOBS_TOOL,
-  SEARCH_BUSINESSES_TOOL
+  SEARCH_BUSINESSES_TOOL,
+  RESUME_WORKFLOW_TOOL,
+  LIST_RESUMABLE_WORKFLOWS_TOOL,
+  GET_PENDING_EMAILS_TOOL,
+  APPROVE_EMAIL_TOOL,
+  REJECT_EMAIL_TOOL,
 } from './schemas';
 
 // =============================================================================
@@ -170,6 +175,15 @@ registry.register(GET_JOB_TOOL);
 registry.register(LIST_JOBS_TOOL);
 registry.register(SEARCH_BUSINESSES_TOOL);
 
+// Workflow checkpoint tools (with actual handlers)
+registry.register(RESUME_WORKFLOW_IMPL as any);
+registry.register(LIST_RESUMABLE_WORKFLOWS_IMPL as any);
+
+// Email approval tools (with actual handlers)
+registry.register(GET_PENDING_EMAILS_IMPL as any);
+registry.register(APPROVE_EMAIL_IMPL as any);
+registry.register(REJECT_EMAIL_IMPL as any);
+
 // Self-improvement tools (import and register)
 import { EXECUTE_CODE_TOOL } from '../tools/execute-code';
 import { WRITE_FILE_TOOL } from '../tools/write-file';
@@ -179,6 +193,18 @@ import { INIT_DATABASE_TOOL } from '../tools/init-database';
 import { SUPABASE_DATABASE_TOOL } from '../tools/supabase-database';
 import { SUPABASE_STORAGE_TOOL } from '../tools/supabase-storage';
 import { CHECK_AI_RANKINGS_TOOL } from '../tools/check-ai-rankings';
+
+// Import actual tool implementations (with handlers)
+import {
+  RESUME_WORKFLOW_TOOL as RESUME_WORKFLOW_IMPL,
+  LIST_RESUMABLE_WORKFLOWS_TOOL as LIST_RESUMABLE_WORKFLOWS_IMPL,
+} from '../tools/workflow-checkpoint';
+
+import {
+  GET_PENDING_EMAILS_TOOL as GET_PENDING_EMAILS_IMPL,
+  APPROVE_EMAIL_TOOL as APPROVE_EMAIL_IMPL,
+  REJECT_EMAIL_TOOL as REJECT_EMAIL_IMPL,
+} from '../tools/email-approval';
 
 registry.register(EXECUTE_CODE_TOOL as any);
 registry.register(WRITE_FILE_TOOL as any);

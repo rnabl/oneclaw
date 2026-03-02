@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 65,
+    "summary": "AI assistants are unlikely to cite Cabrera & Sons due to a lack of conversational content and structured data, but with improvements, they can become a top recommendation in local HVAC queries.",
+    "quick_wins": [
+      "Implement FAQPage schema with common HVAC questions and answers.",
+      "Add HowTo schema for common HVAC repair and installation processes."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with photos, hours, and contact info, but lacks regular posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent Google posts.",
+      "No engagement with Q&A section."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly audit citations to ensure ongoing accuracy."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema with detailed service information.",
+    "No FAQ schema to address common customer queries.",
+    "Lack of HowTo schema for explaining HVAC services and solutions."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Absence of structured data and conversational content makes them less visible to AI models.",
+    "invisible_for": "Local HVAC service queries such as 'best HVAC repair in Philadelphia'.",
+    "low_hanging_fruit": "Implementing FAQPage schema with relevant HVAC questions and answers.",
+    "authority_opportunity": "Position as HVAC experts by adding HowTo schema and detailed service explanations."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by making your HVAC expertise visible to AI assistants.",
+    "pain_point": "Without AI optimization, they are missing out on 40% of potential leads from voice and AI search.",
+    "proof_point": "Their website lacks FAQ and HowTo schema, which are crucial for AI to cite them in relevant queries.",
+    "solution": "Our AEO approach includes implementing structured data, creating conversational content, and optimizing their Google Business Profile for maximum AI visibility.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 3 months.",
+    "urgency": "Competitors are already optimizing for AI, so acting now is crucial to stay ahead in the local HVAC market."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads for Your HVAC Business in Philadelphia",
+  "opening_line": "We analyzed your website and found that while your services are top-notch, your current setup isn't fully optimized for AI search and visibility.",
+  "cta": "Let's schedule a call to discuss how we can make your business the top recommendation for AI assistants in Philadelphia.",
+  "analyzed_at": "2026-02-26T15:50:16.730Z",
+  "lead_id": "ce70b3e2-bbdf-415a-9c57-8d08df244213",
+  "business_name": "Cabrera & Sons Heating & Air Conditioning",
+  "website": "https://cabrerasonsroofingconstruction.com/philadelphia-pa-4/",
+  "location": "Philadelphia, Pennsylvania",
+  "page_title": "HVAC Repair & Installs in Philadelphia Call (267) 300-0838",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.8,
+  "gbp_review_count": 61,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

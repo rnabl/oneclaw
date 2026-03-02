@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 68,
+  "aeo_readiness": {
+    "score": 65,
+    "summary": "AI assistants are unlikely to cite Gary P. Frank, Inc. due to insufficient conversational content and limited authority signals.",
+    "quick_wins": [
+      "Implement structured FAQ schema to address common HVAC queries.",
+      "Expand content to include detailed how-to guides and problem-solving tips."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized but can benefit from more regular posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent posts or updates on GBP.",
+      "Limited engagement with customer Q&A."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly monitor for any discrepancies or new citation opportunities."
+    ]
+  },
+  "schema_gaps": [
+    "Missing FAQPage schema despite existing FAQ content.",
+    "No HowTo schema for common HVAC maintenance or installation processes.",
+    "LocalBusiness schema can be enhanced with more detailed service descriptions."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of conversational content and structured data limits AI recognition.",
+    "invisible_for": "Queries related to emergency HVAC services and energy-efficient solutions.",
+    "low_hanging_fruit": "Implementing FAQ schema and expanding service-related content.",
+    "authority_opportunity": "Position as a regional expert by publishing detailed case studies and industry insights."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by making your expertise visible to the algorithms that power tomorrow's searches.",
+    "pain_point": "Without AI optimization, 40% of potential leads are slipping through the cracks.",
+    "proof_point": "Current content lacks the structured data and conversational tone needed for AI assistants to cite the business.",
+    "solution": "Our AEO approach integrates schema markup, conversational content, and authority-building strategies to ensure AI models recognize and recommend your services.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within six months.",
+    "urgency": "Competitors are already optimizing for AI; the longer you wait, the more ground you lose."
+  },
+  "email_subject_line": "Unlock AI-Driven Growth: Your Path to HVAC Authority",
+  "opening_line": "We analyzed your website and identified key opportunities to make your HVAC expertise stand out to AI assistants.",
+  "cta": "Let's schedule a call to discuss how we can enhance your AI visibility and capture more leads.",
+  "analyzed_at": "2026-02-26T16:09:22.698Z",
+  "lead_id": "c752d2b8-f167-4916-b01f-7b3d87143b4b",
+  "business_name": "Gary P. Frank, Inc.",
+  "website": "https://www.garypfrank.com/",
+  "location": "Bethesda, Maryland",
+  "page_title": "HVAC Services | Gary P. Frank, Inc. | Bethesda, MD",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.7,
+  "gbp_review_count": 76,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

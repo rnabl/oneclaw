@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "Braswell's has foundational elements for AI visibility but lacks critical optimizations to ensure AI assistants prioritize their content. With targeted improvements, they can become a top recommendation for HVAC queries.",
+    "quick_wins": [
+      "Implement FAQPage schema to highlight common HVAC questions and answers.",
+      "Expand conversational content that aligns with AI query patterns."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "Google Business Profile is well-optimized with a strong rating, photos, and accurate information.",
+    "critical_issues": [
+      "No recent posts to engage with potential customers.",
+      "Q&A section is underutilized and lacks detailed responses."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly audit citations to ensure ongoing accuracy."
+    ]
+  },
+  "schema_gaps": [
+    "Missing FAQPage schema",
+    "No HowTo schema for common HVAC tasks",
+    "LocalBusiness schema lacks detailed service area markup"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured, conversational content that aligns with AI query patterns.",
+    "invisible_for": "Queries related to 'HVAC repair near me' and 'best HVAC services in Pearland'.",
+    "low_hanging_fruit": "Implementing FAQPage schema and expanding FAQ content.",
+    "authority_opportunity": "Positioning as local HVAC experts through detailed service explanations and customer testimonials."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for the way people ask questions today.",
+    "pain_point": "Without AI optimization, Braswell's is missing out on 40% of potential leads from voice and AI search.",
+    "proof_point": "Their GBP rating is 4.9, but AI assistants rarely cite them for top HVAC queries.",
+    "solution": "Our AEO approach enhances their content with schema markup, conversational language, and authority signals to make them the go-to HVAC resource for AI assistants.",
+    "impact_estimate": "Expect a 30% increase in AI-driven leads within the first 6 months.",
+    "urgency": "Competitors are already optimizing for AI, and waiting means losing ground in the new search landscape."
+  },
+  "email_subject_line": "Boost Your HVAC Leads with AI-Optimized Content",
+  "opening_line": "We analyzed your website and identified key opportunities to make your HVAC services stand out to AI assistants.",
+  "cta": "Let's schedule a call to discuss how we can optimize your content for AI-driven growth.",
+  "analyzed_at": "2026-02-26T16:20:06.289Z",
+  "lead_id": "560c1bd7-d90f-4a3e-92f5-78a884413ca5",
+  "business_name": "Braswell's Air Conditioning And Heating Services LLC",
+  "website": "https://braswellsacandheat.com/",
+  "location": "Pearland, Texas",
+  "page_title": "Braswell's Air Conditioning & Heating Services, Air Conditioner & Furnace Repair & Service | Pearland, TX 77584",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.9,
+  "gbp_review_count": 144,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

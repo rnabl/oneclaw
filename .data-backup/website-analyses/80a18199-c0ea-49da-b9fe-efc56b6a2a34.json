@@ -1,0 +1,56 @@
+{
+  "overall_aeo_score": 55,
+  "aeo_readiness": {
+    "score": 60,
+    "summary": "The website has basic AEO elements in place, such as schema markup, but lacks comprehensive optimization for AI search. The content is thin and repetitive, and there is no clear focus on user intent or conversational queries.",
+    "quick_wins": [
+      "Expand and diversify website content to address common HVAC queries and user intent.",
+      "Implement FAQ schema to target conversational queries and improve AI visibility.",
+      "Optimize meta tags and headings with relevant keywords and phrases."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 40,
+    "found": "The website has a Google Business Profile (GBP) but lacks reviews and detailed business information.",
+    "summary": "The GBP is not fully utilized. The lack of reviews and detailed business information limits its effectiveness in local search.",
+    "critical_issues": [
+      "No customer reviews on GBP.",
+      "Incomplete business information (e.g., hours of operation, services, photos).",
+      "No posts or updates on GBP."
+    ]
+  },
+  "nap_citations": {
+    "score": 50,
+    "summary": "The business has consistent NAP (Name, Address, Phone number) information on its website but lacks citations on other platforms.",
+    "action_items": [
+      "Create and verify NAP citations on major directories like Yelp, Bing Places, and Apple Maps.",
+      "Ensure NAP consistency across all online platforms.",
+      "Encourage customers to leave reviews on citation sites."
+    ]
+  },
+  "schema_gaps": [
+    "FAQPage",
+    "Review",
+    "LocalBusiness",
+    "Service",
+    "PostalAddress"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of conversational content and structured data targeting AI queries.",
+    "invisible_for": "Voice search and AI-driven conversational interfaces.",
+    "low_hanging_fruit": "Implement FAQ schema and expand content to include common HVAC queries and solutions.",
+    "authority_opportunity": "Publish authoritative content (e.g., blog posts, guides) on HVAC topics to establish expertise and improve AI visibility."
+  },
+  "analyzed_at": "2026-02-27T03:13:25.462Z",
+  "lead_id": "80a18199-c0ea-49da-b9fe-efc56b6a2a34",
+  "business_name": "Sherman Heating and Air Conditioning",
+  "website": "https://www.shermanheatingandair.com/",
+  "location": "Los Angeles, CA",
+  "page_title": "A black and white silhouette of a curve on a white background.",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

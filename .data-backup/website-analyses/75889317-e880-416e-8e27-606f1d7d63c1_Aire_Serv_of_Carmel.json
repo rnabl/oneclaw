@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "AI assistants are likely to cite Aire Serv of Carmel due to their strong local presence and structured content, but improvements in schema markup and conversational content can significantly boost their visibility.",
+    "quick_wins": [
+      "Implement a dedicated FAQ schema to address common HVAC queries.",
+      "Enhance content with more conversational language focused on user intent."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "Google Business Profile is well-optimized with high ratings, photos, and complete contact information.",
+    "critical_issues": [
+      "No recent posts or updates on GBP.",
+      "Limited engagement in the Q&A section."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly monitor citations for any discrepancies."
+    ]
+  },
+  "schema_gaps": [
+    "Missing FAQPage schema",
+    "Incomplete HowTo schema for maintenance guides",
+    "No emphasis on LocalBusiness schema for better local SEO"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data for AI to easily parse and cite their services.",
+    "invisible_for": "Queries related to emergency HVAC services and indoor air quality solutions.",
+    "low_hanging_fruit": "Implementing FAQ schema to address common user questions.",
+    "authority_opportunity": "Positioning as HVAC experts through detailed HowTo guides and industry certifications."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by making your HVAC expertise irresistible to AI assistants.",
+    "pain_point": "Without AI optimization, they miss out on 40% of potential leads from voice and AI search.",
+    "proof_point": "Their strong GBP rating and reviews are not fully leveraged in AI search due to lacking structured data.",
+    "solution": "Our AEO approach integrates schema markup, conversational content, and authority signals to ensure AI models cite Aire Serv as the top HVAC provider.",
+    "impact_estimate": "Expect a 30% increase in AI-driven leads within the first 3 months.",
+    "urgency": "Competitors are already optimizing for AI search—act now to stay ahead."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads for Your HVAC Business in Fishers, Indiana",
+  "opening_line": "We analyzed your website and Google Business Profile and found significant opportunities to boost your visibility with AI assistants.",
+  "cta": "Let’s schedule a call to discuss how we can optimize your online presence for AI search and drive more leads.",
+  "analyzed_at": "2026-02-26T16:21:24.619Z",
+  "lead_id": "75889317-e880-416e-8e27-606f1d7d63c1",
+  "business_name": "Aire Serv of Carmel",
+  "website": "https://www.aireserv.com/carmel?utm_source=google&utm_medium=organic&utm_campaign=gbp_listing",
+  "location": "Fishers, Indiana",
+  "page_title": "Carmel HVAC Services | HVAC in Carmel, IN | Aire Serv",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 5,
+  "gbp_review_count": 49,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

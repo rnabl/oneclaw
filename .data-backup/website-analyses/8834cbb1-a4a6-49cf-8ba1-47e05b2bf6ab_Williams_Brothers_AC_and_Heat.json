@@ -1,0 +1,67 @@
+{
+  "overall_aeo_score": 62,
+  "aeo_readiness": {
+    "score": 55,
+    "summary": "AI assistants are unlikely to cite this business due to inconsistent NAP data, lack of conversational content, and minimal authority signals. The business risks being overlooked in AI-driven search results.",
+    "quick_wins": [
+      "Update NAP data to ensure consistency across all platforms.",
+      "Implement FAQ content to address common customer queries."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 75,
+    "found": true,
+    "summary": "The Google Business Profile is operational with positive ratings but has critical inconsistencies in contact information.",
+    "critical_issues": [
+      "Phone number mismatch between GBP and website.",
+      "Lack of regular posts or Q&A engagement."
+    ]
+  },
+  "nap_citations": {
+    "score": 75,
+    "summary": "NAP consistency is moderate, with a critical phone number mismatch impacting reliability.",
+    "action_items": [
+      "Update the website phone number to match GBP: (213) 658-6100.",
+      "Audit and correct NAP data across all online directories."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for service explanations"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Inconsistent NAP data and lack of structured content make the business less visible to AI.",
+    "invisible_for": "Queries related to 'HVAC services in Pasadena, CA' and 'emergency HVAC repair near me'.",
+    "low_hanging_fruit": "Implementing LocalBusiness schema and ensuring NAP consistency.",
+    "authority_opportunity": "Highlighting certifications, licenses, and customer testimonials to establish expertise."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by fixing your NAP and enhancing your content strategy.",
+    "pain_point": "Inconsistent data and lack of conversational content mean lost opportunities with AI search users.",
+    "proof_point": "The phone number mismatch and absence of FAQ content directly impact AI citation potential.",
+    "solution": "Our AEO approach optimizes NAP data, implements structured schema, and creates conversational content to align with AI search trends.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 3 months.",
+    "urgency": "Competitors optimizing for AI search are capturing market share—act now to stay competitive."
+  },
+  "email_subject_line": "Boost Your AI Visibility: Fix Your NAP & Content Strategy Today!",
+  "opening_line": "We analyzed your website and Google Business Profile and identified key areas to enhance your AI search presence.",
+  "cta": "Let's schedule a call to discuss our findings and how we can help you optimize for AI-driven search.",
+  "analyzed_at": "2026-02-26T15:48:02.098Z",
+  "lead_id": "8834cbb1-a4a6-49cf-8ba1-47e05b2bf6ab",
+  "business_name": "Williams Brothers AC and Heat",
+  "website": "https://williamsbrothersacandheat.com/",
+  "location": "Pasadena, California",
+  "page_title": "HVAC Repair & Installs for Michigan Call ",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.8,
+  "gbp_review_count": 69,
+  "gbp_found": true,
+  "nap_score": 75,
+  "nap_issues": [
+    "Phone mismatch: Website has (626) 240-1710, GBP has (213) 658-6100"
+  ]
+}

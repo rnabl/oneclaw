@@ -1,0 +1,52 @@
+{
+  "overall_aeo_score": 45,
+  "aeo_readiness": {
+    "score": 40,
+    "summary": "The website has minimal AEO readiness with a lack of structured data, limited content depth, and no reviews. The focus on local service and unique selling propositions is present but not fully optimized.",
+    "quick_wins": [
+      "Implement schema markup to provide search engines with structured data about the business.",
+      "Add customer reviews and ratings to build trust and improve search visibility.",
+      "Expand content to include detailed service descriptions, benefits, and location-specific information."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 30,
+    "found": "The website mentions 'Local Installers Who Care' and 'East Bay and South Bay in the San Francisco Area' as geographical indicators.",
+    "summary": "The website has some geographical relevance but lacks explicit local SEO elements such as a Google Business Profile, local keywords, and location-specific landing pages.",
+    "critical_issues": [
+      "No Google Business Profile (GBP) found, which is crucial for local search visibility.",
+      "Lack of location-specific content and keywords to target local search queries."
+    ]
+  },
+  "nap_citations": {
+    "score": 20,
+    "summary": "The business name, address, and phone number (NAP) are not prominently displayed or consistently cited across the website and external platforms.",
+    "action_items": [
+      "Ensure NAP is consistent across the website and include it in the footer for easy access.",
+      "Create and verify NAP citations on local directories and business listing sites.",
+      "Use schema markup to highlight NAP information for search engines."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "Product",
+    "ContactPoint"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and content optimization for AI-driven search algorithms.",
+    "invisible_for": "Voice search, AI-powered search features, and rich results in search engines.",
+    "low_hanging_fruit": "Implement schema markup and improve content relevance with targeted keywords.",
+    "authority_opportunity": "Build authority by creating high-quality, informative content and earning backlinks from local and industry-related websites."
+  },
+  "analyzed_at": "2026-02-27T03:40:51.066Z",
+  "lead_id": "54353d51-8dcb-4083-b194-3b29847918a5",
+  "business_name": "1-888-Heat-Pumps",
+  "website": "https://1888heatpumps.com/",
+  "location": "Berkeley, California",
+  "page_title": "1-888-Heat-Pumps &#8211; Local Installers Who Care &#8211; Berkeley, CA",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_found": false
+}

@@ -1,0 +1,56 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "The website has basic AEO elements in place, such as structured content and schema markup, but lacks depth in content optimization and user engagement features.",
+    "quick_wins": [
+      "Enhance service pages with more detailed content and relevant keywords to improve search visibility.",
+      "Implement a review generation strategy to build a strong online reputation and gain Google reviews.",
+      "Optimize meta tags and headers with targeted keywords to improve search engine ranking."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 60,
+    "found": "The website has a clear business description and contact information, but lacks detailed location-specific content and customer reviews.",
+    "summary": "The business presents itself as a trusted HVAC and indoor air quality expert, but the website lacks the depth of content and customer engagement needed for better local search performance.",
+    "critical_issues": [
+      "No Google reviews, which are crucial for local search visibility and trust.",
+      "Lack of location-specific content that could improve local search rankings.",
+      "No clear call-to-action for customer engagement or feedback."
+    ]
+  },
+  "nap_citations": {
+    "score": 55,
+    "summary": "The business has consistent NAP (Name, Address, Phone Number) information on its website, but lacks citations in local directories and platforms.",
+    "action_items": [
+      "Create and verify a Google My Business profile to improve local search presence.",
+      "List the business in local directories and ensure NAP consistency across all platforms.",
+      "Encourage satisfied customers to leave reviews on Google and other relevant platforms."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Review",
+    "Product",
+    "Service",
+    "BreadcrumbList"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of customer reviews and engagement.",
+    "invisible_for": "Local search users and potential customers looking for HVAC services.",
+    "low_hanging_fruit": "Implementing a review generation strategy and optimizing meta tags.",
+    "authority_opportunity": "Creating high-quality, location-specific content and building a strong backlink profile."
+  },
+  "analyzed_at": "2026-02-27T03:57:48.584Z",
+  "lead_id": "7c2861fc-31fd-429e-8e1d-959dd1c884e9",
+  "business_name": "Red Apple Air Conditioning",
+  "website": "https://www.redappleair.com/",
+  "location": "Harbor City, California",
+  "page_title": "Red Apple Air | Trusted HVAC &amp; Indoor Air Quality Expert",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

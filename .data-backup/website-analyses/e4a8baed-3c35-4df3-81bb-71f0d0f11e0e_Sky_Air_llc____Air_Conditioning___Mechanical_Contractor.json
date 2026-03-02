@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "AI assistants are likely to cite Sky Air LLC due to decent content and schema, but improvements in conversational tone and authority signals are needed for higher visibility.",
+    "quick_wins": [
+      "Implement FAQPage schema to leverage existing FAQ content.",
+      "Expand on 'Community Commitment' to include specific local partnerships or initiatives."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "Google Business Profile is well-optimized with photos, reviews, and accurate contact information, but lacks regular posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent posts on GBP.",
+      "No active management of Q&A section."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly monitor for any inconsistencies due to third-party changes."
+    ]
+  },
+  "schema_gaps": [
+    "Missing FAQPage schema despite existing FAQ content.",
+    "No HowTo schema for explaining common HVAC maintenance or installation processes.",
+    "LocalBusiness schema can be enhanced with more detailed service-area information."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of conversational content tailored for AI queries.",
+    "invisible_for": "Queries related to emergency HVAC services or specific local promotions.",
+    "low_hanging_fruit": "Implementing FAQPage schema and expanding on community initiatives.",
+    "authority_opportunity": "Highlighting certifications, partnerships, and detailed case studies to establish expertise."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for conversational search and authority signals.",
+    "pain_point": "Missing out on 40% of potential leads from AI assistants like ChatGPT and Claude.",
+    "proof_point": "Current content lacks the conversational tone and detailed schema to be cited by AI models.",
+    "solution": "Enhance schema markup, create conversational content, and amplify authority signals to boost AI visibility.",
+    "impact_estimate": "Potential 30-40% increase in AI-driven leads within 3-6 months.",
+    "urgency": "Competitors optimizing for AI are already capturing market share—act now to stay competitive."
+  },
+  "email_subject_line": "Sky Air: Boost Your AI Visibility & Lead Generation Today!",
+  "opening_line": "We analyzed your website and identified key opportunities to enhance your AI search presence.",
+  "cta": "Let's schedule a call to discuss our tailored AEO strategy for Sky Air LLC.",
+  "analyzed_at": "2026-02-26T16:24:05.919Z",
+  "lead_id": "e4a8baed-3c35-4df3-81bb-71f0d0f11e0e",
+  "business_name": "Sky Air llc. - Air Conditioning & Mechanical Contractor",
+  "website": "http://www.skyairandheat.com/",
+  "location": "Winter Park, Florida",
+  "page_title": "Sky Air LLC - HVAC Contractor in Orlando, FL",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.8,
+  "gbp_review_count": 45,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

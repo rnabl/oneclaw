@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 78,
+  "aeo_readiness": {
+    "score": 75,
+    "summary": "AI models are likely to cite Air Solutions Heating & Cooling due to their strong local presence and decent content, but improvements in schema markup and conversational content are needed to maximize visibility.",
+    "quick_wins": [
+      "Implement FAQPage schema to highlight their FAQ content.",
+      "Expand on conversational content to align with AI query patterns."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "Google Business Profile is well-optimized with high ratings, photos, and accurate information, but lacks regular posts and active Q&A engagement.",
+    "critical_issues": [
+      "No recent posts on GBP.",
+      "Q&A section is inactive or not utilized."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no detected issues.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly monitor for any inconsistencies or new citation opportunities."
+    ]
+  },
+  "schema_gaps": [
+    "Missing HowTo schema for explaining HVAC solutions.",
+    "FAQPage schema could be more detailed.",
+    "No LocalBusiness schema enhancements for service area and offerings."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of detailed conversational content tailored to AI queries.",
+    "invisible_for": "Complex HVAC troubleshooting queries that require detailed explanations.",
+    "low_hanging_fruit": "Implementing FAQPage schema and expanding on existing FAQ content.",
+    "authority_opportunity": "Positioning as HVAC experts through detailed guides and use of HowTo schema."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by making your expertise visible to AI assistants.",
+    "pain_point": "Without AI-ready content, they miss out on 40% of potential leads from AI users.",
+    "proof_point": "Their GBP is strong, but AI models prioritize detailed, schema-enhanced content for citations.",
+    "solution": "Enhance schema markup, expand conversational content, and actively manage GBP to align with AI query patterns.",
+    "impact_estimate": "20-30% increase in AI-driven leads within 6 months.",
+    "urgency": "Competitors optimizing for AI are already capturing market share—act now to stay ahead."
+  },
+  "email_subject_line": "Maximize Your AI Visibility: Enhance Your HVAC Authority Now",
+  "opening_line": "We analyzed your website and GBP and found significant opportunities to boost your AI visibility.",
+  "cta": "Let's discuss how to make your HVAC expertise stand out to AI assistants and capture more leads.",
+  "analyzed_at": "2026-02-26T16:10:52.983Z",
+  "lead_id": "f46332e0-2e9f-4187-a18d-8a9e1680d976",
+  "business_name": "Air Solutions Heating & Cooling, LLC",
+  "website": "https://www.airsolutionshc.com/?utm_source=google&utm_medium=organic&utm_campaign=gbp",
+  "location": "Milwaukee, Wisconsin",
+  "page_title": "Air Solutions Heating &amp; Cooling, LLC: HVAC Services",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 5,
+  "gbp_review_count": 115,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

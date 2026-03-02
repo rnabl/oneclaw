@@ -1,0 +1,63 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 55,
+    "summary": "Global Arch Construction is not fully optimized for AI-driven search, making it less likely for AI assistants like ChatGPT or Claude to cite them as a top recommendation.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup to provide AI with structured data about the business.",
+      "Create an FAQ section with commonly asked questions and detailed answers to improve conversational content."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-maintained with positive reviews, photos, and accurate contact information, but lacks regular posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent posts or updates on GBP.",
+      "No active management of Q&A section."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected across all platforms.",
+    "action_items": [
+      "Maintain current NAP consistency across all directories and platforms.",
+      "Regularly monitor for any discrepancies or new citations."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for detailed project guides"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content makes it difficult for AI to understand and recommend their services.",
+    "invisible_for": "Queries related to 'best design-build firms in Northern California' or 'trusted commercial contractors in Roseville'.",
+    "low_hanging_fruit": "Adding LocalBusiness schema and an FAQ section with detailed answers.",
+    "authority_opportunity": "Positioning as industry experts by publishing detailed project guides, certifications, and media coverage."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for answer engines and AI search.",
+    "pain_point": "Without AI optimization, they are missing out on 40% of potential leads from AI-driven searches and recommendations.",
+    "proof_point": "Their website lacks essential schema markup and conversational content, making it less likely for AI assistants to cite them.",
+    "solution": "Our AEO approach includes implementing structured data, creating FAQ content, and enhancing GBP engagement to boost AI visibility and drive more qualified leads.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 6 months.",
+    "urgency": "Competitors are already optimizing for AI, and waiting means losing ground in AI-driven search results."
+  },
+  "email_subject_line": "Boost Your AI Visibility: Optimize for ChatGPT & AI Search Now!",
+  "opening_line": "We analyzed your website and found significant opportunities to improve your AI-driven search presence.",
+  "cta": "Let's schedule a call to discuss how we can optimize your site for AI and boost your lead generation.",
+  "analyzed_at": "2026-02-26T16:12:14.340Z",
+  "lead_id": "29cc3cbb-f750-412e-84de-e3e568993057",
+  "business_name": "Global Arch Construction",
+  "website": "https://www.globalarchconstruction.com/",
+  "location": "Roseville, California",
+  "page_title": "Northern California Design-Build Experts | Global Arch Construction",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": 4.9,
+  "gbp_review_count": 32,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

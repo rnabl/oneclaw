@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "The business has a solid foundation but lacks the structured content and authority signals needed for AI assistants to prioritize them in search results.",
+    "quick_wins": [
+      "Implement FAQPage schema to highlight common customer queries and solutions.",
+      "Add LocalBusiness schema to improve local search visibility."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-maintained with essential information but could benefit from more regular posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent posts or updates on GBP.",
+      "Limited engagement with customer Q&A."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly monitor citations for any potential discrepancies."
+    ]
+  },
+  "schema_gaps": [
+    "Missing FAQPage schema",
+    "Missing HowTo schema",
+    "No emphasis on LocalBusiness schema properties (e.g., openingHours, address)"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content limits AI model citations.",
+    "invisible_for": "Queries related to equipment rental, tool availability, and emergency services.",
+    "low_hanging_fruit": "Implementing FAQPage schema to address common customer questions.",
+    "authority_opportunity": "Highlighting certifications, partnerships, and industry expertise to position the business as a leader."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for the assistants powering tomorrow's searches.",
+    "pain_point": "Without AI optimization, they miss out on 40% of potential leads from voice and AI-assisted searches.",
+    "proof_point": "Their GBP is strong, but AI models overlook them due to a lack of structured data and conversational content.",
+    "solution": "Our AEO approach integrates schema markup, conversational content, and authority signals to make your business the top choice for AI assistants.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within 6 months.",
+    "urgency": "Competitors are already optimizing for AI; the longer you wait, the more ground you lose."
+  },
+  "email_subject_line": "Dominate AI Search: Your Path to 40% More Leads",
+  "opening_line": "We analyzed your website and Google Business Profile and found significant opportunities to enhance your visibility with AI assistants.",
+  "cta": "Let's schedule a call to discuss how we can optimize your digital presence for AI-driven searches.",
+  "analyzed_at": "2026-02-26T15:59:43.179Z",
+  "lead_id": "ccd556e0-d6db-4f19-b3ba-d7932b9e3188",
+  "business_name": "Contractor Service",
+  "website": "http://www.contractorservice.com/",
+  "location": "Camden, New Jersey",
+  "page_title": "Contractors Equipment and Supplies | Contractor Service | New Jersey",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.7,
+  "gbp_review_count": 38,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

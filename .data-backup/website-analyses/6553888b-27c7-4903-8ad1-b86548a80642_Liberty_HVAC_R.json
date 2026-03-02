@@ -1,0 +1,64 @@
+{
+  "overall_aeo_score": 68,
+  "aeo_readiness": {
+    "score": 65,
+    "summary": "AI assistants may not prioritize this business due to a lack of structured data and conversational content, but there are clear opportunities for improvement.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup.",
+      "Create an FAQ schema to address common HVAC queries."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with a high rating and complete information, but posts and Q&A engagement could be improved.",
+    "critical_issues": [
+      "No recent posts on GBP.",
+      "Lack of engagement in the Q&A section."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly monitor for any inconsistencies or new citation opportunities."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQ schema",
+    "No HowTo schema for common HVAC tasks",
+    "Missing Product schema for services offered"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data prevents AI from recognizing them as a top choice.",
+    "invisible_for": "Queries related to 'HVAC repair in Brooklyn' and 'trusted HVAC services NYC'.",
+    "low_hanging_fruit": "Implementing LocalBusiness and FAQ schema to improve AI visibility.",
+    "authority_opportunity": "Highlighting certifications, partnerships with top brands, and detailed service explanations to establish authority."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing your digital presence for answer engines.",
+    "pain_point": "Without AI optimization, they are missing out on 40% of potential leads from voice and AI search.",
+    "proof_point": "Their website lacks critical schema markup, making it less likely for AI models to recommend them.",
+    "solution": "Our AEO approach integrates schema markup, conversational content, and authority signals to make your business the top choice for AI assistants.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 6 months.",
+    "urgency": "Competitors are already optimizing for AI; act now to secure your market position."
+  },
+  "email_subject_line": "Boost Your AI Visibility: Optimize Your HVAC Business for the Future",
+  "opening_line": "We analyzed your website and identified key opportunities to enhance your AI search readiness.",
+  "cta": "Let's schedule a call to discuss how we can make your business the top choice for AI-driven leads.",
+  "analyzed_at": "2026-02-26T16:01:44.831Z",
+  "lead_id": "6553888b-27c7-4903-8ad1-b86548a80642",
+  "business_name": "Liberty HVAC/R",
+  "website": "https://libertyhvacr.com/?utm_source=gmb",
+  "location": "Brooklyn, New York",
+  "page_title": "NYC Commercial HVAC &amp; Appliance Repair Services",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": 5,
+  "gbp_review_count": 37,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

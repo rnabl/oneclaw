@@ -1,0 +1,54 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "The business has a basic foundation for AEO with clear service offerings and location information, but lacks depth in content and user engagement features.",
+    "quick_wins": [
+      "Add customer reviews and testimonials to build trust and provide fresh content.",
+      "Expand service pages with more detailed information and relevant keywords.",
+      "Implement a blog to target long-tail keywords and establish authority in the plumbing niche."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 50,
+    "found": true,
+    "summary": "The Google Business Profile (GBP) is not fully utilized. While the business has a website, there is no evidence of an optimized GBP with reviews, posts, or regular updates.",
+    "critical_issues": [
+      "No Google reviews, which are crucial for local search visibility.",
+      "Lack of GBP posts and updates to engage with potential customers.",
+      "Incomplete business information or potential inconsistencies across platforms."
+    ]
+  },
+  "nap_citations": {
+    "score": 60,
+    "summary": "The business has consistent NAP (Name, Address, Phone Number) on its website, but lacks widespread citations across relevant directories and platforms.",
+    "action_items": [
+      "Create and verify listings on major directories such as Yelp, Yellow Pages, and local business associations.",
+      "Ensure NAP consistency across all online platforms, including social media profiles.",
+      "Submit the business to local citation services to improve local search presence."
+    ]
+  },
+  "schema_gaps": [
+    "No Organization schema beyond basic LocalBusiness schema.",
+    "Missing FAQPage schema to address common customer queries.",
+    "No Review schema to highlight customer feedback and ratings."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of user-generated content and engagement features.",
+    "invisible_for": "Users searching for detailed service information or customer reviews.",
+    "low_hanging_fruit": "Implementing a review system and adding schema markup for reviews.",
+    "authority_opportunity": "Creating high-quality, keyword-rich content such as blog posts and detailed service pages to establish the business as an authority in the plumbing industry."
+  },
+  "analyzed_at": "2026-02-27T02:47:06.522Z",
+  "lead_id": "f35cc1fe-a888-438b-bb28-385389cc81ce",
+  "business_name": "Saving Plumbing LLC",
+  "website": "https://www.savingplumbing.com/?utm_campaign=gmb",
+  "location": "Sandy Springs, Georgia",
+  "page_title": "Plumber Sandy Springs GA | Saving Plumbing",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

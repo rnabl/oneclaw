@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "The business has a decent foundation for AI visibility but lacks structured content and authority signals to ensure AI models prioritize them in recommendations.",
+    "quick_wins": [
+      "Implement FAQPage schema to highlight common questions and answers.",
+      "Create content that directly addresses common customer queries in a conversational tone."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with a high rating, photos, and accurate contact information.",
+    "critical_issues": [
+      "No recent posts or updates on GBP.",
+      "Q&A section is not actively managed."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly monitor for any new citations to ensure ongoing accuracy."
+    ]
+  },
+  "schema_gaps": [
+    "Missing FAQPage schema",
+    "No HowTo schema for common services",
+    "LocalBusiness schema could be enhanced with more detailed properties"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content limits AI model citations.",
+    "invisible_for": "Queries related to 'dryer vent cleaning near me' and 'handyman services in Katy'.",
+    "low_hanging_fruit": "Implementing FAQPage schema and adding conversational FAQs.",
+    "authority_opportunity": "Highlighting certifications, expertise, and detailed service explanations to establish authority."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for the assistants powering tomorrow's searches.",
+    "pain_point": "Without AI optimization, they miss out on 40% of potential leads from voice and AI searches.",
+    "proof_point": "Their GBP is strong, but AI models overlook them due to the lack of structured and conversational content.",
+    "solution": "Our AEO approach integrates structured data, conversational FAQs, and authority-building content to make your business the top choice for AI recommendations.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 3 months.",
+    "urgency": "Competitors are already optimizing for AI; act now to secure your position before they dominate the space."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads for Your Katy Business Today!",
+  "opening_line": "We analyzed your website and Google Business Profile and found significant opportunities to boost your visibility with AI models.",
+  "cta": "Let's discuss how our AEO strategy can position your business as the top choice for AI recommendations.",
+  "analyzed_at": "2026-02-26T16:14:27.048Z",
+  "lead_id": "891c84f0-e013-4e00-84d3-0d2bcb889faa",
+  "business_name": "Home Property Service Handyman Katy Dryer Vent Cleaning & Attic Ladder Stairs Installation Katy Fulshear Houston Sugarland",
+  "website": "http://homepropertyservice.com/",
+  "location": "Katy, Texas",
+  "page_title": "Expert Handyman for Most All Home Repairs Maintenance and Remodeling ",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 5,
+  "gbp_review_count": 121,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

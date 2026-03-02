@@ -1,0 +1,60 @@
+{
+  "overall_aeo_score": 55,
+  "aeo_readiness": {
+    "score": 60,
+    "summary": "The business has some foundational elements for AEO readiness but lacks critical components like reviews and a strong online presence.",
+    "quick_wins": [
+      "Encourage customers to leave Google reviews to build credibility and improve local search visibility.",
+      "Optimize the website's meta tags and content with relevant keywords for electrical, HVAC, and plumbing services in Arlington, Virginia.",
+      "Implement a blog section to regularly publish content related to home repair, maintenance tips, and industry news."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 40,
+    "found": [
+      "Service areas mentioned",
+      "Local phone number provided",
+      "Business name and services clearly stated"
+    ],
+    "summary": "The business has basic local signals but lacks a consistent Google Business Profile and customer reviews.",
+    "critical_issues": [
+      "No active Google Business Profile found.",
+      "Zero customer reviews on Google.",
+      "Insufficient local content and backlinks."
+    ]
+  },
+  "nap_citations": {
+    "score": 50,
+    "summary": "The business has a consistent NAP (Name, Address, Phone Number) on its website but lacks citations on major directories and local platforms.",
+    "action_items": [
+      "Create and verify a Google Business Profile with accurate NAP information.",
+      "List the business on local directories such as Yelp, Bing Places, and Yellow Pages.",
+      "Ensure NAP consistency across all online platforms and social media profiles."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "Product",
+    "FAQPage"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of customer reviews and Google Business Profile",
+    "invisible_for": "Local search users and potential customers looking for reviews and business legitimacy",
+    "low_hanging_fruit": "Setting up a Google Business Profile and actively managing customer reviews",
+    "authority_opportunity": "Publishing high-quality, locally relevant content and building backlinks from local organizations and industry partners"
+  },
+  "analyzed_at": "2026-02-27T03:55:32.174Z",
+  "lead_id": "44eb8ccb-1906-4d93-8a18-0d40792cf423",
+  "business_name": "R&A Electrical Services,LLC",
+  "website": "https://raelectricalservices.com/",
+  "location": "Arlington, Virginia",
+  "page_title": "DC Metro Electrical, HVAC, and Plumbing Services | R&A Services",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

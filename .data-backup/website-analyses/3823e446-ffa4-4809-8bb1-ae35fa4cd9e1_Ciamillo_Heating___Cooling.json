@@ -1,0 +1,70 @@
+{
+  "overall_aeo_score": 70,
+  "aeo_readiness": {
+    "strengths": [
+      "Good NAP consistency (100/100)",
+      "Strong Google Business Profile rating (4.7 with 127 reviews)",
+      "Click-to-call, booking, and chat options available"
+    ],
+    "weaknesses": [
+      "Missing H1 tags on the website",
+      "Lack of structured schema markup",
+      "No FAQ section on the website",
+      "Meta description could be more optimized for search intent"
+    ],
+    "opportunities": [
+      "Implement structured data (schemas) to enhance search visibility",
+      "Add an FAQ section to address common customer queries and improve SEO",
+      "Optimize meta descriptions and title tags for better click-through rates",
+      "Leverage customer reviews and testimonials for authority positioning"
+    ]
+  },
+  "gbp_analysis": {
+    "rating": 4.7,
+    "review_count": 127,
+    "recommendations": [
+      "Encourage more customer reviews to boost credibility",
+      "Respond to reviews, especially negative ones, to show engagement",
+      "Highlight positive reviews on the website and social media"
+    ]
+  },
+  "nap_citations": 100,
+  "schema_gaps": {
+    "issues": [
+      "No schema markup implemented",
+      "Missing local business schema",
+      "No FAQ schema present"
+    ],
+    "recommendations": [
+      "Implement local business schema to provide search engines with detailed information about the business",
+      "Add FAQ schema to address common customer questions and improve search visibility",
+      "Use review schema to highlight customer testimonials"
+    ]
+  },
+  "ai_visibility_gap": {
+    "current_state": "Moderate visibility in AI-driven search results",
+    "recommendations": [
+      "Optimize content with natural language and long-tail keywords to align with AI search patterns",
+      "Incorporate structured data to enhance AI understanding of the website content",
+      "Create AI-friendly content that answers common HVAC-related queries"
+    ]
+  },
+  "agency_pitch": "At [Your Agency Name], we specialize in elevating HVAC businesses like Ciamillo Heating & Cooling to new heights in the digital landscape. Our expertise in Answer Engine Optimization (AEO), AI Search, and Authority Positioning can help you dominate local search results, enhance customer engagement, and drive more qualified leads. With our tailored strategies, we can optimize your online presence, ensuring your business is the top choice for customers in Warren, Michigan. Let's transform your digital footprint and boost your business growth together.",
+  "email_subject_line": "Boost Your HVAC Business with Our Expert AEO and AI Strategies",
+  "opening_line": "Dear [Recipient's Name],",
+  "cta": "Ready to take your HVAC business to the next level? Contact us today to schedule a consultation and discover how our AEO and AI strategies can drive your business growth.",
+  "analyzed_at": "2026-02-26T16:35:03.949Z",
+  "lead_id": "3823e446-ffa4-4809-8bb1-ae35fa4cd9e1",
+  "business_name": "Ciamillo Heating & Cooling",
+  "website": "https://www.ciamilloheating.com/",
+  "location": "Warren, Michigan",
+  "page_title": "\r\n    Ciamillo Heating &amp; Cooling | Air Duct Cleaning | Warren, MI\r\n  ",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": 4.7,
+  "gbp_review_count": 127,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": [],
+  "used_proxy": true
+}

@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "AI models are likely to cite EVO AIR for local HVAC services due to their strong local presence and decent content, but improvements in structured data and conversational content are needed for higher visibility.",
+    "quick_wins": [
+      "Implement FAQPage schema to highlight common customer questions and answers.",
+      "Expand content to include How-To guides and problem-solving tips for HVAC systems."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "Google Business Profile is well-optimized with high ratings, photos, and accurate contact information, but posts and Q&A sections could be more active.",
+    "critical_issues": [
+      "No recent posts or updates on GBP.",
+      "Q&A section is not actively managed."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected across all platforms.",
+    "action_items": [
+      "Maintain current NAP consistency across all directories and platforms.",
+      "Regularly monitor for any inconsistencies or new directory listings."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for common HVAC tasks"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content limits AI model citations.",
+    "invisible_for": "Queries related to 'HVAC repair San Diego' or 'best HVAC services near me'.",
+    "low_hanging_fruit": "Adding FAQPage schema to address common customer questions.",
+    "authority_opportunity": "Positioning as HVAC experts by creating in-depth content on energy efficiency, installation tips, and maintenance."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for answer engines and AI assistants.",
+    "pain_point": "Without AI optimization, EVO AIR misses out on 40% of potential leads from AI users.",
+    "proof_point": "Competitors with structured data and conversational content rank higher in AI-driven search results.",
+    "solution": "Implement AEO strategies, including schema markup, conversational content, and active GBP management, to boost AI visibility.",
+    "impact_estimate": "Expected 30-40% increase in AI-driven leads within 3-6 months.",
+    "urgency": "AI adoption is accelerating; competitors optimizing now will dominate the AI-driven search landscape."
+  },
+  "email_subject_line": "Maximize AI Visibility: Optimize EVO AIR for the Future of Search",
+  "opening_line": "After analyzing your website and Google Business Profile, we identified key opportunities to enhance your AI-driven visibility.",
+  "cta": "Let's schedule a call to discuss how our AEO strategies can position EVO AIR as the go-to HVAC expert for AI users.",
+  "analyzed_at": "2026-02-26T16:15:18.442Z",
+  "lead_id": "abc0925f-5ce0-4839-9f31-53e3ccaa2b66",
+  "business_name": "EVO AIR",
+  "website": "http://www.evoairinc.com/",
+  "location": "San Diego, California",
+  "page_title": "Home | EVO AIR | San Diego's Heating and Air Conditioning Experts ",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 5,
+  "gbp_review_count": 86,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

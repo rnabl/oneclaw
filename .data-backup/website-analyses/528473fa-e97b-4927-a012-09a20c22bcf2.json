@@ -1,0 +1,54 @@
+{
+  "overall_aeo_score": 55,
+  "aeo_readiness": {
+    "score": 60,
+    "summary": "The website has basic AEO elements in place, such as schema markup and reasonable content, but lacks depth in content, reviews, and structured data optimization.",
+    "quick_wins": [
+      "Implement a review generation strategy to build Google reviews and improve social proof.",
+      "Optimize meta tags and headers with targeted keywords for HVAC services in Chicago.",
+      "Expand website content to include detailed service pages, location-specific content, and FAQ sections."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 40,
+    "found": "The business has no Google Business Profile (GBP) reviews and lacks GBP optimization.",
+    "summary": "The absence of a GBP or any GBP reviews significantly impacts local search visibility and customer trust.",
+    "critical_issues": [
+      "No GBP listing found.",
+      "Missing location-specific content on the website.",
+      "Lack of customer reviews and engagement on GBP (if it exists)."
+    ]
+  },
+  "nap_citations": {
+    "score": 50,
+    "summary": "The business has a consistent NAP (Name, Address, Phone Number) on the website but lacks citations on major directories and platforms.",
+    "action_items": [
+      "Create and verify listings on major directories such as Yelp, Bing Places, and Apple Maps.",
+      "Ensure NAP consistency across all online platforms and directories.",
+      "Submit the business to local and industry-specific directories."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness schema is missing detailed information such as address, opening hours, and geo coordinates.",
+    "Service schema is not fully utilized for each specific service offered.",
+    "Review schema is missing, which could help in showcasing customer testimonials."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of customer reviews and engagement signals.",
+    "invisible_for": "Users searching for HVAC services in Chicago who rely on reviews and local business information.",
+    "low_hanging_fruit": "Implementing a review generation strategy and optimizing the website for local SEO.",
+    "authority_opportunity": "Creating high-quality, locally focused content and building backlinks from local and industry-relevant websites."
+  },
+  "analyzed_at": "2026-02-27T04:11:44.114Z",
+  "lead_id": "528473fa-e97b-4927-a012-09a20c22bcf2",
+  "business_name": "Service Pro Titans",
+  "website": "https://serviceprotitans.com/",
+  "location": "Chicago, Illinois",
+  "page_title": "Heating, AC and Indoor Air Quality in Chicago - Service Pro Titans",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

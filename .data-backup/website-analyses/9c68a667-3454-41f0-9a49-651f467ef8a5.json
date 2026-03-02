@@ -1,0 +1,56 @@
+{
+  "overall_aeo_score": 62,
+  "aeo_readiness": {
+    "score": 65,
+    "summary": "Tyrone A/C & Heating has a basic level of AEO readiness but lacks critical elements for optimal performance in AI-driven search. The website has some positive customer testimonials but lacks a substantial review presence and structured data optimization.",
+    "quick_wins": [
+      "Generate and showcase more customer reviews to build trust and improve local search presence.",
+      "Optimize existing schema markup with additional details such as service areas, pricing, and detailed service descriptions.",
+      "Enhance website content with targeted keywords related to HVAC services in Austin, Texas."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 50,
+    "found": [
+      "Local phone number",
+      "Service location (Austin, Texas)"
+    ],
+    "summary": "The business has some local signals but lacks a consistent Google Business Profile (GBP) presence. The absence of GBP makes it harder for the business to appear in local search results and Google Maps.",
+    "critical_issues": [
+      "No active Google Business Profile found.",
+      "Lack of local citations and mentions across directories."
+    ]
+  },
+  "nap_citations": {
+    "score": 40,
+    "summary": "The business has inconsistent or minimal NAP (Name, Address, Phone Number) citations across the web. This inconsistency can confuse search engines and potential customers.",
+    "action_items": [
+      "Create and verify a Google Business Profile with consistent NAP information.",
+      "Audit and update NAP information across major directories such as Yelp, Yellow Pages, and local Austin directories.",
+      "Ensure NAP consistency across the website and all online platforms."
+    ]
+  },
+  "schema_gaps": [
+    "ServiceArea schema is missing.",
+    "PriceRange schema is not included.",
+    "Detailed service descriptions and offerings are not fully structured."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of customer reviews and testimonials to build trust and authority.",
+    "invisible_for": "Local searchers and potential customers looking for HVAC services in Austin, Texas.",
+    "low_hanging_fruit": "Implementing a review generation strategy and optimizing existing schema markup.",
+    "authority_opportunity": "Building a strong GBP presence and earning backlinks from local and industry-related websites."
+  },
+  "analyzed_at": "2026-02-27T03:29:18.194Z",
+  "lead_id": "9c68a667-3454-41f0-9a49-651f467ef8a5",
+  "business_name": "Tyrone A/C & Heating",
+  "website": "http://tyroneac.com/",
+  "location": "Austin, Texas",
+  "page_title": "HVAC Repair &amp; AC Service in Austin, Texas | Tyrone A/C",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

@@ -1,0 +1,52 @@
+{
+  "overall_aeo_score": 55,
+  "aeo_readiness": {
+    "score": 60,
+    "summary": "The website has basic AEO elements in place, such as schema markup and contact information, but lacks depth in content, reviews, and structured data optimization.",
+    "quick_wins": [
+      "Add customer reviews and ratings to build trust and improve local SEO.",
+      "Optimize meta tags and headers with relevant keywords for better search visibility.",
+      "Enhance content with location-specific keywords and detailed service descriptions."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 40,
+    "found": "The website has contact information and a service area mentioned, but lacks a Google Business Profile (GBP) listing.",
+    "summary": "The absence of a GBP listing is a significant gap. A GBP is crucial for local search visibility and customer engagement.",
+    "critical_issues": [
+      "No GBP listing found.",
+      "Missing location-specific content and service area details."
+    ]
+  },
+  "nap_citations": {
+    "score": 50,
+    "summary": "The website has consistent NAP (Name, Address, Phone number) information, but lacks citations on other platforms and directories.",
+    "action_items": [
+      "Create and verify NAP citations on major directories like Yelp, Yellow Pages, and local business listings.",
+      "Ensure NAP consistency across all online platforms and social media profiles."
+    ]
+  },
+  "schema_gaps": [
+    "No Organization schema for the company.",
+    "Missing Service schema for individual services offered.",
+    "No Review schema to showcase customer testimonials."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of content depth and keyword optimization for AI-driven search algorithms.",
+    "invisible_for": "AI search algorithms due to insufficient content and lack of structured data for services and reviews.",
+    "low_hanging_fruit": "Implement FAQ schema and add a blog section with location-specific and service-related content.",
+    "authority_opportunity": "Build authority by publishing expert articles on HVAC topics and obtaining backlinks from local and industry-related websites."
+  },
+  "analyzed_at": "2026-02-27T03:46:03.150Z",
+  "lead_id": "94853702-34cb-499d-8690-9e1db4084f20",
+  "business_name": "San Francisco Expert Heating and Air",
+  "website": "http://sanfranciscoexprethvac.com/",
+  "location": "San Francisco, California",
+  "page_title": "Home - San Francisco Expert HVAC",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

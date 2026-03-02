@@ -1,0 +1,56 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "The Cooling Company has a decent foundation for AEO readiness with clear service offerings and a localized approach. However, the lack of reviews and minimal content depth are limiting factors.",
+    "quick_wins": [
+      "Generate and showcase customer reviews to build trust and improve local search presence.",
+      "Expand service pages with more detailed content and relevant keywords to enhance SEO.",
+      "Implement a blog to regularly publish content related to HVAC and plumbing services."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 60,
+    "found": true,
+    "summary": "The Google Business Profile (GBP) is not actively managed, as there are no reviews or visible GBP information. This is a significant gap.",
+    "critical_issues": [
+      "No customer reviews or ratings on GBP.",
+      "Lack of regular updates or posts on the GBP.",
+      "Missing opportunities to engage with potential customers through GBP features."
+    ]
+  },
+  "nap_citations": {
+    "score": 55,
+    "summary": "NAP (Name, Address, Phone Number) citations are partially consistent across the web, but there is room for improvement in terms of accuracy and completeness.",
+    "action_items": [
+      "Audit and update NAP information across all online directories and platforms.",
+      "Ensure NAP consistency on the website and all social media profiles.",
+      "Actively manage and respond to any mentions or citations to improve local SEO."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "Product",
+    "FAQPage"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of customer reviews and engagement on GBP",
+    "invisible_for": "Potential customers searching for HVAC and plumbing services in Las Vegas",
+    "low_hanging_fruit": "Encourage satisfied customers to leave reviews and actively manage GBP",
+    "authority_opportunity": "Establish the business as a local authority by publishing informative content and engaging with the community"
+  },
+  "analyzed_at": "2026-02-27T02:32:15.223Z",
+  "lead_id": "ca67b147-368a-4cd1-9df3-051ef1ed2d6e",
+  "business_name": "The Cooling Company - Summerlin HVAC & Plumbing",
+  "website": "https://thecoolingco.com/summerlin",
+  "location": "Las Vegas, Nevada",
+  "page_title": "Summerlin HVAC Services | AC Repair &amp; Installation | The Cooling Company",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

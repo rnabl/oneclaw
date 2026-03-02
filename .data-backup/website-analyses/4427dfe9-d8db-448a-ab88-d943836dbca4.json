@@ -1,0 +1,54 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "The business has a decent foundation for AEO readiness with clear service offerings and contact information but lacks content depth and user engagement features.",
+    "quick_wins": [
+      "Add customer reviews and testimonials to build trust and provide fresh content.",
+      "Create a blog section with informative articles about plumbing tips, maintenance, and industry news.",
+      "Implement a clear call-to-action on the homepage to encourage user engagement."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 60,
+    "found": true,
+    "summary": "The website includes a 'Why CJ Plumbing and Heating' section that touches on unique selling points, but it lacks detailed information about the business's awards, history, and expertise.",
+    "critical_issues": [
+      "No detailed information about awards and recognitions.",
+      "Missing specific case studies or project highlights.",
+      "No clear differentiation from competitors in terms of services and expertise."
+    ]
+  },
+  "nap_citations": {
+    "score": 50,
+    "summary": "The website provides a phone number and location but lacks consistent NAP (Name, Address, Phone Number) citations across the web, which are crucial for local SEO.",
+    "action_items": [
+      "Ensure consistent NAP information across the website and all online directories.",
+      "Claim and verify the Google My Business listing to improve local search visibility.",
+      "Encourage satisfied customers to leave reviews on Google and other relevant platforms."
+    ]
+  },
+  "schema_gaps": [
+    "No FAQPage schema to address common customer questions.",
+    "Missing Review schema to showcase customer feedback.",
+    "No BlogPosting schema for the blog section, if implemented."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of customer reviews and testimonials to build trust and provide fresh content.",
+    "invisible_for": "Potential customers searching for reliable plumbing services in Evanston, Illinois.",
+    "low_hanging_fruit": "Implementing a review collection strategy and showcasing them on the website.",
+    "authority_opportunity": "Creating high-quality, informative content that establishes the business as an expert in the plumbing and heating industry."
+  },
+  "analyzed_at": "2026-02-27T04:09:01.989Z",
+  "lead_id": "4427dfe9-d8db-448a-ab88-d943836dbca4",
+  "business_name": "CJ Plumbing & Heating",
+  "website": "https://cjplumbingchicago.com/",
+  "location": "Evanston, Illinois",
+  "page_title": "CJ Plumbing &amp; Heating - Award-Winning Chicago Plumbers",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

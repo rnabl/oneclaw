@@ -1,0 +1,54 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 75,
+    "summary": "Benchmark Service has a strong focus on Mitsubishi HVAC systems and demonstrates expertise in their niche. The website has clear service offerings and a professional appearance, but lacks substantial content depth and user engagement features.",
+    "quick_wins": [
+      "Add more detailed service pages and informative blog content about HVAC maintenance and innovations.",
+      "Incorporate customer testimonials and case studies to build trust and provide social proof.",
+      "Enhance the website's internal linking structure to improve navigation and SEO."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 65,
+    "found": "The website has a clear value proposition as a top Mitsubishi HVAC contractor in Dallas, TX. However, it lacks localized content and detailed information about the geographic service area.",
+    "summary": "The website effectively communicates its specialization in Mitsubishi systems but needs to enhance its local SEO strategy to target the Dallas-Fort Worth area more effectively.",
+    "critical_issues": [
+      "No dedicated location pages for different service areas within Dallas-Fort Worth.",
+      "Lack of local keywords and geographic modifiers in content."
+    ]
+  },
+  "nap_citations": {
+    "score": 60,
+    "summary": "The business has a consistent name, address, and phone number on the website, but there is no evidence of widespread citations across local directories and platforms.",
+    "action_items": [
+      "Create and verify a Google My Business profile.",
+      "Submit the business information to local directories and citation sites like Yelp, Yellow Pages, and local chamber of commerce websites.",
+      "Ensure consistent NAP information across all online platforms."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "Product"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of localized and comprehensive content to target relevant search queries.",
+    "invisible_for": "Users searching for HVAC services in specific Dallas-Fort Worth neighborhoods.",
+    "low_hanging_fruit": "Creating localized service pages and optimizing for long-tail local keywords.",
+    "authority_opportunity": "Publishing expert content on HVAC trends, maintenance tips, and industry news to establish thought leadership."
+  },
+  "analyzed_at": "2026-02-27T02:50:14.326Z",
+  "lead_id": "2eb6e2d4-84f8-4772-b671-7e354f1952c3",
+  "business_name": "Benchmark Service",
+  "website": "http://www.benchmarkservice.net/",
+  "location": "Irving, Texas",
+  "page_title": "Benchmark Service | Top Mitsubishi HVAC Contractor Dallas TX",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

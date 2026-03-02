@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "AI assistants are likely to cite Smart Residential Services Inc. for local HVAC queries due to strong NAP consistency and some authority signals, but lack of rich schema and conversational content limits their visibility.",
+    "quick_wins": [
+      "Implement LocalBusiness schema with detailed service information.",
+      "Expand FAQ content to address common HVAC queries in Torrance."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 75,
+    "found": true,
+    "summary": "Google Business Profile is operational with good ratings but lacks photos and active posts.",
+    "critical_issues": [
+      "No photos uploaded to GBP.",
+      "No recent posts or Q&A engagement."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly audit citations to ensure ongoing accuracy."
+    ]
+  },
+  "schema_gaps": [
+    "Missing FAQPage schema",
+    "No HowTo schema for repair processes",
+    "LocalBusiness schema lacks detailed service descriptions"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of rich schema limits AI understanding of their services.",
+    "invisible_for": "Queries related to specific HVAC repair processes and solutions.",
+    "low_hanging_fruit": "Adding FAQPage schema with local HVAC questions.",
+    "authority_opportunity": "Position as local HVAC experts by showcasing certifications and detailed service expertise."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for answer engines.",
+    "pain_point": "Missing out on 40% of potential leads from AI assistants like ChatGPT and Claude.",
+    "proof_point": "Despite strong NAP consistency, AI models overlook their detailed service pages due to lack of rich schema.",
+    "solution": "Implement advanced schema markup, enhance conversational content, and optimize GBP for AI visibility.",
+    "impact_estimate": "20-30% increase in AI-driven leads within 3 months.",
+    "urgency": "Competitors are already optimizing for AI, making swift action crucial to stay competitive."
+  },
+  "email_subject_line": "Unlock AI-driven growth for your HVAC business in Torrance",
+  "opening_line": "After analyzing your website and Google Business Profile, we've identified key opportunities to boost your visibility with AI assistants.",
+  "cta": "Let's schedule a call to discuss how our AEO strategy can position your business as the go-to HVAC expert in Torrance.",
+  "analyzed_at": "2026-02-26T16:18:00.640Z",
+  "lead_id": "17e3ae10-9f1e-4d3e-9693-237426096f8f",
+  "business_name": "Smart Residential Services Inc.",
+  "website": "https://smarthomeairandheating.com/Torrance",
+  "location": "Torrance, California",
+  "page_title": "Heating &amp; Cooling Repair Torrance, CA | Smart Home Air &amp; Heating",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.9,
+  "gbp_review_count": 46,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

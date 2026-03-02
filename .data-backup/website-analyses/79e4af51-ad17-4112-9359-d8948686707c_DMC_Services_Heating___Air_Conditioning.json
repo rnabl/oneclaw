@@ -1,0 +1,64 @@
+{
+  "overall_aeo_score": 62,
+  "aeo_readiness": {
+    "score": 55,
+    "summary": "AI assistants are unlikely to cite DMC Services due to a lack of structured data and conversational content, but there is potential for improvement with targeted optimizations.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup",
+      "Add an FAQ section with common HVAC queries and detailed answers"
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with a high rating, photos, and accurate information, but lacks regular posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent posts or updates on GBP",
+      "No engagement with Q&A section"
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms",
+      "Regularly monitor for any inconsistencies"
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for common HVAC tasks",
+    "Missing Product schema for services offered"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data prevents AI from recognizing them as a reliable local HVAC provider.",
+    "invisible_for": "Local HVAC service queries where AI prioritizes structured data and detailed service information.",
+    "low_hanging_fruit": "Implementing LocalBusiness and FAQPage schema to provide AI with the necessary context.",
+    "authority_opportunity": "Positioning as local HVAC experts by adding detailed service guides and customer testimonials."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven visibility for your HVAC business.",
+    "pain_point": "Without AI optimization, they are missing out on 40% of potential leads from voice and AI search queries.",
+    "proof_point": "Their website lacks essential schema markup and conversational content, making it less likely for AI assistants to recommend them.",
+    "solution": "Our AEO approach integrates schema markup, conversational content, and GBP optimization to ensure AI models recognize and recommend DMC Services as a top HVAC provider.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 3 months.",
+    "urgency": "Competitors are already optimizing for AI search; the longer they wait, the more ground they lose."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads for Your HVAC Business Today",
+  "opening_line": "We analyzed your website and identified key areas where AI optimization can significantly boost your online visibility.",
+  "cta": "Let's schedule a call to discuss how we can make your business AI-ready and capture more HVAC leads.",
+  "analyzed_at": "2026-02-26T16:07:20.221Z",
+  "lead_id": "79e4af51-ad17-4112-9359-d8948686707c",
+  "business_name": "DMC Services Heating & Air Conditioning",
+  "website": "https://dmcserviceshvac.com/",
+  "location": "Arvada, Colorado",
+  "page_title": "Air Conditioner Repair & Furnace Repair | DMC Services",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": 5,
+  "gbp_review_count": 166,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

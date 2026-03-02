@@ -1,0 +1,54 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "The website has a decent foundation for AEO with proper schema markup and localized content, but lacks reviews and detailed content depth.",
+    "quick_wins": [
+      "Generate and display customer reviews to build trust and improve local search presence.",
+      "Expand service pages with more detailed content and target long-tail keywords.",
+      "Implement a blog to regularly publish relevant content about HVAC services and local trends."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 60,
+    "found": "The website includes location-specific information and service areas.",
+    "summary": "The business has localized its content to some extent, but it lacks depth in location-specific pages and detailed service area information.",
+    "critical_issues": [
+      "No dedicated location pages for each city mentioned (e.g., Brighton, Broomfield).",
+      "Missing localized content such as customer testimonials or case studies specific to each location."
+    ]
+  },
+  "nap_citations": {
+    "score": 50,
+    "summary": "The business has not yet established a strong presence across major citation platforms.",
+    "action_items": [
+      "Create and verify Google Business Profile listing to improve local search visibility.",
+      "Ensure consistent NAP (Name, Address, Phone Number) across all online directories and platforms.",
+      "List the business on relevant local and industry-specific directories such as Yelp, Yellow Pages, and HVAC-focused sites."
+    ]
+  },
+  "schema_gaps": [
+    "No Organization schema specifying the business type, founding date, and other relevant details.",
+    "Missing Service schema for each specific service offered (e.g., Furnace Repair, A/C Installation).",
+    "No LocalBusiness schema with detailed address, geo-coordinates, and opening hours.",
+    "No Review schema to showcase customer testimonials and ratings."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of customer reviews and detailed localized content.",
+    "invisible_for": "Users searching for detailed HVAC services or specific location-based queries.",
+    "low_hanging_fruit": "Implementing a review generation strategy and creating dedicated location pages.",
+    "authority_opportunity": "Publishing expert articles and guides on HVAC topics to establish the business as a local authority."
+  },
+  "analyzed_at": "2026-02-27T03:26:08.349Z",
+  "lead_id": "7f2b12e3-1d10-41ea-86a8-67e5b666ef34",
+  "business_name": "All Climate Systems Heating & Cooling",
+  "website": "https://www.allclimatesystems.net/",
+  "location": "Thornton, Colorado",
+  "page_title": "Heating Repair, AC Repair, Electrician &amp; Heating Service | Brighton, CO, Broomfield, CO, Federal Heights, CO, Northglenn, CO, Thornton, CO &amp; Westminster, CO | All Climate Systems Heating and Cooling",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

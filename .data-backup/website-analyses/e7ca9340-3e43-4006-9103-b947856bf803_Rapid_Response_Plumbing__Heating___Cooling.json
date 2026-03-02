@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "AI models are likely to cite Rapid Response due to their strong local presence, but lack of conversational content and FAQ schemas limits their visibility.",
+    "quick_wins": [
+      "Implement FAQ content addressing common HVAC/plumbing queries.",
+      "Add HowTo schema for common HVAC/plumbing repair processes."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "Google Business Profile is well-optimized with photos, reviews, and contact info, but lacks regular posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent posts on GBP.",
+      "Q&A section is inactive or not utilized."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Monitor for any future inconsistencies."
+    ]
+  },
+  "schema_gaps": [
+    "Missing FAQPage schema.",
+    "No HowTo schema implemented.",
+    "LocalBusiness schema could be enhanced with more detailed service descriptions."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of conversational and FAQ content limits AI model citations.",
+    "invisible_for": "Queries related to emergency HVAC/plumbing services and DIY troubleshooting.",
+    "low_hanging_fruit": "Adding a comprehensive FAQ section addressing common customer questions.",
+    "authority_opportunity": "Position as the go-to expert by creating detailed content on complex HVAC/plumbing topics and obtaining relevant certifications."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for conversational search.",
+    "pain_point": "Without AI optimization, they miss out on 40% of potential leads from voice and AI-assisted searches.",
+    "proof_point": "Competitors with FAQ content and structured data are more frequently cited by AI models.",
+    "solution": "Implement a targeted AEO strategy with FAQ content, structured data, and conversational SEO to boost AI visibility.",
+    "impact_estimate": "Expected 30-40% increase in AI-driven leads within 3-6 months.",
+    "urgency": "Competitors are already optimizing for AI, making it critical to act now to stay competitive."
+  },
+  "email_subject_line": "Unlock AI-driven growth for your HVAC business",
+  "opening_line": "We analyzed your website and identified key opportunities to enhance your AI search visibility.",
+  "cta": "Let's discuss how our AEO strategy can position your business as the top choice for AI-assisted searches.",
+  "analyzed_at": "2026-02-26T16:24:27.498Z",
+  "lead_id": "e7ca9340-3e43-4006-9103-b947856bf803",
+  "business_name": "Rapid Response Plumbing, Heating & Cooling",
+  "website": "https://rapidhvactn.com/hvac-franklin-tn/",
+  "location": "Franklin, Tennessee",
+  "page_title": "HVAC Services Franklin TN - Rapid Response Heating and Cooling",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 5,
+  "gbp_review_count": 192,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

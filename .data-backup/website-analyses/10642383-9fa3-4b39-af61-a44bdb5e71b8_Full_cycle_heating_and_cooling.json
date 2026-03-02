@@ -1,0 +1,66 @@
+{
+  "overall_aeo_score": 45,
+  "aeo_readiness": {
+    "score": 30,
+    "summary": "AI assistants are unlikely to cite or recommend this business due to the lack of structured data, conversational content, and authority signals.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup",
+      "Create and publish an FAQ page with common HVAC questions and answers"
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with photos, hours, and a high rating, but lacks regular posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent posts on GBP",
+      "No engagement with Q&A section"
+    ]
+  },
+  "nap_citations": {
+    "score": 75,
+    "summary": "NAP consistency is moderate, with the address missing on the website but present on GBP.",
+    "action_items": [
+      "Add the complete business address to the website footer",
+      "Verify and update NAP details on all major citation platforms"
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for common HVAC solutions",
+    "Missing review schema for testimonials"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data prevents AI from understanding and citing the business.",
+    "invisible_for": "Queries related to HVAC services in Far Rockaway, NY",
+    "low_hanging_fruit": "Implementing LocalBusiness and FAQ schema markup",
+    "authority_opportunity": "Showcasing certifications, licenses, and detailed service explanations to establish expertise"
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by fixing your schema and content gaps.",
+    "pain_point": "Without AI optimization, you're missing out on 40% of potential leads from voice and AI search.",
+    "proof_point": "Your website lacks essential schema markup and conversational content, making it invisible to AI assistants.",
+    "solution": "Our AEO approach includes implementing schema, creating FAQ content, and optimizing GBP to make your business stand out to AI models.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 3 months.",
+    "urgency": "Competitors are already optimizing for AI search; delay means losing ground daily."
+  },
+  "email_subject_line": "Unlock AI-driven growth for your HVAC business in Far Rockaway",
+  "opening_line": "We analyzed your website and found critical gaps that are preventing AI from recommending your services.",
+  "cta": "Let's schedule a call to discuss how we can optimize your online presence for AI search and drive more leads.",
+  "analyzed_at": "2026-02-26T15:40:45.738Z",
+  "lead_id": "10642383-9fa3-4b39-af61-a44bdb5e71b8",
+  "business_name": "Full cycle heating and cooling",
+  "website": "https://fullcyclehnc.com/",
+  "location": "Far Rockaway, New York",
+  "page_title": "No title",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": 4.9,
+  "gbp_review_count": 38,
+  "gbp_found": true,
+  "nap_score": 75,
+  "nap_issues": [
+    "Address not found on website but listed on GBP"
+  ]
+}

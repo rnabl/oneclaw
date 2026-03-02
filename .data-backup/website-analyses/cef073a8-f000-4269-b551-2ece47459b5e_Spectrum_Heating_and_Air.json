@@ -1,0 +1,61 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 60,
+    "summary": "AI assistants are unlikely to cite Spectrum Heating and Air due to missing structured data and conversational content. Their current site lacks the necessary optimizations to be recognized as a top authority in AI-driven search results.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup",
+      "Add an FAQ section with structured data"
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with a high rating, photos, and accurate hours, but posts and Q&A sections could be better utilized for engagement.",
+    "critical_issues": [
+      "No recent posts on GBP",
+      "Lack of Q&A engagement"
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected, ensuring reliable business information across platforms.",
+    "action_items": []
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQ schema",
+    "No HowTo schema for common HVAC tasks",
+    "Missing review schema for testimonials"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data prevents AI from recognizing them as a reliable HVAC provider.",
+    "invisible_for": "Queries related to 'HVAC services in Mission Hills' or 'emergency HVAC repair near me'",
+    "low_hanging_fruit": "Implementing LocalBusiness schema to improve AI recognition",
+    "authority_opportunity": "Creating in-depth content on energy-efficient HVAC solutions and obtaining expert certifications to establish authority"
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by making your HVAC expertise visible to AI assistants.",
+    "pain_point": "Without AI optimization, Spectrum Heating and Air misses out on 40% of potential leads from voice and AI search users.",
+    "proof_point": "Their site lacks essential schema markup, causing AI models to overlook them in search results.",
+    "solution": "Our AEO approach integrates schema markup, conversational content, and authority-building strategies to ensure AI models recognize and recommend your services.",
+    "impact_estimate": "Expect a 30% increase in AI-driven leads within the first 3 months.",
+    "urgency": "Competitors optimizing for AI are already capturing your potential market share. Act now to stay ahead."
+  },
+  "email_subject_line": "Unlock AI-Driven Growth for Spectrum Heating & Air",
+  "opening_line": "After analyzing your website, we found significant opportunities to enhance your visibility with AI search and voice assistants.",
+  "cta": "Let's schedule a call to discuss how we can optimize your site for AI and boost your HVAC leads.",
+  "analyzed_at": "2026-02-26T15:54:06.768Z",
+  "lead_id": "cef073a8-f000-4269-b551-2ece47459b5e",
+  "business_name": "Spectrum Heating and Air",
+  "website": "https://spectrumheatingandair.com/",
+  "location": "Mission Hills, California",
+  "page_title": "No title",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": 4.9,
+  "gbp_review_count": 97,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

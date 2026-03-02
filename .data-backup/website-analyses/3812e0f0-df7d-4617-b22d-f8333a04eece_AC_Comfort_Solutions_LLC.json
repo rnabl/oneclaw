@@ -1,0 +1,87 @@
+{
+  "overall_aeo_score": 75,
+  "aeo_readiness": {
+    "strengths": [
+      "High NAP consistency (100/100)",
+      "Strong Google Business Profile rating (4.9 with 146 reviews)",
+      "Clear service offerings and contact options"
+    ],
+    "weaknesses": [
+      "Missing H1 and H2 tags on the website",
+      "No FAQ section for Answer Engine Optimization",
+      "Limited schema markup implementation"
+    ],
+    "opportunities": [
+      "Implement structured data (Schema.org) for better search visibility",
+      "Add an FAQ section to target common HVAC queries",
+      "Enhance meta descriptions and title tags for better click-through rates"
+    ],
+    "threats": [
+      "Competition from other HVAC companies with stronger AEO strategies",
+      "Potential loss of customers due to lack of detailed service information"
+    ]
+  },
+  "gbp_analysis": {
+    "rating": 4.9,
+    "review_count": 146,
+    "recommendations": [
+      "Encourage more customer reviews to maintain high rating",
+      "Respond to reviews to show customer engagement",
+      "Highlight positive reviews on the website"
+    ]
+  },
+  "nap_citations": {
+    "status": "Excellent",
+    "details": "NAP (Name, Address, Phone Number) is consistent across all platforms",
+    "recommendations": [
+      "Continue to monitor and maintain NAP consistency",
+      "Ensure NAP is updated on any new platforms or directories"
+    ]
+  },
+  "schema_gaps": {
+    "current_schemas": [
+      "JSON-LD"
+    ],
+    "missing_schemas": [
+      "Service",
+      "LocalBusiness",
+      "FAQPage",
+      "Review",
+      "BreadcrumbList"
+    ],
+    "recommendations": [
+      "Implement Service schema to detail HVAC services offered",
+      "Add FAQPage schema to address common customer questions",
+      "Incorporate Review schema to showcase customer testimonials",
+      "Use BreadcrumbList schema for better site navigation"
+    ]
+  },
+  "ai_visibility_gap": {
+    "current_visibility": "Moderate",
+    "recommendations": [
+      "Optimize content with targeted HVAC keywords",
+      "Leverage AI-driven tools to identify and address customer queries",
+      "Enhance content with natural language processing techniques"
+    ]
+  },
+  "agency_pitch": "At AC Comfort Solutions, we pride ourselves on delivering top-notch HVAC services with a focus on customer satisfaction. Our 20 years of experience in the industry have equipped us with the expertise to handle all your heating and cooling needs. We are committed to providing reliable, efficient, and affordable solutions tailored to your specific requirements. Let us help you maintain a comfortable environment in your home or business with our comprehensive range of services, including maintenance, repairs, and HVAC replacement. Contact us today to schedule an appointment or to learn more about our maintenance plans and pricing.",
+  "email_subject_line": "Experience Unmatched HVAC Expertise with AC Comfort Solutions",
+  "opening_line": "Dear [Customer Name], thank you for considering AC Comfort Solutions for your HVAC needs. With over 20 years of experience, we are dedicated to providing you with the highest quality service and impeccable customer care.",
+  "cta": "Schedule Your Appointment Today!",
+  "analyzed_at": "2026-02-26T16:34:28.415Z",
+  "lead_id": "3812e0f0-df7d-4617-b22d-f8333a04eece",
+  "business_name": "AC Comfort Solutions LLC",
+  "website": "https://www.accomfortsolutions.com/",
+  "location": "Murfreesboro, Tennessee",
+  "page_title": "\r\n    AC Comfort Solutions |  HVAC Contractor | Nashville, TN\r\n  ",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.9,
+  "gbp_review_count": 146,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": [],
+  "used_proxy": true
+}

@@ -1,0 +1,54 @@
+{
+  "overall_aeo_score": 68,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "PMG Mechanical has a solid foundation for AEO readiness with a focus on localized services and a user-friendly website. However, there are opportunities to improve online visibility and customer engagement.",
+    "quick_wins": [
+      "Increase the number of Google reviews to build social proof and improve local search ranking.",
+      "Optimize meta tags and headings with targeted keywords related to HVAC and electrical services in King County.",
+      "Enhance the blog section with informative content that addresses common HVAC and electrical issues."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 65,
+    "found": "The website includes localized service information and contact details, but lacks structured data for Google Business Profile (GBP) optimization.",
+    "summary": "PMG Mechanical's website provides basic GBP elements, but more structured data and GBP-specific content are needed to enhance local search presence.",
+    "critical_issues": [
+      "No active GBP listing found, which is crucial for local search visibility.",
+      "Missing location-specific landing pages for different service areas."
+    ]
+  },
+  "nap_citations": {
+    "score": 60,
+    "summary": "The business has consistent NAP (Name, Address, Phone Number) information on its website, but lacks citations in major online directories and local listings.",
+    "action_items": [
+      "Create and verify NAP citations in top online directories such as Yelp, Bing Places, and Yellow Pages.",
+      "Ensure NAP consistency across all online platforms and social media profiles."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "Product",
+    "BreadcrumbList"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of GBP listing and structured data for local SEO.",
+    "invisible_for": "Local customers searching for HVAC and electrical services in King County.",
+    "low_hanging_fruit": "Implementing a GBP listing and optimizing it with relevant keywords and service information.",
+    "authority_opportunity": "Creating high-quality, localized content that establishes PMG Mechanical as a trusted expert in HVAC and electrical services."
+  },
+  "analyzed_at": "2026-02-27T02:37:46.818Z",
+  "lead_id": "51aaf8c4-6db5-4a0a-80f2-d2371d735240",
+  "business_name": "PMG Mechanical",
+  "website": "http://www.pmg-mechanical.com/",
+  "location": "Bellevue, Washington",
+  "page_title": "Top-Rated HVAC Contractor in King County, WA | PMG Mechanical",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

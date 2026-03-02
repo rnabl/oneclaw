@@ -15,6 +15,7 @@ import { vault, SecretsVault } from '../secrets';
 import { policyEngine, TenantTier } from '../policy';
 import { meteringTracker } from '../metering';
 import { artifactStore } from '../artifacts';
+import { checkpointStore } from './checkpoint-store';
 
 // =============================================================================
 // TYPES
@@ -87,6 +88,9 @@ export interface StepContext {
   secrets: Record<string, string>;   // Decrypted secrets for this step
   log: (level: 'debug' | 'info' | 'warn' | 'error', message: string, data?: Record<string, unknown>) => Promise<void>;
   recordApiCall: (provider: string, operation: string, quantity: number) => void;
+  // NEW: Checkpoint methods
+  saveArtifact: (key: string, data: any, type?: string) => Promise<void>;
+  getArtifact: (key: string) => Promise<any | null>;
 }
 
 export type WorkflowHandler = (
@@ -223,6 +227,12 @@ export class ExecutionRunner {
     policyEngine.jobStarted(tenantId);
     meteringTracker.startJob(job.id, tenantId);
     
+    // NEW: Update run status in Supabase
+    await checkpointStore.updateRun(job.id, {
+      status: 'running',
+      totalSteps: job.totalSteps,
+    });
+    
     try {
       // Get workflow handler
       const handler = this.workflows.get(workflowId);
@@ -255,6 +265,14 @@ export class ExecutionRunner {
       // Record usage
       policyEngine.jobCompleted(tenantId, job.actualCostUsd);
       
+      // NEW: Update run status in Supabase (completed)
+      await checkpointStore.updateRun(job.id, {
+        status: 'completed',
+        currentStep: job.currentStep,
+        actualCostUsd: job.actualCostUsd,
+        completedAt: job.completedAt,
+      });
+      
       // Webhook callback
       if (options.webhookUrl) {
         this.sendWebhook(options.webhookUrl, job).catch(console.error);
@@ -281,6 +299,15 @@ export class ExecutionRunner {
       const costSummary = meteringTracker.completeJob(job.id);
       job.actualCostUsd = costSummary?.totalCostUsd || 0;
       policyEngine.jobCompleted(tenantId, job.actualCostUsd);
+      
+      // NEW: Update run status in Supabase (failed)
+      await checkpointStore.updateRun(job.id, {
+        status: 'failed',
+        currentStep: job.currentStep,
+        errorMessage: job.error,
+        actualCostUsd: job.actualCostUsd,
+        completedAt: job.completedAt,
+      });
       
       console.error(`[Runner] Job ${job.id} failed:`, error);
       throw error;
@@ -309,6 +336,7 @@ export class ExecutionRunner {
           console.log(`[Progress][${job.id}][${step}] ${level.toUpperCase()}: ${message}`);
         }
 
+        // Save to artifact store (local file)
         await artifactStore.storeLog(
           job.id,
           job.currentStep,
@@ -317,6 +345,17 @@ export class ExecutionRunner {
           message,
           data
         );
+
+        // NEW: Save to Supabase checkpoint store (persistent)
+        await checkpointStore.saveLog({
+          runId: job.id,
+          level,
+          message,
+          stepName: job.stepName,
+          stepIndex: job.currentStep,
+          data,
+          timestamp: new Date(),
+        });
       },
       
       recordApiCall: (provider, operation, quantity) => {
@@ -334,6 +373,22 @@ export class ExecutionRunner {
           now
         );
       },
+
+      // NEW: Save artifact to checkpoint store
+      saveArtifact: async (key: string, data: any, type?: string) => {
+        await checkpointStore.saveArtifact({
+          runId: job.id,
+          artifactKey: key,
+          artifactType: type || 'data',
+          data,
+          expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
+        });
+      },
+
+      // NEW: Get artifact from checkpoint store
+      getArtifact: async (key: string) => {
+        return await checkpointStore.getArtifact(job.id, key);
+      },
     };
   }
 
@@ -346,6 +401,25 @@ export class ExecutionRunner {
       job.currentStep = stepIndex;
       job.stepName = stepName;
       if (totalSteps) job.totalSteps = totalSteps;
+      
+      // NEW: Save step checkpoint to Supabase
+      checkpointStore.saveStep({
+        runId: jobId,
+        stepIndex,
+        stepName,
+        status: 'running',
+        startedAt: new Date(),
+      }).catch(err => {
+        console.error(`[Runner] Failed to save step checkpoint:`, err);
+      });
+
+      // NEW: Update run progress in Supabase
+      checkpointStore.updateRun(jobId, {
+        currentStep: stepIndex,
+        totalSteps: totalSteps || job.totalSteps,
+      }).catch(err => {
+        console.error(`[Runner] Failed to update run progress:`, err);
+      });
     }
   }
 

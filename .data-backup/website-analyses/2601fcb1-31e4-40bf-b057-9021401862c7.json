@@ -1,0 +1,55 @@
+{
+  "overall_aeo_score": 55,
+  "aeo_readiness": {
+    "score": 60,
+    "summary": "The business has basic AEO elements in place, such as a clear service offering and contact information, but lacks depth in content, reviews, and keyword optimization.",
+    "quick_wins": [
+      "Add customer reviews to the website and encourage reviews on Google My Business.",
+      "Optimize website content with targeted keywords related to HVAC services in Naperville and surrounding areas.",
+      "Create dedicated service pages for each HVAC service offered to improve relevance and search visibility."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 30,
+    "found": false,
+    "summary": "No evidence of a Google Business Profile (GBP) was found, which is crucial for local search visibility.",
+    "critical_issues": [
+      "Missing GBP listing, which is essential for local search presence.",
+      "Lack of customer reviews and engagement on GBP, if it exists."
+    ]
+  },
+  "nap_citations": {
+    "score": 40,
+    "summary": "The business has inconsistent or incomplete NAP (Name, Address, Phone Number) citations across the web, impacting local search performance.",
+    "action_items": [
+      "Ensure consistent NAP information across all online directories and platforms.",
+      "Claim and update profiles on major local business directories such as Yelp, Bing Places, and Yellow Pages.",
+      "Monitor and manage online citations regularly to maintain accuracy."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "Product",
+    "FAQPage"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of localized and service-specific content",
+    "invisible_for": "Users searching for HVAC services in specific suburbs like Hinsdale, Bolingbrook, and Downers Grove.",
+    "low_hanging_fruit": "Create location-based service pages and optimize unique selling propositions for each area.",
+    "authority_opportunity": "Develop a content strategy that includes blog posts, case studies, and customer testimonials to establish industry authority and improve search rankings."
+  },
+  "analyzed_at": "2026-02-27T04:06:02.517Z",
+  "lead_id": "2601fcb1-31e4-40bf-b057-9021401862c7",
+  "business_name": "American Mechanical Systems",
+  "website": "https://www.americanmechanicalsystems.com/",
+  "location": "Naperville, Illinois",
+  "page_title": "Residential &amp;Commercial HVAC Contractor Naperville",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

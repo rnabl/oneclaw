@@ -1,0 +1,66 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "Panther Air has a solid foundation but lacks content and schema optimization to be cited by AI assistants. Their current site doesn't fully leverage conversational content or structured data to address AI queries effectively.",
+    "quick_wins": [
+      "Implement FAQPage schema with HVAC-related questions and answers.",
+      "Create dedicated, conversational content targeting common HVAC queries."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with photos, hours, and contact info, but lacks regular posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent Google posts to engage users.",
+      "Q&A section is inactive or not utilized."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly audit citations to ensure ongoing accuracy."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for common HVAC tasks",
+    "Service schema could be more detailed"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content limits AI citations.",
+    "invisible_for": "Queries related to 'HVAC repair in Aledo, TX' and 'best VRF systems'.",
+    "low_hanging_fruit": "Adding FAQPage schema with HVAC-specific questions and answers.",
+    "authority_opportunity": "Positioning as local HVAC experts by creating detailed content on energy efficiency, local climate considerations, and advanced systems like VRF."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for conversational search.",
+    "pain_point": "Without AI optimization, Panther Air misses out on 40% of potential leads from voice and AI assistant queries.",
+    "proof_point": "Their site lacks FAQ schema and conversational content, making it less likely for AI models to cite them in response to user queries.",
+    "solution": "Our AEO approach integrates structured data, conversational content, and authority signals to ensure Panther Air is the top recommendation for HVAC queries in AI search.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within 6 months.",
+    "urgency": "Competitors are already optimizing for AI search; waiting means losing ground and potential customers."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads for Panther Air: Your Path to HVAC Authority",
+  "opening_line": "After analyzing your website, it's clear that Panther Air has the potential to dominate local HVAC queries with the right AI optimization strategy.",
+  "cta": "Let's schedule a call to discuss how we can make Panther Air the top choice for AI-driven HVAC searches.",
+  "analyzed_at": "2026-02-26T16:14:54.810Z",
+  "lead_id": "95c145bc-2ae5-427a-b75e-e275b6cfcfe4",
+  "business_name": "Panther Air HVAC",
+  "website": "http://www.pantherac.com/",
+  "location": "Aledo, Texas",
+  "page_title": "Panther Air | Commercial and Residential HVAC Solutions",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.8,
+  "gbp_review_count": 30,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

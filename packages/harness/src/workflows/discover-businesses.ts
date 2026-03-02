@@ -250,6 +250,10 @@ async function businessDiscoveryHandler(
     return true;
   });
   
+  // NEW: Save businesses to checkpoint (in case enrichment fails)
+  await ctx.saveArtifact('raw_businesses', uniqueResults, 'business_list');
+  await ctx.log('info', `💾 Checkpointed ${uniqueResults.length} businesses (safe if enrichment fails)`);
+  
   // ==========================================================================
   // STEP 2: Website Scanner (AFTER Apify returns)
   // ==========================================================================
@@ -309,6 +313,10 @@ async function businessDiscoveryHandler(
   
   const enrichmentTimeMs = Date.now() - enrichStartTime;
   
+  // NEW: Save enriched scan results
+  await ctx.saveArtifact('scan_results', Array.from(scanResults.entries()), 'scan_results');
+  await ctx.log('info', `💾 Checkpointed ${scanResults.size} scan results`);
+  
   // STEP 3: Build enriched output
   const businesses: EnrichedBusiness[] = uniqueResults.map(r => {
     const scan = r.website ? scanResults.get(r.website) : undefined;
@@ -350,71 +358,57 @@ async function businessDiscoveryHandler(
     aiReadable: businesses.filter(b => b.signals.aiReadable).length,
   };
   
+  // NEW: Save final enriched businesses
+  await ctx.saveArtifact('enriched_businesses', businesses, 'business_list');
+  await ctx.log('info', `💾 Final checkpoint: ${businesses.length} enriched businesses saved`);
+  
   const searchTimeMs = Date.now() - startTime;
   
   await ctx.log('info', `Discovery complete: ${businesses.length} businesses, ${stats.enriched} enriched in ${searchTimeMs}ms`);
   await ctx.log('info', `Stats: ${stats.withAds} with ads, ${stats.withBooking} with booking, ${stats.withChatbot} with chatbot`);
   
   // ==========================================================================
-  // STEP 4: Store in Supabase (Production Database)
+  // STEP 4: Store in Production Database (Modular)
   // ==========================================================================
   
   if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
-    await ctx.log('info', 'Storing leads in Supabase production database...');
+    await ctx.log('info', 'Storing businesses in production database...');
     
     try {
-      const supabase = createClient(
-        process.env.SUPABASE_URL,
-        process.env.SUPABASE_SERVICE_ROLE_KEY
-      );
+      const { createStorageAdapter } = await import('../storage/business-adapter');
+      const storage = createStorageAdapter(); // Uses env var or defaults to 'supabase-crm'
       
-      const leadRecords = businesses.map(b => {
-        const signals = b.signals || {};
-        
-        // Auto-calculate scores from signals
-        let score = 50;
-        if (b.website) score += 20;
-        if (signals.hasAds) score += 10;
-        if (!signals.aiReadable) score += 15; // Low AI visibility = bigger opportunity
-        if (b.reviewCount && b.reviewCount > 20) score += 5;
-        
-        return {
-          company_name: b.name,
-          website: b.website,
-          phone: b.phone,
-          industry: niche,
-          address: b.address,
-          city: b.city,
-          state: b.state,
-          zip_code: b.zipCode,
-          google_place_id: b.googlePlaceId || b.placeId,
-          google_rating: b.rating,
-          google_reviews: b.reviewCount,
-          google_maps_url: b.googleMapsUrl,
-          image_url: b.imageUrl,
-          website_signals: signals,
-          lead_score: Math.min(score, 100),
-          geo_readiness_score: signals.seoOptimized ? 7.0 : 3.0,
-          aeo_readiness_score: signals.aiReadable ? 7.0 : 2.0,
-          stage: 'discovered',
-          source_job_id: ctx.jobId,
-        };
-      });
+      const businessRecords = businesses.map(b => ({
+        name: b.name,
+        website: b.website,
+        phone: b.phone,
+        address: b.address,
+        city: b.city,
+        state: b.state,
+        zipCode: b.zipCode,
+        rating: b.rating,
+        reviewCount: b.reviewCount,
+        googlePlaceId: b.googlePlaceId || b.placeId,
+        googleMapsUrl: b.googleMapsUrl,
+        imageUrl: b.imageUrl,
+        signals: b.signals,
+        industry: niche,
+        leadScore: calculateLeadScore(b),
+        geoReadinessScore: b.signals?.seoOptimized ? 7.0 : 3.0,
+        aeoReadinessScore: b.signals?.aiReadable ? 7.0 : 2.0,
+        sourceJobId: ctx.jobId,
+      }));
       
-      const { data, error } = await supabase
-        .schema('crm')
-        .from('leads')
-        .insert(leadRecords)
-        .select('id');
+      const result = await storage.store(businessRecords);
       
-      if (error) {
-        await ctx.log('warn', `Supabase storage failed: ${error.message}`);
+      if (result.success) {
+        await ctx.log('info', `✅ Stored ${result.count} businesses in production database`);
       } else {
-        await ctx.log('info', `✅ Stored ${data?.length || 0} leads in Supabase crm.leads table`);
+        await ctx.log('warn', `Storage failed: ${result.error}`);
       }
     } catch (error) {
-      await ctx.log('warn', `Supabase error: ${error}. Continuing without Supabase storage.`);
-      // Don't fail workflow if Supabase unavailable
+      await ctx.log('warn', `Storage error: ${error}. Continuing without database storage.`);
+      // Don't fail workflow if storage unavailable
     }
   }
   
@@ -432,6 +426,19 @@ async function businessDiscoveryHandler(
     stats,
     formattedResponse,
   };
+}
+
+// Helper to calculate lead score
+function calculateLeadScore(business: EnrichedBusiness): number {
+  const signals = business.signals || {};
+  let score = 50;
+  
+  if (business.website) score += 20;
+  if (signals.hasAds) score += 10;
+  if (!signals.aiReadable) score += 15; // Low AI visibility = bigger opportunity
+  if (business.reviewCount && business.reviewCount > 20) score += 5;
+  
+  return Math.min(score, 100);
 }
 
 function formatDiscoveryForChat(

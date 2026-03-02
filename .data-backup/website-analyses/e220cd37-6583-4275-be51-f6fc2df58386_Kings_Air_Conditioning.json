@@ -1,0 +1,67 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 65,
+    "summary": "AI assistants are unlikely to cite Kings Air Conditioning due to insufficient structured data and conversational content. They lack clear authority signals and optimized FAQ content.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup with detailed business info.",
+      "Add an FAQ section with questions and answers about HVAC services and their expertise."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "Google Business Profile is well-optimized with photos, hours, and reviews, but Q&A is not actively managed.",
+    "critical_issues": [
+      "No active management of Q&A section.",
+      "Missing regular posts about promotions or service updates."
+    ]
+  },
+  "nap_citations": {
+    "score": 75,
+    "summary": "NAP consistency is moderate, with the address missing from the website but present on GBP.",
+    "action_items": [
+      "Add the complete business address to the website footer.",
+      "Verify and update NAP details across all online directories and citations."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for common HVAC tasks"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content makes it difficult for AI to understand and recommend their services.",
+    "invisible_for": "Queries related to '24/7 AC repair in Fort Lauderdale' and 'top HVAC services near me'.",
+    "low_hanging_fruit": "Adding FAQ content and LocalBusiness schema.",
+    "authority_opportunity": "Positioning as local HVAC experts through detailed service explanations, customer testimonials, and media mentions."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by making your business the top choice for HVAC queries in Fort Lauderdale.",
+    "pain_point": "Without AI optimization, they are missing out on 40% of potential leads from voice and AI search users.",
+    "proof_point": "Their website lacks essential schema markup and conversational content, causing AI models to overlook them in search results.",
+    "solution": "Our AEO strategy integrates schema markup, FAQ content, and authority signals to ensure AI models recognize and recommend Kings Air Conditioning as the go-to HVAC expert.",
+    "impact_estimate": "Expect a 30% increase in AI-driven leads within the first 6 months.",
+    "urgency": "Competitors are already optimizing for AI search—waiting means losing ground and potential customers."
+  },
+  "email_subject_line": "Unlock AI-Driven Growth for Your HVAC Business",
+  "opening_line": "We analyzed your website and identified key opportunities to make your business stand out in AI search results.",
+  "cta": "Let's schedule a call to discuss how we can optimize your online presence for AI and voice search.",
+  "analyzed_at": "2026-02-26T15:44:32.640Z",
+  "lead_id": "e220cd37-6583-4275-be51-f6fc2df58386",
+  "business_name": "Kings Air Conditioning",
+  "website": "http://www.kingsairconditioning.com/",
+  "location": "Fort Lauderdale, Florida",
+  "page_title": "Welcome - Kings Air Conditioning",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.8,
+  "gbp_review_count": 79,
+  "gbp_found": true,
+  "nap_score": 75,
+  "nap_issues": [
+    "Address not found on website but listed on GBP"
+  ]
+}

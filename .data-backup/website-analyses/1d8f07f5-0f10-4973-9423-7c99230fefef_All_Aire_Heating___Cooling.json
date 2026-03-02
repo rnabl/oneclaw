@@ -1,0 +1,63 @@
+{
+  "overall_aeo_score": 62,
+  "aeo_readiness": {
+    "score": 55,
+    "summary": "AI assistants are unlikely to cite this business due to a lack of structured data, conversational content, and authority signals. Implementing schema markup and FAQ content can significantly improve visibility.",
+    "quick_wins": [
+      "Add LocalBusiness schema markup to the website.",
+      "Create an FAQ section with questions related to HVAC services and local expertise."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 75,
+    "found": true,
+    "summary": "The Google Business Profile is well-rated but lacks critical details like business hours and regular posts.",
+    "critical_issues": [
+      "Business hours are not listed.",
+      "No recent posts or Q&A engagement."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly monitor citations for any potential discrepancies."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for common HVAC tasks"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of schema markup and conversational content makes the site less attractive to AI crawlers.",
+    "invisible_for": "Local HVAC service queries where AI assistants prioritize structured data and authority signals.",
+    "low_hanging_fruit": "Implementing LocalBusiness schema markup.",
+    "authority_opportunity": "Showcasing certifications, partnerships, and detailed service expertise to establish authority."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for answer engines and AI search.",
+    "pain_point": "Without AI optimization, they are missing out on 40% of potential leads from voice and AI assistant queries.",
+    "proof_point": "The site lacks essential schema markup and FAQ content, making it less likely to be cited by AI models.",
+    "solution": "Our AEO approach integrates schema markup, conversational content, and authority signals to make your business the top choice for AI-driven searches.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 3 months.",
+    "urgency": "Competitors are already optimizing for AI, and waiting means losing market share to them."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads for Your HVAC Business in Chula Vista",
+  "opening_line": "We analyzed your website and identified key opportunities to boost your visibility with AI assistants and voice search.",
+  "cta": "Let’s schedule a call to discuss how we can optimize your online presence for AI-driven searches.",
+  "analyzed_at": "2026-02-26T16:17:58.038Z",
+  "lead_id": "1d8f07f5-0f10-4973-9423-7c99230fefef",
+  "business_name": "All Aire Heating & Cooling",
+  "website": "http://allaireone.com/",
+  "location": "Chula Vista, California",
+  "page_title": "All Aire Heating A/C and Refrigeration Chula Vista CA",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": 5,
+  "gbp_review_count": 182,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

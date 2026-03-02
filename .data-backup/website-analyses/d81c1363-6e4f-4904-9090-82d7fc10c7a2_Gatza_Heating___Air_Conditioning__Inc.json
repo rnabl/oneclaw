@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 72,
+  "aeo_readiness": {
+    "score": 68,
+    "summary": "AI assistants are likely to cite Gatza Heating & Air Conditioning due to their strong local presence and reviews, but improvements in structured data and conversational content are needed for better AI visibility.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup with detailed service information.",
+      "Expand FAQ content to address common HVAC queries and solutions."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "Google Business Profile is well-optimized with high ratings, photos, and accurate information, but lacks regular posts and active Q&A engagement.",
+    "critical_issues": [
+      "No recent posts or updates on GBP.",
+      "Q&A section is inactive or not utilized."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected across platforms.",
+    "action_items": [
+      "Maintain current NAP consistency across all directories and listings.",
+      "Regularly monitor for any inconsistencies or new citation opportunities."
+    ]
+  },
+  "schema_gaps": [
+    "Missing FAQPage schema despite having FAQ content.",
+    "No HowTo schema for common HVAC maintenance or troubleshooting guides.",
+    "LocalBusiness schema lacks detailed service descriptions and geo."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data limits AI understanding of their services.",
+    "invisible_for": "Queries related to 'HVAC maintenance tips' or 'emergency HVAC services in Olathe.'",
+    "low_hanging_fruit": "Adding FAQPage schema and expanding conversational FAQs.",
+    "authority_opportunity": "Position as local HVAC experts by creating detailed how-to guides and obtaining relevant certifications."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing your digital presence for voice and chat search.",
+    "pain_point": "Without AI optimization, they miss out on 40% of potential leads from voice and chat queries.",
+    "proof_point": "Their GBP is strong, but AI assistants rarely cite them for service-related queries due to lacking structured data.",
+    "solution": "Implement comprehensive schema markup, enhance conversational content, and actively manage GBP to boost AI visibility.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within 3-6 months.",
+    "urgency": "Competitors are already optimizing for AI, making it critical to act now to capture market share."
+  },
+  "email_subject_line": "Maximize Your AI Reach: Optimize Your HVAC Business for Voice & Chat Search",
+  "opening_line": "We analyzed your website and GBP, and here’s how AI assistants currently perceive your HVAC services.",
+  "cta": "Let’s schedule a call to discuss our AEO strategy and how it can drive more AI-driven leads to your business.",
+  "analyzed_at": "2026-02-26T16:10:10.716Z",
+  "lead_id": "d81c1363-6e4f-4904-9090-82d7fc10c7a2",
+  "business_name": "Gatza Heating & Air Conditioning, Inc",
+  "website": "http://www.gatzaheatingandair.com/",
+  "location": "Olathe, Kansas",
+  "page_title": "Home - Gatza Heating &amp; Air Conditioning, Inc.",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 5,
+  "gbp_review_count": 178,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

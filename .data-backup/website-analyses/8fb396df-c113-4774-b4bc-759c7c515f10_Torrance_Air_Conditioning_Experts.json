@@ -1,0 +1,63 @@
+{
+  "overall_aeo_score": 68,
+  "aeo_readiness": {
+    "score": 65,
+    "summary": "AI assistants are unlikely to cite Torrance AC Repair due to insufficient conversational content and lack of structured data for AI consumption.",
+    "quick_wins": [
+      "Implement FAQPage schema with common HVAC questions and answers.",
+      "Add HowTo schema for common HVAC maintenance tasks."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "Google Business Profile is well-optimized with high ratings, photos, and accurate information.",
+    "critical_issues": [
+      "No recent posts or updates on GBP.",
+      "Lack of Q&A section engagement."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": []
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema",
+    "No structured data for services"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content tailored for AI consumption.",
+    "invisible_for": "Queries related to HVAC emergency services and maintenance tips.",
+    "low_hanging_fruit": "Implementing FAQPage schema with HVAC-specific questions and answers.",
+    "authority_opportunity": "Positioning as HVAC experts by creating detailed HowTo guides and publishing them with proper schema."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by making your HVAC expertise AI-friendly.",
+    "pain_point": "Without AI optimization, Torrance AC Repair is missing out on 40% of potential leads from voice and AI search.",
+    "proof_point": "Competitors with structured data and conversational content rank higher in AI search results.",
+    "solution": "Our AEO approach integrates schema markup, conversational content, and authority-building strategies to make your business the top choice for AI assistants.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within 6 months.",
+    "urgency": "Waiting means losing ground to competitors who are already optimizing for AI search."
+  },
+  "email_subject_line": "Unlock AI-Ready HVAC Leads for Torrance AC Repair",
+  "opening_line": "We analyzed your website and identified key opportunities to make your HVAC services more visible to AI search and voice assistants.",
+  "cta": "Let's schedule a call to discuss how we can optimize your online presence for AI-driven growth.",
+  "analyzed_at": "2026-02-26T16:08:12.399Z",
+  "lead_id": "8fb396df-c113-4774-b4bc-759c7c515f10",
+  "business_name": "Torrance Air Conditioning Experts",
+  "website": "http://torranceacrepair.com/",
+  "location": "Torrance, California",
+  "page_title": "Home - Torrance AC Repair",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.9,
+  "gbp_review_count": 37,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

@@ -1,0 +1,52 @@
+{
+  "overall_aeo_score": 55,
+  "aeo_readiness": {
+    "score": 60,
+    "summary": "The business has basic online presence but lacks critical elements for strong AEO readiness, such as reviews, schema markup, and detailed content.",
+    "quick_wins": [
+      "Gather and display customer reviews on the website and Google Business Profile.",
+      "Implement schema markup to enhance search engine understanding of the business.",
+      "Expand website content to include detailed service descriptions, FAQs, and location-specific information."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 30,
+    "found": "No Google Business Profile found or insufficient information available.",
+    "summary": "The absence of a Google Business Profile severely limits local search visibility and customer engagement.",
+    "critical_issues": [
+      "No Google Business Profile exists for the business.",
+      "Lack of local search presence and customer interaction channels."
+    ]
+  },
+  "nap_citations": {
+    "score": 40,
+    "summary": "NAP (Name, Address, Phone number) citations are inconsistent or missing across the web, affecting local SEO.",
+    "action_items": [
+      "Ensure consistent NAP information across all online directories and platforms.",
+      "List the business on major local directories such as Yelp, Yellow Pages, and industry-specific sites.",
+      "Monitor and update NAP information regularly to maintain accuracy."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "Product",
+    "ContactPoint"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and customer reviews.",
+    "invisible_for": "Local search users and potential customers seeking reliable AC services.",
+    "low_hanging_fruit": "Implementing schema markup and collecting customer reviews.",
+    "authority_opportunity": "Establishing the business as a local authority by creating valuable content, such as blog posts on AC maintenance tips and local HVAC trends."
+  },
+  "analyzed_at": "2026-02-27T03:32:28.953Z",
+  "lead_id": "03fb9d70-fac2-4e37-a33e-8e6577b91020",
+  "business_name": "40 Degrees Air & Refrigeration",
+  "website": "http://www.40degreesac.com/",
+  "location": "Hollywood, Florida",
+  "page_title": "40 Degrees Air & Refrigeration | Expert AC Services in South Florida",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_found": false
+}

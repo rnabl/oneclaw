@@ -1,0 +1,53 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "The business has a basic level of AEO readiness with some foundational elements in place, such as a clear website structure and schema markup. However, there are significant gaps in customer engagement and online reputation.",
+    "quick_wins": [
+      "Encourage customers to leave Google reviews to build online reputation.",
+      "Optimize website content with targeted keywords related to HVAC services in Georgetown, Texas.",
+      "Implement a blog section to regularly publish relevant content and improve SEO."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 50,
+    "found": false,
+    "summary": "The Google Business Profile (GBP) was not found, indicating that the business may not have claimed or set up their GBP.",
+    "critical_issues": [
+      "No GBP found, which is crucial for local search visibility.",
+      "Lack of customer reviews and engagement on Google."
+    ]
+  },
+  "nap_citations": {
+    "score": 60,
+    "summary": "The business has some level of NAP (Name, Address, Phone Number) consistency across the web, but there is room for improvement in citation quality and quantity.",
+    "action_items": [
+      "Claim and verify the business on major citation sites like Yelp, Bing, and Apple Maps.",
+      "Ensure consistent NAP information across all online platforms.",
+      "Seek out niche citation opportunities specific to the HVAC industry."
+    ]
+  },
+  "schema_gaps": [
+    "Product schema for HVAC services and products offered.",
+    "Review schema to highlight customer testimonials and ratings.",
+    "FAQ schema to address common customer queries about HVAC services."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of online reputation and customer engagement.",
+    "invisible_for": "Customers searching for HVAC services in Georgetown, Texas, due to the absence of a GBP and limited online presence.",
+    "low_hanging_fruit": "Setting up and optimizing a Google Business Profile to improve local search visibility.",
+    "authority_opportunity": "Creating high-quality, informative content that establishes the business as an authority in the HVAC industry."
+  },
+  "analyzed_at": "2026-02-27T02:36:22.800Z",
+  "lead_id": "31630d29-7afc-4ee6-b553-f21b453c9d30",
+  "business_name": "Bee Cool Texas Heating and Air",
+  "website": "http://www.beecooltexas.com/",
+  "location": "Georgetown, Texas",
+  "page_title": "Bee Cool Texas Heating &amp; Air | HVAC Experts in Georgetown",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

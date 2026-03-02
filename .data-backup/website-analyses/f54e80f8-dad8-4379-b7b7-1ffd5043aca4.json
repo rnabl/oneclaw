@@ -1,0 +1,58 @@
+{
+  "overall_aeo_score": 58,
+  "aeo_readiness": {
+    "score": 60,
+    "summary": "The business has a basic foundation for AEO with a clear website structure and some schema markup, but lacks reviews, citations, and comprehensive content to fully optimize for AI search.",
+    "quick_wins": [
+      "Gather and display customer reviews to build trust and improve local SEO.",
+      "Expand content on services and benefits to target long-tail keywords and improve relevance.",
+      "Implement a blog or resource section to regularly publish content related to heat pump maintenance and industry trends."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 50,
+    "found": [
+      "Local service area mentioned (Greater Boston & Coastal New England)",
+      "Physical location in Jamaica Plain, Massachusetts"
+    ],
+    "summary": "The business has a defined local presence but lacks detailed location information and local content to strengthen its local SEO signals.",
+    "critical_issues": [
+      "No Google Business Profile (GBP) found, which is crucial for local search visibility.",
+      "Lack of localized content and location-specific keywords.",
+      "No customer reviews or testimonials to build local trust and authority."
+    ]
+  },
+  "nap_citations": {
+    "score": 40,
+    "summary": "The business has not established consistent Name, Address, and Phone Number (NAP) citations across directories, which is essential for local SEO.",
+    "action_items": [
+      "Create and verify a Google Business Profile with accurate NAP information.",
+      "List the business on major local directories such as Yelp, Bing Places, and Yellow Pages.",
+      "Ensure NAP consistency across all online platforms, including social media and industry-specific directories."
+    ]
+  },
+  "schema_gaps": [
+    "No Organization schema",
+    "No LocalBusiness schema with detailed address and service area",
+    "No Review schema to display customer testimonials",
+    "No FAQ schema to address common customer questions"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of customer reviews and local citations",
+    "invisible_for": "Local search users and voice search queries due to inadequate local SEO and GBP presence",
+    "low_hanging_fruit": "Implementing a review generation strategy and creating a Google Business Profile",
+    "authority_opportunity": "Publishing high-quality, locally relevant content and earning backlinks from local organizations or industry partners"
+  },
+  "analyzed_at": "2026-02-27T02:47:32.989Z",
+  "lead_id": "f54e80f8-dad8-4379-b7b7-1ffd5043aca4",
+  "business_name": "We Clean Heat Pumps – Greater Boston & Coastal New England",
+  "website": "https://wecleanheatpumps.com/",
+  "location": "Jamaica Plain, Massachusetts",
+  "page_title": "Heat Pump Mini-Split Cleaning | We Clean Heat Pumps, LLC",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

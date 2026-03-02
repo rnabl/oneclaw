@@ -1,0 +1,52 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 65,
+    "summary": "The website has basic AEO elements in place, such as schema markup and relevant content, but lacks depth in optimization and user engagement features.",
+    "quick_wins": [
+      "Implement a review generation strategy to build Google Business Profile (GBP) reviews.",
+      "Optimize meta tags and headers with targeted keywords like 'roofing services Towson MD'.",
+      "Enhance website content with location-specific information and detailed service descriptions."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 30,
+    "found": false,
+    "summary": "No active Google Business Profile (GBP) was found, which is crucial for local search visibility and customer engagement.",
+    "critical_issues": [
+      "Missing GBP listing affects local search presence.",
+      "Lack of customer reviews and engagement on GBP."
+    ]
+  },
+  "nap_citations": {
+    "score": 40,
+    "summary": "Inconsistent or incomplete Name, Address, Phone (NAP) citations across the web may hinder local search performance.",
+    "action_items": [
+      "Audit and update NAP information on major directories like Yelp, Yellow Pages, and local chamber of commerce websites.",
+      "Ensure NAP consistency across the website, social media, and all online platforms."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness schema is missing detailed information such as opening hours, geo coordinates, and service area.",
+    "Review schema is not implemented to highlight customer testimonials.",
+    "FAQ schema is not used to address common customer queries."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of GBP listing severely impacts local search visibility.",
+    "invisible_for": "Users searching for local roofing services in Towson, MD.",
+    "low_hanging_fruit": "Creating and optimizing a GBP listing with relevant keywords and high-quality images.",
+    "authority_opportunity": "Establishing the business as a local authority by publishing blog posts on roofing tips, local projects, and community involvement."
+  },
+  "analyzed_at": "2026-02-27T02:25:27.890Z",
+  "lead_id": "bd22d266-6d7f-4543-878a-a994ed7dc58a",
+  "business_name": "AC Matthews, Roofing & Exteriors",
+  "website": "https://acmatthews.com/service-area/towson-md/?utm_source=google&utm_medium=organic&utm_campaign=gbp_towson",
+  "location": "Towson, Maryland",
+  "page_title": "Roofing Company Towson MD | Roof Replacement | AC Matthews",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

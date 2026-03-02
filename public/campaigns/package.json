@@ -1,0 +1,8 @@
+{
+  "name": "oneclaw-campaigns",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "npx http-server public -p 3001 -o /campaigns",
+    "deploy": "vercel --prod"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "overall_aeo_score": 55,
+  "aeo_readiness": {
+    "score": 45,
+    "summary": "AI assistants are unlikely to cite Michaels HVAC Pros due to the absence of structured data, lack of GBP visibility, and insufficient authority signals.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup",
+      "Create and optimize a Google Business Profile (GBP)"
+    ]
+  },
+  "gbp_analysis": {
+    "score": 0,
+    "found": false,
+    "summary": "The Google Business Profile is not found, making the business invisible to Google AI and limiting local search visibility.",
+    "critical_issues": [
+      "Missing Google Business Profile",
+      "No GBP posts or Q&A engagement"
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms",
+      "Expand NAP citations to additional relevant directories"
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for service processes"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and GBP visibility severely limits AI recognition.",
+    "invisible_for": "Local HVAC service queries in Queens, NY",
+    "low_hanging_fruit": "Adding LocalBusiness schema markup",
+    "authority_opportunity": "Showcasing certifications, licenses, and detailed service expertise to establish authority"
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by making your business visible to AI assistants.",
+    "pain_point": "Without AI optimization, Michaels HVAC Pros is missing out on 40% of potential leads from AI-driven searches.",
+    "proof_point": "The absence of a GBP and structured data means the business is invisible in AI-driven search results.",
+    "solution": "Our AEO approach integrates schema markup, GBP optimization, and authority-building content to ensure AI models recognize and recommend your business.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 3 months.",
+    "urgency": "Competitors optimizing for AI are capturing market share; immediate action is crucial to stay competitive."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads for Your HVAC Business in Queens",
+  "opening_line": "We analyzed your website and discovered critical gaps in AI visibility that are likely costing you valuable leads.",
+  "cta": "Let's schedule a call to discuss how we can optimize your online presence for AI-driven search and boost your lead generation.",
+  "analyzed_at": "2026-02-26T16:13:57.631Z",
+  "lead_id": "6b9f7218-eef1-4a31-8cdf-cb912569e96f",
+  "business_name": "Michaels HVAC Pros",
+  "website": "https://localservice4you.site/bronx-hvac-service",
+  "location": "Queens, NY",
+  "page_title": "Hvac Service  Near Me &#8211; localservice4you.site",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": null,
+  "gbp_review_count": null,
+  "gbp_found": false,
+  "nap_score": 100,
+  "nap_issues": []
+}

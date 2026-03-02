@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 78,
+  "aeo_readiness": {
+    "score": 75,
+    "summary": "AI assistants are likely to cite the business due to strong NAP consistency and decent content, but lack of conversational FAQs and authority signals limits their visibility.",
+    "quick_wins": [
+      "Implement FAQPage schema with conversational questions and answers.",
+      "Add LocalBusiness schema to provide detailed business information for AI models."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "Google Business Profile is well-optimized with photos, hours, and contact info, but lacks regular posts and Q&A engagement.",
+    "critical_issues": [
+      "No recent posts on GBP.",
+      "No active management of Q&A section."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly monitor for any inconsistencies or new citation opportunities."
+    ]
+  },
+  "schema_gaps": [
+    "Missing FAQPage schema",
+    "Missing HowTo schema for explaining air duct cleaning process",
+    "LocalBusiness schema can be enhanced with more detailed business information"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of conversational content and structured data limits AI model citations.",
+    "invisible_for": "Queries related to 'best air duct cleaning in Arlington' and 'how to choose an air duct cleaner'.",
+    "low_hanging_fruit": "Adding FAQPage schema with common customer questions and detailed answers.",
+    "authority_opportunity": "Position as local HVAC authority by publishing expert articles and obtaining certifications."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by making your business the top choice for AI assistants.",
+    "pain_point": "Without AI-ready content and structured data, you're missing out on 40% of potential leads from AI users.",
+    "proof_point": "Competitors with FAQ schemas and conversational content rank higher in AI-driven search results.",
+    "solution": "Our AEO approach integrates conversational FAQs, enhanced schema markup, and authority-building content to make your business stand out to AI models.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within 3 months.",
+    "urgency": "Competitors are already optimizing for AI; act now to capture market share before it's too late."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads for Your Arlington HVAC Business",
+  "opening_line": "We analyzed your website and identified key opportunities to boost your visibility with AI assistants.",
+  "cta": "Let's schedule a call to discuss how we can optimize your site for AI-driven search and increase your leads.",
+  "analyzed_at": "2026-02-26T15:50:41.262Z",
+  "lead_id": "da776acf-5ad8-4d71-8e02-006fc3ba0f41",
+  "business_name": "Precise Arlington Air Duct Cleaners",
+  "website": "https://bestairductva.com/",
+  "location": "Arlington, Virginia",
+  "page_title": "Arlington Air Duct Cleaners Call (571) 568-8600",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": 4.8,
+  "gbp_review_count": 60,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

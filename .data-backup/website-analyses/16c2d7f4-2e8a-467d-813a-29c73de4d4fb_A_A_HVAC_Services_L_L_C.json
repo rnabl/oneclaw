@@ -1,0 +1,65 @@
+{
+  "overall_aeo_score": 55,
+  "aeo_readiness": {
+    "score": 45,
+    "summary": "AI assistants are unlikely to cite this business due to limited conversational content, missing FAQ, and lack of structured data for authority positioning.",
+    "quick_wins": [
+      "Implement FAQ content with structured data (FAQPage schema).",
+      "Add LocalBusiness schema to define the business clearly for AI."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 20,
+    "found": false,
+    "summary": "Google Business Profile is not optimized and is invisible to Google AI, missing a critical channel for local search visibility.",
+    "critical_issues": [
+      "GBP is not set up or claimed.",
+      "No photos, posts, or Q&A to engage users and improve local SEO."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Expand NAP citations to additional local directories for increased visibility."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for service explanations"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data and conversational content to capture AI attention.",
+    "invisible_for": "Local HVAC repair and installation queries in Murfreesboro, TN.",
+    "low_hanging_fruit": "Implementing FAQ content with FAQPage schema to provide direct answers for AI queries.",
+    "authority_opportunity": "Highlighting certifications, expertise, and unique service approaches to establish authority in AI-driven searches."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for ChatGPT, Claude, and other AI assistants.",
+    "pain_point": "Missing out on 40% of potential leads as AI models overlook their business.",
+    "proof_point": "Google Business Profile is not found, and no FAQ or LocalBusiness schema is in place.",
+    "solution": "Our AEO approach integrates structured data, GBP optimization, and conversational content to make your business the top choice for AI searches.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within the first 3 months.",
+    "urgency": "Competitors optimizing for AI are already capturing your potential market share—act now to stay competitive."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads for Your HVAC Business in Murfreesboro",
+  "opening_line": "We analyzed your website and found significant opportunities to improve your visibility with AI assistants like ChatGPT and Claude.",
+  "cta": "Let's schedule a call to discuss how we can optimize your online presence for AI-driven searches.",
+  "analyzed_at": "2026-02-26T16:17:35.889Z",
+  "lead_id": "16c2d7f4-2e8a-467d-813a-29c73de4d4fb",
+  "business_name": "A&A HVAC Services,L.L.C",
+  "website": "https://hvacrepairmurfreesboro.com/",
+  "location": "Murfreesboro, TN",
+  "page_title": "HVAC Repair Murfreesboro TN - Honest, Professional, Affordable",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD"
+  ],
+  "gbp_rating": null,
+  "gbp_review_count": null,
+  "gbp_found": false,
+  "nap_score": 100,
+  "nap_issues": []
+}

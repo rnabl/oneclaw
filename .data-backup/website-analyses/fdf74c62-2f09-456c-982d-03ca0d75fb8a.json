@@ -1,0 +1,54 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 65,
+    "summary": "J&J Pro Energy Solutions Inc. has a basic level of AEO readiness with some foundational elements in place, such as schema markup and localized contact information. However, there are significant gaps in content depth, customer engagement, and local SEO signals.",
+    "quick_wins": [
+      "Add customer reviews and testimonials to build trust and improve local SEO.",
+      "Enhance content with targeted keywords related to HVAC services, water filtration, and local service areas.",
+      "Implement a blog or resource section to provide valuable information to potential customers and improve search visibility."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 50,
+    "found": "The website includes basic business information such as phone numbers and a physical location, but lacks detailed service descriptions, pricing, and structured data for Google Business Profile (GBP).",
+    "summary": "The website has some GBP-relevant information, but it is not fully optimized for local search. The absence of GBP-specific schema and detailed service information is a significant drawback.",
+    "critical_issues": [
+      "Missing GBP-specific schema markup.",
+      "Lack of detailed service descriptions and pricing information.",
+      "No integration with Google Business Profile for reviews and business updates."
+    ]
+  },
+  "nap_citations": {
+    "score": 70,
+    "summary": "The website has consistent NAP (Name, Address, Phone Number) information, which is crucial for local SEO. However, the lack of citations on external directories and platforms is a missed opportunity.",
+    "action_items": [
+      "Create and verify a Google Business Profile listing.",
+      "List the business on relevant local directories and citation sites such as Yelp, Yellow Pages, and local chamber of commerce websites.",
+      "Ensure NAP consistency across all online platforms and directories."
+    ]
+  },
+  "schema_gaps": [
+    "Service schema for HVAC and water filtration services.",
+    "Review schema to showcase customer testimonials and ratings.",
+    "LocalBusiness schema with detailed address and service area information."
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of detailed, keyword-rich content and structured data to enhance search engine understanding and visibility.",
+    "invisible_for": "Users searching for specific HVAC services or water filtration solutions in the Kissimmee area.",
+    "low_hanging_fruit": "Implementing service-specific schema markup and expanding the content to include local keywords and phrases.",
+    "authority_opportunity": "Creating a blog or resource center to establish the business as an authority in the HVAC and water filtration sectors, thereby improving search rankings and customer trust."
+  },
+  "analyzed_at": "2026-02-27T04:03:27.145Z",
+  "lead_id": "fdf74c62-2f09-456c-982d-03ca0d75fb8a",
+  "business_name": "J&J Pro Energy Solutions Inc.",
+  "website": "http://www.jjproenergy.com/",
+  "location": "Kissimmee, Florida",
+  "page_title": "Home – J&amp;J Pro-Energy Solutions in Kissimmee, FL",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

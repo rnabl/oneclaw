@@ -1,0 +1,64 @@
+{
+  "overall_aeo_score": 68,
+  "aeo_readiness": {
+    "score": 60,
+    "summary": "AI assistants are unlikely to cite this business due to missing structured data and conversational content gaps. However, with focused improvements, they can become a strong contender for AI-driven recommendations.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup.",
+      "Add an FAQPage schema with common HVAC questions and answers."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 85,
+    "found": true,
+    "summary": "The Google Business Profile is well-optimized with a 5-star rating, photos, and accurate hours, but lacks depth in Q&A and regular posts.",
+    "critical_issues": [
+      "No recent posts or updates on GBP.",
+      "Limited engagement in the Q&A section."
+    ]
+  },
+  "nap_citations": {
+    "score": 100,
+    "summary": "NAP consistency is perfect with no issues detected.",
+    "action_items": [
+      "Maintain current NAP consistency across all platforms.",
+      "Regularly monitor for any inconsistencies or new citation opportunities."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQ schema",
+    "No HowTo schema for common HVAC tasks",
+    "No Product or Service schema for specific offerings"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data prevents AI from identifying them as a reliable local HVAC provider.",
+    "invisible_for": "Queries related to 'HVAC services in Northglenn, Colorado' and 'emergency heating repair near me'.",
+    "low_hanging_fruit": "Implementing LocalBusiness and FAQPage schemas.",
+    "authority_opportunity": "Showcasing certifications, awards, and detailed service explanations to establish expertise."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing for answer engines and AI search.",
+    "pain_point": "Without AI optimization, they are missing out on 40% of potential leads from voice and AI searches.",
+    "proof_point": "Their website lacks critical schema markup, making it difficult for AI assistants to recommend their services.",
+    "solution": "Our AEO approach integrates structured data, conversational content, and authority signals to ensure AI models recognize and recommend their business.",
+    "impact_estimate": "Expect a 30-40% increase in AI-driven leads within 6 months.",
+    "urgency": "Competitors are already optimizing for AI, and waiting means losing ground in the rapidly evolving search landscape."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads for Your HVAC Business in Northglenn",
+  "opening_line": "We analyzed your website and identified key opportunities to enhance your visibility with AI assistants and answer engines.",
+  "cta": "Let's schedule a call to discuss how we can optimize your online presence for AI-driven growth.",
+  "analyzed_at": "2026-02-26T16:08:16.178Z",
+  "lead_id": "8310f400-2e78-4018-826b-a180607ecc06",
+  "business_name": "The Comfort Crew Heating and Cooling",
+  "website": "https://comfort-crew.com/",
+  "location": "Northglenn, Colorado",
+  "page_title": "The Comfort Crew Heating and Cooling &#8211; The Comfort Crew Heating and Cooling",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": 5,
+  "gbp_review_count": 32,
+  "gbp_found": true,
+  "nap_score": 100,
+  "nap_issues": []
+}

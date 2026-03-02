@@ -1,0 +1,66 @@
+{
+  "overall_aeo_score": 62,
+  "aeo_readiness": {
+    "score": 55,
+    "summary": "AI assistants are unlikely to cite this business due to a lack of structured data, conversational content, and authority signals. Their current content is not optimized for AI-driven search queries.",
+    "quick_wins": [
+      "Implement LocalBusiness schema markup to provide AI models with structured data about the business.",
+      "Create an FAQ page addressing common HVAC queries to capture AI-driven search traffic."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 80,
+    "found": true,
+    "summary": "The Google Business Profile is well-maintained but has critical inconsistencies with the website.",
+    "critical_issues": [
+      "Phone number mismatch between the website and GBP.",
+      "No recent posts or Q&A engagement on the GBP."
+    ]
+  },
+  "nap_citations": {
+    "score": 75,
+    "summary": "NAP consistency is moderate, with a key inconsistency in the phone number.",
+    "action_items": [
+      "Update the phone number on the website to match the GBP: (919) 791-0910.",
+      "Ensure all online directories and citations reflect the correct phone number."
+    ]
+  },
+  "schema_gaps": [
+    "Missing LocalBusiness schema",
+    "No FAQPage schema",
+    "No HowTo schema for explaining HVAC services",
+    "Missing review schema for highlighting positive feedback"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of structured data prevents AI models from understanding and citing the business effectively.",
+    "invisible_for": "Queries related to '24/7 HVAC emergency services in Raleigh' or 'best HVAC maintenance plans'.",
+    "low_hanging_fruit": "Adding LocalBusiness schema markup to provide AI models with essential business information.",
+    "authority_opportunity": "Positioning the company as HVAC experts by publishing detailed guides and how-to content with proper schema."
+  },
+  "agency_pitch": {
+    "hook": "Unlock AI-driven leads by optimizing your digital presence for answer engines.",
+    "pain_point": "Without AI optimization, they are missing out on 40% of potential leads from voice and AI search.",
+    "proof_point": "Their website lacks essential schema markup and conversational content, making it less visible to AI models.",
+    "solution": "Implement structured data, create FAQ content, and optimize GBP to ensure AI models recognize and recommend their services.",
+    "impact_estimate": "Expect a 30% increase in AI-driven leads within the first 6 months.",
+    "urgency": "Competitors are already optimizing for AI search; waiting means losing market share."
+  },
+  "email_subject_line": "Unlock AI-Driven Leads for Your HVAC Business in Raleigh",
+  "opening_line": "We analyzed your website and identified key opportunities to make your HVAC services more visible to AI search and voice assistants.",
+  "cta": "Let's schedule a call to discuss how we can optimize your digital presence for AI-driven search.",
+  "analyzed_at": "2026-02-26T16:08:42.334Z",
+  "lead_id": "a1219de9-c0cf-422f-bcbb-6605bafc6539",
+  "business_name": "Fast",
+  "website": "https://www.fasthvac.net/",
+  "location": "Raleigh, North Carolina",
+  "page_title": "Fast Air Conditioning | Heating and Cooling Specialists in Wake County | 919-422-7565",
+  "has_schema": false,
+  "detected_schemas": [],
+  "gbp_rating": 4.8,
+  "gbp_review_count": 2782,
+  "gbp_found": true,
+  "nap_score": 75,
+  "nap_issues": [
+    "Phone mismatch: Website has (919) 422-7565, GBP has (919) 791-0910"
+  ]
+}

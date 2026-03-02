@@ -1,0 +1,54 @@
+{
+  "overall_aeo_score": 55,
+  "aeo_readiness": {
+    "score": 60,
+    "summary": "The website has basic AEO elements in place, such as relevant content and schema markup, but lacks depth in content optimization, user engagement, and review generation.",
+    "quick_wins": [
+      "Implement a strategy to generate Google reviews to improve credibility and local search presence.",
+      "Expand content to include detailed service descriptions, customer testimonials, and location-specific keywords.",
+      "Optimize meta tags and headers with targeted keywords to improve search engine visibility."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 40,
+    "found": "The website has Google Business Profile (GBP) elements such as location-specific landing pages and contact information.",
+    "summary": "While the website includes some GBP elements, it lacks a dedicated Google Business Profile, which is crucial for local search visibility and customer engagement.",
+    "critical_issues": [
+      "No active Google Business Profile.",
+      "Lack of customer reviews and ratings on Google.",
+      "Insufficient local content targeting Minneapolis, MN."
+    ]
+  },
+  "nap_citations": {
+    "score": 50,
+    "summary": "The business has consistent NAP (Name, Address, Phone) information on its website, but lacks citations across major directories and local listings.",
+    "action_items": [
+      "Create and verify listings on major directories such as Yelp, Bing Places, and Yellow Pages.",
+      "Ensure consistent NAP information across all online platforms and directories.",
+      "Encourage customers to leave reviews on these directories to boost local search presence."
+    ]
+  },
+  "schema_gaps": [
+    "No Organization schema",
+    "No LocalBusiness schema with detailed address and service area information",
+    "No Review schema to showcase customer testimonials"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of a dedicated Google Business Profile and customer reviews.",
+    "invisible_for": "Local search users and potential customers searching for plumbing and HVAC services in Minneapolis, MN.",
+    "low_hanging_fruit": "Implementing a Google Business Profile and generating initial customer reviews.",
+    "authority_opportunity": "Creating high-quality, location-specific content and building backlinks from local business directories and industry-related websites."
+  },
+  "analyzed_at": "2026-02-27T04:12:41.638Z",
+  "lead_id": "695c6069-c8af-470f-98ec-ab5ebc070981",
+  "business_name": "O'Boys Plumbing, Furnace & AC Repair",
+  "website": "https://www.calloboys.com/area/minneapolis-mn-furnace-repair/?utm_source=google&utm_medium=organic&utm_campaign=gbp_minneapolis",
+  "location": "Minneapolis, Minnesota",
+  "page_title": "Keep your family comfortable with trusted furnace repair in Minneapolis, MN",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}

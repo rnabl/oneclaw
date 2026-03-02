@@ -1,0 +1,54 @@
+{
+  "overall_aeo_score": 65,
+  "aeo_readiness": {
+    "score": 70,
+    "summary": "The business has a solid foundation for AEO with clear service offerings and a user-friendly website structure. However, there is room for improvement in local SEO and content depth.",
+    "quick_wins": [
+      "Add more detailed service pages with location-specific keywords.",
+      "Implement a review generation strategy to build Google Business Profile reviews.",
+      "Optimize meta tags and headers with targeted keywords for better search visibility."
+    ]
+  },
+  "gbp_analysis": {
+    "score": 40,
+    "found": "No Google Business Profile (GBP) reviews found.",
+    "summary": "The absence of a GBP or any reviews significantly impacts local search visibility and customer trust.",
+    "critical_issues": [
+      "No active GBP listing.",
+      "Lack of customer reviews to build social proof."
+    ]
+  },
+  "nap_citations": {
+    "score": 50,
+    "summary": "The business name, address, and phone number (NAP) are consistent on the website but need to be verified across major directories and local listings.",
+    "action_items": [
+      "Claim and verify the business on Google, Bing, and Yelp.",
+      "Ensure NAP consistency across all online directories and local listings.",
+      "Monitor and update NAP information regularly to maintain accuracy."
+    ]
+  },
+  "schema_gaps": [
+    "LocalBusiness",
+    "Service",
+    "Review",
+    "AggregateRating"
+  ],
+  "ai_visibility_gap": {
+    "primary_gap": "Lack of local SEO optimization and customer reviews.",
+    "invisible_for": "Users searching for local plumbing, HVAC, or electrical services in Naperville.",
+    "low_hanging_fruit": "Implementing a review generation strategy and optimizing the website for local search terms.",
+    "authority_opportunity": "Establishing the business as a local authority by creating content that addresses common customer questions and concerns."
+  },
+  "analyzed_at": "2026-02-27T03:41:14.451Z",
+  "lead_id": "575b7abf-4922-4baa-8b2a-25eb772a4190",
+  "business_name": "Expert Plumbing Heating & Electrical",
+  "website": "https://expertplumbing.com/",
+  "location": "Naperville, Illinois",
+  "page_title": "Expert Plumbing — Veteran‑Built Naperville Plumbing, HVAC &amp; Electrical",
+  "has_schema": true,
+  "detected_schemas": [
+    "JSON-LD",
+    "Microdata"
+  ],
+  "gbp_found": false
+}
