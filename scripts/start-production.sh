@@ -1,37 +1,42 @@
 #!/bin/bash
 set -e
 
-echo "🛑 Stopping all PM2 services..."
+cd /opt/oneclaw
+
+echo "🛑 Stopping PM2 completely..."
 pm2 kill 2>/dev/null || true
-sleep 1
+sleep 2
 
 echo "🔪 Killing ALL oneclaw processes..."
 pkill -9 -f "oneclaw-node" 2>/dev/null || true
 pkill -9 -f "node.*harness" 2>/dev/null || true
+pkill -9 -f "node.*server.js" 2>/dev/null || true
 sleep 1
 
 echo "🔪 Force killing any processes on ports 8787 and 9000..."
 fuser -k 8787/tcp 2>/dev/null || true
 fuser -k 9000/tcp 2>/dev/null || true
-sleep 2
+fuser -k 3000/tcp 2>/dev/null || true
+sleep 3
 
-echo "🔍 Verifying ports are free..."
-if netstat -tlnp 2>/dev/null | grep -q ":8787 "; then
-  echo "❌ Port 8787 still in use!"
-  netstat -tlnp | grep ":8787 "
-  exit 1
-fi
-if netstat -tlnp 2>/dev/null | grep -q ":9000 "; then
-  echo "❌ Port 9000 still in use!"
-  netstat -tlnp | grep ":9000 "
-  exit 1
-fi
-echo "✅ Ports 8787 and 9000 are free"
+echo "🔍 Waiting for ports to be free..."
+for i in {1..10}; do
+  PORT_8787=$(ss -tlnp 2>/dev/null | grep ":8787 " || true)
+  PORT_9000=$(ss -tlnp 2>/dev/null | grep ":9000 " || true)
+  if [ -z "$PORT_8787" ] && [ -z "$PORT_9000" ]; then
+    echo "✅ Ports 8787 and 9000 are free"
+    break
+  fi
+  if [ $i -eq 10 ]; then
+    echo "❌ Ports still in use after 10 attempts!"
+    ss -tlnp | grep -E ":(8787|9000) " || true
+    exit 1
+  fi
+  echo "   Waiting... ($i/10)"
+  sleep 1
+done
 
-echo "🚀 Starting PM2..."
-pm2 resurrect 2>/dev/null || true
-
-echo "🚀 Starting harness..."
+echo "🚀 Starting harness first..."
 pm2 start /opt/oneclaw/ecosystem.config.js --only harness
 
 echo "⏳ Waiting for harness to be ready..."
@@ -60,10 +65,20 @@ if echo "$DAEMON_LOG" | grep -q "Loaded 0 harness tools"; then
   sleep 3
 fi
 
+echo "🚀 Starting API..."
+pm2 start /opt/oneclaw/ecosystem.config.js --only api
+sleep 2
+
 echo ""
 echo "✅ All services started!"
 pm2 status
+
 echo ""
 echo "🔍 Verification:"
+echo "Harness health:"
 curl -s http://localhost:8787/health && echo ""
-curl -s http://localhost:8787/tools | head -c 200 && echo "..."
+echo "Tools count:"
+curl -s http://localhost:8787/tools | grep -o '"id"' | wc -l | xargs echo "  Tools loaded:"
+
+echo ""
+echo "📱 To test OAuth, visit: https://oneclaw.chat/oauth/google?user=default"
