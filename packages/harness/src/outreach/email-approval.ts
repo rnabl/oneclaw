@@ -29,7 +29,9 @@ function getSupabaseClient() {
 
 export async function getPendingEmailDrafts(limit = 50) {
   const supabase = getSupabaseClient();
-  const { data, error } = await supabase
+  
+  // First get email campaigns without the join (cross-schema joins are tricky)
+  const { data: campaigns, error } = await supabase
     .from('email_campaigns')
     .select(`
       id,
@@ -40,11 +42,37 @@ export async function getPendingEmailDrafts(limit = 50) {
       sent_from_email,
       approval_status,
       created_at,
-      lead:crm.leads(company_name, website, phone, email, city, state, lead_score)
+      lead_id
     `)
     .eq('approval_status', 'pending')
     .order('created_at', { ascending: false })
     .limit(limit);
+  
+  if (error || !campaigns) {
+    return { success: false, error: error?.message || 'No campaigns found', drafts: [] };
+  }
+  
+  // Get lead data separately if there are lead_ids
+  const leadIds = campaigns.map(c => c.lead_id).filter(Boolean);
+  let leadsMap: Record<string, any> = {};
+  
+  if (leadIds.length > 0) {
+    const { data: leads } = await supabase
+      .schema('crm')
+      .from('leads')
+      .select('id, company_name, website, phone, email, city, state, lead_score')
+      .in('id', leadIds);
+    
+    if (leads) {
+      leadsMap = Object.fromEntries(leads.map(l => [l.id, l]));
+    }
+  }
+  
+  // Merge lead data into campaigns
+  const drafts = campaigns.map(c => ({
+    ...c,
+    lead: c.lead_id ? leadsMap[c.lead_id] || null : null
+  }));
 
   if (error) {
     return { success: false, error: error.message, drafts: [] };
@@ -106,25 +134,49 @@ export async function rejectEmail(emailId: string, reason: string, rejectedBy: s
 
 export async function getApprovedEmails(limit = 50) {
   const supabase = getSupabaseClient();
-  const { data, error } = await supabase
+  
+  // Get approved campaigns
+  const { data: campaigns, error } = await supabase
     .from('email_campaigns')
     .select(`
       id,
       subject,
       body,
       sent_from_email,
-      lead:crm.leads(company_name, email, phone)
+      lead_id
     `)
     .eq('approval_status', 'approved')
-    .is('sent_at', null) // Not sent yet
+    .is('sent_at', null)
     .order('approved_at', { ascending: false })
     .limit(limit);
-
-  if (error) {
-    return { success: false, error: error.message, emails: [] };
+  
+  if (error || !campaigns) {
+    return { success: false, error: error?.message || 'No campaigns found', emails: [] };
   }
+  
+  // Get lead data separately
+  const leadIds = campaigns.map(c => c.lead_id).filter(Boolean);
+  let leadsMap: Record<string, any> = {};
+  
+  if (leadIds.length > 0) {
+    const { data: leads } = await supabase
+      .schema('crm')
+      .from('leads')
+      .select('id, company_name, email, phone')
+      .in('id', leadIds);
+    
+    if (leads) {
+      leadsMap = Object.fromEntries(leads.map(l => [l.id, l]));
+    }
+  }
+  
+  // Merge lead data
+  const emails = campaigns.map(c => ({
+    ...c,
+    lead: c.lead_id ? leadsMap[c.lead_id] || null : null
+  }));
 
-  return { success: true, emails: data || [] };
+  return { success: true, emails };
 }
 
 // =============================================================================
