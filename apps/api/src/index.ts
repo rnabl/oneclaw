@@ -4,7 +4,9 @@
 import * as dotenv from 'dotenv';
 import * as path from 'path';
 
-// Load environment variables from root .env.local
+// Load environment variables - try multiple locations
+dotenv.config({ path: path.resolve(process.cwd(), '.env.production') });
+dotenv.config({ path: path.resolve(process.cwd(), '../../.env.production') });
 dotenv.config({ path: path.resolve(process.cwd(), '.env.local') });
 dotenv.config({ path: path.resolve(process.cwd(), '../../.env.local') });
 
