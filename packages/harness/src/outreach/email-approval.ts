@@ -18,7 +18,10 @@ function getSupabaseClient() {
       throw new Error('Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY environment variables');
     }
     
-    supabase = createClient(supabaseUrl, supabaseKey);
+    // Use crm schema by default for email campaigns
+    supabase = createClient(supabaseUrl, supabaseKey, {
+      db: { schema: 'crm' }
+    });
   }
   return supabase;
 }
@@ -30,9 +33,8 @@ function getSupabaseClient() {
 export async function getPendingEmailDrafts(limit = 50) {
   const supabase = getSupabaseClient();
   
-  // First get email campaigns without the join (cross-schema joins are tricky)
+  // Get email campaigns (client already uses crm schema)
   const { data: campaigns, error } = await supabase
-    .schema('crm')
     .from('email_campaigns')
     .select(`
       id,
@@ -59,7 +61,6 @@ export async function getPendingEmailDrafts(limit = 50) {
   
   if (leadIds.length > 0) {
     const { data: leads } = await supabase
-      .schema('crm')
       .from('leads')
       .select('id, company_name, website, phone, email, city, state, lead_score')
       .in('id', leadIds);
@@ -89,7 +90,6 @@ export async function getPendingEmailDrafts(limit = 50) {
 export async function approveEmail(emailId: string, approvedBy: string) {
   const supabase = getSupabaseClient();
   const { data, error } = await supabase
-    .schema('crm')
     .from('email_campaigns')
     .update({
       approval_status: 'approved',
@@ -113,7 +113,6 @@ export async function approveEmail(emailId: string, approvedBy: string) {
 export async function rejectEmail(emailId: string, reason: string, rejectedBy: string) {
   const supabase = getSupabaseClient();
   const { data, error} = await supabase
-    .schema('crm')
     .from('email_campaigns')
     .update({
       approval_status: 'rejected',
@@ -140,7 +139,6 @@ export async function getApprovedEmails(limit = 50) {
   
   // Get approved campaigns
   const { data: campaigns, error } = await supabase
-    .schema('crm')
     .from('email_campaigns')
     .select(`
       id,
@@ -164,7 +162,6 @@ export async function getApprovedEmails(limit = 50) {
   
   if (leadIds.length > 0) {
     const { data: leads } = await supabase
-      .schema('crm')
       .from('leads')
       .select('id, company_name, email, phone')
       .in('id', leadIds);
@@ -190,7 +187,6 @@ export async function getApprovedEmails(limit = 50) {
 export async function markEmailSent(emailId: string, gmailMessageId?: string) {
   const supabase = getSupabaseClient();
   const { data, error } = await supabase
-    .schema('crm')
     .from('email_campaigns')
     .update({
       sent_at: new Date().toISOString(),
