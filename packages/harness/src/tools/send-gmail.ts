@@ -165,4 +165,4 @@ registry.register({
   updatedAt: new Date(),
 });
 
-export { SendGmailInputSchema, SendGmailOutputSchema, sendGmailHandler };
+export { SendGmailInputSchema, SendGmailOutputSchema };
