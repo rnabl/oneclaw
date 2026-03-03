@@ -1805,7 +1805,7 @@ app.get('/gmail/senders', async (c) => {
   // Get all Gmail integrations
   const { data: integrations } = await supabase
     .from('node_integrations')
-    .select('node_id, provider, credentials, created_at')
+    .select('node_id, provider, email, created_at')
     .eq('provider', 'google')
     .order('created_at', { ascending: false });
   
@@ -1819,7 +1819,7 @@ app.get('/gmail/senders', async (c) => {
   
   const senders = Array.from(uniqueIntegrations.values()).map(int => ({
     nodeId: int.node_id,
-    email: int.credentials?.email || 'Unknown',
+    email: int.email || 'Unknown',
     connectedAt: new Date(int.created_at).toLocaleDateString(),
   }));
   
@@ -1999,7 +1999,7 @@ app.get('/api/gmail/senders', async (c) => {
   
   const { data: integrations } = await supabase
     .from('node_integrations')
-    .select('node_id, credentials, created_at')
+    .select('node_id, email, created_at')
     .eq('provider', 'google')
     .order('created_at', { ascending: false });
   
@@ -2013,7 +2013,7 @@ app.get('/api/gmail/senders', async (c) => {
   
   const senders = Array.from(uniqueIntegrations.values()).map(int => ({
     nodeId: int.node_id,
-    email: int.credentials?.email || 'Unknown',
+    email: int.email || 'Unknown',
     connectedAt: int.created_at,
   }));
   
