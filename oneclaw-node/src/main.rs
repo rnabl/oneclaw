@@ -13,6 +13,7 @@ mod learning;
 mod memory;
 mod monitor;
 mod oauth_config;
+mod ports;
 mod receipt;
 mod store;
 mod workflow;
@@ -30,11 +31,8 @@ struct Cli {
 
 #[derive(Subcommand)]
 enum Commands {
-    /// Start the node daemon
-    Daemon {
-        #[arg(short, long, default_value = "9000")]
-        port: u16,
-    },
+    /// Start the node daemon (ALWAYS on port 9000)
+    Daemon,
     /// Interactive onboarding wizard
     Onboard,
     /// Run a workflow
@@ -68,8 +66,9 @@ async fn main() -> anyhow::Result<()> {
     let cli = Cli::parse();
 
     match cli.command {
-        Commands::Daemon { port } => {
-            daemon::start(port).await?;
+        Commands::Daemon => {
+            // HARDCODED PORT - no CLI args, no env vars, no config
+            daemon::start(ports::DAEMON_PORT).await?;
         }
         Commands::Onboard => {
             onboard().await?;

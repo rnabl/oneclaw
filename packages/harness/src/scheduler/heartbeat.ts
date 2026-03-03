@@ -16,6 +16,7 @@ import { nanoid } from 'nanoid';
 import { scheduleStore, calculateNextRun, type Schedule } from './index';
 import { workflowExecutor } from '../workflows/templates/executor';
 import { getHarnessUrl, isProduction } from '../utils/env';
+import { processEmailQueue, getEmailQueueStats } from './email-sender';
 
 interface OutreachParams {
   niche: string;
@@ -82,10 +83,21 @@ export class SchedulerHeartbeat {
    * Check for due schedules and execute them
    */
   private async tick() {
+    // Process email queue (runs every tick, has internal rate limiting)
+    try {
+      const emailStats = await processEmailQueue();
+      if (emailStats.sent > 0 || emailStats.failed > 0) {
+        console.log(`[Scheduler] Email queue: ${emailStats.sent} sent, ${emailStats.skipped} skipped, ${emailStats.failed} failed`);
+      }
+    } catch (error) {
+      console.error('[Scheduler] Email queue error:', error);
+    }
+    
+    // Check for due scheduled workflows
     const due = scheduleStore.getDue();
     
     if (due.length === 0) {
-      return;  // Nothing to do
+      return;  // No scheduled workflows
     }
     
     console.log(`[Scheduler] Found ${due.length} due schedule(s)`);

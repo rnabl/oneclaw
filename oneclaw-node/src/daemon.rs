@@ -68,9 +68,8 @@ pub async fn start(port: u16) -> anyhow::Result<()> {
         if agent_os.memory.contains("Not Found") { "missing" } else { "loaded" },
     );
     
-    // Fetch tools from harness with retry logic
-    let harness_url = std::env::var("HARNESS_URL")
-        .unwrap_or_else(|_| "http://localhost:8787".to_string());
+    // HARDCODED - no env vars
+    let harness_url = crate::ports::HARNESS_URL.to_string();
     let harness_url_clone = harness_url.clone();
     let harness_tools = tokio::task::spawn_blocking(move || {
         let max_retries = 5;
@@ -568,14 +567,8 @@ pub async fn start(port: u16) -> anyhow::Result<()> {
         .layer(CorsLayer::permissive())
         .with_state(state);
 
-    let harness_url = std::env::var("HARNESS_URL")
-        .unwrap_or_else(|_| {
-            if cfg!(debug_assertions) {
-                "http://localhost:9000".to_string()
-            } else {
-                "https://oneclaw.chat".to_string()
-            }
-        });
+    // HARDCODED - no env vars
+    let harness_url = crate::ports::HARNESS_URL.to_string();
     println!("\n🦞 OneClaw Node Daemon (Rust)");
     println!("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
     println!("  Node:   {} ({})", config.node.name, config.node.id);
@@ -1422,7 +1415,7 @@ async fn send_email(
 async fn gmail_senders_proxy(
     Query(params): Query<std::collections::HashMap<String, String>>,
 ) -> Result<axum::response::Response, (StatusCode, String)> {
-    let harness_url = std::env::var("HARNESS_URL").unwrap_or_else(|_| "http://localhost:8787".to_string());
+    let harness_url = crate::ports::HARNESS_URL;
     let client = reqwest::Client::new();
     
     let mut url = format!("{}/gmail/senders", harness_url);
@@ -1452,7 +1445,7 @@ async fn gmail_senders_proxy(
 
 /// Proxy to harness /api/gmail/senders
 async fn api_gmail_senders_proxy() -> Result<Json<serde_json::Value>, (StatusCode, String)> {
-    let harness_url = std::env::var("HARNESS_URL").unwrap_or_else(|_| "http://localhost:8787".to_string());
+    let harness_url = crate::ports::HARNESS_URL;
     let client = reqwest::Client::new();
     
     match client.get(format!("{}/api/gmail/senders", harness_url)).send().await {
@@ -1472,7 +1465,7 @@ async fn api_gmail_senders_proxy() -> Result<Json<serde_json::Value>, (StatusCod
 async fn oauth_google_proxy(
     Query(params): Query<std::collections::HashMap<String, String>>,
 ) -> axum::response::Redirect {
-    let harness_url = std::env::var("HARNESS_URL").unwrap_or_else(|_| "http://localhost:8787".to_string());
+    let harness_url = crate::ports::HARNESS_URL;
     let mut url = format!("{}/oauth/google", harness_url);
     if !params.is_empty() {
         let query: String = params.iter().map(|(k, v)| format!("{}={}", k, v)).collect::<Vec<_>>().join("&");
@@ -1485,7 +1478,7 @@ async fn oauth_google_proxy(
 async fn oauth_callback_proxy(
     Query(params): Query<std::collections::HashMap<String, String>>,
 ) -> Result<axum::response::Response, (StatusCode, String)> {
-    let harness_url = std::env::var("HARNESS_URL").unwrap_or_else(|_| "http://localhost:8787".to_string());
+    let harness_url = crate::ports::HARNESS_URL;
     let client = reqwest::Client::new();
     
     let mut url = format!("{}/oauth/google/callback", harness_url);

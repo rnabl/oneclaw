@@ -204,7 +204,7 @@ impl Default for HttpChannelConfig {
 }
 
 fn default_true() -> bool { true }
-fn default_port() -> u16 { 8787 }
+fn default_port() -> u16 { 9000 }  // Daemon ALWAYS on 9000, Harness on 8787
 
 // ============================================
 // Store Config

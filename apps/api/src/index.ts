@@ -160,8 +160,8 @@ app.get('/test/payment-message', async (c) => {
 // Export for different runtimes
 export default app;
 
-// Start server
-const port = process.env.PORT || 3000;
+// HARDCODED PORT - API ALWAYS on 3000
+const port = 3000;
 
 console.log(`🚀 OneClaw API starting on port ${port}`);
 

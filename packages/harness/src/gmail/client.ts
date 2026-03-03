@@ -205,6 +205,7 @@ export class GmailClient {
   /**
    * Create RFC 2822 formatted email
    * Returns base64url-encoded email
+   * Sends as HTML for proper formatting
    */
   private createRawEmail(
     from: string,
@@ -215,12 +216,14 @@ export class GmailClient {
   ): string {
     const fromHeader = fromName ? `${fromName} <${from}>` : from;
     
+    // Send as plain text for deliverability
+    // Use format=flowed to let email clients wrap text naturally
     const email = [
       `From: ${fromHeader}`,
       `To: ${to}`,
       `Subject: ${subject}`,
       'MIME-Version: 1.0',
-      'Content-Type: text/plain; charset=UTF-8',
+      'Content-Type: text/plain; charset=UTF-8; format=flowed',
       '',
       body,
     ].join('\r\n');

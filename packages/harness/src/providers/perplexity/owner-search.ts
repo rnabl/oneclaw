@@ -9,8 +9,16 @@
  * Based on your implementation from the audit tool.
  */
 
-const PERPLEXITY_API_KEY = process.env.PERPLEXITY_API_KEY;
 const PERPLEXITY_API_BASE = 'https://api.perplexity.ai';
+
+// Read API key at runtime, not module load time
+function getPerplexityApiKey(): string {
+  const key = process.env.PERPLEXITY_API_KEY;
+  if (!key) {
+    throw new Error('PERPLEXITY_API_KEY is not configured');
+  }
+  return key;
+}
 
 export interface OwnerInfo {
   name: string;
@@ -36,9 +44,7 @@ export async function searchBusinessOwner(params: {
   state?: string;
 }): Promise<OwnerSearchResult> {
   
-  if (!PERPLEXITY_API_KEY) {
-    throw new Error('PERPLEXITY_API_KEY is not configured');
-  }
+  const apiKey = getPerplexityApiKey();
   
   const { businessName, city, state } = params;
   
@@ -55,7 +61,7 @@ export async function searchBusinessOwner(params: {
     const response = await fetch(`${PERPLEXITY_API_BASE}/chat/completions`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${PERPLEXITY_API_KEY}`,
+        'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -107,27 +113,72 @@ export async function searchBusinessOwner(params: {
 function parseOwnerFromText(text: string): OwnerInfo[] {
   const owners: OwnerInfo[] = [];
   
-  // Patterns for extracting owner info
+  // Strip markdown formatting first
+  const cleanText = text
+    .replace(/\*\*/g, '')  // Remove bold **
+    .replace(/\*/g, '')    // Remove italic *
+    .replace(/\[(\d+)\]/g, '') // Remove citation references like [1]
+    .replace(/Mr\.\s*/gi, '')  // Remove Mr.
+    .replace(/Mrs\.\s*/gi, '') // Remove Mrs.
+    .replace(/Ms\.\s*/gi, '')  // Remove Ms.
+    .replace(/Dr\.\s*/gi, ''); // Remove Dr.
+  
+  console.log('[Perplexity] Cleaned text for parsing:', cleanText.substring(0, 300));
+  
+  // Patterns for extracting owner info - more flexible but precise
+  // Name pattern: First Last or First Middle Last (2-4 words, each capitalized)
+  const namePattern = '([A-Z][a-z]+(?:\\s+[A-Z][a-z]+){1,3})';
+  
   const patterns = [
-    // "John Smith is the founder and CEO"
-    /([A-Z][a-z]+ [A-Z][a-z]+) is the (owner|founder|ceo|president|co-founder)/gi,
-    // "Founded by John Smith"
-    /(?:founded|owned|started) by ([A-Z][a-z]+ [A-Z][a-z]+)/gi,
-    // "John Smith, Owner"
-    /([A-Z][a-z]+ [A-Z][a-z]+),?\s+(owner|founder|ceo|president)/gi,
+    // "John Smith is the owner/founder/CEO" - must be at word boundary
+    new RegExp(`\\b${namePattern}\\s+is\\s+(?:the\\s+)?(owner|founder|ceo|president|co-founder|managing member)\\b`, 'gi'),
+    // "Founded/owned by John Smith"
+    new RegExp(`(?:founded|owned|started|established)\\s+by\\s+${namePattern}\\b`, 'gi'),
+    // "John Smith, Owner" or "John Smith - Owner" (comma or dash before role)
+    new RegExp(`\\b${namePattern}[,\\s]+-?\\s*(?:the\\s+)?(owner|founder|ceo|president)\\b`, 'gi'),
+    // "lists John Smith as Owner"
+    new RegExp(`lists\\s+${namePattern}\\s+as\\s+(owner|founder|ceo|president)`, 'gi'),
   ];
   
   for (const pattern of patterns) {
-    const matches = text.matchAll(pattern);
+    const matches = cleanText.matchAll(pattern);
     for (const match of matches) {
-      const name = match[1];
+      let name = match[1]?.trim();
       const role = match[2] || 'Owner';
       
-      // Avoid duplicates
-      if (!owners.find(o => o.name === name)) {
+      // Clean up the name
+      if (name) {
+        name = name.replace(/\s+/g, ' ').trim();
+        
+        // Skip if name looks invalid (too short, contains numbers, etc.)
+        if (name.length < 4 || /\d/.test(name) || name.split(' ').length < 2) {
+          continue;
+        }
+        
+        // Avoid duplicates
+        if (!owners.find(o => o.name.toLowerCase() === name.toLowerCase())) {
+          console.log(`[Perplexity] Extracted owner: ${name} (${role})`);
+          owners.push({
+            name,
+            role: role.charAt(0).toUpperCase() + role.slice(1).toLowerCase(),
+            source: 'perplexity-ai',
+          });
+        }
+      }
+    }
+  }
+  
+  // If no structured match, try to find the first bolded name that looks like a person
+  if (owners.length === 0) {
+    // Look for patterns like "Name is the" or "Name, an" at the start
+    const firstNameMatch = cleanText.match(/^([A-Z][a-z]+(?:\s+[A-Z][a-z]+)+)/);
+    if (firstNameMatch) {
+      const name = firstNameMatch[1].trim();
+      if (name.length >= 4 && name.split(' ').length >= 2 && !/\d/.test(name)) {
+        console.log(`[Perplexity] Extracted owner from start: ${name}`);
         owners.push({
           name,
-          role: role.charAt(0).toUpperCase() + role.slice(1),
+          role: 'Owner',
           source: 'perplexity-ai',
         });
       }

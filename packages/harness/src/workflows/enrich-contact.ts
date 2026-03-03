@@ -196,21 +196,48 @@ async function enrichViaWebsiteScrape(
     
     const html = await response.text();
     
-    // Parse for contact info with regex patterns
-    const emailPattern = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
+    // Parse for contact info with regex patterns - find ALL emails
+    const emailPattern = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;
     const phonePattern = /\d{3}[-.]?\d{3}[-.]?\d{4}/;
     const namePattern = /(?:owner|founder|ceo|president)[:]\s*([A-Z][a-z]+ [A-Z][a-z]+)/i;
     
-    const emailMatch = html.match(emailPattern);
+    const emailMatches = html.match(emailPattern);
     const phoneMatch = html.match(phonePattern);
     const nameMatch = html.match(namePattern);
     
-    if (emailMatch || phoneMatch || nameMatch) {
+    // If we found emails, prioritize owner-looking ones
+    let bestEmail: string | undefined;
+    if (emailMatches && emailMatches.length > 0) {
+      // Priority: owner@, contact@, info@, admin@, office@, any other
+      const priorityEmails = emailMatches.filter(email => 
+        email.toLowerCase().includes('owner') || 
+        email.toLowerCase().includes('contact') ||
+        email.toLowerCase().includes('info') ||
+        email.toLowerCase().includes('admin') ||
+        email.toLowerCase().includes('office')
+      );
+      
+      bestEmail = priorityEmails[0] || emailMatches[0];
+      
+      await ctx.log('info', `Found email via website scrape: ${bestEmail}`);
+      
       return {
         owner: {
-          name: nameMatch?.[1] || 'Unknown',
-          email: emailMatch?.[0],
+          name: nameMatch?.[1] || 'Business Owner', // Default to "Business Owner" for ATTN:
+          email: bestEmail,
           phone: phoneMatch?.[0],
+          title: 'Owner',
+        },
+      };
+    }
+    
+    if (emailMatches || phoneMatch || nameMatch) {
+      return {
+        owner: {
+          name: nameMatch?.[1] || 'Business Owner',
+          email: emailMatches?.[0],
+          phone: phoneMatch?.[0],
+          title: 'Owner',
         },
       };
     }
@@ -246,46 +273,8 @@ async function enrichContactHandler(
   let fallbackUsed = false;
   
   // ==========================================================================
-  // STEP 1: Try Apify lead-finder first (code_crafter/leads-finder)
+  // STEP 1: Try Perplexity first (cheapest and fastest for existing businesses)
   // ==========================================================================
-  try {
-    await ctx.log('info', 'Attempting Apify lead-finder (code_crafter/leads-finder)');
-    const apifyResult = await enrichViaApifyLeadFinder(ctx, url, businessName);
-    
-    if (apifyResult && apifyResult.owner) {
-      owner = apifyResult.owner;
-      contacts = apifyResult.contacts || [];
-      company = apifyResult.company || null;
-      source = 'linkedin';
-      cost = 0.15;
-      
-      await ctx.log('info', 'Apify lead-finder found contact successfully');
-      ctx.recordApiCall('apify', 'lead_finder', 1);
-      
-      const timeMs = Date.now() - startTime;
-      return {
-        url,
-        businessName,
-        owner,
-        contacts,
-        company,
-        method: 'apify',
-        source,
-        timeMs,
-        cost,
-        fallbackUsed: false,
-      };
-    }
-  } catch (error) {
-    await ctx.log('warn', `Apify lead-finder failed: ${error}, falling back to blended enrichment`);
-    fallbackUsed = true;
-  }
-  
-  // ==========================================================================
-  // STEP 2: Fallback to Blended Enrichment (Perplexity -> DataForSEO -> LinkedIn)
-  // ==========================================================================
-  
-  // Try Perplexity first (cheapest)
   if (businessName) {
     try {
       await ctx.log('info', 'Trying Perplexity AI enrichment');
@@ -310,7 +299,7 @@ async function enrichContactHandler(
           source,
           timeMs,
           cost,
-          fallbackUsed: true,
+          fallbackUsed: false,
         };
       }
     } catch (error) {
@@ -318,40 +307,46 @@ async function enrichContactHandler(
     }
   }
   
-  // Skip DataForSEO - using Apify and Perplexity only
-  
-  // Try direct LinkedIn search (most expensive, last resort)
-  try {
-    await ctx.log('info', 'Trying direct LinkedIn enrichment');
-    const linkedInResult = await enrichViaLinkedIn(ctx, url, businessName);
-    
-    if (linkedInResult && linkedInResult.owner) {
-      owner = linkedInResult.owner;
-      contacts = linkedInResult.contacts || [];
-      company = linkedInResult.company || null;
-      source = 'linkedin';
-      cost = 0.15;
+  // ==========================================================================
+  // STEP 2: Try Apify lead-finder (for new lead discovery workflows)
+  // Note: Skipped by default for existing business enrichment, enable with method='linkedin'
+  // ==========================================================================
+  if (preferredMethod === 'linkedin' || preferredMethod === 'auto') {
+    try {
+      await ctx.log('info', 'Attempting Apify lead-finder (code_crafter/leads-finder)');
+      const apifyResult = await enrichViaApifyLeadFinder(ctx, url, businessName);
       
-      await ctx.log('info', 'LinkedIn found contacts');
-      ctx.recordApiCall('linkedin', 'profile_search', 1);
-      
-      const timeMs = Date.now() - startTime;
-      return {
-        url,
-        businessName,
-        owner,
-        contacts,
-        company,
-        method: 'linkedin',
-        source,
-        timeMs,
-        cost,
-        fallbackUsed: true,
-      };
+      if (apifyResult && apifyResult.owner) {
+        owner = apifyResult.owner;
+        contacts = apifyResult.contacts || [];
+        company = apifyResult.company || null;
+        source = 'linkedin';
+        cost = 0.15;
+        
+        await ctx.log('info', 'Apify lead-finder found contact successfully');
+        ctx.recordApiCall('apify', 'lead_finder', 1);
+        
+        const timeMs = Date.now() - startTime;
+        return {
+          url,
+          businessName,
+          owner,
+          contacts,
+          company,
+          method: 'apify',
+          source,
+          timeMs,
+          cost,
+          fallbackUsed: true,
+        };
+      }
+    } catch (error) {
+      await ctx.log('warn', `Apify lead-finder failed: ${error}, falling back to blended enrichment`);
+      fallbackUsed = true;
     }
-  } catch (error) {
-    await ctx.log('warn', `LinkedIn failed: ${error}`);
   }
+  
+  // Skip DataForSEO and direct LinkedIn search for this enrichment
   
   // ==========================================================================
   // STEP 3: Last resort - website scraping

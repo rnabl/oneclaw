@@ -11,6 +11,8 @@ import './complete-sdr-discovery';
 
 // Import tools to register them
 import '../tools/send-gmail';
+import '../tools/check-citations';
+import '../tools/check-citations-free';
 
 export { auditWorkflowHandler } from './audit';
 export { runAgent, DiscoveryAgent } from './discovery';

@@ -1,3 +1,11 @@
+/**
+ * PM2 Ecosystem Config
+ * 
+ * PORTS ARE HARDCODED IN CODE - NOT HERE
+ * - Harness: 8787 (packages/harness/src/server.ts)
+ * - Daemon:  9000 (oneclaw-node/src/ports.rs)
+ * - API:     3000 (apps/api/src/index.ts)
+ */
 module.exports = {
   apps: [
     {
@@ -7,10 +15,8 @@ module.exports = {
       args: 'dist/server.js',
       env: {
         NODE_ENV: 'production',
-        HARNESS_PORT: '8787',
       },
-      wait_ready: true,
-      listen_timeout: 10000,
+      wait_ready: false,
       kill_timeout: 5000,
       restart_delay: 2000,
       max_restarts: 10,
@@ -19,9 +25,9 @@ module.exports = {
       name: 'daemon',
       cwd: '/opt/oneclaw/oneclaw-node',
       script: './target/release/oneclaw-node',
-      args: 'daemon --port 9000',
+      args: 'daemon',
       env: {
-        HARNESS_URL: 'http://localhost:8787',
+        NODE_ENV: 'production',
       },
       restart_delay: 5000,
       max_restarts: 10,
@@ -34,7 +40,6 @@ module.exports = {
       args: 'tsx src/index.ts',
       env: {
         NODE_ENV: 'production',
-        PORT: '3000',
       },
       wait_ready: false,
       kill_timeout: 5000,

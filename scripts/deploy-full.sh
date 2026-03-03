@@ -57,14 +57,31 @@ echo "🦀 Building daemon (this takes a minute)..."
 cd /opt/oneclaw/oneclaw-node
 cargo build --release
 
-# Step 7: Start everything fresh
-echo "🚀 Starting services..."
+# Step 7: Start services ONE AT A TIME (no race conditions)
+echo "🚀 Starting Harness (port 8787)..."
 cd /opt/oneclaw
-pm2 start ecosystem.config.js
+pm2 start ecosystem.config.js --only harness
+sleep 3
 
-# Step 8: Wait and verify
-echo "⏳ Waiting for services to start..."
-sleep 5
+# Verify harness is up before starting daemon
+echo "🔍 Checking Harness..."
+if ! curl -s -o /dev/null -w "" http://localhost:8787/health; then
+  echo "❌ Harness failed to start!"
+  pm2 logs harness --lines 20 --nostream
+  exit 1
+fi
+echo "✅ Harness is up on 8787"
+
+echo "🚀 Starting Daemon (port 9000)..."
+pm2 start ecosystem.config.js --only daemon
+sleep 3
+
+echo "🚀 Starting API (port 3000)..."
+pm2 start ecosystem.config.js --only api
+sleep 2
+
+# Step 8: Final verification
+echo "⏳ Final verification..."
 
 echo ""
 echo "📊 Service Status:"

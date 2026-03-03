@@ -11,19 +11,27 @@ import { harnessApi } from './api';
 import { schedulerHeartbeat } from './scheduler/heartbeat';
 import { logEnvironmentInfo, isProduction, validateProductionConfig, getHarnessUrl } from './utils/env';
 
-// Load .env.local from project root (three directories up from src/)
-const envPath = resolve(__dirname, '../../../.env.local');
+// SINGLE SOURCE OF TRUTH - HARDCODED PORTS
+const PORTS = {
+  HARNESS: 8787,
+  DAEMON: 9000,
+  API: 3000,
+} as const;
+
+// Load .env.production from project root (three directories up from src/)
+const envPath = resolve(__dirname, '../../../.env.production');
 const result = config({ path: envPath });
 
 if (result.error) {
-  console.error(`❌ Failed to load .env.local from ${envPath}:`, result.error);
+  console.error(`❌ Failed to load .env.production from ${envPath}:`, result.error);
 } else {
-  console.log(`✅ Loaded .env.local from ${envPath}`);
+  console.log(`✅ Loaded .env.production from ${envPath}`);
   console.log(`   APIFY_API_TOKEN: ${process.env.APIFY_API_TOKEN ? '✅ Present' : '❌ Missing'}`);
+  console.log(`   PERPLEXITY_API_KEY: ${process.env.PERPLEXITY_API_KEY ? '✅ Present' : '❌ Missing'}`);
   console.log(`   BRAVE_API_KEY: ${process.env.BRAVE_API_KEY ? '✅ Present' : '❌ Missing'}`);
 }
 
-const port = parseInt(process.env.HARNESS_PORT || '9000');
+const port = PORTS.HARNESS;
 
 console.log(`
 ╔═══════════════════════════════════════════════════════════════╗
