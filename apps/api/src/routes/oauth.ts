@@ -68,7 +68,8 @@ export function getGoogleAuthUrl(userId: string, scopes: string[]): string {
  * Query params: ?user=<userId>
  */
 export async function googleAuthHandler(c: Context) {
-  const userId = c.req.query('user');
+  // Accept both ?user= (legacy) and ?tenantId= (new Gmail senders page)
+  const userId = c.req.query('user') || c.req.query('tenantId');
   const config = getGoogleConfig();
 
   // Fail fast if OAuth is not configured (avoids Google "Missing client_id" error)
@@ -95,7 +96,7 @@ export async function googleAuthHandler(c: Context) {
       <html>
         <body style="font-family: -apple-system, sans-serif; padding: 40px; text-align: center;">
           <h1>❌ Error</h1>
-          <p>Missing user ID. Please use the link from iMessage or the Integrations page.</p>
+          <p>Missing user ID or tenant ID. Please use the link from iMessage, the Integrations page, or the Gmail Senders page.</p>
         </body>
       </html>
     `, 400);

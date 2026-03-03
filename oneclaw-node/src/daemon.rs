@@ -1461,17 +1461,50 @@ async fn api_gmail_senders_proxy() -> Result<Json<serde_json::Value>, (StatusCod
     }
 }
 
-/// Proxy to harness /oauth/google
+/// Proxy to harness /oauth/google - fetch from harness and forward the redirect
 async fn oauth_google_proxy(
     Query(params): Query<std::collections::HashMap<String, String>>,
-) -> axum::response::Redirect {
+) -> Result<axum::response::Response, (StatusCode, String)> {
     let harness_url = crate::ports::HARNESS_URL;
+    let client = reqwest::Client::builder()
+        .redirect(reqwest::redirect::Policy::none())  // Don't follow redirects
+        .build()
+        .map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()))?;
+    
     let mut url = format!("{}/oauth/google", harness_url);
     if !params.is_empty() {
         let query: String = params.iter().map(|(k, v)| format!("{}={}", k, v)).collect::<Vec<_>>().join("&");
         url = format!("{}?{}", url, query);
     }
-    axum::response::Redirect::temporary(&url)
+    
+    match client.get(&url).send().await {
+        Ok(resp) => {
+            let status = StatusCode::from_u16(resp.status().as_u16()).unwrap_or(StatusCode::OK);
+            
+            // If it's a redirect, forward the redirect to the client
+            if let Some(location) = resp.headers().get("location") {
+                return Ok(axum::response::Response::builder()
+                    .status(status)
+                    .header("location", location.to_str().unwrap_or_default())
+                    .body(axum::body::Body::empty())
+                    .unwrap());
+            }
+            
+            // Otherwise return the body
+            let content_type = resp.headers().get("content-type")
+                .and_then(|v| v.to_str().ok())
+                .unwrap_or("text/html")
+                .to_string();
+            let body = resp.bytes().await.unwrap_or_default();
+            
+            Ok(axum::response::Response::builder()
+                .status(status)
+                .header("content-type", content_type)
+                .body(axum::body::Body::from(body))
+                .unwrap())
+        }
+        Err(e) => Err((StatusCode::BAD_GATEWAY, format!("Failed to reach harness: {}", e))),
+    }
 }
 
 /// Proxy to harness /oauth/google/callback
