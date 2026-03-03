@@ -24,13 +24,12 @@ if (Test-Path $LOCAL_ENV) {
     exit 1
 }
 
-# Step 3: SSH and run deploy commands on VPS
+# Step 3: SSH and run full deploy script on VPS
 Write-Host "`n🔄 Deploying on VPS..." -ForegroundColor Yellow
 
-# Use semicolons to avoid Windows line ending issues
-$DEPLOY_COMMANDS = "cd /opt/oneclaw && git fetch origin && git reset --hard origin/main && pnpm install && cd packages/database && pnpm build && cd /opt/oneclaw/packages/harness && pnpm build && cd /opt/oneclaw && pm2 restart all && sleep 3 && pm2 status"
-
-ssh $VPS_HOST $DEPLOY_COMMANDS
+# Upload and run the deploy script (avoids line ending issues)
+scp scripts/deploy-full.sh "${VPS_HOST}:/opt/oneclaw/deploy-full.sh"
+ssh $VPS_HOST "chmod +x /opt/oneclaw/deploy-full.sh && /opt/oneclaw/deploy-full.sh"
 
 Write-Host "`n✅ Deployment finished!" -ForegroundColor Green
 Write-Host "🌐 Test: https://oneclaw.chat/oauth/google?user=oneclaw-vps-1" -ForegroundColor Cyan
