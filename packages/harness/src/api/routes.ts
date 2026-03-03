@@ -1992,16 +1992,31 @@ app.get('/gmail/senders', async (c) => {
  */
 app.get('/api/gmail/senders', async (c) => {
   const { createClient } = await import('@supabase/supabase-js');
-  const supabase = createClient(
-    process.env.SUPABASE_URL || '',
-    process.env.SUPABASE_SERVICE_ROLE_KEY || ''
-  );
   
-  const { data: integrations } = await supabase
+  const url = process.env.SUPABASE_URL || '';
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
+  
+  console.log('[gmail/senders] SUPABASE_URL:', url ? 'SET' : 'MISSING');
+  console.log('[gmail/senders] SUPABASE_SERVICE_ROLE_KEY:', key ? 'SET' : 'MISSING');
+  
+  if (!url || !key) {
+    return c.json({ senders: [], error: 'Supabase not configured' });
+  }
+  
+  const supabase = createClient(url, key);
+  
+  const { data: integrations, error } = await supabase
     .from('node_integrations')
     .select('node_id, email, created_at')
     .eq('provider', 'google')
     .order('created_at', { ascending: false });
+  
+  console.log('[gmail/senders] Query result:', { count: integrations?.length, error });
+  
+  if (error) {
+    console.error('[gmail/senders] Supabase error:', error);
+    return c.json({ senders: [], error: error.message });
+  }
   
   // Dedupe by node_id
   const uniqueIntegrations = new Map<string, any>();
@@ -2016,6 +2031,8 @@ app.get('/api/gmail/senders', async (c) => {
     email: int.email || 'Unknown',
     connectedAt: int.created_at,
   }));
+  
+  console.log('[gmail/senders] Returning', senders.length, 'senders');
   
   return c.json({ senders });
 });
