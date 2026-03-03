@@ -1,4 +1,4 @@
-use axum::{extract::State, http::StatusCode, response::Html, routing::{get, post}, Json, Router};
+use axum::{extract::{Query, State}, http::StatusCode, response::Html, routing::{get, post}, Json, Router};
 use serde::{Deserialize, Serialize};
 use std::sync::Arc;
 use tower_http::cors::CorsLayer;
@@ -561,6 +561,10 @@ pub async fn start(port: u16) -> anyhow::Result<()> {
         .route("/integrations/gmail/send-test", post(send_test_email))
         .route("/integrations/gmail/send", post(send_email))
         .route("/api/oauth/config", post(oauth_config::save_oauth_config_handler))
+        .route("/gmail/senders", get(gmail_senders_proxy))
+        .route("/api/gmail/senders", get(api_gmail_senders_proxy))
+        .route("/oauth/google", get(oauth_google_proxy))
+        .route("/oauth/google/callback", get(oauth_callback_proxy))
         .layer(CorsLayer::permissive())
         .with_state(state);
 
@@ -1411,6 +1415,101 @@ async fn send_email(
         Err(e) => {
             Err((StatusCode::INTERNAL_SERVER_ERROR, Json(serde_json::json!({ "error": e.to_string() }))))
         }
+    }
+}
+
+/// Proxy to harness /gmail/senders page
+async fn gmail_senders_proxy(
+    Query(params): Query<std::collections::HashMap<String, String>>,
+) -> Result<axum::response::Response, (StatusCode, String)> {
+    let harness_url = std::env::var("HARNESS_URL").unwrap_or_else(|_| "http://localhost:8787".to_string());
+    let client = reqwest::Client::new();
+    
+    let mut url = format!("{}/gmail/senders", harness_url);
+    if !params.is_empty() {
+        let query: String = params.iter().map(|(k, v)| format!("{}={}", k, v)).collect::<Vec<_>>().join("&");
+        url = format!("{}?{}", url, query);
+    }
+    
+    match client.get(&url).send().await {
+        Ok(resp) => {
+            let status = StatusCode::from_u16(resp.status().as_u16()).unwrap_or(StatusCode::OK);
+            let content_type = resp.headers().get("content-type")
+                .and_then(|v| v.to_str().ok())
+                .unwrap_or("text/html")
+                .to_string();
+            let body = resp.bytes().await.unwrap_or_default();
+            
+            Ok(axum::response::Response::builder()
+                .status(status)
+                .header("content-type", content_type)
+                .body(axum::body::Body::from(body))
+                .unwrap())
+        }
+        Err(e) => Err((StatusCode::BAD_GATEWAY, format!("Harness error: {}", e)))
+    }
+}
+
+/// Proxy to harness /api/gmail/senders
+async fn api_gmail_senders_proxy() -> Result<Json<serde_json::Value>, (StatusCode, String)> {
+    let harness_url = std::env::var("HARNESS_URL").unwrap_or_else(|_| "http://localhost:8787".to_string());
+    let client = reqwest::Client::new();
+    
+    match client.get(format!("{}/api/gmail/senders", harness_url)).send().await {
+        Ok(resp) if resp.status().is_success() => {
+            let data: serde_json::Value = resp.json().await.unwrap_or_default();
+            Ok(Json(data))
+        }
+        Ok(resp) => {
+            let error = resp.text().await.unwrap_or_default();
+            Err((StatusCode::BAD_GATEWAY, error))
+        }
+        Err(e) => Err((StatusCode::BAD_GATEWAY, e.to_string()))
+    }
+}
+
+/// Proxy to harness /oauth/google
+async fn oauth_google_proxy(
+    Query(params): Query<std::collections::HashMap<String, String>>,
+) -> axum::response::Redirect {
+    let harness_url = std::env::var("HARNESS_URL").unwrap_or_else(|_| "http://localhost:8787".to_string());
+    let mut url = format!("{}/oauth/google", harness_url);
+    if !params.is_empty() {
+        let query: String = params.iter().map(|(k, v)| format!("{}={}", k, v)).collect::<Vec<_>>().join("&");
+        url = format!("{}?{}", url, query);
+    }
+    axum::response::Redirect::temporary(&url)
+}
+
+/// Proxy to harness /oauth/google/callback
+async fn oauth_callback_proxy(
+    Query(params): Query<std::collections::HashMap<String, String>>,
+) -> Result<axum::response::Response, (StatusCode, String)> {
+    let harness_url = std::env::var("HARNESS_URL").unwrap_or_else(|_| "http://localhost:8787".to_string());
+    let client = reqwest::Client::new();
+    
+    let mut url = format!("{}/oauth/google/callback", harness_url);
+    if !params.is_empty() {
+        let query: String = params.iter().map(|(k, v)| format!("{}={}", k, v)).collect::<Vec<_>>().join("&");
+        url = format!("{}?{}", url, query);
+    }
+    
+    match client.get(&url).send().await {
+        Ok(resp) => {
+            let status = StatusCode::from_u16(resp.status().as_u16()).unwrap_or(StatusCode::OK);
+            let content_type = resp.headers().get("content-type")
+                .and_then(|v| v.to_str().ok())
+                .unwrap_or("text/html")
+                .to_string();
+            let body = resp.bytes().await.unwrap_or_default();
+            
+            Ok(axum::response::Response::builder()
+                .status(status)
+                .header("content-type", content_type)
+                .body(axum::body::Body::from(body))
+                .unwrap())
+        }
+        Err(e) => Err((StatusCode::BAD_GATEWAY, format!("Harness error: {}", e)))
     }
 }
 
