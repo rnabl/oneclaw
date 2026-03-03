@@ -26,33 +26,9 @@ if (Test-Path $LOCAL_ENV) {
 
 # Step 3: SSH and run deploy commands on VPS
 Write-Host "`n🔄 Deploying on VPS..." -ForegroundColor Yellow
-$DEPLOY_COMMANDS = @"
-cd /opt/oneclaw
-echo '📥 Pulling latest code...'
-git fetch origin && git reset --hard origin/main
 
-echo '📦 Installing dependencies...'
-pnpm install --frozen-lockfile 2>/dev/null || pnpm install
-
-echo '🔨 Building packages...'
-cd packages/database && pnpm build && cd /opt/oneclaw
-cd packages/harness && pnpm build && cd /opt/oneclaw
-
-echo '🔗 Linking env files...'
-ln -sf /opt/oneclaw/.env.production /opt/oneclaw/apps/api/.env.production
-ln -sf /opt/oneclaw/.env.production /opt/oneclaw/packages/harness/.env.production
-
-echo '🔄 Restarting services...'
-pm2 restart all
-
-echo '⏳ Waiting for services...'
-sleep 3
-
-echo '📊 Service status:'
-pm2 status
-
-echo '✅ Deploy complete!'
-"@
+# Use semicolons to avoid Windows line ending issues
+$DEPLOY_COMMANDS = "cd /opt/oneclaw && git fetch origin && git reset --hard origin/main && pnpm install && cd packages/database && pnpm build && cd /opt/oneclaw/packages/harness && pnpm build && cd /opt/oneclaw && pm2 restart all && sleep 3 && pm2 status"
 
 ssh $VPS_HOST $DEPLOY_COMMANDS
 

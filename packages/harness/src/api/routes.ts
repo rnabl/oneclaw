@@ -19,8 +19,6 @@ import { agentMonitor } from '../agents/log-monitor';
 import { spawn, execSync } from 'child_process';
 import { join, resolve } from 'path';
 import { createGmailClient } from '../gmail/client';
-import { encryptToken } from '../gmail/encryption';
-import { registerGmailAccount } from '../tools/send-gmail';
 import { getHarnessUrl, getOAuthRedirectUri, isProduction, getEnvironment } from '../utils/env';
 
 // Import workflows to register them
@@ -191,7 +189,7 @@ app.post('/tools/:id/execute', async (c) => {
       console.log(`[Tool Execute] Running ${toolId} as workflow`);
       const job = await runner.execute(toolId, validatedInput, {
         tenantId,
-        tier: 'free',
+        tier: 'pro', // Allow access to all tools
         secrets: {},
       });
       
@@ -1338,6 +1336,24 @@ app.post('/scheduler/stop', async (c) => {
   }
 });
 
+/**
+ * Get email queue status
+ * GET /scheduler/email-queue
+ */
+app.get('/scheduler/email-queue', async (c) => {
+  try {
+    const { getEmailQueueStats } = await import('../scheduler/email-sender');
+    const stats = await getEmailQueueStats();
+    return c.json({
+      status: 'ok',
+      queue: stats,
+      schedulerRunning: schedulerHeartbeat.isRunning(),
+    });
+  } catch (error) {
+    return c.json({ error: redactSecrets(String(error)) }, 500);
+  }
+});
+
 // =============================================================================
 // SUB-AGENTS (PHASE 4)
 // =============================================================================
@@ -1639,24 +1655,14 @@ app.get('/oauth/google/callback', async (c) => {
     const gmailClient = createGmailClient();
     const profile = await gmailClient.getUserProfile(tokens.access_token);
     
-    // Encrypt tokens
-    const encryptedAccess = encryptToken(tokens.access_token);
-    const encryptedRefresh = tokens.refresh_token ? encryptToken(tokens.refresh_token) : '';
-    
-    // Register account for this tenant
-    registerGmailAccount(tenantId, {
-      id: `gml_${Date.now()}`,
-      user_id: tenantId,
+    // Save integration to database
+    const { saveNodeIntegration } = await import('@oneclaw/database');
+    await saveNodeIntegration(tenantId, 'google', {
+      accessToken: tokens.access_token,
+      refreshToken: tokens.refresh_token || '',
+      expiresAt: new Date(Date.now() + tokens.expires_in * 1000),
+      scopes: ['https://www.googleapis.com/auth/gmail.send', 'https://www.googleapis.com/auth/gmail.readonly'],
       email: profile.email,
-      access_token: encryptedAccess,
-      refresh_token: encryptedRefresh,
-      token_expires_at: new Date(Date.now() + tokens.expires_in * 1000).toISOString(),
-      is_active: true,
-      daily_send_count: 0,
-      daily_send_reset_at: new Date().toISOString(),
-      last_sent_at: null,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
     });
     
     console.log(`[OAuth] Gmail connected: ${profile.email} for tenant ${tenantId}`);
@@ -1779,6 +1785,239 @@ app.get('/api/v1/oauth/google/account', async (c) => {
   }
   
   return c.json({ error: 'No Gmail account connected' }, 404);
+});
+
+// =============================================================================
+// GMAIL SENDER MANAGEMENT UI
+// =============================================================================
+
+/**
+ * Gmail Sender Management Page
+ * GET /gmail/senders - UI to manage email sender accounts
+ */
+app.get('/gmail/senders', async (c) => {
+  const { createClient } = await import('@supabase/supabase-js');
+  const supabase = createClient(
+    process.env.SUPABASE_URL || '',
+    process.env.SUPABASE_SERVICE_ROLE_KEY || ''
+  );
+  
+  // Get all Gmail integrations
+  const { data: integrations } = await supabase
+    .from('node_integrations')
+    .select('node_id, provider, credentials, created_at')
+    .eq('provider', 'google')
+    .order('created_at', { ascending: false });
+  
+  // Dedupe by node_id (keep most recent)
+  const uniqueIntegrations = new Map<string, any>();
+  for (const int of integrations || []) {
+    if (!uniqueIntegrations.has(int.node_id)) {
+      uniqueIntegrations.set(int.node_id, int);
+    }
+  }
+  
+  const senders = Array.from(uniqueIntegrations.values()).map(int => ({
+    nodeId: int.node_id,
+    email: int.credentials?.email || 'Unknown',
+    connectedAt: new Date(int.created_at).toLocaleDateString(),
+  }));
+  
+  const baseUrl = getHarnessUrl();
+  
+  return c.html(`
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Gmail Sender Management - OneClaw</title>
+        <style>
+          * { margin: 0; padding: 0; box-sizing: border-box; }
+          body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 40px 20px;
+          }
+          .container { max-width: 800px; margin: 0 auto; }
+          h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+          }
+          .subtitle { color: #888; margin-bottom: 40px; }
+          .card {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+          }
+          .card h2 { font-size: 18px; margin-bottom: 16px; color: #fff; }
+          .sender-list { display: flex; flex-direction: column; gap: 12px; }
+          .sender-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            background: #1a1a1a;
+            border-radius: 8px;
+            border: 1px solid #333;
+          }
+          .sender-item:hover { border-color: #667eea; }
+          .sender-info { flex: 1; }
+          .sender-email { font-size: 16px; font-weight: 600; color: #fff; }
+          .sender-meta { font-size: 13px; color: #888; margin-top: 4px; }
+          .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+          }
+          .status-connected { background: #1a3d1a; color: #4ade80; }
+          .add-section { margin-top: 32px; }
+          .form-group { margin-bottom: 16px; }
+          .form-group label { display: block; margin-bottom: 8px; color: #888; font-size: 14px; }
+          .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            background: #0a0a0a;
+            color: #fff;
+            font-size: 15px;
+          }
+          .form-group input:focus { outline: none; border-color: #667eea; }
+          .form-group small { display: block; margin-top: 6px; color: #666; font-size: 12px; }
+          .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+          }
+          .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+          }
+          .btn-primary:hover { opacity: 0.9; }
+          .instructions {
+            background: #1a1a2e;
+            border: 1px solid #2d2d5a;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 24px;
+          }
+          .instructions h3 { font-size: 14px; color: #a0a0ff; margin-bottom: 12px; }
+          .instructions ol { padding-left: 20px; color: #888; font-size: 14px; line-height: 1.8; }
+          .instructions code { background: #0a0a0a; padding: 2px 6px; border-radius: 4px; color: #667eea; }
+          .empty-state { text-align: center; padding: 40px; color: #666; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <h1>📧 Gmail Sender Management</h1>
+          <p class="subtitle">Connect Gmail accounts for cold email campaigns</p>
+          
+          <div class="card">
+            <h2>Connected Accounts</h2>
+            ${senders.length > 0 ? `
+              <div class="sender-list">
+                ${senders.map(s => `
+                  <div class="sender-item">
+                    <div class="sender-info">
+                      <div class="sender-email">${s.email}</div>
+                      <div class="sender-meta">ID: ${s.nodeId} • Connected ${s.connectedAt}</div>
+                    </div>
+                    <span class="status-badge status-connected">✓ Connected</span>
+                  </div>
+                `).join('')}
+              </div>
+            ` : `
+              <div class="empty-state">
+                <p>No Gmail accounts connected yet.</p>
+              </div>
+            `}
+          </div>
+          
+          <div class="card add-section">
+            <h2>Connect New Sender</h2>
+            <form id="connectForm" onsubmit="connectAccount(event)">
+              <div class="form-group">
+                <label for="senderId">Sender ID</label>
+                <input type="text" id="senderId" placeholder="e.g., riley, bailey, madison" required>
+                <small>This will be used as the node_id (prefixed with "sender-")</small>
+              </div>
+              <button type="submit" class="btn btn-primary">Connect Gmail Account →</button>
+            </form>
+            
+            <div class="instructions">
+              <h3>📋 How to connect multiple senders:</h3>
+              <ol>
+                <li>Enter the sender's name (e.g., <code>riley</code>)</li>
+                <li>Click "Connect Gmail Account"</li>
+                <li>Sign in with that sender's Gmail (<code>riley@closelanepro.com</code>)</li>
+                <li>Authorize the app</li>
+                <li>Repeat for each sender (bailey, madison, etc.)</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        
+        <script>
+          function connectAccount(e) {
+            e.preventDefault();
+            const senderId = document.getElementById('senderId').value.trim().toLowerCase();
+            if (!senderId) return;
+            
+            const nodeId = 'sender-' + senderId;
+            window.location.href = '/oauth/google?tenantId=' + encodeURIComponent(nodeId);
+          }
+        </script>
+      </body>
+    </html>
+  `);
+});
+
+/**
+ * API: List connected Gmail senders
+ * GET /api/gmail/senders
+ */
+app.get('/api/gmail/senders', async (c) => {
+  const { createClient } = await import('@supabase/supabase-js');
+  const supabase = createClient(
+    process.env.SUPABASE_URL || '',
+    process.env.SUPABASE_SERVICE_ROLE_KEY || ''
+  );
+  
+  const { data: integrations } = await supabase
+    .from('node_integrations')
+    .select('node_id, credentials, created_at')
+    .eq('provider', 'google')
+    .order('created_at', { ascending: false });
+  
+  // Dedupe by node_id
+  const uniqueIntegrations = new Map<string, any>();
+  for (const int of integrations || []) {
+    if (!uniqueIntegrations.has(int.node_id)) {
+      uniqueIntegrations.set(int.node_id, int);
+    }
+  }
+  
+  const senders = Array.from(uniqueIntegrations.values()).map(int => ({
+    nodeId: int.node_id,
+    email: int.credentials?.email || 'Unknown',
+    connectedAt: int.created_at,
+  }));
+  
+  return c.json({ senders });
 });
 
 // =============================================================================
