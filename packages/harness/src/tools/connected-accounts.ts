@@ -6,7 +6,7 @@
 
 import { z } from 'zod';
 import { registry } from '../registry';
-import { getSupabaseClient } from '../supabase';
+import { getSupabaseClient } from '../lib/supabase';
 
 // Input schema
 const ConnectedAccountsInputSchema = z.object({

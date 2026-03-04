@@ -6,7 +6,7 @@
  */
 
 import { google } from 'googleapis';
-import { getSupabaseClient } from '../supabase';
+import { getSupabaseClient } from '../lib/supabase';
 import { sendTelegramNotification } from './email-sender';
 
 // Check for replies every 5 minutes

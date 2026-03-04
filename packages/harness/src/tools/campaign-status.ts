@@ -7,7 +7,7 @@
 
 import { z } from 'zod';
 import { registry } from '../registry';
-import { getSupabaseClient } from '../supabase';
+import { getSupabaseClient } from '../lib/supabase';
 
 // Input schema - no required inputs, just query options
 const CampaignStatusInputSchema = z.object({

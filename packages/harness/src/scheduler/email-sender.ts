@@ -11,27 +11,11 @@
  * - Crash recovery (picks up where it left off)
  */
 
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { createGmailClient } from '../gmail/client';
+import { getSupabaseClient } from '../lib/supabase';
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || '';
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET || '';
-
-let supabase: SupabaseClient | null = null;
-
-function getSupabaseClient() {
-  if (!supabase) {
-    const supabaseUrl = process.env.SUPABASE_URL;
-    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_KEY;
-    
-    if (!supabaseUrl || !supabaseKey) {
-      return null;
-    }
-    
-    supabase = createClient(supabaseUrl, supabaseKey);
-  }
-  return supabase;
-}
 
 // Configuration
 const DAILY_LIMIT_PER_SENDER = 50;
