@@ -14,6 +14,7 @@ import '../tools/send-gmail';
 import '../tools/check-citations';
 import '../tools/check-citations-free';
 import '../tools/campaign-status';
+import '../tools/connected-accounts';
 
 export { auditWorkflowHandler } from './audit';
 export { runAgent, DiscoveryAgent } from './discovery';
