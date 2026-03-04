@@ -43,9 +43,13 @@ const EMAILS_PER_TICK = 3; // Max emails to send per scheduler tick (every 60s)
 const SEND_WINDOW_START_UTC = 20; // 3 PM EST = 8 PM UTC (during EST, not EDT)
 const SEND_WINDOW_END_UTC = 2;    // 9 PM EST = 2 AM UTC next day
 
-// Telegram config
-const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '';
-const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || '';
+// Telegram config - read at runtime, not module load
+function getTelegramConfig() {
+  return {
+    botToken: process.env.TELEGRAM_BOT_TOKEN || '',
+    chatId: process.env.TELEGRAM_CHAT_ID || '',
+  };
+}
 
 // Stats tracking
 let sessionStats = {
@@ -317,20 +321,31 @@ function isWithinSendingWindow(): boolean {
  * Send a Telegram notification
  */
 export async function sendTelegramNotification(message: string): Promise<void> {
-  if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
+  const { botToken, chatId } = getTelegramConfig();
+  
+  if (!botToken || !chatId) {
+    console.log('[EmailSender] Telegram not configured (missing TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID)');
     return;
   }
   
   try {
-    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+    console.log(`[EmailSender] Sending Telegram notification to chat ${chatId}...`);
+    const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        chat_id: TELEGRAM_CHAT_ID,
+        chat_id: chatId,
         text: message,
         parse_mode: 'HTML',
       }),
     });
+    
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('[EmailSender] Telegram API error:', response.status, errorText);
+    } else {
+      console.log('[EmailSender] Telegram notification sent successfully');
+    }
   } catch (error) {
     console.error('[EmailSender] Telegram notification failed:', error);
   }
