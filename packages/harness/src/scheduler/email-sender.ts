@@ -62,6 +62,9 @@ let sessionStats = {
 // Track last send time to enforce delays
 let lastSendTime: Date | null = null;
 
+// Mutex to prevent concurrent queue processing
+let isProcessingQueue = false;
+
 interface EmailCampaign {
   id: string;
   lead_id: string;
@@ -411,6 +414,13 @@ export async function processEmailQueue(): Promise<{ sent: number; skipped: numb
   const stats = { sent: 0, skipped: 0, failed: 0 };
   const now = new Date();
   
+  // Prevent concurrent processing (race condition fix)
+  if (isProcessingQueue) {
+    return stats;
+  }
+  isProcessingQueue = true;
+  
+  try {
   // Check if we're within sending window (3 PM - 9 PM EST)
   if (!isWithinSendingWindow()) {
     return stats;
@@ -446,6 +456,25 @@ export async function processEmailQueue(): Promise<{ sent: number; skipped: numb
       continue;
     }
     
+    // IMPORTANT: Mark as "processing" BEFORE sending to prevent race conditions
+    // This prevents duplicate sends if multiple scheduler ticks overlap
+    const supabase = getSupabaseClient();
+    if (supabase) {
+      const { error: lockError } = await supabase
+        .schema('crm')
+        .from('email_campaigns')
+        .update({ approval_status: 'sending' })
+        .eq('id', email.id)
+        .eq('approval_status', 'approved') // Only update if still approved (not already being sent)
+        .is('sent_at', null);
+      
+      if (lockError) {
+        console.log(`[EmailSender] Could not lock email ${email.id}, skipping (may be processed by another tick)`);
+        stats.skipped++;
+        continue;
+      }
+    }
+    
     // Send the email
     const result = await sendEmail(email);
     
@@ -470,6 +499,9 @@ export async function processEmailQueue(): Promise<{ sent: number; skipped: numb
   }
   
   return stats;
+  } finally {
+    isProcessingQueue = false;
+  }
 }
 
 /**
