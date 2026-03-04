@@ -104,7 +104,27 @@ cd /opt/oneclaw/oneclaw-node
 cargo build --release
 
 # ============================================
-# STEP 10: START SERVICES WITH PM2
+# STEP 10: BOOTSTRAP AGENT WORKSPACE
+# ============================================
+echo ""
+echo "🧠 Setting up agent workspace..."
+WORKSPACE_DIR="/root/.oneclaw/workspace"
+if [ ! -d "$WORKSPACE_DIR" ]; then
+    echo "   Creating workspace directory..."
+    mkdir -p "$WORKSPACE_DIR"
+fi
+
+# Copy templates if workspace is empty (first deploy) or SOUL.md missing
+if [ ! -f "$WORKSPACE_DIR/SOUL.md" ]; then
+    echo "   Copying templates to workspace (first-time setup)..."
+    cp /opt/oneclaw/oneclaw-node/templates/*.md "$WORKSPACE_DIR/"
+    echo "   ✅ Agent brain initialized"
+else
+    echo "   ✅ Workspace exists, preserving learned content"
+fi
+
+# ============================================
+# STEP 11: START SERVICES WITH PM2
 # ============================================
 echo ""
 echo "🚀 Starting services..."
@@ -149,7 +169,7 @@ pm2 start ecosystem.config.js --only api
 sleep 2
 
 # ============================================
-# STEP 11: SAVE PM2 CONFIG
+# STEP 12: SAVE PM2 CONFIG
 # ============================================
 pm2 save
 

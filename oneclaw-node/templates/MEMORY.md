@@ -1,31 +1,20 @@
-# OneClaw MEMORY
-
-## User Preferences
-
-(Will be populated as you learn about the user)
-
----
-
-## Recent Tasks
-
-(Will be populated with successful executions)
-
----
-
-## Learned Patterns
-
-(Will be populated with what works and what doesn't)
-
----
+# Memory
 
 ## Connected Services
 
-- Gmail: Not connected
-- Google My Business: Not connected
-- Stripe: Not connected
+Check with `get_connected_accounts` tool - do not assume.
 
----
+## Current Context
 
-## Notes
+- Cold email outreach campaigns active
+- 3 Gmail sender accounts configured
+- Sending window: 3 PM - 9 PM EST
+- Reply checking: every 5 minutes
 
-(General observations about the user's needs and preferences)
+## Learned Patterns
+
+(Updated automatically after successful tool executions)
+
+## User Preferences
+
+(Updated automatically based on interactions)
