@@ -175,8 +175,9 @@ pub async fn start(port: u16) -> anyhow::Result<()> {
             let telegram_clone = telegram.clone();
             tokio::spawn(async move {
                 while let Some(msg) = rx.recv().await {
-                    tracing::info!("📨 Telegram message from {}: {}", 
+                    tracing::info!("📨 Telegram message from {} (chat_id: {}): {}", 
                         msg.username.as_deref().unwrap_or("unknown"),
+                        msg.channel_id,
                         msg.content
                     );
                     

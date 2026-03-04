@@ -1429,6 +1429,37 @@ If you see this, Telegram is working!
   }
 });
 
+/**
+ * GET /scheduler/reply-checker
+ * Get reply checker status
+ */
+app.get('/scheduler/reply-checker', async (c) => {
+  try {
+    const { getReplyCheckerStatus } = await import('../scheduler/reply-checker');
+    const status = getReplyCheckerStatus();
+    return c.json(status);
+  } catch (error) {
+    return c.json({ error: redactSecrets(String(error)) }, 500);
+  }
+});
+
+/**
+ * POST /scheduler/check-replies
+ * Manually trigger a reply check
+ */
+app.post('/scheduler/check-replies', async (c) => {
+  try {
+    const { triggerReplyCheck } = await import('../scheduler/reply-checker');
+    const result = await triggerReplyCheck();
+    return c.json({
+      status: 'ok',
+      ...result,
+    });
+  } catch (error) {
+    return c.json({ error: redactSecrets(String(error)) }, 500);
+  }
+});
+
 // =============================================================================
 // SUB-AGENTS (PHASE 4)
 // =============================================================================

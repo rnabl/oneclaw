@@ -165,6 +165,103 @@ export class GmailClient {
   }
   
   /**
+   * Get messages in a thread
+   * Used to check for replies to sent emails
+   */
+  async getThreadMessages(accessToken: string, threadId: string): Promise<Array<{
+    id: string;
+    from: string;
+    to: string;
+    subject: string;
+    snippet: string;
+    date: string;
+    isInbound: boolean;
+  }>> {
+    const oauth2Client = new google.auth.OAuth2();
+    oauth2Client.setCredentials({ access_token: accessToken });
+    
+    const gmail = google.gmail({ version: 'v1', auth: oauth2Client });
+    
+    // Get the thread with full message data
+    const thread = await gmail.users.threads.get({
+      userId: 'me',
+      id: threadId,
+      format: 'metadata',
+      metadataHeaders: ['From', 'To', 'Subject', 'Date'],
+    });
+    
+    if (!thread.data.messages) {
+      return [];
+    }
+    
+    // Get the sender's email to determine inbound vs outbound
+    const profile = await gmail.users.getProfile({ userId: 'me' });
+    const myEmail = profile.data.emailAddress?.toLowerCase() || '';
+    
+    return thread.data.messages.map(msg => {
+      const headers = msg.payload?.headers || [];
+      const getHeader = (name: string) => 
+        headers.find(h => h.name?.toLowerCase() === name.toLowerCase())?.value || '';
+      
+      const from = getHeader('From');
+      const fromEmail = from.match(/<(.+)>/)?.[1] || from;
+      
+      return {
+        id: msg.id || '',
+        from: getHeader('From'),
+        to: getHeader('To'),
+        subject: getHeader('Subject'),
+        snippet: msg.snippet || '',
+        date: getHeader('Date'),
+        isInbound: !fromEmail.toLowerCase().includes(myEmail),
+      };
+    });
+  }
+  
+  /**
+   * Get full message body
+   */
+  async getMessageBody(accessToken: string, messageId: string): Promise<string> {
+    const oauth2Client = new google.auth.OAuth2();
+    oauth2Client.setCredentials({ access_token: accessToken });
+    
+    const gmail = google.gmail({ version: 'v1', auth: oauth2Client });
+    
+    const message = await gmail.users.messages.get({
+      userId: 'me',
+      id: messageId,
+      format: 'full',
+    });
+    
+    // Extract body from payload
+    const payload = message.data.payload;
+    if (!payload) return '';
+    
+    // Try to get plain text body first
+    const getBody = (part: any): string => {
+      if (part.mimeType === 'text/plain' && part.body?.data) {
+        return Buffer.from(part.body.data, 'base64').toString('utf-8');
+      }
+      if (part.parts) {
+        for (const subPart of part.parts) {
+          const body = getBody(subPart);
+          if (body) return body;
+        }
+      }
+      return '';
+    };
+    
+    let body = getBody(payload);
+    
+    // Fallback to snippet if no body found
+    if (!body && message.data.snippet) {
+      body = message.data.snippet;
+    }
+    
+    return body;
+  }
+  
+  /**
    * Send email using just an access token (simpler API)
    */
   async sendEmailWithToken(

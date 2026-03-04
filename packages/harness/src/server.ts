@@ -64,6 +64,14 @@ const autoStartScheduler = isProduction() || process.env.AUTO_START_SCHEDULER ==
 if (autoStartScheduler) {
   schedulerHeartbeat.start();
   console.log('✅ Scheduler auto-started (production mode)');
+  
+  // Start reply checker
+  import('./scheduler/reply-checker').then(({ startReplyChecker }) => {
+    startReplyChecker();
+    console.log('✅ Reply checker auto-started');
+  }).catch(err => {
+    console.error('❌ Failed to start reply checker:', err);
+  });
 } else {
   console.log('ℹ️  Scheduler not auto-started (start with POST /scheduler/start)');
 }
