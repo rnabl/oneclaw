@@ -18,14 +18,14 @@ const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || '';
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET || '';
 
 // Configuration
-const DAILY_LIMIT_PER_SENDER = 50;
-const MIN_DELAY_SECONDS = 120; // 2 minutes minimum between emails
-const MAX_DELAY_SECONDS = 360; // 6 minutes maximum between emails
+const DAILY_LIMIT_PER_SENDER = 100; // Increased from 50 - still safe for aged Gmail accounts
+const MIN_DELAY_SECONDS = 60;  // 1 minute minimum between emails (was 120)
+const MAX_DELAY_SECONDS = 180; // 3 minutes maximum between emails (was 360)
 const POLL_INTERVAL_MS = 10000; // Check for new emails every 10 seconds when idle
 
-// Time window: 3 PM - 9 PM EST (20:00 - 02:00 UTC)
-const SEND_WINDOW_START_UTC = 20; // 3 PM EST = 8 PM UTC (during EST, not EDT)
-const SEND_WINDOW_END_UTC = 2;    // 9 PM EST = 2 AM UTC next day
+// Time window: 1 PM - 7 PM EST (18:00 - 00:00 UTC)
+const SEND_WINDOW_START_UTC = 18; // 1 PM EST = 6 PM UTC (during EST, not EDT)
+const SEND_WINDOW_END_UTC = 0;    // 7 PM EST = 12 AM UTC (midnight)
 
 // Telegram config - read at runtime, not module load
 function getTelegramConfig() {
@@ -303,20 +303,18 @@ async function sendEmail(campaign: EmailCampaign): Promise<{ success: boolean; m
 }
 
 /**
- * Check if current time is within sending window (3 PM - 9 PM EST)
+ * Check if current time is within sending window (1 PM - 7 PM EST)
  */
 function isWithinSendingWindow(): boolean {
   const now = new Date();
   const utcHour = now.getUTCHours();
   
-  // 3 PM EST = 20:00 UTC (during standard time) or 19:00 UTC (during daylight time)
-  // 9 PM EST = 02:00 UTC next day (standard) or 01:00 UTC (daylight)
-  // For simplicity, use a window that covers both: 19:00 - 02:00 UTC
+  // 1 PM EST = 18:00 UTC (during standard time) or 17:00 UTC (during daylight time)
+  // 7 PM EST = 00:00 UTC (midnight) (standard) or 23:00 UTC (daylight)
+  // For simplicity, use a window that covers both: 17:00 - 00:00 UTC
   
-  // Window spans midnight UTC, so check if we're either:
-  // - After 7 PM UTC (19:00), OR
-  // - Before 2 AM UTC (02:00)
-  return utcHour >= 19 || utcHour < 2;
+  // Simple check: between 5 PM and midnight UTC
+  return utcHour >= 17 && utcHour < 24;
 }
 
 /**
@@ -451,7 +449,7 @@ export async function runEmailLoop(): Promise<void> {
     while (true) {
       // Check sending window
       if (!isWithinSendingWindow()) {
-        console.log('[EmailSender] Outside sending window (3 PM - 9 PM EST), stopping');
+        console.log('[EmailSender] Outside sending window (1 PM - 7 PM EST), stopping');
         break;
       }
       
@@ -516,7 +514,7 @@ export async function notifySessionStart(): Promise<void> {
   
   const message = `🚀 <b>Email Campaign Started</b>
 
-⏰ Sending window: 3 PM - 9 PM EST
+⏰ Sending window: 1 PM - 7 PM EST
 📬 Emails ready to send: ${stats.approved}
 👥 Using 3 senders (50/day each = 150 max)
 
@@ -538,7 +536,7 @@ export async function notifySessionEnd(): Promise<void> {
 ❌ Failed: ${sessionStats.failed}
 📬 Remaining in queue: ${stats.approved}
 
-Resumes at 3 PM EST tomorrow.`;
+Resumes at 1 PM EST tomorrow.`;
   
   await sendTelegramNotification(message);
 }
