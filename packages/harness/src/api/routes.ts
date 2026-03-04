@@ -1337,17 +1337,92 @@ app.post('/scheduler/stop', async (c) => {
 });
 
 /**
- * Get email queue status
+ * Get email queue status with detailed sending window info
  * GET /scheduler/email-queue
  */
 app.get('/scheduler/email-queue', async (c) => {
   try {
     const { getEmailQueueStats } = await import('../scheduler/email-sender');
     const stats = await getEmailQueueStats();
+    
+    // Calculate sending window status
+    const now = new Date();
+    const utcHour = now.getUTCHours();
+    const inSendingWindow = utcHour >= 19 || utcHour < 2; // 3 PM - 9 PM EST
+    
+    // Calculate time until window opens/closes
+    let windowStatus: string;
+    let nextWindowChange: string;
+    
+    if (inSendingWindow) {
+      windowStatus = 'ACTIVE - Sending emails';
+      // Calculate when window closes (2:00 UTC)
+      const closesAt = new Date(now);
+      if (utcHour >= 19) {
+        closesAt.setUTCDate(closesAt.getUTCDate() + 1);
+      }
+      closesAt.setUTCHours(2, 0, 0, 0);
+      const hoursUntilClose = Math.round((closesAt.getTime() - now.getTime()) / (1000 * 60 * 60) * 10) / 10;
+      nextWindowChange = `Closes in ${hoursUntilClose} hours`;
+    } else {
+      windowStatus = 'PAUSED - Outside sending hours';
+      // Calculate when window opens (19:00 UTC)
+      const opensAt = new Date(now);
+      if (utcHour >= 2) {
+        opensAt.setUTCHours(19, 0, 0, 0);
+      } else {
+        opensAt.setUTCDate(opensAt.getUTCDate() - 1);
+        opensAt.setUTCHours(19, 0, 0, 0);
+      }
+      if (opensAt < now) {
+        opensAt.setUTCDate(opensAt.getUTCDate() + 1);
+      }
+      const hoursUntilOpen = Math.round((opensAt.getTime() - now.getTime()) / (1000 * 60 * 60) * 10) / 10;
+      nextWindowChange = `Opens in ${hoursUntilOpen} hours`;
+    }
+    
     return c.json({
       status: 'ok',
+      sendingWindow: {
+        active: inSendingWindow,
+        status: windowStatus,
+        nextChange: nextWindowChange,
+        hours: '3 PM - 9 PM EST',
+        currentTimeUTC: now.toISOString(),
+      },
       queue: stats,
       schedulerRunning: schedulerHeartbeat.isRunning(),
+    });
+  } catch (error) {
+    return c.json({ error: redactSecrets(String(error)) }, 500);
+  }
+});
+
+/**
+ * Test Telegram notification
+ * POST /scheduler/telegram-test
+ */
+app.post('/scheduler/telegram-test', async (c) => {
+  try {
+    const { sendTelegramNotification, getEmailQueueStats } = await import('../scheduler/email-sender');
+    
+    const stats = await getEmailQueueStats();
+    
+    const message = `🧪 <b>Telegram Test</b>
+
+This is a test notification from OneClaw.
+If you see this, Telegram is working!
+
+📊 Queue Status:
+• Ready to send: ${stats.approved}
+• Sent today: ${stats.sentToday}
+• Total sent: ${stats.totalSent}`;
+
+    await sendTelegramNotification(message);
+    
+    return c.json({
+      status: 'ok',
+      message: 'Telegram notification sent. Check your Telegram app!',
     });
   } catch (error) {
     return c.json({ error: redactSecrets(String(error)) }, 500);

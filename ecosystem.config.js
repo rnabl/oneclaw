@@ -13,6 +13,7 @@ module.exports = {
       cwd: '/opt/oneclaw/packages/harness',
       script: 'node',
       args: 'dist/server.js',
+      env_file: '/opt/oneclaw/.env.production',
       env: {
         NODE_ENV: 'production',
       },

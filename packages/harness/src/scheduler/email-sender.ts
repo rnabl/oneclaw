@@ -39,6 +39,22 @@ const MIN_DELAY_SECONDS = 120; // 2 minutes
 const MAX_DELAY_SECONDS = 300; // 5 minutes
 const EMAILS_PER_TICK = 3; // Max emails to send per scheduler tick (every 60s)
 
+// Time window: 3 PM - 9 PM EST (20:00 - 02:00 UTC)
+const SEND_WINDOW_START_UTC = 20; // 3 PM EST = 8 PM UTC (during EST, not EDT)
+const SEND_WINDOW_END_UTC = 2;    // 9 PM EST = 2 AM UTC next day
+
+// Telegram config
+const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '';
+const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || '';
+
+// Stats tracking
+let sessionStats = {
+  sent: 0,
+  failed: 0,
+  lastReportTime: new Date(),
+  sessionStart: new Date(),
+};
+
 // Track last send time to enforce delays
 let lastSendTime: Date | null = null;
 
@@ -281,24 +297,94 @@ async function sendEmail(campaign: EmailCampaign): Promise<{ success: boolean; m
 }
 
 /**
+ * Check if current time is within sending window (3 PM - 9 PM EST)
+ */
+function isWithinSendingWindow(): boolean {
+  const now = new Date();
+  const utcHour = now.getUTCHours();
+  
+  // 3 PM EST = 20:00 UTC (during standard time) or 19:00 UTC (during daylight time)
+  // 9 PM EST = 02:00 UTC next day (standard) or 01:00 UTC (daylight)
+  // For simplicity, use a window that covers both: 19:00 - 02:00 UTC
+  
+  // Window spans midnight UTC, so check if we're either:
+  // - After 7 PM UTC (19:00), OR
+  // - Before 2 AM UTC (02:00)
+  return utcHour >= 19 || utcHour < 2;
+}
+
+/**
+ * Send a Telegram notification
+ */
+export async function sendTelegramNotification(message: string): Promise<void> {
+  if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
+    return;
+  }
+  
+  try {
+    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        text: message,
+        parse_mode: 'HTML',
+      }),
+    });
+  } catch (error) {
+    console.error('[EmailSender] Telegram notification failed:', error);
+  }
+}
+
+/**
+ * Send periodic progress report (every 30 minutes)
+ */
+async function maybeReportProgress(): Promise<void> {
+  const now = new Date();
+  const minutesSinceLastReport = (now.getTime() - sessionStats.lastReportTime.getTime()) / (1000 * 60);
+  
+  if (minutesSinceLastReport >= 30) {
+    const stats = await getEmailQueueStats();
+    const runtime = Math.round((now.getTime() - sessionStats.sessionStart.getTime()) / (1000 * 60));
+    
+    const message = `📧 <b>Email Campaign Update</b>
+
+⏱ Running for: ${runtime} min
+✅ Sent this session: ${sessionStats.sent}
+❌ Failed: ${sessionStats.failed}
+
+📊 <b>Queue Status:</b>
+• Ready to send: ${stats.approved}
+• Sent today: ${stats.sentToday}
+• Total sent: ${stats.totalSent}`;
+
+    await sendTelegramNotification(message);
+    sessionStats.lastReportTime = now;
+  }
+}
+
+/**
  * Process email queue - called by scheduler heartbeat
  * 
  * This function:
- * 1. Checks if enough time has passed since last send
- * 2. Gets next batch of approved emails
- * 3. Checks daily limits per sender
- * 4. Sends emails with appropriate delays
+ * 1. Checks if we're in the sending window (3 PM - 9 PM EST)
+ * 2. Checks if enough time has passed since last send
+ * 3. Gets next batch of approved emails
+ * 4. Checks daily limits per sender
+ * 5. Sends emails with appropriate delays
+ * 6. Reports progress to Telegram every 30 min
  */
 export async function processEmailQueue(): Promise<{ sent: number; skipped: number; failed: number }> {
   const stats = { sent: 0, skipped: 0, failed: 0 };
-  
-  // Check if we're within business hours (9 AM - 5 PM local)
   const now = new Date();
-  const hour = now.getHours();
-  if (hour < 9 || hour >= 17) {
-    // Outside business hours - skip
+  
+  // Check if we're within sending window (3 PM - 9 PM EST)
+  if (!isWithinSendingWindow()) {
     return stats;
   }
+  
+  // Send periodic Telegram updates
+  await maybeReportProgress();
   
   // Check minimum delay since last send
   if (lastSendTime) {
@@ -334,11 +420,13 @@ export async function processEmailQueue(): Promise<{ sent: number; skipped: numb
       await markEmailSent(email.id, result.messageId);
       console.log(`[EmailSender] ✅ Sent to ${email.lead?.email} (${email.lead?.company_name})`);
       stats.sent++;
+      sessionStats.sent++;
       lastSendTime = new Date();
     } else {
       await markEmailFailed(email.id, result.error || 'Unknown error');
       console.log(`[EmailSender] ❌ Failed: ${email.lead?.email} - ${result.error}`);
       stats.failed++;
+      sessionStats.failed++;
     }
     
     // Add random delay between sends (within this batch)
@@ -349,6 +437,47 @@ export async function processEmailQueue(): Promise<{ sent: number; skipped: numb
   }
   
   return stats;
+}
+
+/**
+ * Notify when email session starts (entering sending window)
+ */
+export async function notifySessionStart(): Promise<void> {
+  const stats = await getEmailQueueStats();
+  sessionStats = {
+    sent: 0,
+    failed: 0,
+    lastReportTime: new Date(),
+    sessionStart: new Date(),
+  };
+  
+  const message = `🚀 <b>Email Campaign Started</b>
+
+⏰ Sending window: 3 PM - 9 PM EST
+📬 Emails ready to send: ${stats.approved}
+👥 Using 3 senders (50/day each = 150 max)
+
+Updates every 30 min during active sending.`;
+  
+  await sendTelegramNotification(message);
+}
+
+/**
+ * Notify when email session ends (leaving sending window)
+ */
+export async function notifySessionEnd(): Promise<void> {
+  const stats = await getEmailQueueStats();
+  
+  const message = `🛑 <b>Email Campaign Paused</b>
+
+📊 <b>Session Summary:</b>
+✅ Sent: ${sessionStats.sent}
+❌ Failed: ${sessionStats.failed}
+📬 Remaining in queue: ${stats.approved}
+
+Resumes at 3 PM EST tomorrow.`;
+  
+  await sendTelegramNotification(message);
 }
 
 /**

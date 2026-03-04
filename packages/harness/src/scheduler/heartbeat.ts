@@ -16,7 +16,10 @@ import { nanoid } from 'nanoid';
 import { scheduleStore, calculateNextRun, type Schedule } from './index';
 import { workflowExecutor } from '../workflows/templates/executor';
 import { getHarnessUrl, isProduction } from '../utils/env';
-import { processEmailQueue, getEmailQueueStats } from './email-sender';
+import { processEmailQueue, getEmailQueueStats, notifySessionStart, notifySessionEnd } from './email-sender';
+
+// Track sending window state for notifications
+let wasInSendingWindow = false;
 
 interface OutreachParams {
   niche: string;
@@ -80,9 +83,30 @@ export class SchedulerHeartbeat {
   }
   
   /**
+   * Check if we're in the sending window (3 PM - 9 PM EST)
+   */
+  private isInSendingWindow(): boolean {
+    const now = new Date();
+    const utcHour = now.getUTCHours();
+    // Window: 7 PM UTC (19:00) to 2 AM UTC (covers both EST and EDT)
+    return utcHour >= 19 || utcHour < 2;
+  }
+  
+  /**
    * Check for due schedules and execute them
    */
   private async tick() {
+    // Check for sending window transitions and notify
+    const inWindow = this.isInSendingWindow();
+    if (inWindow && !wasInSendingWindow) {
+      console.log('[Scheduler] 📧 Entering email sending window (3 PM - 9 PM EST)');
+      await notifySessionStart();
+    } else if (!inWindow && wasInSendingWindow) {
+      console.log('[Scheduler] 🛑 Leaving email sending window');
+      await notifySessionEnd();
+    }
+    wasInSendingWindow = inWindow;
+    
     // Process email queue (runs every tick, has internal rate limiting)
     try {
       const emailStats = await processEmailQueue();

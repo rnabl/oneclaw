@@ -110,6 +110,17 @@ echo ""
 echo "🚀 Starting services..."
 cd /opt/oneclaw
 
+# Source production env file if it exists
+if [ -f /opt/oneclaw/.env.production ]; then
+    echo "   Loading environment from .env.production"
+    set -a
+    source /opt/oneclaw/.env.production
+    set +a
+else
+    echo "   ⚠️ No .env.production found. Telegram notifications will be disabled."
+    echo "   Copy .env.production.example to /opt/oneclaw/.env.production"
+fi
+
 # Start harness first, wait for it
 pm2 start ecosystem.config.js --only harness
 echo "   Waiting for Harness..."
@@ -161,6 +172,11 @@ echo -n "   Gmail Senders:  "
 curl -s -o /dev/null -w "%{http_code}\n" http://localhost:8787/gmail/senders || echo "FAILED"
 
 echo ""
+echo "📧 Email Queue Status:"
+curl -s http://localhost:8787/scheduler/email-queue | head -c 500 || echo "   FAILED to get queue status"
+
+echo ""
 echo "✅ DEPLOY COMPLETE"
 echo "🌐 Test: https://oneclaw.chat/gmail/senders"
+echo "📊 Email Status: https://oneclaw.chat/scheduler/email-queue"
 echo ""
