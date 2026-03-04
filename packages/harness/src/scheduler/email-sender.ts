@@ -35,8 +35,8 @@ function getSupabaseClient() {
 
 // Configuration
 const DAILY_LIMIT_PER_SENDER = 50;
-const MIN_DELAY_SECONDS = 120; // 2 minutes between emails
-const MAX_DELAY_SECONDS = 300; // 5 minutes max delay
+const MIN_DELAY_SECONDS = 120; // 2 minutes minimum between emails
+const MAX_DELAY_SECONDS = 360; // 6 minutes maximum between emails
 const POLL_INTERVAL_MS = 10000; // Check for new emails every 10 seconds when idle
 
 // Time window: 3 PM - 9 PM EST (20:00 - 02:00 UTC)
