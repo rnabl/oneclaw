@@ -236,19 +236,34 @@ async function sendEmail(campaign: EmailCampaign): Promise<{ success: boolean; m
   }
   
   try {
-    // Get integration from database based on sender
-    const { getNodeIntegration, saveNodeIntegration } = await import('@oneclaw/database');
+    const supabase = getSupabaseClient();
+    if (!supabase) {
+      return { success: false, error: 'Database not configured' };
+    }
     
     // Look up OAuth by sender name (e.g., "sender-riley" for riley@closelanepro.com)
     const senderUser = campaign.sent_from_email.split('@')[0]; // e.g., "riley" from "riley@closelanepro.com"
     const tenantId = `sender-${senderUser}`;
     
-    let integration = await getNodeIntegration(tenantId, 'google');
+    // Get integration from node_integrations table
+    let { data: integration } = await supabase
+      .from('node_integrations')
+      .select('*')
+      .eq('node_id', tenantId)
+      .eq('provider', 'google')
+      .single();
     
     // Fallback to legacy oneclaw-vps-1 if sender-specific doesn't exist
     if (!integration) {
-      integration = await getNodeIntegration('oneclaw-vps-1', 'google');
-      if (integration) {
+      const { data: fallback } = await supabase
+        .from('node_integrations')
+        .select('*')
+        .eq('node_id', 'oneclaw-vps-1')
+        .eq('provider', 'google')
+        .single();
+      
+      if (fallback) {
+        integration = fallback;
         console.log(`[EmailSender] Warning: Using fallback OAuth for ${senderUser}. Connect at /gmail/senders`);
       }
     }
@@ -269,12 +284,15 @@ async function sendEmail(campaign: EmailCampaign): Promise<{ success: boolean; m
       const refreshed = await refreshAccessToken(integration.refresh_token);
       if (refreshed) {
         accessToken = refreshed.access_token;
-        await saveNodeIntegration(actualTenantId, 'google', {
-          accessToken: refreshed.access_token,
-          refreshToken: integration.refresh_token,
-          expiresAt: new Date(Date.now() + refreshed.expires_in * 1000),
-          scopes: integration.scopes || [],
-        });
+        // Update token in database
+        await supabase
+          .from('node_integrations')
+          .update({
+            access_token: refreshed.access_token,
+            token_expires_at: new Date(Date.now() + refreshed.expires_in * 1000).toISOString(),
+          })
+          .eq('node_id', actualTenantId)
+          .eq('provider', 'google');
       } else {
         return { success: false, error: `Token refresh failed for ${senderUser}` };
       }
