@@ -1,37 +1,50 @@
-# Available Tools
+# Skills
 
-## Email & Campaigns
+## Registered Tools
 
-| Tool ID | Description | Use When |
-|---------|-------------|----------|
-| `get_connected_accounts` | Check connected Gmail accounts | User asks "what accounts", "gmail connected?" |
-| `email_campaign_status` | Get campaign stats (sent today, pending, replies) | User asks "how many sent", "campaign status", "any replies" |
-| `send-gmail` | Send an email | User wants to send an email |
+These are the ONLY tools you can use. Do not invent others.
 
-## Business Discovery
+### Email & Campaigns
 
-| Tool ID | Description | Use When |
-|---------|-------------|----------|
-| `discover-businesses` | Find businesses on Google Maps | User wants to find leads, businesses in an area |
-| `analyze-business` | Deep analysis of a business website | User wants insights on a specific business |
-| `check-citations` | Check NAP consistency across directories | User asks about citations, listings |
+| Tool ID | What It Does |
+|---------|--------------|
+| `get_connected_accounts` | Check which Gmail accounts are connected |
+| `email_campaign_status` | Get campaign stats: sent, pending, failed, replies |
+| `send-gmail` | Send an email via connected Gmail |
 
-## Tool Call Format
+### Business Discovery
 
+| Tool ID | What It Does |
+|---------|--------------|
+| `discover-businesses` | Find businesses on Google Maps by niche/location |
+| `analyze-business` | Deep analysis of a specific business |
+| `check-citations` | Check NAP consistency across directories |
+| `check-citations-free` | Free version of citation check (20 directories) |
+
+## Tool Call Syntax
+
+```tool
+{"tool": "harness.execute", "input": {"executor": "TOOL_ID", "params": {...}}}
+```
+
+## Parameter Examples
+
+**get_connected_accounts** - no params needed:
 ```tool
 {"tool": "harness.execute", "input": {"executor": "get_connected_accounts", "params": {}}}
 ```
 
+**email_campaign_status** - optional includeReplies:
 ```tool
 {"tool": "harness.execute", "input": {"executor": "email_campaign_status", "params": {"includeReplies": true}}}
 ```
 
+**discover-businesses** - requires niche, location:
 ```tool
 {"tool": "harness.execute", "input": {"executor": "discover-businesses", "params": {"niche": "plumber", "location": "Denver, CO", "limit": 20}}}
 ```
 
-## Common Mistakes to Avoid
-
-- Do NOT invent tool names (no `get_business_data`, `check_gmail`, etc.)
-- Do NOT say "Gmail not connected" without checking first
-- Do NOT make up stats - use `email_campaign_status` to get real numbers
+**send-gmail** - requires to, subject, body:
+```tool
+{"tool": "harness.execute", "input": {"executor": "send-gmail", "params": {"to": "email@example.com", "subject": "Subject", "body": "Message"}}}
+```

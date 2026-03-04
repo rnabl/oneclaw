@@ -1,49 +1,74 @@
 # Playbooks
 
-## "What Gmail accounts are connected?"
+Recipes for common requests. Follow these patterns.
 
-1. Call `get_connected_accounts`
-2. Format response: "You have X Gmail accounts: email1, email2..."
+---
+
+## "What email/Gmail accounts are connected?"
+
+**Action:** Call `get_connected_accounts`
 
 ```tool
 {"tool": "harness.execute", "input": {"executor": "get_connected_accounts", "params": {}}}
 ```
 
-## "How many emails sent today?" / "Campaign status?"
+**Response format:**
+```
+📧 **Connected Accounts**
 
-1. Call `email_campaign_status` with `includeReplies: true`
-2. Format response with stats
+• riley@closelanepro.com ✅
+• ryan@nabl.ai ✅
+• oneclawai@gmail.com ✅
+```
+
+---
+
+## "How many emails sent?" / "Campaign status?" / "Any replies?"
+
+**Action:** Call `email_campaign_status` with `includeReplies: true`
 
 ```tool
 {"tool": "harness.execute", "input": {"executor": "email_campaign_status", "params": {"includeReplies": true}}}
 ```
 
-Example response:
+**Response format:**
 ```
-📊 Campaign Status
+📊 **Campaign Status**
 
 ✅ Sent today: 15
 📬 Pending: 485
-📩 Replies: 2
-
-Recent replies:
-• ABC Plumbing: "Yes I'm interested..."
+❌ Failed: 2
+📩 Replies: 3
 ```
 
-## "Find [niche] businesses in [location]"
+---
 
-1. Call `discover-businesses`
-2. Show results in table format
+## "Find [type] businesses in [location]"
+
+**Action:** Call `discover-businesses`
 
 ```tool
-{"tool": "harness.execute", "input": {"executor": "discover-businesses", "params": {"niche": "hvac", "location": "Austin, TX", "limit": 20}}}
+{"tool": "harness.execute", "input": {"executor": "discover-businesses", "params": {"niche": "TYPE", "location": "LOCATION", "limit": 20}}}
 ```
 
-## "Send an email to [address]"
+---
 
-1. Confirm Gmail is connected (use `get_connected_accounts` if unsure)
+## "Send email to [address]"
+
+**Action:** 
+1. First verify Gmail is connected (if unsure)
 2. Call `send-gmail`
 
 ```tool
-{"tool": "harness.execute", "input": {"executor": "send-gmail", "params": {"to": "john@example.com", "subject": "Hello", "body": "Message here"}}}
+{"tool": "harness.execute", "input": {"executor": "send-gmail", "params": {"to": "ADDRESS", "subject": "SUBJECT", "body": "BODY"}}}
 ```
+
+---
+
+## Unknown Request
+
+If the user asks for something not covered:
+
+1. Check if a tool in SKILLS might help
+2. If no tool exists, say: "I don't have a tool for that yet."
+3. Do NOT invent tools or pretend you can do it
