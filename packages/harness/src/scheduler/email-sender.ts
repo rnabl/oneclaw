@@ -35,9 +35,9 @@ function getSupabaseClient() {
 
 // Configuration
 const DAILY_LIMIT_PER_SENDER = 50;
-const MIN_DELAY_SECONDS = 120; // 2 minutes
-const MAX_DELAY_SECONDS = 300; // 5 minutes
-const EMAILS_PER_TICK = 3; // Max emails to send per scheduler tick (every 60s)
+const MIN_DELAY_SECONDS = 120; // 2 minutes between emails
+const MAX_DELAY_SECONDS = 300; // 5 minutes max delay
+const POLL_INTERVAL_MS = 10000; // Check for new emails every 10 seconds when idle
 
 // Time window: 3 PM - 9 PM EST (20:00 - 02:00 UTC)
 const SEND_WINDOW_START_UTC = 20; // 3 PM EST = 8 PM UTC (during EST, not EDT)
@@ -58,9 +58,6 @@ let sessionStats = {
   lastReportTime: new Date(),
   sessionStart: new Date(),
 };
-
-// Track last send time to enforce delays
-let lastSendTime: Date | null = null;
 
 // Mutex to prevent concurrent queue processing
 let isProcessingQueue = false;
@@ -400,108 +397,125 @@ async function maybeReportProgress(): Promise<void> {
 }
 
 /**
- * Process email queue - called by scheduler heartbeat
+ * Process ONE email from the queue
  * 
- * This function:
- * 1. Checks if we're in the sending window (3 PM - 9 PM EST)
- * 2. Checks if enough time has passed since last send
- * 3. Gets next batch of approved emails
- * 4. Checks daily limits per sender
- * 5. Sends emails with appropriate delays
- * 6. Reports progress to Telegram every 30 min
+ * Simple approach: get ONE email, send it, done.
+ * No batching, no complexity - just one at a time.
+ */
+async function processOneEmail(): Promise<'sent' | 'failed' | 'skipped' | 'empty'> {
+  const supabase = getSupabaseClient();
+  if (!supabase) return 'empty';
+  
+  // Get ONE approved email
+  const emails = await getReadyEmails(1);
+  
+  if (emails.length === 0) {
+    return 'empty';
+  }
+  
+  const email = emails[0];
+  
+  // Check daily limit for this sender
+  const sentToday = await getSentTodayCount(email.sent_from_email);
+  if (sentToday >= DAILY_LIMIT_PER_SENDER) {
+    console.log(`[EmailSender] Daily limit reached for ${email.sent_from_email} (${sentToday}/${DAILY_LIMIT_PER_SENDER})`);
+    // Mark as limit_reached so we skip it next time
+    await supabase
+      .schema('crm')
+      .from('email_campaigns')
+      .update({ approval_status: 'daily_limit' })
+      .eq('id', email.id);
+    return 'skipped';
+  }
+  
+  // Send the email
+  const result = await sendEmail(email);
+  
+  if (result.success) {
+    await markEmailSent(email.id, result.messageId);
+    console.log(`[EmailSender] ✅ Sent to ${email.lead?.email} (${email.lead?.company_name})`);
+    sessionStats.sent++;
+    return 'sent';
+  } else {
+    await markEmailFailed(email.id, result.error || 'Unknown error');
+    console.log(`[EmailSender] ❌ Failed: ${email.lead?.email} - ${result.error}`);
+    sessionStats.failed++;
+    return 'failed';
+  }
+}
+
+/**
+ * Run continuous email sending loop
+ * 
+ * Simple flow:
+ * 1. Check if in sending window
+ * 2. Get one email
+ * 3. Send it
+ * 4. Wait 2-5 minutes
+ * 5. Repeat until done or window closes
+ */
+export async function runEmailLoop(): Promise<void> {
+  if (isProcessingQueue) {
+    console.log('[EmailSender] Loop already running');
+    return;
+  }
+  
+  isProcessingQueue = true;
+  console.log('[EmailSender] 🚀 Starting email sending loop');
+  
+  try {
+    while (true) {
+      // Check sending window
+      if (!isWithinSendingWindow()) {
+        console.log('[EmailSender] Outside sending window (3 PM - 9 PM EST), stopping');
+        break;
+      }
+      
+      // Report progress every 30 min
+      await maybeReportProgress();
+      
+      // Process one email
+      const result = await processOneEmail();
+      
+      if (result === 'empty') {
+        console.log('[EmailSender] Queue empty, checking again in 10 seconds...');
+        await new Promise(resolve => setTimeout(resolve, POLL_INTERVAL_MS));
+        continue;
+      }
+      
+      if (result === 'sent') {
+        // Wait 2-5 minutes before next send
+        const delaySeconds = MIN_DELAY_SECONDS + Math.random() * (MAX_DELAY_SECONDS - MIN_DELAY_SECONDS);
+        console.log(`[EmailSender] Waiting ${Math.round(delaySeconds)}s before next email...`);
+        await new Promise(resolve => setTimeout(resolve, delaySeconds * 1000));
+      } else {
+        // Failed or skipped - short delay then try next
+        await new Promise(resolve => setTimeout(resolve, 2000));
+      }
+    }
+  } finally {
+    isProcessingQueue = false;
+    console.log('[EmailSender] Email loop stopped');
+  }
+}
+
+/**
+ * Start the email sender (called by scheduler)
+ * 
+ * This kicks off the loop if we're in the sending window.
+ * The loop runs continuously until the window closes.
  */
 export async function processEmailQueue(): Promise<{ sent: number; skipped: number; failed: number }> {
   const stats = { sent: 0, skipped: 0, failed: 0 };
-  const now = new Date();
   
-  // Prevent concurrent processing (race condition fix)
-  if (isProcessingQueue) {
-    return stats;
-  }
-  isProcessingQueue = true;
-  
-  try {
-  // Check if we're within sending window (3 PM - 9 PM EST)
   if (!isWithinSendingWindow()) {
     return stats;
   }
   
-  // Send periodic Telegram updates
-  await maybeReportProgress();
-  
-  // Check minimum delay since last send
-  if (lastSendTime) {
-    const secondsSinceLastSend = (now.getTime() - lastSendTime.getTime()) / 1000;
-    if (secondsSinceLastSend < MIN_DELAY_SECONDS) {
-      // Not enough time passed
-      return stats;
-    }
-  }
-  
-  // Get emails ready to send
-  const emails = await getReadyEmails(EMAILS_PER_TICK);
-  
-  if (emails.length === 0) {
-    return stats;
-  }
-  
-  console.log(`[EmailSender] Processing ${emails.length} email(s)`);
-  
-  for (const email of emails) {
-    // Check daily limit for this sender
-    const sentToday = await getSentTodayCount(email.sent_from_email);
-    if (sentToday >= DAILY_LIMIT_PER_SENDER) {
-      console.log(`[EmailSender] Daily limit reached for ${email.sent_from_email} (${sentToday}/${DAILY_LIMIT_PER_SENDER})`);
-      stats.skipped++;
-      continue;
-    }
-    
-    // IMPORTANT: Mark as "processing" BEFORE sending to prevent race conditions
-    // This prevents duplicate sends if multiple scheduler ticks overlap
-    const supabase = getSupabaseClient();
-    if (supabase) {
-      const { error: lockError } = await supabase
-        .schema('crm')
-        .from('email_campaigns')
-        .update({ approval_status: 'sending' })
-        .eq('id', email.id)
-        .eq('approval_status', 'approved') // Only update if still approved (not already being sent)
-        .is('sent_at', null);
-      
-      if (lockError) {
-        console.log(`[EmailSender] Could not lock email ${email.id}, skipping (may be processed by another tick)`);
-        stats.skipped++;
-        continue;
-      }
-    }
-    
-    // Send the email
-    const result = await sendEmail(email);
-    
-    if (result.success) {
-      await markEmailSent(email.id, result.messageId);
-      console.log(`[EmailSender] ✅ Sent to ${email.lead?.email} (${email.lead?.company_name})`);
-      stats.sent++;
-      sessionStats.sent++;
-      lastSendTime = new Date();
-    } else {
-      await markEmailFailed(email.id, result.error || 'Unknown error');
-      console.log(`[EmailSender] ❌ Failed: ${email.lead?.email} - ${result.error}`);
-      stats.failed++;
-      sessionStats.failed++;
-    }
-    
-    // Add random delay between sends (within this batch)
-    if (emails.indexOf(email) < emails.length - 1) {
-      const delayMs = (MIN_DELAY_SECONDS + Math.random() * (MAX_DELAY_SECONDS - MIN_DELAY_SECONDS)) * 1000;
-      await new Promise(resolve => setTimeout(resolve, delayMs));
-    }
-  }
+  // Start loop in background (don't block)
+  runEmailLoop().catch(err => console.error('[EmailSender] Loop error:', err));
   
   return stats;
-  } finally {
-    isProcessingQueue = false;
-  }
 }
 
 /**
