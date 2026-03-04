@@ -80,7 +80,7 @@ export async function connectedAccountsHandler(
 
 // Register the tool
 registry.register({
-  id: 'integrations.connected_accounts',
+  id: 'get_connected_accounts',
   name: 'Get Connected Accounts',
   description: 'Check what accounts and integrations are connected (Gmail, etc). Use this to see if email sending is available.',
   category: 'integrations',

@@ -144,7 +144,7 @@ export async function campaignStatusHandler(
 
 // Register the tool
 registry.register({
-  id: 'email.campaign_status',
+  id: 'email_campaign_status',
   name: 'Get Email Campaign Status',
   description: 'Get statistics about email campaigns including sent counts, pending emails, and replies. Use this to answer questions about campaign progress.',
   category: 'email',
