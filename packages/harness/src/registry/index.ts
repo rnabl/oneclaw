@@ -193,6 +193,7 @@ import { INIT_DATABASE_TOOL } from '../tools/init-database';
 import { SUPABASE_DATABASE_TOOL } from '../tools/supabase-database';
 import { SUPABASE_STORAGE_TOOL } from '../tools/supabase-storage';
 import { CHECK_AI_RANKINGS_TOOL } from '../tools/check-ai-rankings';
+import { DISCOVER_HIRING_BUSINESSES_TOOL } from '../tools/discover-hiring-businesses';
 
 // Import actual tool implementations (with handlers)
 import {
@@ -214,6 +215,7 @@ registry.register(INIT_DATABASE_TOOL as any);
 registry.register(SUPABASE_DATABASE_TOOL as any);
 registry.register(SUPABASE_STORAGE_TOOL as any);
 registry.register(CHECK_AI_RANKINGS_TOOL as any);
+registry.register(DISCOVER_HIRING_BUSINESSES_TOOL as any);
 
 // =============================================================================
 // EXPORTS
