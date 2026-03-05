@@ -10,6 +10,10 @@ import './sdr-pipeline';
 import './sdr-volume-outreach';
 import './complete-sdr-discovery';
 import './generate-hiring-campaign';
+import './check-ai-rankings';
+import './match-ai-visibility';
+import './full-sdr-pipeline-geo';
+import './full-sdr-pipeline-hiring';
 
 // Import tools to register them
 import '../tools/send-gmail';
@@ -29,3 +33,7 @@ export { sdrPipelineHandler } from './sdr-pipeline';
 export { volumeOutreachHandler } from './sdr-volume-outreach';
 export { completeSDRDiscoveryHandler } from './complete-sdr-discovery';
 export { generateHiringCampaignHandler } from './generate-hiring-campaign';
+export { checkAIRankingsHandler } from './check-ai-rankings';
+export { matchAIVisibilityHandler } from './match-ai-visibility';
+export { fullSDRPipelineGeoHandler } from './full-sdr-pipeline-geo';
+export { fullSDRPipelineHiringHandler } from './full-sdr-pipeline-hiring';
