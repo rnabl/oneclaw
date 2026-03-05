@@ -971,7 +971,7 @@ async function executeStep(
   // Special handling for enrich action with businesses from previous step
   if (action === 'enrich' && resolvedParams?.businesses) {
     // Get businesses from database that were stored in previous discover step
-    const businesses = db.getBusinessesByJobId(jobId);
+    const businesses = db.getBusinessesByJob(jobId);
     
     if (!businesses || businesses.length === 0) {
       throw new Error('No businesses found to enrich');
