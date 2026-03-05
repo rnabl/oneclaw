@@ -87,6 +87,52 @@ app.get('/tools', (c) => {
   return c.json({ tools });
 });
 
+// =============================================================================
+// WORKFLOW REGISTRY (NEW - For LLM Discovery)
+// =============================================================================
+
+app.get('/workflows', (c) => {
+  const { WORKFLOW_REGISTRY, suggestWorkflows } = require('../workflows/registry');
+  
+  // Get query param for intent-based filtering
+  const intent = c.req.query('intent');
+  
+  let workflows = Object.values(WORKFLOW_REGISTRY);
+  
+  // Filter by intent if provided
+  if (intent) {
+    workflows = suggestWorkflows(intent);
+  }
+  
+  // Filter by category if provided
+  const category = c.req.query('category');
+  if (category) {
+    workflows = workflows.filter((w: any) => w.category === category);
+  }
+  
+  return c.json({ 
+    workflows,
+    count: workflows.length,
+    help: {
+      intent: 'Use ?intent=<query> to get workflow suggestions (e.g., ?intent=hiring)',
+      category: 'Use ?category=<type> to filter by category (discovery, enrichment, outreach, analysis)',
+    },
+  });
+});
+
+// Get specific workflow details
+app.get('/workflows/:id', (c) => {
+  const { WORKFLOW_REGISTRY } = require('../workflows/registry');
+  const workflowId = c.req.param('id');
+  const workflow = WORKFLOW_REGISTRY[workflowId];
+  
+  if (!workflow) {
+    return c.json({ error: 'Workflow not found' }, 404);
+  }
+  
+  return c.json({ workflow });
+});
+
 // Helper to convert Zod shape to simple JSON Schema
 function zodShapeToJsonSchema(shape: any): any {
   if (!shape) return {};
