@@ -885,6 +885,25 @@ async function executeJobAsync(jobId: string, db: any) {
       }
     }
 
+    // All steps completed successfully
+    db.updateJobStatus(jobId, 'completed');
+    db.addLog({
+      jobId,
+      level: 'info',
+      message: 'Job completed successfully',
+    });
+
+  } catch (error) {
+    // Job failed
+    db.updateJobStatus(jobId, 'failed', String(error));
+    db.addLog({
+      jobId,
+      level: 'error',
+      message: `Job failed: ${error}`,
+    });
+  }
+}
+
 /**
  * Resolve placeholder references in step params
  * e.g., "{{from_step_1}}" -> actual data from previous step
@@ -921,25 +940,6 @@ function resolveStepParams(params: any, previousResults: any[]): any {
   }
   
   return resolvePlaceholders(resolved);
-}
-
-    // All steps completed successfully
-    db.updateJobStatus(jobId, 'completed');
-    db.addLog({
-      jobId,
-      level: 'info',
-      message: 'Job completed successfully',
-    });
-
-  } catch (error) {
-    // Job failed
-    db.updateJobStatus(jobId, 'failed', String(error));
-    db.addLog({
-      jobId,
-      level: 'error',
-      message: `Job failed: ${error}`,
-    });
-  }
 }
 
 /**
