@@ -114,3 +114,36 @@ DISCORD_BOT_UPDATES.md
 
 .env.production
 .data/
+.data-backup/
+
+# Test/debugging scripts in root (keep packages/ untouched)
+/test-*.ts
+/check-*.ts
+/backfill-*.ts
+/fix-*.ts
+/setup-*.ts
+/generate-*.ts
+/refresh-*.ts
+/run-*.ts
+/force-*.ts
+/add-*.ts
+
+# Temporary SQL queries in root
+/*.sql
+
+# Internal strategy docs (keep only architecture docs)
+*_STRATEGY.md
+*_GUIDE.md
+*_DEPLOYMENT.md
+*_COMPLETE.md
+*_SUMMARY.md
+*_USAGE.md
+*_IMPLEMENTATION.md
+*_READY.md
+*_MANUAL.md
+*_SETUP.md
+
+# Keep these essential docs (whitelist)
+!README.md
+!ARCHITECTURE.md
+!THREE_PILLAR_ARCHITECTURE.md

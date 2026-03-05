@@ -101,6 +101,10 @@ export interface WebsiteScanResult {
   aiReadabilityScore: number;
   aiReadabilityFactors: string[];
   
+  // Business Description (NEW)
+  businessDescription?: string;
+  businessServices?: string[];
+  
   // Performance
   loadTimeMs?: number;
   
@@ -252,6 +256,44 @@ export async function scanWebsite(
     result.hasOpenGraph = $('meta[property^="og:"]').length > 0;
     result.hasTwitterCard = $('meta[name^="twitter:"]').length > 0;
     result.hasStructuredData = $('script[type="application/ld+json"]').length > 0;
+    
+    // Business Description Extraction (NEW)
+    // Try multiple sources in order of quality
+    let description = '';
+    let services: string[] = [];
+    
+    // 1. Try meta description first (usually best)
+    if (result.description && result.description.length > 20) {
+      description = result.description;
+    }
+    
+    // 2. Try H1 + first paragraph if meta is missing/short
+    if (!description || description.length < 30) {
+      const h1 = result.h1Text || '';
+      const firstP = $('p').first().text().trim();
+      description = h1 && firstP ? `${h1}. ${firstP}` : h1 || firstP || description;
+    }
+    
+    // 3. Extract services from common patterns
+    const serviceKeywords = ['service', 'offer', 'specializ', 'provide', 'expert'];
+    $('h2, h3, li, p').each((_, el) => {
+      const text = $(el).text().toLowerCase();
+      if (serviceKeywords.some(kw => text.includes(kw))) {
+        const service = $(el).text().trim();
+        if (service.length > 10 && service.length < 100 && !services.includes(service)) {
+          services.push(service);
+        }
+      }
+    });
+    
+    // Clean and truncate description
+    result.businessDescription = description
+      .replace(/\s+/g, ' ')
+      .replace(/[^\w\s.,!?-]/g, '')
+      .trim()
+      .slice(0, 500); // Max 500 chars
+    
+    result.businessServices = services.slice(0, 5); // Top 5 services
     
     // Check for sitemap and robots.txt (these require separate requests)
     try {

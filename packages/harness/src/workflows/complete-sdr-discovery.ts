@@ -15,7 +15,7 @@ import type { StepContext } from '../execution/runner';
 import { runner } from '../execution/runner';
 import { z } from 'zod';
 import { createClient } from '@supabase/supabase-js';
-// import { suggestWorkflows, WORKFLOW_REGISTRY } from './registry'; // TODO: Re-enable when file exists
+import { suggestWorkflows, WORKFLOW_REGISTRY } from './registry';
 
 const CompleteSDRDiscoveryInput = z.object({
   // Discovery method selection
