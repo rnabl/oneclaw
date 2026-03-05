@@ -7,12 +7,12 @@
  */
 
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import {
-  type LeadRecord,
-  type SourceType,
-  validateLeadRecord,
-  safeValidateLeadRecord,
-} from './lead-schemas';
+// import {
+//   type LeadRecord,
+//   type SourceType,
+//   validateLeadRecord,
+//   safeValidateLeadRecord,
+// } from './lead-schemas'; // TODO: Re-enable when file exists
 
 export interface BusinessRecord {
   name: string;
