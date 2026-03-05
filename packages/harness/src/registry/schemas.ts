@@ -258,7 +258,7 @@ export const AUDIT_TOOL: ToolDefinition = {
 export const DiscoveryToolInput = z.object({
   niche: z.string().min(1).describe('Business type or niche (e.g., "dentist", "roofing contractor")'),
   location: z.string().min(1).describe('Location string (e.g., "Austin, TX" or "Fort Worth, Texas")'),
-  limit: z.coerce.number().min(1).max(100).default(50).describe('Maximum number of results to return'),
+  limit: z.coerce.number().min(1).max(100).default(10).describe('Maximum number of results to return'),
 });
 export type DiscoveryToolInput = z.infer<typeof DiscoveryToolInput>;
 

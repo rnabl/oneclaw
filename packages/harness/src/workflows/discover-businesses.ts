@@ -14,7 +14,7 @@ import { createClient } from '@supabase/supabase-js';
 const BusinessDiscoveryInput = z.object({
   niche: z.string(),
   location: z.string(),
-  limit: z.coerce.number().default(100),
+  limit: z.coerce.number().default(10),
   enrich: z.coerce.boolean().default(true),
 });
 
