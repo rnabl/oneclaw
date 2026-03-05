@@ -827,6 +827,8 @@ async function executeJobAsync(jobId: string, db: any) {
     }
 
     // Execute each step in the plan
+    const stepResults: any[] = []; // Store results from previous steps
+    
     for (let i = 0; i < job.plan.length; i++) {
       const step = job.plan[i];
 
@@ -842,8 +844,11 @@ async function executeJobAsync(jobId: string, db: any) {
       });
 
       try {
-        // Execute the step based on action type
-        const result = await executeStep(step, db, jobId);
+        // Execute the step based on action type, passing previous results
+        const result = await executeStep(step, db, jobId, stepResults);
+        
+        // Store result for next steps
+        stepResults.push(result);
         
         // Update step as completed
         step.status = 'completed';
@@ -900,7 +905,7 @@ async function executeJobAsync(jobId: string, db: any) {
  * Execute a single job step
  * Maps step actions to actual workflow execution
  */
-async function executeStep(step: any, db: any, jobId: string) {
+async function executeStep(step: any, db: any, jobId: string, previousResults: any[] = []) {
   const { action, params } = step;
 
   // Map actions to workflow IDs
@@ -916,8 +921,61 @@ async function executeStep(step: any, db: any, jobId: string) {
     throw new Error(`Unknown action: ${action}`);
   }
 
-  // Execute via existing runner
-  const job = await runner.execute(workflowId, params, {
+  // Transform params based on action and previous results
+  let enrichedParams = { ...params };
+  
+  // If this is an enrich step and we have businesses from a previous discover step
+  if (action === 'enrich' && previousResults.length > 0) {
+    const previousResult = previousResults[previousResults.length - 1];
+    
+    // If previous step was discover and returned businesses
+    if (previousResult?.businesses && Array.isArray(previousResult.businesses)) {
+      // Get businesses from the database for this job
+      const businesses = db.getBusinessesByJobId(jobId);
+      
+      if (businesses && businesses.length > 0) {
+        // Enrich contacts for all discovered businesses
+        const enrichResults = [];
+        
+        for (const business of businesses) {
+          if (business.website) {
+            try {
+              const enrichJob = await runner.execute(workflowId, {
+                url: business.website,
+                businessName: business.name,
+                city: business.city,
+                state: business.state,
+              }, {
+                tenantId: 'autonomous-system',
+                tier: 'free',
+              });
+              
+              if (enrichJob.status === 'completed' && enrichJob.output) {
+                enrichResults.push({
+                  businessId: business.id,
+                  businessName: business.name,
+                  ...enrichJob.output,
+                });
+              }
+            } catch (error) {
+              // Log but continue with other businesses
+              db.addLog({
+                jobId,
+                level: 'warn',
+                message: `Failed to enrich ${business.name}: ${error}`,
+              });
+            }
+          }
+        }
+        
+        // Return aggregated results
+        return { contacts: enrichResults, businessCount: businesses.length };
+      }
+    }
+  }
+
+  // Execute via existing runner (for non-enrich or single-business workflows)
+  const job = await runner.execute(workflowId, enrichedParams, {
     tenantId: 'autonomous-system', // Special tenant for autonomous jobs
     tier: 'free',
   });
