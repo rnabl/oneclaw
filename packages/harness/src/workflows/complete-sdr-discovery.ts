@@ -15,13 +15,22 @@ import type { StepContext } from '../execution/runner';
 import { runner } from '../execution/runner';
 import { z } from 'zod';
 import { createClient } from '@supabase/supabase-js';
+import { suggestWorkflows, WORKFLOW_REGISTRY } from './registry';
 
 const CompleteSDRDiscoveryInput = z.object({
-  niche: z.string(),
+  // Discovery method selection
+  method: z.enum(['discover-businesses', 'discover-hiring-businesses', 'auto']).default('auto')
+    .describe('Which discovery workflow to use. "auto" = LLM selects based on intent'),
+  
+  // Discovery params
+  niche: z.string().optional().describe('Business niche (for Google Maps discovery)'),
+  keyword: z.string().optional().describe('Job title keyword (for hiring discovery)'),
   city: z.string(),
   state: z.string(),
   service: z.string().optional().describe('Specific service (e.g., "AC repair", "Botox")'),
   limit: z.number().default(100),
+  
+  // Analysis options
   runCMOAnalysis: z.boolean().default(false).describe('Run expensive CMO analysis ($0.05 each)'),
   checkAIRankings: z.boolean().default(true).describe('Check AI search visibility'),
 });
@@ -74,19 +83,58 @@ async function completeSDRDiscoveryHandler(
   
   const location = `${params.city}, ${params.state}`;
   
-  await ctx.log('info', `Starting complete SDR discovery: ${params.niche} in ${location}`);
+  await ctx.log('info', `Starting complete SDR discovery: ${params.niche || params.keyword} in ${location}`);
   
   // ==========================================================================
-  // STEP 1: Discover Businesses (includes website scan!)
+  // STEP 0: Select Discovery Method (if auto)
   // ==========================================================================
-  runner.updateStep(ctx.jobId, 1, 'Discovering and scanning businesses', 6);
+  let selectedMethod = params.method;
   
-  const discoveryJob = await runner.execute('discover-businesses', {
-    niche: params.niche,
+  if (selectedMethod === 'auto') {
+    await ctx.log('info', 'Auto-selecting discovery method based on params...');
+    
+    // Use hiring discovery if keyword provided
+    if (params.keyword) {
+      selectedMethod = 'discover-hiring-businesses';
+      await ctx.log('info', `Selected: Hiring-based discovery (keyword: "${params.keyword}")`);
+    } 
+    // Default to Google Maps if niche provided
+    else if (params.niche) {
+      selectedMethod = 'discover-businesses';
+      await ctx.log('info', `Selected: Geographic discovery (niche: "${params.niche}")`);
+    }
+    else {
+      throw new Error('Must provide either niche (for Google Maps) or keyword (for hiring discovery)');
+    }
+  }
+  
+  const methodMetadata = WORKFLOW_REGISTRY[selectedMethod];
+  if (methodMetadata) {
+    await ctx.log('info', `Using: ${methodMetadata.name}`);
+    await ctx.log('info', `Expected: ~${methodMetadata.benchmarks.avgLeadsFound} leads, $${methodMetadata.estimatedCostPer100.toFixed(2)} per 100`);
+  }
+  
+  // ==========================================================================
+  // STEP 1: Discover Businesses (using selected method)
+  // ==========================================================================
+  runner.updateStep(ctx.jobId, 1, `Discovering businesses via ${selectedMethod}`, 6);
+  
+  // Build method-specific params
+  const discoveryParams: Record<string, unknown> = {
     location,
     limit: params.limit,
-    enrich: true, // Enables website scanner
-  }, {
+    enrich: true, // Enable website scanner for both methods
+  };
+  
+  if (selectedMethod === 'discover-businesses') {
+    if (!params.niche) throw new Error('niche required for Google Maps discovery');
+    discoveryParams.niche = params.niche;
+  } else if (selectedMethod === 'discover-hiring-businesses') {
+    if (!params.keyword) throw new Error('keyword required for hiring discovery');
+    discoveryParams.keyword = params.keyword;
+  }
+  
+  const discoveryJob = await runner.execute(selectedMethod, discoveryParams, {
     tenantId: ctx.tenantId,
     tier: 'pro',
   });

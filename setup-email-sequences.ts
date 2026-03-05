@@ -16,14 +16,19 @@ const supabaseUrl = process.env.SUPABASE_URL!;
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-// Sender rotation
+// Sender rotation (add more to scale: 6 senders = 300 emails/day)
 const SENDERS = [
   { email: 'riley@closelanepro.com', name: 'Riley' },
   { email: 'bailey@closelanepro.com', name: 'Bailey' },
   { email: 'madison@closelanepro.com', name: 'Madison' },
+  // Add more senders below (make sure to connect Gmail OAuth first at /gmail/senders):
+  // { email: 'alex@closelanepro.com', name: 'Alex' },
+  // { email: 'jordan@closelanepro.com', name: 'Jordan' },
+  // { email: 'taylor@closelanepro.com', name: 'Taylor' },
 ];
 
 // Template variants for Touch 1 (curiosity/question-based)
+// NOTE: Name on its own line, no dash, minimal signature
 const TEMPLATES = {
   'curiosity-hook': {
     getSubject: (vars: EmailVars) => 
@@ -38,7 +43,7 @@ Wasn't sure if I should reach out to you or someone else at ${vars.businessName}
 
 Want me to show you what it takes to get listed?
 
-- ${sender}`;
+${sender}`;
     }
   },
   
@@ -52,7 +57,7 @@ Searched "${vars.service} ${vars.city}" in ChatGPT. ${vars.businessName} didn't 
 
 Want me to show you how to fix that?
 
-- ${sender}`;
+${sender}`;
     }
   },
   
@@ -72,7 +77,7 @@ I've been looking at how AI tools like ChatGPT recommend local businesses, and I
 
 A few other ${vars.city} HVAC companies have started optimizing for this. It's still early, so there's an opportunity to get ahead. Want me to show you how it works?
 
-- ${sender}`;
+${sender}`;
     }
   },
   
@@ -86,7 +91,7 @@ When someone asks ChatGPT "best HVAC company in ${vars.city}", your name doesn't
 
 The fix isn't complicated, but most businesses don't know it exists yet. Want me to show you what needs to change?
 
-- ${sender}`;
+${sender}`;
     }
   },
 };

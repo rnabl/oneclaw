@@ -23,9 +23,9 @@ const MIN_DELAY_SECONDS = 60;  // 1 minute minimum between emails (was 120)
 const MAX_DELAY_SECONDS = 180; // 3 minutes maximum between emails (was 360)
 const POLL_INTERVAL_MS = 10000; // Check for new emails every 10 seconds when idle
 
-// Time window: 1 PM - 7 PM EST (18:00 - 00:00 UTC)
+// Time window: 1 PM - 9 PM EST (18:00 - 02:00 UTC)
 const SEND_WINDOW_START_UTC = 18; // 1 PM EST = 6 PM UTC (during EST, not EDT)
-const SEND_WINDOW_END_UTC = 0;    // 7 PM EST = 12 AM UTC (midnight)
+const SEND_WINDOW_END_UTC = 2;    // 9 PM EST = 2 AM UTC next day
 
 // Telegram config - read at runtime, not module load
 function getTelegramConfig() {
@@ -449,7 +449,7 @@ export async function runEmailLoop(): Promise<void> {
     while (true) {
       // Check sending window
       if (!isWithinSendingWindow()) {
-        console.log('[EmailSender] Outside sending window (1 PM - 7 PM EST), stopping');
+        console.log('[EmailSender] Outside sending window (1 PM - 9 PM EST), stopping');
         break;
       }
       
@@ -514,7 +514,7 @@ export async function notifySessionStart(): Promise<void> {
   
   const message = `🚀 <b>Email Campaign Started</b>
 
-⏰ Sending window: 1 PM - 7 PM EST
+⏰ Sending window: 1 PM - 9 PM EST
 📬 Emails ready to send: ${stats.approved}
 👥 Using 3 senders (50/day each = 150 max)
 

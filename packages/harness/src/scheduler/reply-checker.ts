@@ -113,7 +113,7 @@ async function getSentCampaignsWithThreads(): Promise<SentCampaign[]> {
       sent_from_email,
       sent_at,
       reply_detected_at,
-      lead:leads(email, company_name, contact_name)
+      lead:leads(email, company_name, contact_data)
     `)
     .not('gmail_thread_id', 'is', null)
     .not('sent_at', 'is', null)
@@ -127,10 +127,17 @@ async function getSentCampaignsWithThreads(): Promise<SentCampaign[]> {
     return [];
   }
   
-  return (data || []).map(d => ({
-    ...d,
-    lead: Array.isArray(d.lead) ? d.lead[0] : d.lead,
-  })) as SentCampaign[];
+  return (data || []).map(d => {
+    const lead = Array.isArray(d.lead) ? d.lead[0] : d.lead;
+    return {
+      ...d,
+      lead: lead ? {
+        email: lead.email,
+        company_name: lead.company_name,
+        contact_name: lead.contact_data?.owner_name || null,
+      } : null,
+    };
+  }) as SentCampaign[];
 }
 
 /**

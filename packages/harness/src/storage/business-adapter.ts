@@ -3,9 +3,16 @@
  * 
  * Modular/agnostic storage for discovered businesses.
  * Can save to different destinations based on configuration.
+ * Now with Zod validation for type safety.
  */
 
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import {
+  type LeadRecord,
+  type SourceType,
+  validateLeadRecord,
+  safeValidateLeadRecord,
+} from './lead-schemas';
 
 export interface BusinessRecord {
   name: string;
@@ -27,10 +34,16 @@ export interface BusinessRecord {
   geoReadinessScore?: number;
   aeoReadinessScore?: number;
   sourceJobId?: string;
+  // NEW: Agnostic fields
+  sourceType?: SourceType;
+  sourceMetadata?: Record<string, any>;
+  hiringSignal?: Record<string, any>; // Backward compat
+  businessType?: string;
+  businessTypeConfidence?: number;
 }
 
 export interface StorageAdapter {
-  store(businesses: BusinessRecord[]): Promise<{ success: boolean; count: number; error?: string }>;
+  store(businesses: BusinessRecord[]): Promise<{ success: boolean; count: number; error?: string; skipped?: number }>;
   query(filters: Record<string, any>): Promise<{ success: boolean; businesses: BusinessRecord[]; error?: string }>;
 }
 
@@ -49,28 +62,81 @@ export class SupabaseCRMAdapter implements StorageAdapter {
 
   async store(businesses: BusinessRecord[]) {
     try {
-      const records = businesses.map(b => ({
-        company_name: b.name,
-        website: b.website,
-        phone: b.phone,
-        email: b.email,
-        industry: b.industry,
-        address: b.address,
-        city: b.city,
-        state: b.state,
-        zip_code: b.zipCode,
-        google_place_id: b.googlePlaceId,
-        google_rating: b.rating,
-        google_reviews: b.reviewCount,
-        google_maps_url: b.googleMapsUrl,
-        image_url: b.imageUrl,
-        website_signals: b.signals || {},
-        lead_score: b.leadScore || 50,
-        geo_readiness_score: b.geoReadinessScore || 5.0,
-        aeo_readiness_score: b.aeoReadinessScore || 5.0,
-        stage: 'discovered',
-        source_job_id: b.sourceJobId,
-      }));
+      // Validate records with Zod
+      const validatedRecords: BusinessRecord[] = [];
+      const skipped: string[] = [];
+      
+      for (const business of businesses) {
+        const validation = safeValidateLeadRecord(business);
+        if (validation.success) {
+          validatedRecords.push(business);
+        } else {
+          console.warn(`[Storage] Skipping invalid record: ${business.name}`, validation.error.errors);
+          skipped.push(business.name);
+        }
+      }
+      
+      if (validatedRecords.length === 0) {
+        return {
+          success: false,
+          count: 0,
+          skipped: skipped.length,
+          error: 'All records failed validation',
+        };
+      }
+      
+      // Build source_metadata from various fields
+      const records = validatedRecords.map(b => {
+        const sourceMetadata: Record<string, any> = { ...(b.sourceMetadata || {}) };
+        
+        // For job posting leads, merge hiring data into source_metadata
+        if (b.sourceType === 'job_posting' || b.hiringSignal) {
+          sourceMetadata.hiring_signal = b.hiringSignal || {
+            is_hiring: true,
+            total_postings: b.signals?.totalJobPostings || 1,
+            roles: b.signals?.hiringRoles || [],
+            intensity: b.signals?.hiringIntensity || 'low',
+            most_recent_days: b.signals?.mostRecentJobDays || 0,
+          };
+          
+          if (b.businessType) {
+            sourceMetadata.business_type = b.businessType;
+            sourceMetadata.business_type_confidence = b.businessTypeConfidence;
+          }
+        }
+        
+        // For geographic leads, store Google data
+        if (b.sourceType === 'geographic' || b.googlePlaceId) {
+          sourceMetadata.discovery_method = 'google_maps';
+          if (b.googlePlaceId) sourceMetadata.googlePlaceId = b.googlePlaceId;
+          if (b.googleMapsUrl) sourceMetadata.googleMapsUrl = b.googleMapsUrl;
+        }
+        
+        return {
+          company_name: b.name,
+          website: b.website,
+          phone: b.phone,
+          email: b.email,
+          industry: b.industry,
+          address: b.address,
+          city: b.city,
+          state: b.state,
+          zip_code: b.zipCode,
+          google_place_id: b.googlePlaceId,
+          google_rating: b.rating,
+          google_reviews: b.reviewCount,
+          google_maps_url: b.googleMapsUrl,
+          image_url: b.imageUrl,
+          website_signals: b.signals || {},
+          lead_score: b.leadScore || 50,
+          geo_readiness_score: b.geoReadinessScore || 5.0,
+          aeo_readiness_score: b.aeoReadinessScore || 5.0,
+          stage: 'discovered',
+          source_job_id: b.sourceJobId,
+          source_type: b.sourceType || 'geographic',
+          source_metadata: sourceMetadata,
+        };
+      });
 
       const { data, error } = await this.client
         .schema('crm')
@@ -79,10 +145,19 @@ export class SupabaseCRMAdapter implements StorageAdapter {
         .select('id');
 
       if (error) {
-        return { success: false, count: 0, error: error.message };
+        return {
+          success: false,
+          count: 0,
+          skipped: skipped.length,
+          error: error.message,
+        };
       }
 
-      return { success: true, count: data?.length || 0 };
+      return {
+        success: true,
+        count: data?.length || 0,
+        skipped: skipped.length,
+      };
     } catch (error) {
       return {
         success: false,
@@ -101,6 +176,7 @@ export class SupabaseCRMAdapter implements StorageAdapter {
       if (filters.state) query = query.eq('state', filters.state);
       if (filters.minScore) query = query.gte('lead_score', filters.minScore);
       if (filters.stage) query = query.eq('stage', filters.stage);
+      if (filters.sourceType) query = query.eq('source_type', filters.sourceType);
 
       const { data, error } = await query.limit(filters.limit || 100);
 
@@ -128,6 +204,8 @@ export class SupabaseCRMAdapter implements StorageAdapter {
         geoReadinessScore: row.geo_readiness_score,
         aeoReadinessScore: row.aeo_readiness_score,
         sourceJobId: row.source_job_id,
+        sourceType: row.source_type,
+        sourceMetadata: row.source_metadata,
       }));
 
       return { success: true, businesses };

@@ -1,10 +1,12 @@
 /**
- * PM2 Ecosystem Config
+ * PM2 Ecosystem Config - FIXED FOR PERSISTENCE
  * 
  * PORTS ARE HARDCODED IN CODE - NOT HERE
  * - Harness: 8787 (packages/harness/src/server.ts)
  * - Daemon:  9000 (oneclaw-node/src/ports.rs)
  * - API:     3000 (apps/api/src/index.ts)
+ * 
+ * PERSISTENCE: Unlimited restarts + auto-start on boot
  */
 module.exports = {
   apps: [
@@ -17,10 +19,22 @@ module.exports = {
       env: {
         NODE_ENV: 'production',
       },
-      wait_ready: false,
+      
+      // PERSISTENCE SETTINGS
+      autorestart: true,           // Always restart on crash
+      max_restarts: 999999,        // Unlimited restarts (was: 10)
+      min_uptime: '10s',           // Must stay up 10s to be "stable"
+      max_memory_restart: '1G',    // Restart if memory exceeds 1GB
+      restart_delay: 2000,         // Wait 2s between restarts
+      
+      // ERROR HANDLING
+      error_file: '/opt/oneclaw/logs/harness-error.log',
+      out_file: '/opt/oneclaw/logs/harness-out.log',
+      merge_logs: true,
+      
+      // GRACEFUL SHUTDOWN
       kill_timeout: 5000,
-      restart_delay: 2000,
-      max_restarts: 10,
+      wait_ready: false,
     },
     {
       name: 'daemon',
@@ -30,8 +44,9 @@ module.exports = {
       env: {
         NODE_ENV: 'production',
       },
+      autorestart: true,
+      max_restarts: 999999,
       restart_delay: 5000,
-      max_restarts: 10,
       kill_timeout: 5000,
     },
     {
@@ -42,10 +57,10 @@ module.exports = {
       env: {
         NODE_ENV: 'production',
       },
-      wait_ready: false,
-      kill_timeout: 5000,
+      autorestart: true,
+      max_restarts: 999999,
       restart_delay: 2000,
-      max_restarts: 10,
+      kill_timeout: 5000,
     },
   ],
 };

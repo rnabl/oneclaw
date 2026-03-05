@@ -83,13 +83,13 @@ export class SchedulerHeartbeat {
   }
   
   /**
-   * Check if we're in the sending window (3 PM - 9 PM EST)
+   * Check if we're in the sending window (1 PM - 9 PM EST)
    */
   private isInSendingWindow(): boolean {
     const now = new Date();
     const utcHour = now.getUTCHours();
-    // Window: 7 PM UTC (19:00) to 2 AM UTC (covers both EST and EDT)
-    return utcHour >= 19 || utcHour < 2;
+    // Window: 6 PM UTC (18:00) to 2 AM UTC next day (covers both EST and EDT)
+    return utcHour >= 18 || utcHour < 2;
   }
   
   /**
@@ -99,7 +99,7 @@ export class SchedulerHeartbeat {
     // Check for sending window transitions and notify
     const inWindow = this.isInSendingWindow();
     if (inWindow && !wasInSendingWindow) {
-      console.log('[Scheduler] 📧 Entering email sending window (3 PM - 9 PM EST)');
+      console.log('[Scheduler] 📧 Entering email sending window (1 PM - 9 PM EST)');
       await notifySessionStart();
     } else if (!inWindow && wasInSendingWindow) {
       console.log('[Scheduler] 🛑 Leaving email sending window');
