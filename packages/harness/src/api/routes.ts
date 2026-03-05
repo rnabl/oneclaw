@@ -998,7 +998,7 @@ async function executeStep(
           state: business.state,
         }, {
           tenantId: 'autonomous-system',
-          tier: 'free',
+          tier: 'pro', // Allow expensive operations for autonomous jobs
         });
         
         if (enrichJob.status === 'completed' && enrichJob.output) {
@@ -1041,7 +1041,7 @@ async function executeStep(
   // Execute via existing runner (for standard single-execution workflows)
   const job = await runner.execute(workflowId, resolvedParams, {
     tenantId: 'autonomous-system',
-    tier: 'free',
+    tier: 'pro', // Allow expensive operations for autonomous jobs
   });
 
   if (job.status === 'completed') {
