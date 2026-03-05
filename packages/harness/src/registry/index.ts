@@ -194,6 +194,9 @@ import { SUPABASE_DATABASE_TOOL } from '../tools/supabase-database';
 import { SUPABASE_STORAGE_TOOL } from '../tools/supabase-storage';
 import { CHECK_AI_RANKINGS_TOOL } from '../tools/check-ai-rankings';
 import { DISCOVER_HIRING_BUSINESSES_TOOL } from '../tools/discover-hiring-businesses';
+import { FULL_SDR_PIPELINE_GEO_TOOL } from '../tools/full-sdr-pipeline-geo';
+import { FULL_SDR_PIPELINE_HIRING_TOOL } from '../tools/full-sdr-pipeline-hiring';
+import { MATCH_AI_VISIBILITY_TOOL } from '../tools/match-ai-visibility';
 
 // Import actual tool implementations (with handlers)
 import {
@@ -216,6 +219,9 @@ registry.register(SUPABASE_DATABASE_TOOL as any);
 registry.register(SUPABASE_STORAGE_TOOL as any);
 registry.register(CHECK_AI_RANKINGS_TOOL as any);
 registry.register(DISCOVER_HIRING_BUSINESSES_TOOL as any);
+registry.register(FULL_SDR_PIPELINE_GEO_TOOL as any);
+registry.register(FULL_SDR_PIPELINE_HIRING_TOOL as any);
+registry.register(MATCH_AI_VISIBILITY_TOOL as any);
 
 // =============================================================================
 // EXPORTS
