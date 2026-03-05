@@ -131,6 +131,18 @@ DISCORD_BOT_UPDATES.md
 # Temporary SQL queries in root
 /*.sql
 
+# Logs
+logs/
+*.log
+
+# Screenshots and debug images  
+*.png
+*.jpg
+*.jpeg
+*.gif
+assets/*.png
+assets/*.jpg
+
 # Internal strategy docs (keep only architecture docs)
 *_STRATEGY.md
 *_GUIDE.md
