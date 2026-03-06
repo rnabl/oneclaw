@@ -456,20 +456,7 @@ export async function generateSignalCampaign(
   }
 }
 
-// Register workflow
-import { registry } from './registry';
-
-// Only register if registry is available (not in standalone scripts)
-if (registry && typeof registry.registerWorkflow === 'function') {
-  registry.registerWorkflow({
-    name: 'generate-signal-campaign',
-    description: 'Generate signal-based personalized email campaigns with proper signal detection and variation',
-    inputSchema: GenerateSignalCampaignInput,
-    outputSchema: GenerateSignalCampaignOutput,
-    handler: generateSignalCampaign,
-  });
-}
-
+// Export workflow for registration
 export const generateSignalCampaignWorkflow = {
   name: 'generate-signal-campaign',
   description: 'Generate signal-based personalized email campaigns',
