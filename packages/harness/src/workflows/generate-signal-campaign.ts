@@ -299,7 +299,7 @@ Hi [Name],
 
 [CTA?]
 
-Ryan
+Riley
 
 OUTPUT FORMAT
 
@@ -325,12 +325,12 @@ Email: [email body with line breaks as shown above]`;
     .replace(/^["'\s]+|["'\s]+$/g, '') // Remove leading/trailing quotes/spaces (but not newlines in middle)
     .trim();
   
-  // Ensure signature is on its own line
-  body = body.replace(/\s*-?\s*(Riley|Ryan)\s*$/i, '\n\nRyan');
+  // Ensure signature is on its own line (keep whatever name was used)
+  body = body.replace(/\s*-?\s*(Riley|Ryan|Alex|Jordan)\s*$/i, (match, name) => `\n\n${name}`);
   
-  // If no signature, add it
-  if (!body.includes('Riley') && !body.includes('Ryan')) {
-    body = `${body}\n\nRyan`;
+  // If no signature, add Riley (default sender)
+  if (!body.match(/(Riley|Ryan|Alex|Jordan)\s*$/i)) {
+    body = `${body}\n\nRiley`;
   }
 
   await ctx.log('info', `Generated email: "${subject}"`);
