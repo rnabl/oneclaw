@@ -141,6 +141,83 @@ async function getSentCampaignsWithThreads(): Promise<SentCampaign[]> {
 }
 
 /**
+ * Check if a message is a bounce/automated response
+ */
+function isBounceOrAutomated(fromHeader: string, subject: string, body: string, snippet: string): boolean {
+  const from = fromHeader.toLowerCase();
+  const subjectLower = subject.toLowerCase();
+  const bodyLower = body.toLowerCase();
+  const snippetLower = snippet.toLowerCase();
+  
+  // Check sender patterns
+  const bouncePatterns = [
+    'mailer-daemon',
+    'postmaster',
+    'no-reply',
+    'noreply',
+    'do-not-reply',
+    'bounce',
+    'undeliverable',
+    'mail delivery',
+    'delivery status notification',
+    'automatic reply',
+    'auto-reply',
+    'out of office',
+    'out-of-office',
+  ];
+  
+  for (const pattern of bouncePatterns) {
+    if (from.includes(pattern)) {
+      return true;
+    }
+  }
+  
+  // Check subject patterns
+  const bounceSubjects = [
+    'undeliverable',
+    'delivery failed',
+    'failure notice',
+    'returned mail',
+    'delivery status notification',
+    'mail delivery failed',
+    'address not found',
+    'domain not found',
+    'user unknown',
+    'out of office',
+    'automatic reply',
+    'auto-reply',
+  ];
+  
+  for (const pattern of bounceSubjects) {
+    if (subjectLower.includes(pattern)) {
+      return true;
+    }
+  }
+  
+  // Check body/snippet patterns
+  const bounceBodyPatterns = [
+    'address not found',
+    'domain not found',
+    'does not exist',
+    'user unknown',
+    'mailbox unavailable',
+    'recipient address rejected',
+    'delivery has failed',
+    'message could not be delivered',
+    'permanent error',
+    'mail system error',
+  ];
+  
+  for (const pattern of bounceBodyPatterns) {
+    if (bodyLower.includes(pattern) || snippetLower.includes(pattern)) {
+      return true;
+    }
+  }
+  
+  return false;
+}
+
+/**
  * Check a single thread for replies
  */
 async function checkThreadForReply(
@@ -175,6 +252,7 @@ async function checkThreadForReply(
       const headers = msg.payload?.headers || [];
       const fromHeader = headers.find(h => h.name?.toLowerCase() === 'from')?.value || '';
       const fromEmail = fromHeader.match(/<(.+)>/)?.[1] || fromHeader;
+      const subjectHeader = headers.find(h => h.name?.toLowerCase() === 'subject')?.value || '';
       
       // Skip our own messages
       if (fromEmail.toLowerCase().includes(myEmail)) {
@@ -183,6 +261,13 @@ async function checkThreadForReply(
       
       // Skip if this is our original sent message
       if (msg.id === campaign.gmail_message_id) {
+        continue;
+      }
+      
+      // Skip bounces and automated responses
+      const snippet = msg.snippet || '';
+      if (isBounceOrAutomated(fromHeader, subjectHeader, '', snippet)) {
+        console.log(`[ReplyChecker] Skipping bounce/automated response from ${fromEmail}`);
         continue;
       }
       
@@ -210,6 +295,12 @@ async function checkThreadForReply(
       let body = getBody(fullMessage.data.payload);
       if (!body && fullMessage.data.snippet) {
         body = fullMessage.data.snippet;
+      }
+      
+      // Double-check body for bounce patterns
+      if (isBounceOrAutomated(fromHeader, subjectHeader, body, snippet)) {
+        console.log(`[ReplyChecker] Skipping bounce/automated response after body check from ${fromEmail}`);
+        continue;
       }
       
       const dateHeader = headers.find(h => h.name?.toLowerCase() === 'date')?.value;
