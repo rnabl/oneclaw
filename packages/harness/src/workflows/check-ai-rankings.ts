@@ -9,6 +9,7 @@
 
 import type { StepContext } from '../execution/runner';
 import { runner } from '../execution/runner';
+import { registry } from '../registry';
 import { z } from 'zod';
 
 const CheckAIRankingsInput = z.object({
