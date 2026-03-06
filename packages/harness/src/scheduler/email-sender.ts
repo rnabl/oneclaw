@@ -288,10 +288,15 @@ async function sendEmail(campaign: EmailCampaign): Promise<{ success: boolean; m
     // Get sender display name
     const senderName = senderUser.charAt(0).toUpperCase() + senderUser.slice(1);
     
+    // Update signature in body to match sender
+    let emailBody = campaign.body;
+    // Replace any existing signature (Riley, Ryan, Madison, Bailey, Alex, Jordan) with the actual sender name
+    emailBody = emailBody.replace(/\n\n(Riley|Ryan|Madison|Bailey|Alex|Jordan)\s*$/i, `\n\n${senderName}`);
+    
     const result = await gmailClient.sendEmailWithToken(accessToken, {
       to: campaign.lead.email,
       subject: campaign.subject,
-      body: campaign.body,
+      body: emailBody,
       fromName: senderName,
     });
     
