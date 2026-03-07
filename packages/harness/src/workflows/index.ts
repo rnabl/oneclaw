@@ -21,6 +21,7 @@ import '../tools/send-gmail';
 import '../tools/check-citations';
 import '../tools/check-citations-free';
 import '../tools/campaign-status';
+import '../tools/audit-bounces';
 import '../tools/connected-accounts';
 
 export { auditWorkflowHandler } from './audit';

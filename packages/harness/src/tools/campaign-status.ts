@@ -85,12 +85,12 @@ export async function campaignStatusHandler(
       .eq('approval_status', 'approved')
       .is('sent_at', null);
     
-    // Count failed
+    // Count failed (rejected emails - bounces and send failures)
     const { count: failed } = await supabase
       .schema('crm')
       .from('email_campaigns')
       .select('*', { count: 'exact', head: true })
-      .eq('approval_status', 'failed');
+      .eq('approval_status', 'rejected');
     
     const stats: CampaignStatusOutput['stats'] = {
       sentToday: sentToday || 0,

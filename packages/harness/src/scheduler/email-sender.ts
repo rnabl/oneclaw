@@ -137,19 +137,20 @@ async function getReadyEmails(limit: number): Promise<EmailCampaign[]> {
 /**
  * Mark an email as sent
  */
-async function markEmailSent(emailId: string, gmailMessageId?: string): Promise<boolean> {
+async function markEmailSent(emailId: string, gmailMessageId?: string, gmailThreadId?: string): Promise<boolean> {
   const supabase = getSupabaseClient();
   if (!supabase) return false;
-  
+
   const { error } = await supabase
     .schema('crm')
     .from('email_campaigns')
     .update({
       sent_at: new Date().toISOString(),
       gmail_message_id: gmailMessageId,
+      gmail_thread_id: gmailThreadId || null,
     })
     .eq('id', emailId);
-  
+
   return !error;
 }
 
@@ -201,7 +202,7 @@ async function refreshAccessToken(refreshToken: string): Promise<{ access_token:
 /**
  * Send a single email via Gmail API
  */
-async function sendEmail(campaign: EmailCampaign): Promise<{ success: boolean; messageId?: string; error?: string }> {
+async function sendEmail(campaign: EmailCampaign): Promise<{ success: boolean; messageId?: string; threadId?: string; error?: string }> {
   if (!campaign.lead?.email) {
     return { success: false, error: 'No recipient email' };
   }
@@ -300,7 +301,7 @@ async function sendEmail(campaign: EmailCampaign): Promise<{ success: boolean; m
       fromName: senderName,
     });
     
-    return { success: true, messageId: result.id };
+    return { success: true, messageId: result.id, threadId: result.threadId };
     
   } catch (error) {
     return { success: false, error: String(error) };
@@ -419,7 +420,7 @@ async function processOneEmail(): Promise<'sent' | 'failed' | 'skipped' | 'empty
   const result = await sendEmail(email);
   
   if (result.success) {
-    await markEmailSent(email.id, result.messageId);
+    await markEmailSent(email.id, result.messageId, result.threadId);
     console.log(`[EmailSender] ✅ Sent to ${email.lead?.email} (${email.lead?.company_name})`);
     sessionStats.sent++;
     return 'sent';

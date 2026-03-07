@@ -267,7 +267,8 @@ async function checkThreadForReply(
       // Skip bounces and automated responses
       const snippet = msg.snippet || '';
       if (isBounceOrAutomated(fromHeader, subjectHeader, '', snippet)) {
-        console.log(`[ReplyChecker] Skipping bounce/automated response from ${fromEmail}`);
+        console.log(`[ReplyChecker] ⚠️ BOUNCE detected for campaign ${campaign.id} - ${campaign.lead?.company_name}`);
+        await markBounceDetected(campaign.id, snippet);
         continue;
       }
       
@@ -299,7 +300,8 @@ async function checkThreadForReply(
       
       // Double-check body for bounce patterns
       if (isBounceOrAutomated(fromHeader, subjectHeader, body, snippet)) {
-        console.log(`[ReplyChecker] Skipping bounce/automated response after body check from ${fromEmail}`);
+        console.log(`[ReplyChecker] ⚠️ BOUNCE detected (body check) for campaign ${campaign.id} - ${campaign.lead?.company_name}`);
+        await markBounceDetected(campaign.id, snippet || body.substring(0, 200));
         continue;
       }
       
@@ -336,6 +338,23 @@ async function markReplyDetected(campaignId: string, replySnippet: string): Prom
     .update({
       reply_detected_at: new Date().toISOString(),
       reply_snippet: replySnippet.substring(0, 500), // Store first 500 chars
+    })
+    .eq('id', campaignId);
+}
+
+/**
+ * Mark a campaign as bounced
+ */
+async function markBounceDetected(campaignId: string, bounceSnippet: string): Promise<void> {
+  const supabase = getSupabaseClient();
+  if (!supabase) return;
+  
+  await supabase
+    .schema('crm')
+    .from('email_campaigns')
+    .update({
+      approval_status: 'rejected',
+      rejection_reason: `Bounced: ${bounceSnippet.substring(0, 200)}`,
     })
     .eq('id', campaignId);
 }
