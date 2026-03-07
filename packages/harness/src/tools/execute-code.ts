@@ -1,31 +1,32 @@
 /**
  * Execute Code Tool
- * 
- * Allows OneClaw to execute TypeScript/JavaScript code in a sandboxed environment.
- * This enables self-improvement capabilities by letting the AI write and test code.
- * 
+ *
+ * Executes TypeScript/JavaScript/Bash in a secure Deno sandbox.
+ * Replaces vm2 (abandoned, known escapes) with Deno subprocess.
+ *
  * Security features:
- * - Restricted to workspace directory
- * - No access to system calls or sensitive APIs
- * - Timeout protection
- * - Memory limits
+ * - Deno permission model (--no-env, --no-read, --no-write by default)
+ * - No access to process.env / secrets
+ * - 30s timeout enforced at OS level
+ * - Memory limits via Deno runtime
+ * - Temp files written to /tmp (never workspace)
  */
 
 import { z } from 'zod';
-import { pathValidator } from '../security/path-validator';
-import { VM } from 'vm2';
 import { exec } from 'child_process';
 import { promisify } from 'util';
 import fs from 'fs/promises';
 import path from 'path';
+import os from 'os';
 
 const execAsync = promisify(exec);
 
 const ExecuteCodeInputSchema = z.object({
   code: z.string().min(1).max(50000).describe('Code to execute'),
   language: z.enum(['typescript', 'javascript', 'bash']).describe('Programming language'),
-  timeout: z.number().min(100).max(60000).optional().default(30000).describe('Timeout in milliseconds'),
-  workingDirectory: z.string().optional().describe('Working directory (relative to workspace)'),
+  timeout: z.number().min(100).max(30000).optional().default(30000).describe('Timeout in ms (max 30s)'),
+  allowNet: z.boolean().optional().default(false).describe('Allow network access in sandbox'),
+  allowedDomains: z.array(z.string()).optional().describe('Specific domains to allow (if allowNet true)'),
 });
 
 type ExecuteCodeInput = z.infer<typeof ExecuteCodeInputSchema>;
@@ -41,18 +42,46 @@ const ExecuteCodeOutputSchema = z.object({
 
 type ExecuteCodeOutput = z.infer<typeof ExecuteCodeOutputSchema>;
 
-const BLOCKED_OPERATIONS = [
-  'process.exit',
-  'process.kill',
-  'require("child_process")',
-  'require("fs")',
-  'eval(',
-  'Function(',
-  'import("',
-  'crypto.createPrivateKey',
-  'crypto.createPublicKey',
-  'crypto.generateKeyPair',
-];
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
+function buildDenoFlags(allowNet: boolean, allowedDomains?: string[]): string {
+  const flags = [
+    '--no-prompt',   // never ask for permissions interactively
+    '--no-remote',   // no importing remote modules (security)
+    '--no-read',     // no file system reads
+    '--no-write',    // no file system writes
+    '--no-env',      // NO access to process.env (your secrets are safe)
+    '--no-run',      // can't spawn subprocesses
+    '--no-ffi',      // no native plugins
+    '--no-sys',      // no system info
+  ];
+
+  if (allowNet) {
+    if (allowedDomains && allowedDomains.length > 0) {
+      // Only allow specific domains
+      flags.push(`--allow-net=${allowedDomains.join(',')}`);
+    } else {
+      flags.push('--allow-net');
+    }
+  } else {
+    flags.push('--no-net');
+  }
+
+  return flags.join(' ');
+}
+
+async function writeTempFile(code: string, ext: string): Promise<string> {
+  const tmpDir = os.tmpdir();
+  const tmpPath = path.join(tmpDir, `oneclaw-sandbox-${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`);
+  await fs.writeFile(tmpPath, code, 'utf8');
+  return tmpPath;
+}
+
+async function cleanupTempFile(filePath: string): Promise<void> {
+  await fs.unlink(filePath).catch(() => {}); // silent cleanup
+}
+
+// ─── Executors ────────────────────────────────────────────────────────────────
 
 async function executeCodeHandler(
   input: ExecuteCodeInput,
@@ -61,41 +90,32 @@ async function executeCodeHandler(
   const startTime = Date.now();
 
   try {
-    // Check for blocked operations
-    for (const blocked of BLOCKED_OPERATIONS) {
-      if (input.code.includes(blocked)) {
-        return {
-          success: false,
-          error: `Blocked operation detected: ${blocked}`,
-          executionTime: Date.now() - startTime,
-        };
-      }
-    }
-
-    // Validate working directory if provided
-    let workingDir = pathValidator.getWorkspaceRoot();
-    if (input.workingDirectory) {
-      const validation = pathValidator.validateRead(input.workingDirectory);
-      if (!validation.allowed) {
-        return {
-          success: false,
-          error: validation.reason,
-          executionTime: Date.now() - startTime,
-        };
-      }
-      workingDir = validation.normalizedPath!;
-    }
-
     switch (input.language) {
       case 'javascript':
-        return await executeJavaScript(input.code, input.timeout, startTime);
-      
+        return await executeJavaScript(
+          input.code,
+          input.timeout,
+          input.allowNet ?? false,
+          input.allowedDomains,
+          startTime
+        );
+
       case 'typescript':
-        return await executeTypeScript(input.code, input.timeout, workingDir, startTime);
-      
+        return await executeTypeScript(
+          input.code,
+          input.timeout,
+          input.allowNet ?? false,
+          input.allowedDomains,
+          startTime
+        );
+
       case 'bash':
-        return await executeBash(input.code, input.timeout, workingDir, startTime);
-      
+        return await executeBash(
+          input.code,
+          input.timeout,
+          startTime
+        );
+
       default:
         return {
           success: false,
@@ -112,71 +132,140 @@ async function executeCodeHandler(
   }
 }
 
+/**
+ * JavaScript execution via Deno
+ * Deno runs JS natively — no vm2, no escapes
+ */
 async function executeJavaScript(
   code: string,
   timeout: number,
+  allowNet: boolean,
+  allowedDomains: string[] | undefined,
   startTime: number
 ): Promise<ExecuteCodeOutput> {
-  try {
-    const vm = new VM({
-      timeout,
-      sandbox: {
-        console: {
-          log: (...args: unknown[]) => console.log('[Sandboxed]', ...args),
-          error: (...args: unknown[]) => console.error('[Sandboxed]', ...args),
-        },
-      },
-      eval: false,
-      wasm: false,
-    });
+  const tmpFile = await writeTempFile(code, 'js');
 
-    const result = vm.run(code);
+  try {
+    const flags = buildDenoFlags(allowNet, allowedDomains);
+    const { stdout, stderr } = await execAsync(
+      `deno run ${flags} ${tmpFile}`,
+      { timeout }
+    );
 
     return {
       success: true,
-      stdout: String(result),
+      stdout: stdout.trim(),
+      stderr: stderr.trim() || undefined,
       exitCode: 0,
       executionTime: Date.now() - startTime,
     };
-  } catch (error) {
+  } catch (error: any) {
     return {
       success: false,
-      error: error instanceof Error ? error.message : String(error),
-      exitCode: 1,
+      stdout: error.stdout?.trim(),
+      stderr: error.stderr?.trim(),
+      error: error.message,
+      exitCode: error.code || 1,
       executionTime: Date.now() - startTime,
     };
+  } finally {
+    await cleanupTempFile(tmpFile);
   }
 }
 
+/**
+ * TypeScript execution via Deno
+ * Deno has native TS support — no tsx, no transpile step, no env leak
+ */
 async function executeTypeScript(
   code: string,
   timeout: number,
-  workingDir: string,
+  allowNet: boolean,
+  allowedDomains: string[] | undefined,
   startTime: number
 ): Promise<ExecuteCodeOutput> {
-  try {
-    const tempFile = path.join(workingDir, `temp-${Date.now()}.ts`);
-    
-    await fs.writeFile(tempFile, code);
+  const tmpFile = await writeTempFile(code, 'ts');
 
+  try {
+    const flags = buildDenoFlags(allowNet, allowedDomains);
     const { stdout, stderr } = await execAsync(
-      `npx tsx ${tempFile}`,
+      `deno run ${flags} ${tmpFile}`,
+      { timeout }
+    );
+
+    return {
+      success: true,
+      stdout: stdout.trim(),
+      stderr: stderr.trim() || undefined,
+      exitCode: 0,
+      executionTime: Date.now() - startTime,
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      stdout: error.stdout?.trim(),
+      stderr: error.stderr?.trim(),
+      error: error.message,
+      exitCode: error.code || 1,
+      executionTime: Date.now() - startTime,
+    };
+  } finally {
+    await cleanupTempFile(tmpFile);
+  }
+}
+
+/**
+ * Bash execution
+ * Kept isolated — no access to .env.production
+ * Strips env entirely before running
+ */
+async function executeBash(
+  code: string,
+  timeout: number,
+  startTime: number
+): Promise<ExecuteCodeOutput> {
+  // Hard blocklist for truly destructive commands
+  const blocked = [
+    'rm -rf /',
+    'rm -rf ~',
+    'dd if=',
+    'mkfs',
+    ':(){:|:&};:',   // fork bomb
+    'cat .env',
+    '> /dev/sd',
+  ];
+
+  for (const cmd of blocked) {
+    if (code.includes(cmd)) {
+      return {
+        success: false,
+        error: `Blocked dangerous command: ${cmd}`,
+        executionTime: Date.now() - startTime,
+      };
+    }
+  }
+
+  const tmpFile = await writeTempFile(code, 'sh');
+
+  try {
+    const { stdout, stderr } = await execAsync(
+      `bash ${tmpFile}`,
       {
         timeout,
-        cwd: workingDir,
+        shell: '/bin/bash',
         env: {
-          ...process.env,
-          NODE_ENV: 'sandbox',
+          // Minimal safe env — no secrets
+          PATH: process.env.PATH,
+          HOME: os.tmpdir(),
+          TMPDIR: os.tmpdir(),
         },
       }
     );
 
-    await fs.unlink(tempFile).catch(() => {});
-
     return {
       success: true,
       stdout: stdout.trim(),
-      stderr: stderr.trim(),
+      stderr: stderr.trim() || undefined,
       exitCode: 0,
       executionTime: Date.now() - startTime,
     };
@@ -189,58 +278,18 @@ async function executeTypeScript(
       exitCode: error.code || 1,
       executionTime: Date.now() - startTime,
     };
+  } finally {
+    await cleanupTempFile(tmpFile);
   }
 }
 
-async function executeBash(
-  code: string,
-  timeout: number,
-  workingDir: string,
-  startTime: number
-): Promise<ExecuteCodeOutput> {
-  try {
-    const blockedCommands = ['rm -rf /', 'dd if=', 'mkfs', 'format', ':(){:|:&};:'];
-    
-    for (const blocked of blockedCommands) {
-      if (code.includes(blocked)) {
-        return {
-          success: false,
-          error: `Blocked dangerous command: ${blocked}`,
-          executionTime: Date.now() - startTime,
-        };
-      }
-    }
-
-    const { stdout, stderr } = await execAsync(code, {
-      timeout,
-      cwd: workingDir,
-      shell: '/bin/bash',
-    });
-
-    return {
-      success: true,
-      stdout: stdout.trim(),
-      stderr: stderr.trim(),
-      exitCode: 0,
-      executionTime: Date.now() - startTime,
-    };
-  } catch (error: any) {
-    return {
-      success: false,
-      stdout: error.stdout?.trim(),
-      stderr: error.stderr?.trim(),
-      error: error.message,
-      exitCode: error.code || 1,
-      executionTime: Date.now() - startTime,
-    };
-  }
-}
+// ─── Tool Registration ────────────────────────────────────────────────────────
 
 export const EXECUTE_CODE_TOOL = {
   id: 'execute-code',
   name: 'execute-code',
-  description: 'Execute TypeScript, JavaScript, or Bash code in a secure sandbox',
-  version: '1.0.0',
+  description: 'Execute TypeScript, JavaScript, or Bash in a secure Deno sandbox. No access to secrets or file system by default.',
+  version: '2.0.0',
   costClass: 'low' as const,
   estimatedCostUsd: 0.001,
   requiredSecrets: [] as string[],

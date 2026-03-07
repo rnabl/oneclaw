@@ -506,18 +506,27 @@ export async function getNodeIntegrations(nodeId: string): Promise<NodeIntegrati
 
 /**
  * Delete a node integration
+ * @param email Optional email to delete a specific account (for multi-account support)
  */
 export async function deleteNodeIntegration(
   nodeId: string,
-  provider: 'google' | 'apple' | 'microsoft'
+  provider: 'google' | 'apple' | 'microsoft',
+  email?: string
 ): Promise<boolean> {
   const supabase = getSupabaseAdminClient();
 
-  const { error } = await supabase
+  let query = supabase
     .from('node_integrations')
     .delete()
     .eq('node_id', nodeId)
     .eq('provider', provider);
+  
+  // If email is provided, only delete that specific account
+  if (email) {
+    query = query.eq('email', email);
+  }
+
+  const { error } = await query;
 
   if (error) {
     console.error('[DB] Error deleting node integration:', error);

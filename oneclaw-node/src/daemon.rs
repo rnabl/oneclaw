@@ -560,6 +560,7 @@ pub async fn start(port: u16) -> anyhow::Result<()> {
         .route("/integrations/gmail/accounts", get(gmail_accounts))
         .route("/integrations/gmail/send-test", post(send_test_email))
         .route("/integrations/gmail/send", post(send_email))
+        .route("/integrations/gmail/disconnect", post(disconnect_gmail))
         .route("/api/oauth/config", post(oauth_config::save_oauth_config_handler))
         .route("/gmail/senders", get(gmail_senders_proxy))
         .route("/api/gmail/senders", get(api_gmail_senders_proxy))
@@ -1398,6 +1399,50 @@ async fn send_email(
                 "success": true,
                 "message": format!("Email sent to {}", req.to),
                 "data": data,
+            })))
+        }
+        Ok(resp) => {
+            let status = resp.status();
+            let error_text = resp.text().await.unwrap_or_default();
+            Err((StatusCode::from_u16(status.as_u16()).unwrap_or(StatusCode::INTERNAL_SERVER_ERROR), 
+                Json(serde_json::json!({ "error": error_text }))))
+        }
+        Err(e) => {
+            Err((StatusCode::INTERNAL_SERVER_ERROR, Json(serde_json::json!({ "error": e.to_string() }))))
+        }
+    }
+}
+
+#[derive(Deserialize)]
+struct DisconnectGmailRequest {
+    email: String,
+}
+
+/// POST /integrations/gmail/disconnect - Disconnect a Gmail account
+async fn disconnect_gmail(
+    State(state): State<Arc<AppState>>,
+    Json(req): Json<DisconnectGmailRequest>,
+) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
+    let control_plane_url = match state.config.control_plane.url.as_deref() {
+        Some(url) => url,
+        None => return Err((StatusCode::BAD_REQUEST, Json(serde_json::json!({ "error": "No control plane configured" })))),
+    };
+    
+    let client = reqwest::Client::new();
+    let response = client
+        .post(format!("{}/api/v1/oauth/google/disconnect", control_plane_url))
+        .json(&serde_json::json!({
+            "user_id": state.config.node.id,
+            "email": req.email,
+        }))
+        .send()
+        .await;
+    
+    match response {
+        Ok(resp) if resp.status().is_success() => {
+            Ok(Json(serde_json::json!({
+                "success": true,
+                "message": format!("Disconnected {}", req.email),
             })))
         }
         Ok(resp) => {

@@ -2,6 +2,7 @@ use axum::{extract::State, http::StatusCode, response::{Html, IntoResponse}, Jso
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 use std::sync::Arc;
+use chrono::{DateTime, Utc};
 use crate::{config, store};
 
 #[derive(Serialize, Deserialize, Clone)]
@@ -13,6 +14,7 @@ pub struct Integration {
     pub connected: bool,
     pub email: Option<String>,
     pub connected_at: Option<String>,
+    pub status: String, // "connected", "expired", "disconnected"
     pub required_for: Vec<String>,
     pub scopes: Vec<String>,
 }
@@ -22,7 +24,26 @@ pub struct GmailAccount {
     pub id: String,
     pub email: String,
     pub connected_at: String,
+    pub expires_at: Option<String>,
     pub scopes: Vec<String>,
+}
+
+impl GmailAccount {
+    /// Check if the OAuth token is expired or expiring very soon
+    /// Uses a 5-minute grace period - tokens refresh automatically before this
+    pub fn is_token_expired(&self) -> bool {
+        if let Some(expires_at_str) = &self.expires_at {
+            if let Ok(expires_at) = DateTime::parse_from_rfc3339(expires_at_str) {
+                let now = Utc::now();
+                // Add 5 minute grace period - show as expired only if really expired
+                // The auto-refresh service refreshes tokens 10 minutes before expiry
+                let grace_period = chrono::Duration::minutes(5);
+                return expires_at < now + grace_period;
+            }
+        }
+        // If we can't parse the expiration date, assume it's expired for safety
+        true
+    }
 }
 
 /// Get all Gmail accounts for this node from the control plane
@@ -58,6 +79,7 @@ pub async fn get_gmail_accounts(
             id: acc["id"].as_str()?.to_string(),
             email: acc["email"].as_str()?.to_string(),
             connected_at: acc["connected_at"].as_str()?.to_string(),
+            expires_at: acc["expires_at"].as_str().map(String::from),
             scopes: acc["scopes"].as_array()
                 .map(|s| s.iter().filter_map(|v| v.as_str().map(String::from)).collect())
                 .unwrap_or_default(),
@@ -65,7 +87,7 @@ pub async fn get_gmail_accounts(
     }).collect()
 }
 
-/// Check if Gmail is connected for this node
+/// Check if Gmail is connected for this node (with valid, non-expired token)
 pub async fn check_gmail_connected(
     user_id: &str,
     control_plane_url: Option<&str>,
@@ -75,7 +97,8 @@ pub async fn check_gmail_connected(
     };
     
     let accounts = get_gmail_accounts(user_id, url).await;
-    !accounts.is_empty()
+    // Only consider accounts with non-expired tokens as connected
+    accounts.iter().any(|acc| !acc.is_token_expired())
 }
 
 /// Get Gmail account info if connected (returns first account for backward compat)
@@ -109,6 +132,7 @@ pub async fn get_integrations_list(
             connected: false,
             email: None,
             connected_at: None,
+            status: "disconnected".to_string(),
             required_for: vec![
                 "email sending".to_string(),
                 "email reading".to_string(),
@@ -119,19 +143,23 @@ pub async fn get_integrations_list(
             ],
         }]
     } else {
-        gmail_accounts.iter().map(|acc| Integration {
-            id: format!("gmail:{}", acc.email),
-            name: "Gmail".to_string(),
-            icon: "📧".to_string(),
-            description: "Send and read emails via Gmail".to_string(),
-            connected: true,
-            email: Some(acc.email.clone()),
-            connected_at: Some(acc.connected_at.clone()),
-            required_for: vec![
-                "email sending".to_string(),
-                "email reading".to_string(),
-            ],
-            scopes: acc.scopes.clone(),
+        gmail_accounts.iter().map(|acc| {
+            let is_expired = acc.is_token_expired();
+            Integration {
+                id: format!("gmail:{}", acc.email),
+                name: "Gmail".to_string(),
+                icon: "📧".to_string(),
+                description: "Send and read emails via Gmail".to_string(),
+                connected: !is_expired, // Only mark as connected if not expired
+                email: Some(acc.email.clone()),
+                connected_at: Some(acc.connected_at.clone()),
+                status: if is_expired { "expired".to_string() } else { "connected".to_string() },
+                required_for: vec![
+                    "email sending".to_string(),
+                    "email reading".to_string(),
+                ],
+                scopes: acc.scopes.clone(),
+            }
         }).collect()
     };
     
@@ -144,6 +172,7 @@ pub async fn get_integrations_list(
         connected: false,
         email: None,
         connected_at: None,
+        status: "disconnected".to_string(),
         required_for: vec![
             "calendar events".to_string(),
             "meeting scheduling".to_string(),
@@ -162,6 +191,7 @@ pub async fn get_integrations_list(
         connected: false,
         email: None,
         connected_at: None,
+        status: "disconnected".to_string(),
         required_for: vec![
             "team notifications".to_string(),
             "channel messages".to_string(),

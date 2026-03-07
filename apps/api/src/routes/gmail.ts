@@ -129,6 +129,7 @@ async function refreshAccessToken(refreshToken: string): Promise<{ access_token:
  * 
  * Check if a user has Gmail connected
  * Used by Node Runtime to determine if OAuth is needed
+ * Also proactively refreshes tokens if expiring soon
  * 
  * Query params:
  * - user_id: Node ID or user ID
@@ -144,11 +145,50 @@ export async function getGmailStatusHandler(c: Context) {
     const integration = await getNodeIntegration(user_id, 'google');
     
     if (integration) {
+      // Proactively refresh token if expiring within 10 minutes
+      let accessToken = integration.access_token;
+      let expiresAt = integration.token_expires_at;
+      
+      if (expiresAt && integration.refresh_token) {
+        const expiresAtDate = new Date(expiresAt);
+        const timeUntilExpiry = expiresAtDate.getTime() - Date.now();
+        
+        // Refresh if expiring within 10 minutes
+        if (timeUntilExpiry < 10 * 60 * 1000) {
+          console.log(`[Gmail Status] Token expiring soon for ${integration.email}, refreshing...`);
+          const refreshed = await refreshAccessToken(integration.refresh_token);
+          
+          if (refreshed) {
+            accessToken = refreshed.access_token;
+            expiresAt = new Date(Date.now() + refreshed.expires_in * 1000).toISOString();
+            
+            // Update in database
+            await saveNodeIntegration(user_id, 'google', {
+              accessToken: refreshed.access_token,
+              refreshToken: integration.refresh_token,
+              expiresAt: new Date(expiresAt),
+              scopes: integration.scopes || [],
+              email: integration.email,
+            });
+            
+            console.log(`[Gmail Status] ✅ Token refreshed successfully for ${integration.email}`);
+          } else {
+            console.warn(`[Gmail Status] ❌ Failed to refresh token for ${integration.email}`);
+            // Return as expired if refresh failed
+            return c.json({
+              connected: false,
+              error: 'Token expired and refresh failed',
+              email: integration.email,
+            });
+          }
+        }
+      }
+      
       return c.json({
         connected: true,
         email: integration.email,
         has_refresh_token: !!integration.refresh_token,
-        expires_at: integration.token_expires_at,
+        expires_at: expiresAt,
       });
     }
     
@@ -202,6 +242,7 @@ export async function getGmailAccountHandler(c: Context) {
  * GET /api/v1/oauth/google/accounts
  * 
  * Get all Gmail accounts for a node
+ * Also proactively refreshes tokens if expiring soon
  */
 export async function getGmailAccountsHandler(c: Context) {
   try {
@@ -214,16 +255,53 @@ export async function getGmailAccountsHandler(c: Context) {
     const integrations = await getNodeIntegrations(user_id);
     const googleAccounts = integrations.filter(i => i.provider === 'google');
     
+    // Proactively refresh tokens that are expiring soon
+    const refreshedAccounts = [];
+    
+    for (const account of googleAccounts) {
+      let expiresAt = account.token_expires_at;
+      
+      // Check if token needs refresh (expiring within 10 minutes)
+      if (expiresAt && account.refresh_token) {
+        const expiresAtDate = new Date(expiresAt);
+        const timeUntilExpiry = expiresAtDate.getTime() - Date.now();
+        
+        if (timeUntilExpiry < 10 * 60 * 1000) {
+          console.log(`[Gmail Accounts] Token expiring soon for ${account.email}, refreshing...`);
+          const refreshed = await refreshAccessToken(account.refresh_token);
+          
+          if (refreshed) {
+            expiresAt = new Date(Date.now() + refreshed.expires_in * 1000).toISOString();
+            
+            // Update in database
+            await saveNodeIntegration(user_id, 'google', {
+              accessToken: refreshed.access_token,
+              refreshToken: account.refresh_token,
+              expiresAt: new Date(expiresAt),
+              scopes: account.scopes || [],
+              email: account.email,
+            });
+            
+            console.log(`[Gmail Accounts] ✅ Token refreshed for ${account.email}`);
+          } else {
+            console.warn(`[Gmail Accounts] ❌ Failed to refresh token for ${account.email}`);
+          }
+        }
+      }
+      
+      refreshedAccounts.push({
+        id: account.id,
+        node_id: account.node_id,
+        email: account.email,
+        connected_at: account.created_at,
+        expires_at: expiresAt,
+        scopes: account.scopes,
+      });
+    }
+    
     return c.json({
-      accounts: googleAccounts.map(a => ({
-        id: a.id,
-        node_id: a.node_id,
-        email: a.email,
-        connected_at: a.created_at,
-        expires_at: a.token_expires_at,
-        scopes: a.scopes,
-      })),
-      count: googleAccounts.length,
+      accounts: refreshedAccounts,
+      count: refreshedAccounts.length,
     });
     
   } catch (error) {
@@ -235,17 +313,29 @@ export async function getGmailAccountsHandler(c: Context) {
 /**
  * POST /api/v1/oauth/google/disconnect
  * 
- * Disconnect a Gmail account
+ * Disconnect a Gmail account by email address
  */
 export async function disconnectGmailHandler(c: Context) {
   try {
-    const { user_id } = await c.req.json();
+    const { user_id, email } = await c.req.json();
     
     if (!user_id) {
       return c.json({ error: 'user_id required' }, 400);
     }
     
-    await deleteNodeIntegration(user_id, 'google');
+    // If email provided, delete specific account; otherwise delete all Google accounts for this user
+    if (email) {
+      const { getNodeIntegrationByEmail } = await import('@oneclaw/database');
+      const integration = await getNodeIntegrationByEmail(user_id, 'google', email);
+      
+      if (!integration) {
+        return c.json({ error: `Gmail account ${email} not found` }, 404);
+      }
+      
+      await deleteNodeIntegration(user_id, 'google', email);
+    } else {
+      await deleteNodeIntegration(user_id, 'google');
+    }
     
     return c.json({ success: true, message: 'Gmail disconnected' });
     

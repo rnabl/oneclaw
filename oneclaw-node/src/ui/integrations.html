@@ -49,6 +49,15 @@
             background: #e8f5e9;
             color: #2e7d32;
         }
+        .status-expired {
+            background: #fff3cd;
+            color: #f59e0b;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
         .status-disconnected {
             background: #f5f5f5;
             color: #666;
@@ -612,11 +621,30 @@
                 }
                 
                 document.getElementById('integrations-list').innerHTML = list.map(integration => {
-                    const statusClass = integration.connected ? 'status-connected' : 'status-disconnected';
-                    const statusText = integration.connected ? '✓ Connected' : 'Not Connected';
+                    const status = integration.status || (integration.connected ? 'connected' : 'disconnected');
+                    const statusClass = status === 'connected' ? 'status-connected' : 
+                                       status === 'expired' ? 'status-expired' : 'status-disconnected';
+                    const statusText = status === 'connected' ? '✓ Connected' :
+                                      status === 'expired' ? '⚠️ Expired - Reconnect Required' : 'Not Connected';
                     
                     let actions = '';
-                    if (integration.connected && integration.email) {
+                    if (status === 'expired' && integration.email) {
+                        // Expired tokens - show reconnect option
+                        actions = `
+                            <div class="integration-email" style="font-weight: 600; font-size: 16px; margin-bottom: 8px;">${integration.email}</div>
+                            <div class="integration-details" style="color: #f59e0b; font-size: 13px; margin-bottom: 12px;">
+                                ⚠️ Token expired - Please reconnect to resume sending emails
+                            </div>
+                            <div class="integration-actions" style="display: flex; gap: 8px; flex-wrap: wrap;">
+                                <button class="btn-primary" onclick="reconnectIntegration('${integration.email}')">
+                                    Reconnect Account
+                                </button>
+                                <button class="btn-secondary" onclick="disconnectIntegration('${integration.id}', '${integration.email}')">
+                                    Remove Account
+                                </button>
+                            </div>
+                        `;
+                    } else if (status === 'connected' && integration.email) {
                         actions = `
                             <div class="integration-email" style="font-weight: 600; font-size: 16px; margin-bottom: 8px;">${integration.email}</div>
                             <div class="integration-details" style="color: #666; font-size: 13px; margin-bottom: 12px;">
@@ -808,8 +836,33 @@
         
         async function disconnectIntegration(id, email) {
             const displayName = email || id;
-            if (!confirm(`Disconnect ${displayName}?`)) return;
-            alert(`Disconnect functionality coming soon`);
+            if (!confirm(`Are you sure you want to disconnect ${displayName}?`)) return;
+            
+            try {
+                // Extract just the email from id if it's in format "gmail:email@example.com"
+                const actualEmail = id.startsWith('gmail:') ? id.substring(6) : email;
+                
+                const res = await fetch('/integrations/gmail/disconnect', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: actualEmail }),
+                });
+                
+                if (res.ok) {
+                    showNotification(`${displayName} disconnected successfully`);
+                    loadIntegrations(); // Reload the list
+                } else {
+                    const data = await res.json();
+                    showNotification(`Failed to disconnect: ${data.error || 'Unknown error'}`, 'error');
+                }
+            } catch (e) {
+                showNotification(`Error: ${e.message}`, 'error');
+            }
+        }
+        
+        async function reconnectIntegration(email) {
+            // Reconnecting is the same as connecting - just opens OAuth flow
+            connectIntegration('gmail');
         }
         
         function formatDate(isoString) {
