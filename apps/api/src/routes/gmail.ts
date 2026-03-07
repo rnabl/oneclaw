@@ -351,6 +351,24 @@ export async function disconnectGmailHandler(c: Context) {
  */
 export async function sendGmailHandler(c: Context) {
   try {
+    // Check if today is Sunday (EST timezone)
+    const now = new Date();
+    const dayOfWeek = now.getUTCDay(); // 0 = Sunday, 6 = Saturday
+    const estOffset = -5; // EST is UTC-5
+    const estHour = now.getUTCHours() + estOffset;
+    
+    // Adjust day if EST time crosses midnight
+    let estDayOfWeek = dayOfWeek;
+    if (estHour < 0) estDayOfWeek = (dayOfWeek - 1 + 7) % 7;
+    if (estHour >= 24) estDayOfWeek = (dayOfWeek + 1) % 7;
+    
+    if (estDayOfWeek === 0) {
+      return c.json({
+        success: false,
+        error: 'Email sending is disabled on Sundays (EST). Will retry on Monday.'
+      }, 403);
+    }
+    
     const { user_id, to, subject, body, from_name, from_email } = await c.req.json();
     
     if (!user_id || !to || !subject || !body) {

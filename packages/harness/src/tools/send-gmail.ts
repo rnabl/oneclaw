@@ -70,6 +70,24 @@ export async function sendGmailHandler(
   context: { tenantId: string }
 ): Promise<SendGmailOutput> {
   try {
+    // Check if today is Sunday (EST timezone)
+    const now = new Date();
+    const dayOfWeek = now.getUTCDay(); // 0 = Sunday, 6 = Saturday
+    const estOffset = -5; // EST is UTC-5
+    const estHour = now.getUTCHours() + estOffset;
+    
+    // Adjust day if EST time crosses midnight
+    let estDayOfWeek = dayOfWeek;
+    if (estHour < 0) estDayOfWeek = (dayOfWeek - 1 + 7) % 7;
+    if (estHour >= 24) estDayOfWeek = (dayOfWeek + 1) % 7;
+    
+    if (estDayOfWeek === 0) {
+      return {
+        success: false,
+        error: 'Email sending is disabled on Sundays (EST). Will retry on Monday.',
+      };
+    }
+    
     // Dynamic import to avoid circular dependency issues
     const { getNodeIntegration, saveNodeIntegration } = await import('@oneclaw/database');
     
