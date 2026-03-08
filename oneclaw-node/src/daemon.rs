@@ -449,6 +449,58 @@ pub async fn start(port: u16) -> anyhow::Result<()> {
                                         .await;
                                 }
                                 
+                                // Special handling for execute-code: show actual output if successful
+                                let first_result = &tool_results[0];
+                                if first_result.tool == "execute-code" {
+                                    // Check if execution was successful
+                                    let success = first_result.output
+                                        .get("result")
+                                        .and_then(|r| r.get("success"))
+                                        .and_then(|s| s.as_bool())
+                                        .unwrap_or(false);
+                                    
+                                    if success {
+                                        let stdout = first_result.output
+                                            .get("result")
+                                            .and_then(|r| r.get("stdout"))
+                                            .and_then(|s| s.as_str())
+                                            .unwrap_or("");
+                                        
+                                        let stderr = first_result.output
+                                            .get("result")
+                                            .and_then(|r| r.get("stderr"))
+                                            .and_then(|s| s.as_str())
+                                            .unwrap_or("");
+                                        
+                                        let exec_time = first_result.output
+                                            .get("result")
+                                            .and_then(|r| r.get("executionTime"))
+                                            .and_then(|t| t.as_u64())
+                                            .unwrap_or(0);
+                                        
+                                        tracing::info!("Code executed successfully, showing actual output");
+                                        
+                                        let mut response = format!("Code executed successfully ({}ms):\n\n", exec_time);
+                                        if !stdout.is_empty() {
+                                            response.push_str(&format!("Output:\n{}\n", stdout));
+                                        }
+                                        if !stderr.is_empty() && !stderr.contains("Warning") {
+                                            response.push_str(&format!("\nStderr:\n{}", stderr));
+                                        }
+                                        
+                                        // Skip further LLM processing, return actual output
+                                        response
+                                    } else {
+                                        // Execution failed, let LLM explain the error
+                                        let error = first_result.output
+                                            .get("result")
+                                            .and_then(|r| r.get("error"))
+                                            .and_then(|e| e.as_str())
+                                            .unwrap_or("Unknown error");
+                                        
+                                        format!("Code execution failed:\n\n{}", error)
+                                    }
+                                } else {
                                 // Build a simpler prompt that just asks Claude to format, not regenerate
                                 let formatted_response = format!(
                                     "I found the results. Here's a nicely formatted summary:\n\n{}",
@@ -495,6 +547,7 @@ pub async fn start(port: u16) -> anyhow::Result<()> {
                                         }
                                     }
                                 }
+                                } // close else for non-execute-code tools
                             };
                             
                             tracing::info!("Preparing final response...");
