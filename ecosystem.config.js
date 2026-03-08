@@ -43,6 +43,7 @@ module.exports = {
       args: 'daemon',
       env: {
         NODE_ENV: 'production',
+        PATH: '/root/.deno/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       },
       autorestart: true,
       max_restarts: 999999,
