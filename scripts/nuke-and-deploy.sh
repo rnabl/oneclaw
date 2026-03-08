@@ -148,8 +148,8 @@ sleep 5
 
 # Check harness is up
 for i in {1..10}; do
-    if curl -s http://localhost:8787/health > /dev/null 2>&1; then
-        echo "   ✅ Harness is up on port 8787"
+    if curl -s http://localhost:9000/health > /dev/null 2>&1; then
+        echo "   ✅ Harness is up on port 9000"
         break
     fi
     if [ $i -eq 10 ]; then
@@ -184,10 +184,10 @@ pm2 status
 
 echo ""
 echo "🔍 Port Check:"
-echo -n "   Harness (8787): "
-curl -s -o /dev/null -w "%{http_code}\n" http://localhost:8787/health || echo "FAILED"
-echo -n "   Daemon (9000):  "
+echo -n "   Harness (9000): "
 curl -s -o /dev/null -w "%{http_code}\n" http://localhost:9000/health || echo "FAILED"
+echo -n "   Daemon (8787):  "
+curl -s -o /dev/null -w "%{http_code}\n" http://localhost:8787/health || echo "FAILED"
 echo -n "   Gmail Senders:  "
 curl -s -o /dev/null -w "%{http_code}\n" http://localhost:8787/gmail/senders || echo "FAILED"
 
