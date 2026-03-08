@@ -44,6 +44,35 @@ type ExecuteCodeOutput = z.infer<typeof ExecuteCodeOutputSchema>;
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
+/**
+ * Get the Deno executable path
+ * Checks common installation locations since PM2 may not inherit PATH
+ */
+function getDenoPath(): string {
+  const possiblePaths = [
+    '/root/.deno/bin/deno',           // Linux root user install
+    '/home/ubuntu/.deno/bin/deno',    // Ubuntu user install
+    `${process.env.HOME}/.deno/bin/deno`, // User home install
+    '/usr/local/bin/deno',            // System-wide install
+    '/usr/bin/deno',                  // Package manager install
+    'deno',                           // Fallback to PATH
+  ];
+
+  for (const denoPath of possiblePaths) {
+    try {
+      const { execSync } = require('child_process');
+      execSync(`${denoPath} --version`, { stdio: 'ignore' });
+      return denoPath;
+    } catch {
+      continue;
+    }
+  }
+
+  return 'deno'; // Fallback - will fail with "not found" if not in PATH
+}
+
+const DENO_PATH = getDenoPath();
+
 function buildDenoFlags(allowNet: boolean, allowedDomains?: string[]): string {
   const flags = [
     '--no-prompt',   // never ask for permissions interactively
@@ -148,7 +177,7 @@ async function executeJavaScript(
   try {
     const flags = buildDenoFlags(allowNet, allowedDomains);
     const { stdout, stderr } = await execAsync(
-      `deno run ${flags} ${tmpFile}`,
+      `${DENO_PATH} run ${flags} ${tmpFile}`,
       { timeout }
     );
 
@@ -189,7 +218,7 @@ async function executeTypeScript(
   try {
     const flags = buildDenoFlags(allowNet, allowedDomains);
     const { stdout, stderr } = await execAsync(
-      `deno run ${flags} ${tmpFile}`,
+      `${DENO_PATH} run ${flags} ${tmpFile}`,
       { timeout }
     );
 
