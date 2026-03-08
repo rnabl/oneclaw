@@ -21,12 +21,29 @@ import os from 'os';
 
 const execAsync = promisify(exec);
 
+// Helper to coerce string "true"/"false" to boolean (LLMs sometimes send strings)
+const coerceBoolean = z.preprocess((val) => {
+  if (typeof val === 'string') {
+    if (val.toLowerCase() === 'true') return true;
+    if (val.toLowerCase() === 'false') return false;
+  }
+  return val;
+}, z.boolean());
+
+// Helper to coerce comma-separated string to array (LLMs sometimes send "a,b,c" instead of ["a","b","c"])
+const coerceStringArray = z.preprocess((val) => {
+  if (typeof val === 'string') {
+    return val.split(',').map(s => s.trim()).filter(Boolean);
+  }
+  return val;
+}, z.array(z.string()));
+
 const ExecuteCodeInputSchema = z.object({
   code: z.string().min(1).max(50000).describe('Code to execute'),
   language: z.enum(['typescript', 'javascript', 'bash']).describe('Programming language'),
   timeout: z.number().min(100).max(30000).optional().default(30000).describe('Timeout in ms (max 30s)'),
-  allowNet: z.boolean().optional().default(false).describe('Allow network access in sandbox'),
-  allowedDomains: z.array(z.string()).optional().describe('Specific domains to allow (if allowNet true)'),
+  allowNet: coerceBoolean.optional().default(false).describe('Allow network access in sandbox'),
+  allowedDomains: coerceStringArray.optional().describe('Specific domains to allow (if allowNet true)'),
 });
 
 type ExecuteCodeInput = z.infer<typeof ExecuteCodeInputSchema>;
