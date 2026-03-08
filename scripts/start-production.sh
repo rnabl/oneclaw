@@ -13,23 +13,23 @@ pkill -9 -f "node.*harness" 2>/dev/null || true
 pkill -9 -f "node.*server.js" 2>/dev/null || true
 sleep 1
 
-echo "🔪 Force killing any processes on ports 8787 and 9000..."
-fuser -k 8787/tcp 2>/dev/null || true
+echo "🔪 Force killing any processes on ports 9000 and 8787..."
 fuser -k 9000/tcp 2>/dev/null || true
+fuser -k 8787/tcp 2>/dev/null || true
 fuser -k 3000/tcp 2>/dev/null || true
 sleep 3
 
 echo "🔍 Waiting for ports to be free..."
 for i in {1..10}; do
-  PORT_8787=$(ss -tlnp 2>/dev/null | grep ":8787 " || true)
   PORT_9000=$(ss -tlnp 2>/dev/null | grep ":9000 " || true)
-  if [ -z "$PORT_8787" ] && [ -z "$PORT_9000" ]; then
-    echo "✅ Ports 8787 and 9000 are free"
+  PORT_8787=$(ss -tlnp 2>/dev/null | grep ":8787 " || true)
+  if [ -z "$PORT_9000" ] && [ -z "$PORT_8787" ]; then
+    echo "✅ Ports 9000 and 8787 are free"
     break
   fi
   if [ $i -eq 10 ]; then
     echo "❌ Ports still in use after 10 attempts!"
-    ss -tlnp | grep -E ":(8787|9000) " || true
+    ss -tlnp | grep -E ":(9000|8787) " || true
     exit 1
   fi
   echo "   Waiting... ($i/10)"
@@ -41,7 +41,7 @@ pm2 start /opt/oneclaw/ecosystem.config.js --only harness
 
 echo "⏳ Waiting for harness to be ready..."
 for i in {1..30}; do
-  if curl -s http://localhost:8787/health > /dev/null 2>&1; then
+  if curl -s http://localhost:9000/health > /dev/null 2>&1; then
     echo "✅ Harness is ready!"
     break
   fi
@@ -76,9 +76,9 @@ pm2 status
 echo ""
 echo "🔍 Verification:"
 echo "Harness health:"
-curl -s http://localhost:8787/health && echo ""
+curl -s http://localhost:9000/health && echo ""
 echo "Tools count:"
-curl -s http://localhost:8787/tools | grep -o '"id"' | wc -l | xargs echo "  Tools loaded:"
+curl -s http://localhost:9000/tools | grep -o '"id"' | wc -l | xargs echo "  Tools loaded:"
 
 echo ""
 echo "📱 To test OAuth, visit: https://oneclaw.chat/oauth/google?user=default"

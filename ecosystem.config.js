@@ -2,8 +2,8 @@
  * PM2 Ecosystem Config - FIXED FOR PERSISTENCE
  * 
  * PORTS ARE HARDCODED IN CODE - NOT HERE
- * - Harness: 8787 (packages/harness/src/server.ts)
- * - Daemon:  9000 (oneclaw-node/src/ports.rs)
+ * - Harness: 9000 (packages/harness/src/server.ts)
+ * - Daemon:  8787 (oneclaw-node/src/ports.rs)
  * - API:     3000 (apps/api/src/index.ts)
  * 
  * PERSISTENCE: Unlimited restarts + auto-start on boot

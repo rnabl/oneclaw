@@ -118,6 +118,15 @@ pub async fn start(port: u16) -> anyhow::Result<()> {
     tracing::info!("Harness URL: {} (set HARNESS_URL to override)", harness_url);
     tracing::info!("Loaded {} harness tools", harness_tools.len());
     
+    // Sync harness tools to SKILLS.md
+    if !harness_tools.is_empty() {
+        if let Err(e) = crate::daemon_skills_sync::sync_skills_md(&harness_tools).await {
+            tracing::warn!("Failed to sync SKILLS.md with harness tools: {}", e);
+        } else {
+            tracing::info!("✅ Synced SKILLS.md with {} harness tools", harness_tools.len());
+        }
+    }
+    
     // Initialize job monitor
     let job_monitor = monitor::JobMonitor::default();
     
@@ -213,7 +222,7 @@ pub async fn start(port: u16) -> anyhow::Result<()> {
                     
                     // Build system prompt with Telegram formatting instructions
                     let mut system_prompt = state_clone.agent_os.build_system_prompt(&state_clone.harness_tools);
-                    system_prompt.push_str("\n\n## Telegram Formatting\nYou are communicating via Telegram. Format your responses to be:\n- Concise and easy to read on mobile\n- Use **bold** for business names and key info\n- Use bullet points (•) for lists\n- Avoid raw CLI output - present data in a friendly way\n- When showing businesses, format like:\n\n**Business Name** ⭐ 4.8\n📞 (720) 442-0474\n✅ Has website | ✅ Has reviews\n");
+                    system_prompt.push_str("\n\n## Response Format\nYou are communicating via Telegram. Format your responses to be:\n- Clear and easy to read on mobile\n- Use simple bullet points for lists\n- Avoid special formatting (no bold, no emojis)\n- Present information in a straightforward way\n");
                     
                     // Build messages
                     let messages = match state_clone
@@ -457,11 +466,10 @@ pub async fn start(port: u16) -> anyhow::Result<()> {
                                         serde_json::json!({
                                             "role": "user",
                                             "content": format!(
-                                                "Format this business data for Telegram with:\n\
-                                                - **Bold** business names\n\
-                                                - ⭐ ratings, 📞 phones\n\
-                                                - ✅/❌ for features\n\
-                                                - Quick stats summary\n\n\
+                                                "Format this data as clean, plain text:\n\
+                                                - Use simple bullet points\n\
+                                                - No bold, no emojis, no special formatting\n\
+                                                - Keep it clear and concise\n\n\
                                                 Data: {}",
                                                 serde_json::to_string_pretty(&tool_results[0].output)
                                                     .unwrap_or_default()

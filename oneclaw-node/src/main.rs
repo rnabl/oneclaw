@@ -5,6 +5,7 @@ mod channels;
 mod config;
 mod conversation;
 mod daemon;
+mod daemon_skills_sync;
 mod executor;
 mod heartbeat;
 mod identity;
@@ -31,8 +32,12 @@ struct Cli {
 
 #[derive(Subcommand)]
 enum Commands {
-    /// Start the node daemon (ALWAYS on port 9000)
-    Daemon,
+    /// Start the node daemon (Web UI)
+    Daemon {
+        /// Port to bind to (default: 8787)
+        #[arg(short, long, default_value_t = 8787)]
+        port: u16,
+    },
     /// Interactive onboarding wizard
     Onboard,
     /// Run a workflow
@@ -66,9 +71,8 @@ async fn main() -> anyhow::Result<()> {
     let cli = Cli::parse();
 
     match cli.command {
-        Commands::Daemon => {
-            // HARDCODED PORT - no CLI args, no env vars, no config
-            daemon::start(ports::DAEMON_PORT).await?;
+        Commands::Daemon { port } => {
+            daemon::start(port).await?;
         }
         Commands::Onboard => {
             onboard().await?;

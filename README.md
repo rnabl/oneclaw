@@ -8,10 +8,10 @@ Self-hosted. Data-local. Production-ready.
 
 ## Why OneClaw?
 
-**Built with Rust** — Ultra-fast agent runtime with <10ms startup time  
-**Privacy-First** — Your data stays local, OAuth tokens encrypted  
-**Production-Ready** — Durable workflows, wallet system, policy enforcement  
-**Developer-Friendly** — YAML workflows + Rust executors = infinite possibilities  
+**5-Minute Setup** — Docker Compose → AI agent with code execution  
+**Self-Hosted** — Your data stays local, OAuth tokens encrypted  
+**Production-Ready** — Durable workflows, SQLite/Supabase, policy enforcement  
+**Developer-Friendly** — Markdown-driven agent, 8 core tools, progressive add-ons  
 
 ---
 
@@ -19,45 +19,53 @@ Self-hosted. Data-local. Production-ready.
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    Your Machine                             │
-│                                                             │
+│                    Docker Compose                            │
+│                                                              │
 │  ┌────────────────────────────────────────────────────┐    │
-│  │  OneClaw Node (Rust) - Port 8787                   │    │
-│  │  • Simplified chat (minimal prompt)                │    │
-│  │  • Agent OS (SOUL, IDENTITY, etc.)                 │    │
-│  │  • Tool execution (```tool blocks)                 │    │
+│  │  Daemon (Rust) - Port 8787                         │    │
+│  │  • Chat UI & Agent runtime                         │    │
+│  │  • Agent OS (SOUL, SKILLS, PLAYBOOKS, MEMORY)      │    │
 │  │  • Conversation memory (SQLite)                    │    │
-│  │  • Web UI                                           │    │
+│  │  • Auto-syncs SKILLS.md from Harness              │    │
 │  └────────────────────────────────────────────────────┘    │
-│                        │                                    │
-│                        │ HTTP                               │
-│                        ▼                                    │
+│                        │                                     │
+│                        │ HTTP                                │
+│                        ▼                                     │
 │  ┌────────────────────────────────────────────────────┐    │
 │  │  Harness (TypeScript) - Port 9000                  │    │
-│  │  • Workflow executors                              │    │
-│  │  • Durable execution                               │    │
-│  │  • Artifact storage                                │    │
+│  │  • Tool registry (24 tools)                        │    │
+│  │  • execute-code (Deno sandbox)                     │    │
+│  │  • Database, files, business tools                 │    │
+│  │  • Durable execution engine                        │    │
 │  └────────────────────────────────────────────────────┘    │
-│                        │                                    │
-│                        │ Optional                           │
-│                        ▼                                    │
+│                        │                                     │
+│                        │ HTTP (OAuth only)                   │
+│                        ▼                                     │
 │  ┌────────────────────────────────────────────────────┐    │
-│  │  API (TypeScript/Hono) - Port 3000                 │    │
-│  │  • OAuth proxy (Gmail, Calendar)                   │    │
-│  │  • Billing & wallet                                │    │
-│  │  • Node registry                                   │    │
+│  │  API (TypeScript) - Port 3000                      │    │
+│  │  • Gmail OAuth proxy                               │    │
+│  │  • Google Calendar (optional)                      │    │
+│  │  • Stripe billing (optional)                       │    │
 │  └────────────────────────────────────────────────────┘    │
 └─────────────────────────────────────────────────────────────┘
                         │
                         │ External Services
                         ▼
 ┌─────────────────────────────────────────────────────────────┐
-│  • OpenRouter/Anthropic/OpenAI (LLM)                        │
-│  • Google (Gmail, Calendar)                                 │
-│  • Stripe (Payments)                                        │
-│  • Supabase (Database)                                      │
+│  • Anthropic/OpenAI/OpenRouter (LLM)                        │
+│  • Google (Gmail OAuth)                                     │
+│  • Supabase (optional - cloud database)                     │
+│  • Apify (optional - business discovery)                    │
+│  • Perplexity (optional - AI search)                        │
 └─────────────────────────────────────────────────────────────┘
 ```
+
+**Start everything:** `docker-compose up`
+
+**Access:**
+- Main UI: http://localhost:8787 (Daemon)
+- Tools API: http://localhost:9000 (Harness)
+- OAuth: http://localhost:3000 (API)
 
 ---
 
@@ -82,48 +90,80 @@ Self-hosted. Data-local. Production-ready.
 
 ## Features
 
-| Rust Performance | Privacy-First | Production-Ready | YAML Workflows |
-|------------------|---------------|------------------|----------------|
-| <10ms startup | Local data storage | Wallet system | Write once, run anywhere |
-| <5MB RAM | Encrypted tokens | Policy engine | Pre-built executors |
-| ~3MB binary | No telemetry | Durable execution | HTTP, Browser, Gmail |
+| Docker Setup | Agent OS | 8 Core Tools | Progressive Add-Ons |
+|--------------|----------|--------------|---------------------|
+| One command | Markdown files define behavior | Code execution, Files, Database, Gmail | Supabase, Business Discovery, AI Search |
+| 5 minutes | Self-improving through SKILLS.md | SQLite included | Choose what you need |
+| No Rust/Node install needed | SOUL, IDENTITY, PLAYBOOKS, MEMORY | Deno sandbox | $0 to $30/mo based on add-ons |
 
 ---
 
 ## Quick Start
 
-**1. Clone & Install**
+### Option 1: Docker (Recommended) ⚡
+
+**Time: 5 minutes**
 
 ```bash
 git clone https://github.com/rnabl/oneclaw.git
 cd oneclaw
-pnpm install && pnpm build
+cp .env.example .env.local
+nano .env.local  # Add your API keys
+docker-compose up
 ```
 
-**2. Configure** (create `.env.local`)
+Open → http://localhost:8787
 
+**What you get:**
+- ✅ AI agent with chat UI
+- ✅ Code execution (TypeScript/JavaScript/Bash via Deno)
+- ✅ File operations (read/write)
+- ✅ Local database (SQLite)
+- ✅ Gmail integration (with OAuth setup)
+- ✅ 8 core tools, ready to use
+
+**Required in `.env.local`:**
 ```env
-# Required
 ANTHROPIC_API_KEY=sk-ant-...
-SUPABASE_URL=https://your-project.supabase.co
-SUPABASE_SERVICE_ROLE_KEY=...
-
-# Optional (for Gmail)
 GOOGLE_CLIENT_ID=...
 GOOGLE_CLIENT_SECRET=...
 ```
 
-**3. Run**
+See [DOCKER.md](./DOCKER.md) for complete Docker documentation.
+
+---
+
+### Option 2: Manual Setup
+
+**Time: 15 minutes**
 
 ```bash
-# Terminal 1: API
-pnpm --filter @oneclaw/api dev
+# 1. Clone & Build
+git clone https://github.com/rnabl/oneclaw.git
+cd oneclaw
+pnpm install && pnpm build
+cd oneclaw-node && cargo build --release
 
-# Terminal 2: Node  
-cd oneclaw-node && cargo run -- daemon
+# 2. Configure
+cp .env.example .env.local
+nano .env.local  # Add API keys
+
+# 3. Run (3 terminals)
+pnpm --filter @oneclaw/harness dev        # Terminal 1 (port 9000)
+pnpm --filter @oneclaw/api dev            # Terminal 2 (port 3000)
+cd oneclaw-node && cargo run -- daemon    # Terminal 3 (port 8787)
+# Or custom port: cargo run -- daemon --port 8888
 ```
 
-**4. Open** → http://localhost:8787
+Open → http://localhost:8787
+
+---
+
+### Option 3: Production VPS
+
+**Time: 20 minutes** - One-click deployment with SSL
+
+See [DEPLOY.md](./DEPLOY.md) for VPS setup guide.
 
 ---
 

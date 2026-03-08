@@ -12,10 +12,11 @@ import { schedulerHeartbeat } from './scheduler/heartbeat';
 import { logEnvironmentInfo, isProduction, validateProductionConfig, getHarnessUrl } from './utils/env';
 
 // SINGLE SOURCE OF TRUTH - HARDCODED PORTS
+// MUST MATCH: oneclaw-node/src/ports.rs
 const PORTS = {
-  HARNESS: 8787,
-  DAEMON: 9000,
-  API: 3000,
+  HARNESS: 9000,  // ✅ Matches ports.rs HARNESS_PORT
+  DAEMON: 8787,   // ✅ Matches ports.rs DAEMON_PORT
+  API: 3000,      // ✅ Matches ports.rs API_PORT
 } as const;
 
 // Load .env.production from project root (three directories up from src/)
