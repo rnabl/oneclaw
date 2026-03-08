@@ -18,6 +18,7 @@ module.exports = {
       env_file: '/opt/oneclaw/.env.production',
       env: {
         NODE_ENV: 'production',
+        PATH: '/root/.deno/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       },
       
       // PERSISTENCE SETTINGS
