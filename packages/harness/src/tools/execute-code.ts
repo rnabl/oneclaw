@@ -83,7 +83,7 @@ function buildDenoFlags(allowNet: boolean, allowedDomains?: string[]): string {
     '--deny-run',       // can't spawn subprocesses
     '--deny-ffi',       // no native plugins
     '--deny-sys',       // no system info
-    '--deny-hrtime',    // no high-resolution time
+    // Note: --deny-hrtime removed in Deno 2.x (high-res time always allowed)
   ];
 
   if (allowNet) {
