@@ -32,9 +32,24 @@ const coerceBoolean = z.preprocess((val) => {
 
 // Helper to coerce comma-separated string to array (LLMs sometimes send "a,b,c" instead of ["a","b","c"])
 const coerceStringArray = z.preprocess((val) => {
+  // Already an array, return as-is
+  if (Array.isArray(val)) return val;
+  
+  // String that might be JSON array syntax
   if (typeof val === 'string') {
+    // Try parsing as JSON first (e.g., '["a","b"]')
+    if (val.trim().startsWith('[')) {
+      try {
+        const parsed = JSON.parse(val);
+        if (Array.isArray(parsed)) return parsed;
+      } catch {
+        // Not valid JSON, fall through to comma split
+      }
+    }
+    // Split by comma (e.g., "a,b,c")
     return val.split(',').map(s => s.trim()).filter(Boolean);
   }
+  
   return val;
 }, z.array(z.string()));
 
