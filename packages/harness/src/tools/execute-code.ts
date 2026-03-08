@@ -74,15 +74,16 @@ function getDenoPath(): string {
 const DENO_PATH = getDenoPath();
 
 function buildDenoFlags(allowNet: boolean, allowedDomains?: string[]): string {
+  // Deno 2.x uses --deny-* instead of --no-* for most permissions
   const flags = [
-    '--no-prompt',   // never ask for permissions interactively
-    '--no-remote',   // no importing remote modules (security)
-    '--no-read',     // no file system reads
-    '--no-write',    // no file system writes
-    '--no-env',      // NO access to process.env (your secrets are safe)
-    '--no-run',      // can't spawn subprocesses
-    '--no-ffi',      // no native plugins
-    '--no-sys',      // no system info
+    '--no-prompt',      // never ask for permissions interactively (still valid in 2.x)
+    '--deny-read',      // no file system reads
+    '--deny-write',     // no file system writes
+    '--deny-env',       // NO access to process.env (your secrets are safe)
+    '--deny-run',       // can't spawn subprocesses
+    '--deny-ffi',       // no native plugins
+    '--deny-sys',       // no system info
+    '--deny-hrtime',    // no high-resolution time
   ];
 
   if (allowNet) {
@@ -93,7 +94,7 @@ function buildDenoFlags(allowNet: boolean, allowedDomains?: string[]): string {
       flags.push('--allow-net');
     }
   } else {
-    flags.push('--no-net');
+    flags.push('--deny-net');
   }
 
   return flags.join(' ');
