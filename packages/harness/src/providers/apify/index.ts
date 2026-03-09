@@ -6,3 +6,4 @@
 
 export { searchBusinesses } from './google-places';
 export { findContacts } from './lead-finder';
+export { scrapeReviews } from './review-scraper';

@@ -35,6 +35,40 @@ export interface WorkflowMetadata {
 
 export const WORKFLOW_REGISTRY: Record<string, WorkflowMetadata> = {
   
+  'scrape-reviews': {
+    id: 'scrape-reviews',
+    name: 'Review Scraper',
+    description: 'Enriches leads with 5 most recent Google Maps reviews for personalized outreach.',
+    category: 'enrichment',
+    
+    estimatedCostPer100: 3.50, // ~$0.035 per lead (2 Apify actors)
+    avgTimePerLead: 30000, // 30 seconds per lead
+    
+    benchmarks: {
+      avgLeadsFound: 85, // ~85% of leads found on Google Maps
+      emailCoverageRate: 0, // Doesn't provide emails
+      dataQualityScore: 9, // High quality review data
+      successRate: 90, // ~90% success rate
+    },
+    
+    bestFor: [
+      'Personalized cold outreach using recent customer feedback',
+      'AEO/GEO service marketing',
+      'Local HVAC/Plumbing contractors',
+      'Building trust with social proof',
+    ],
+    limitations: [
+      'Requires business to have Google Maps listing',
+      'Time-consuming (30s per lead)',
+      'Some businesses have no reviews',
+      'Reviewer names sometimes Anonymous',
+    ],
+    
+    requiredInputs: [],
+    optionalInputs: ['leadIds', 'batchSize', 'skipExisting'],
+    outputFormat: '{ processed, successful, failed, skipped, errors }',
+  },
+  
   'discover-businesses': {
     id: 'discover-businesses',
     name: 'Geographic Discovery (Google Maps)',

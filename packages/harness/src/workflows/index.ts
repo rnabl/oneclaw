@@ -15,6 +15,7 @@ import './check-ai-rankings';
 import './match-ai-visibility';
 import './full-sdr-pipeline-geo';
 import './full-sdr-pipeline-hiring';
+import './scrape-reviews';
 
 // Import tools to register them
 import '../tools/send-gmail';
@@ -40,3 +41,4 @@ export { checkAIRankingsHandler } from './check-ai-rankings';
 export { matchAIVisibilityHandler } from './match-ai-visibility';
 export { fullSDRPipelineGeoHandler } from './full-sdr-pipeline-geo';
 export { fullSDRPipelineHiringHandler } from './full-sdr-pipeline-hiring';
+export { scrapeReviewsHandler } from './scrape-reviews';
