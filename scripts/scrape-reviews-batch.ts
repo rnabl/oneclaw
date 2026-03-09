@@ -34,12 +34,18 @@ async function scrapeReviewsBatch(startIndex: number = 0, batchSize: number = BA
   console.log(`🚀 Starting batch review scraping...\n`);
 
   // Load filtered leads
-  let leadsFile = 'data/filtered-aeo-leads.json';
+  let leadsFile = 'data/all-filtered-leads.json';
   try {
     await fs.access(leadsFile);
   } catch {
-    console.log('⚠️  filtered-aeo-leads.json not found, using top-1000-aeo-leads.json');
-    leadsFile = 'data/top-1000-aeo-leads.json';
+    console.log('⚠️  all-filtered-leads.json not found, trying filtered-aeo-leads.json');
+    leadsFile = 'data/filtered-aeo-leads.json';
+    try {
+      await fs.access(leadsFile);
+    } catch {
+      console.log('⚠️  filtered-aeo-leads.json not found, using top-1000-aeo-leads.json');
+      leadsFile = 'data/top-1000-aeo-leads.json';
+    }
   }
 
   const leadsRaw = await fs.readFile(leadsFile, 'utf-8');
