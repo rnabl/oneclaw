@@ -195,29 +195,49 @@ export async function findContacts(params: {
     return null;
   }
   
-  // Transform Apify results to our format
-  const contacts: ContactPerson[] = results.map((r: any) => {
-    // Use the raw seniority level from Apify first, fallback to mapping
-    const seniorityLevel = r.seniorityLevel || r.seniority_level || mapSeniorityLevel(r.title || r.jobTitle);
-    
-    return {
-      fullName: r.full_name || r.name || r.fullName,
-      firstName: r.firstName || r.first_name,
-      lastName: r.lastName || r.last_name,
-      jobTitle: r.job_title || r.title || r.jobTitle,
-      email: r.email || r.workEmail || r.work_email,
-      personalEmail: r.personalEmail || r.personal_email,
-      mobileNumber: r.mobile_number || r.phone || r.mobileNumber,
-      city: r.city,
-      state: r.state,
-      country: r.country || 'US',
-      linkedin: r.linkedin_url || r.linkedinUrl || r.linkedin,
-      seniorityLevel,
-      functionalLevel: r.functionalLevel || r.functional_level,
-      headline: r.headline,
-      dataSource: 'linkedin',
-    };
-  });
+  // Transform Apify results to our format with validation
+  const contacts: ContactPerson[] = results
+    .map((r: any) => {
+      // Use the raw seniority level from Apify first, fallback to mapping
+      const seniorityLevel = r.seniorityLevel || r.seniority_level || mapSeniorityLevel(r.title || r.jobTitle);
+      const fullName = r.full_name || r.name || r.fullName;
+      const email = r.email || r.workEmail || r.work_email;
+      
+      return {
+        fullName,
+        firstName: r.firstName || r.first_name,
+        lastName: r.lastName || r.last_name,
+        jobTitle: r.job_title || r.title || r.jobTitle,
+        email,
+        personalEmail: r.personalEmail || r.personal_email,
+        mobileNumber: r.mobile_number || r.phone || r.mobileNumber,
+        city: r.city,
+        state: r.state,
+        country: r.country || 'US',
+        linkedin: r.linkedin_url || r.linkedinUrl || r.linkedin,
+        seniorityLevel,
+        functionalLevel: r.functionalLevel || r.functional_level,
+        headline: r.headline,
+        dataSource: 'linkedin',
+      };
+    })
+    .filter(c => {
+      // Skip contacts with invalid names
+      const nameBlacklist = ['multiple family', 'includes conflicting', 'conflicting reports'];
+      if (!c.fullName || nameBlacklist.some(phrase => c.fullName.toLowerCase().includes(phrase))) {
+        console.log(`[Apify Leads] Skipped invalid name: ${c.fullName}`);
+        return false;
+      }
+      
+      // Skip contacts with wrong company emails (Yelp, LinkedIn, etc.)
+      const emailBlacklist = ['@yelp.com', '@linkedin.com', '@facebook.com', '@google.com', '@indeed.com'];
+      if (c.email && emailBlacklist.some(domain => c.email.toLowerCase().includes(domain))) {
+        console.log(`[Apify Leads] Skipped wrong company email: ${c.email}`);
+        return false;
+      }
+      
+      return true;
+    });
   
   // Find owner/CEO
   const owner = contacts.find(c => 

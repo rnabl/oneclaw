@@ -165,7 +165,9 @@ function parseOwnerFromText(text: string): OwnerInfo[] {
         // Blacklist invalid names
         const blacklist = [
           'key details', 'business owner', 'company owner', 'the owner',
-          'the founder', 'the ceo', 'vice president', 'one man'
+          'the founder', 'the ceo', 'vice president', 'one man',
+          'multiple family', 'includes conflicting', 'conflicting reports',
+          'and serves as', 'he serves as', 'she serves as'
         ];
         
         if (blacklist.some(phrase => cleanName.toLowerCase().includes(phrase))) {
