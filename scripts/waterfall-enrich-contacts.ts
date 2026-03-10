@@ -393,77 +393,114 @@ async function saveContacts(leadId: string, contacts: Contact[], tier: string) {
 async function enrichLead(lead: Lead): Promise<void> {
   console.log(`\n🔍 ${lead.company_name}`);
 
-  const allContacts: Contact[] = [];
-
-  // Tier 1: Try Perplexity first (fast, gets owner name)
-  console.log(`   📡 Tier 1: Perplexity...`);
-  const perplexityContacts = await enrichViaPerplexity(lead);
-  
-  if (perplexityContacts.length > 0) {
-    console.log(`   ✅ Perplexity found ${perplexityContacts.length} contact(s)`);
-    // Mark Perplexity contacts as SECONDARY (just names, no verified contact info)
-    perplexityContacts.forEach(c => c.is_primary = false);
-    allContacts.push(...perplexityContacts);
-  }
-
-  // Tier 2: Also try Apify if enabled (slow, gets multiple decision-makers with verified contact info)
-  if (USE_APIFY) {
-    console.log(`   📡 Tier 2: Apify leads-finder (this may take 2-10 minutes)...`);
-    const apifyContacts = await enrichViaApify(lead);
-    
-    if (apifyContacts.length > 0) {
-      console.log(`   ✅ Apify found ${apifyContacts.length} contact(s)`);
-      
-      // Check if Perplexity and Apify agree on the owner name (verified match)
-      if (perplexityContacts.length > 0 && apifyContacts.length > 0) {
-        const perplexityName = perplexityContacts[0].full_name.toLowerCase().trim();
-        const apifyName = apifyContacts[0].full_name.toLowerCase().trim();
-        
-        // Check for name match (exact or partial - last name match is good enough)
-        const perplexityLastName = perplexityName.split(' ').pop() || '';
-        const apifyLastName = apifyName.split(' ').pop() || '';
-        
-        if (perplexityName === apifyName || perplexityLastName === apifyLastName) {
-          console.log(`   ✅ VERIFIED: Both sources agree on owner: ${apifyContacts[0].full_name}`);
-          // Mark as VERIFIED and merge Perplexity data into Apify contact
-          apifyContacts[0].verified = true;
-          apifyContacts[0].full_name = perplexityContacts[0].full_name; // Use Perplexity's name format
-          // Remove the duplicate Perplexity contact
-          allContacts.pop();
+  try {
+    // Call harness API - it will handle Apify + Perplexity internally
+    console.log(`   📡 Enriching via harness (Apify + Perplexity)...`);
+    const response = await fetch('http://localhost:9000/execute', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        workflowId: 'enrich-contact',
+        tenantId: 'waterfall-enrichment',
+        tier: 'enterprise',
+        input: {
+          url: lead.website,
+          businessName: lead.company_name,
+          city: lead.city,
+          state: lead.state,
+          method: 'auto'
         }
-      }
-      
-      // Mark FIRST Apify contact as PRIMARY (has verified email/phone)
-      // Rest are secondary
-      apifyContacts[0].is_primary = true;
-      for (let i = 1; i < apifyContacts.length; i++) {
-        apifyContacts[i].is_primary = false;
-      }
-      
-      allContacts.push(...apifyContacts);
-    }
-  }
+      })
+    });
 
-  // Tier 3: Fallback to website scraping if we got nothing
-  if (allContacts.length === 0) {
-    console.log(`   📡 Tier 3: Website scraping (fallback)...`);
-    const websiteContacts = await enrichViaWebsiteScrape(lead);
+    if (!response.ok) {
+      throw new Error(`Harness API error: ${response.status}`);
+    }
+
+    const result = await response.json();
     
-    if (websiteContacts.length > 0) {
-      console.log(`   ✅ Website scrape found ${websiteContacts.length} contact(s)`);
-      allContacts.push(...websiteContacts);
-    }
-  }
+    // Poll for completion
+    let jobStatus = result.status;
+    let attempts = 0;
+    const maxAttempts = 120; // 10 minutes
 
-  // Save all contacts
-  if (allContacts.length > 0) {
-    const tier = allContacts.some(c => c.source === 'perplexity') ? 'perplexity' : 
-                 allContacts.some(c => c.source === 'apify') ? 'apify' : 
-                 'website_scrape';
-    await saveContacts(lead.id, allContacts, tier);
-  } else {
-    console.log(`   ❌ No contacts found`);
-    await saveContacts(lead.id, [], 'none');
+    while (jobStatus === 'running' && attempts < maxAttempts) {
+      await new Promise(resolve => setTimeout(resolve, 5000));
+      
+      const statusResponse = await fetch(`http://localhost:9000/jobs/${result.jobId}/status`);
+      const statusData = await statusResponse.json();
+      jobStatus = statusData.status;
+      attempts++;
+      
+      if (attempts % 12 === 0) {
+        console.log(`   ⏳ Still running... (${attempts * 5}s)`);
+      }
+    }
+
+    if (jobStatus !== 'completed') {
+      throw new Error('Enrichment job timed out or failed');
+    }
+
+    // Get final result
+    const jobResponse = await fetch(`http://localhost:9000/jobs/${result.jobId}`);
+    const jobData = await jobResponse.json();
+    const output = jobData.job.output;
+
+    const allContacts: Contact[] = [];
+
+    // Add owner if found
+    if (output.owner) {
+      const owner = output.owner;
+      allContacts.push({
+        full_name: owner.name,
+        first_name: owner.name?.split(' ')[0],
+        last_name: owner.name?.split(' ').slice(1).join(' '),
+        title: owner.title,
+        seniority_level: owner.seniorityLevel || 'owner',
+        email: owner.email,
+        phone: owner.phone,
+        linkedin_url: owner.linkedin,
+        source: output.source === 'linkedin' ? 'apify' : output.source,
+        is_primary: true,
+        outreach_priority: 1,
+        confidence_score: 0.9,
+        verified: false
+      });
+    }
+
+    // Add other contacts
+    if (output.contacts && Array.isArray(output.contacts)) {
+      for (const contact of output.contacts) {
+        const seniority = getSeniorityLevel(contact.title);
+        allContacts.push({
+          full_name: contact.name,
+          first_name: contact.name?.split(' ')[0],
+          last_name: contact.name?.split(' ').slice(1).join(' '),
+          title: contact.title,
+          seniority_level: seniority,
+          email: contact.email,
+          phone: contact.phone,
+          linkedin_url: contact.linkedin,
+          source: 'apify',
+          is_primary: false,
+          outreach_priority: getOutreachPriority(seniority),
+          confidence_score: 0.9,
+          verified: false
+        });
+      }
+    }
+
+    if (allContacts.length > 0) {
+      console.log(`   ✅ Found ${allContacts.length} contact(s) via ${output.source}`);
+      await saveContacts(lead.id, allContacts, output.source);
+    } else {
+      console.log(`   ❌ No contacts found`);
+      await saveContacts(lead.id, [], 'none');
+    }
+    
+  } catch (error: any) {
+    console.error(`   ❌ Error: ${error.message}`);
+    await saveContacts(lead.id, [], 'failed');
   }
 }
 
