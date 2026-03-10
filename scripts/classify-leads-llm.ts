@@ -97,6 +97,10 @@ Small local business:
 async function main() {
   console.log('🔍 LLM-Based Lead Classification\n');
   console.log('='.repeat(60));
+  
+  // Get offset from command line args (for resuming)
+  const offset = parseInt(process.argv[2] || '0');
+  console.log(`Starting from lead #${offset + 1}\n`);
 
   // Get all pending leads
   const { data: leads, error } = await supabase
@@ -105,7 +109,8 @@ async function main() {
     .select('id, company_name, website, city, state, industry')
     .eq('enrichment_status', 'pending')
     .not('website', 'is', null)
-    .limit(1000); // Classify all pending leads
+    .order('created_at', { ascending: false })
+    .range(offset, offset + 999); // Get 1000 leads starting from offset
 
   if (error) {
     console.error('❌ Error fetching leads:', error);
