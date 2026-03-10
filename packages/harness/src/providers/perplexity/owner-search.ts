@@ -125,75 +125,63 @@ function parseOwnerFromText(text: string): OwnerInfo[] {
   
   console.log('[Perplexity] Cleaned text for parsing:', cleanText.substring(0, 300));
   
-  // Patterns for extracting owner info - more flexible but precise
   // Name pattern: First Last or First Middle Last (2-4 words, each capitalized)
   const namePattern = '([A-Z][a-z]+(?:\\s+[A-Z][a-z]+){1,3})';
   
+  // More precise patterns - require complete context
   const patterns = [
-    // "John Smith is the owner/founder/CEO" - must be at word boundary
-    new RegExp(`\\b${namePattern}\\s+is\\s+(?:the\\s+)?(owner|founder|ceo|president|co-founder|managing member)\\b`, 'gi'),
-    // "Founded/owned by John Smith"
-    new RegExp(`(?:founded|owned|started|established)\\s+by\\s+${namePattern}\\b`, 'gi'),
-    // "John Smith, Owner" or "John Smith - Owner" (comma or dash before role)
-    new RegExp(`\\b${namePattern}[,\\s]+-?\\s*(?:the\\s+)?(owner|founder|ceo|president)\\b`, 'gi'),
-    // "lists John Smith as Owner"
-    new RegExp(`lists\\s+${namePattern}\\s+as\\s+(owner|founder|ceo|president)`, 'gi'),
+    // "John Smith founded" or "John Smith and Jane Doe founded"
+    new RegExp(`${namePattern}(?:\\s+and\\s+${namePattern})?\\s+founded`, 'g'),
+    // "founded by John Smith" or "owned by John Smith"
+    new RegExp(`(?:founded|owned|started|established)\\s+by\\s+${namePattern}`, 'gi'),
+    // "John Smith is the owner/founder/CEO"
+    new RegExp(`${namePattern}\\s+is\\s+(?:the\\s+)?(owner|founder|ceo|president|co-owner)`, 'gi'),
+    // "John Smith, the owner" or "John Smith - Owner"
+    new RegExp(`${namePattern},?\\s+(?:the\\s+)?(owner|founder|ceo|president)`, 'gi'),
+    // "co-owners" or "co-founders" - extract names before this
+    new RegExp(`${namePattern}(?:\\s+and\\s+${namePattern})?\\s+are\\s+the\\s+(co-owners|co-founders|owners|founders)`, 'g'),
   ];
   
   for (const pattern of patterns) {
     const matches = cleanText.matchAll(pattern);
     for (const match of matches) {
-      let name = match[1]?.trim();
-      const role = match[2] || 'Owner';
+      // Extract all captured names (groups 1, 3, etc.)
+      const capturedNames = [];
+      for (let i = 1; i < match.length; i++) {
+        if (match[i] && /^[A-Z][a-z]+(?:\s+[A-Z][a-z]+)+$/.test(match[i])) {
+          capturedNames.push(match[i]);
+        }
+      }
       
-      // Clean up the name
-      if (name) {
-        name = name.replace(/\s+/g, ' ').trim();
+      for (const name of capturedNames) {
+        const cleanName = name.replace(/\s+/g, ' ').trim();
         
-        // Skip if name looks invalid (too short, contains numbers, etc.)
-        if (name.length < 4 || /\d/.test(name) || name.split(' ').length < 2) {
+        // Validation: name must be 2+ words, no numbers, reasonable length
+        const words = cleanName.split(' ');
+        if (words.length < 2 || words.length > 4 || /\d/.test(cleanName) || cleanName.length < 4) {
           continue;
         }
         
-        // Blacklist common non-name phrases that match the pattern
+        // Blacklist invalid names
         const blacklist = [
-          'this husband', 'he serves as', 'she serves as', 'and is listed',
-          'is also listed', 'includes conflicting', 'served as', 'ceo and',
-          'business owner', 'the owner', 'the founder', 'the ceo',
-          'an owner', 'a founder', 'a ceo', 'company owner'
+          'key details', 'business owner', 'company owner', 'the owner',
+          'the founder', 'the ceo', 'vice president', 'one man'
         ];
         
-        if (blacklist.some(phrase => name.toLowerCase().includes(phrase))) {
-          console.log(`[Perplexity] Skipped blacklisted phrase: ${name}`);
+        if (blacklist.some(phrase => cleanName.toLowerCase().includes(phrase))) {
+          console.log(`[Perplexity] Skipped blacklisted: ${cleanName}`);
           continue;
         }
         
         // Avoid duplicates
-        if (!owners.find(o => o.name.toLowerCase() === name.toLowerCase())) {
-          console.log(`[Perplexity] Extracted owner: ${name} (${role})`);
+        if (!owners.find(o => o.name.toLowerCase() === cleanName.toLowerCase())) {
+          console.log(`[Perplexity] Extracted owner: ${cleanName}`);
           owners.push({
-            name,
-            role: role.charAt(0).toUpperCase() + role.slice(1).toLowerCase(),
+            name: cleanName,
+            role: 'Owner',
             source: 'perplexity-ai',
           });
         }
-      }
-    }
-  }
-  
-  // If no structured match, try to find the first bolded name that looks like a person
-  if (owners.length === 0) {
-    // Look for patterns like "Name is the" or "Name, an" at the start
-    const firstNameMatch = cleanText.match(/^([A-Z][a-z]+(?:\s+[A-Z][a-z]+)+)/);
-    if (firstNameMatch) {
-      const name = firstNameMatch[1].trim();
-      if (name.length >= 4 && name.split(' ').length >= 2 && !/\d/.test(name)) {
-        console.log(`[Perplexity] Extracted owner from start: ${name}`);
-        owners.push({
-          name,
-          role: 'Owner',
-          source: 'perplexity-ai',
-        });
       }
     }
   }
