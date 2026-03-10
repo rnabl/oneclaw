@@ -180,7 +180,7 @@ async function enrichViaApify(lead: Lead): Promise<Contact[]> {
 
   try {
     // Call harness API
-    const response = await fetch('http://localhost:9000/execute', {
+    const response = await fetch('http://localhost:8787/execute', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -211,7 +211,7 @@ async function enrichViaApify(lead: Lead): Promise<Contact[]> {
     while (jobStatus === 'running' && attempts < maxAttempts) {
       await new Promise(resolve => setTimeout(resolve, 5000));
       
-      const statusResponse = await fetch(`http://localhost:9000/jobs/${result.jobId}/status`);
+      const statusResponse = await fetch(`http://localhost:8787/jobs/${result.jobId}/status`);
       const statusData = await statusResponse.json();
       jobStatus = statusData.status;
       attempts++;
@@ -222,7 +222,7 @@ async function enrichViaApify(lead: Lead): Promise<Contact[]> {
     }
 
     // Get final result
-    const jobResponse = await fetch(`http://localhost:9000/jobs/${result.jobId}`);
+    const jobResponse = await fetch(`http://localhost:8787/jobs/${result.jobId}`);
     const jobData = await jobResponse.json();
     const output = jobData.job.output;
 
@@ -396,7 +396,7 @@ async function enrichLead(lead: Lead): Promise<void> {
   try {
     // Call harness API - it will handle Apify + Perplexity internally
     console.log(`   📡 Enriching via harness (Apify + Perplexity)...`);
-    const response = await fetch('http://localhost:9000/execute', {
+    const response = await fetch('http://localhost:8787/execute', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -427,7 +427,7 @@ async function enrichLead(lead: Lead): Promise<void> {
     while (jobStatus === 'running' && attempts < maxAttempts) {
       await new Promise(resolve => setTimeout(resolve, 5000));
       
-      const statusResponse = await fetch(`http://localhost:9000/jobs/${result.jobId}/status`);
+      const statusResponse = await fetch(`http://localhost:8787/jobs/${result.jobId}/status`);
       const statusData = await statusResponse.json();
       jobStatus = statusData.status;
       attempts++;
@@ -442,7 +442,7 @@ async function enrichLead(lead: Lead): Promise<void> {
     }
 
     // Get final result
-    const jobResponse = await fetch(`http://localhost:9000/jobs/${result.jobId}`);
+    const jobResponse = await fetch(`http://localhost:8787/jobs/${result.jobId}`);
     const jobData = await jobResponse.json();
     const output = jobData.job.output;
 

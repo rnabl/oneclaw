@@ -60,6 +60,7 @@ export interface LeadFinderResult {
   totalContactsFound: number;
   contactsWithEmail: number;
   contactsWithPhone: number;
+  cost: number;
 }
 
 /**
@@ -162,6 +163,20 @@ export async function findContacts(params: {
     throw new Error(`Apify leads actor failed: ${status}`);
   }
   
+  // Get final run data to extract cost
+  const finalRunResponse = await fetch(
+    `${config.apiBase}/actor-runs/${runId}?token=${config.token}`
+  );
+  const finalRunData = await finalRunResponse.json();
+  
+  // Extract cost from usage (computeUnits)
+  const usage = finalRunData.data.usage;
+  const computeUnits = usage?.computeUnits || 0;
+  // Apify charges $1.00 per 1000 compute units
+  const actualCost = (computeUnits / 1000);
+  
+  console.log(`[Apify Leads] Cost: $${actualCost.toFixed(3)} (${computeUnits} compute units)`);
+  
   // Fetch results
   const datasetId = runData.data.defaultDatasetId || runData.data.datasetId;
   
@@ -182,23 +197,28 @@ export async function findContacts(params: {
   }
   
   // Transform Apify results to our format
-  const contacts: ContactPerson[] = results.map((r: any) => ({
-    fullName: r.name || r.fullName,
-    firstName: r.firstName,
-    lastName: r.lastName,
-    jobTitle: r.title || r.jobTitle,
-    email: r.email || r.workEmail,
-    personalEmail: r.personalEmail,
-    mobileNumber: r.phone || r.mobileNumber,
-    city: r.city,
-    state: r.state,
-    country: r.country || 'US',
-    linkedin: r.linkedinUrl || r.linkedin,
-    seniorityLevel: mapSeniorityLevel(r.seniorityLevel || r.title),
-    functionalLevel: r.functionalLevel,
-    headline: r.headline,
-    dataSource: 'linkedin',
-  }));
+  const contacts: ContactPerson[] = results.map((r: any) => {
+    // Use the raw seniority level from Apify first, fallback to mapping
+    const seniorityLevel = r.seniorityLevel || r.seniority_level || mapSeniorityLevel(r.title || r.jobTitle);
+    
+    return {
+      fullName: r.full_name || r.name || r.fullName,
+      firstName: r.firstName || r.first_name,
+      lastName: r.lastName || r.last_name,
+      jobTitle: r.job_title || r.title || r.jobTitle,
+      email: r.email || r.workEmail || r.work_email,
+      personalEmail: r.personalEmail || r.personal_email,
+      mobileNumber: r.mobile_number || r.phone || r.mobileNumber,
+      city: r.city,
+      state: r.state,
+      country: r.country || 'US',
+      linkedin: r.linkedin_url || r.linkedinUrl || r.linkedin,
+      seniorityLevel,
+      functionalLevel: r.functionalLevel || r.functional_level,
+      headline: r.headline,
+      dataSource: 'linkedin',
+    };
+  });
   
   // Find owner/CEO
   const owner = contacts.find(c => 
@@ -237,6 +257,7 @@ export async function findContacts(params: {
     totalContactsFound: contacts.length,
     contactsWithEmail: contacts.filter(c => c.email).length,
     contactsWithPhone: contacts.filter(c => c.mobileNumber).length,
+    cost: actualCost,
   };
 }
 

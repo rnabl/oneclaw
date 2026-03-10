@@ -17,7 +17,7 @@ async function testHarnessApify() {
   
   console.log('📤 Calling harness API...');
   
-  const response = await fetch('http://localhost:9000/execute', {
+  const response = await fetch('http://localhost:8787/execute', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -48,7 +48,7 @@ async function testHarnessApify() {
   while (jobStatus === 'running' && attempts < 120) {
     await new Promise(resolve => setTimeout(resolve, 5000));
     
-    const statusResponse = await fetch(`http://localhost:9000/jobs/${result.jobId}/status`);
+    const statusResponse = await fetch(`http://localhost:8787/jobs/${result.jobId}/status`);
     const statusData = await statusResponse.json();
     jobStatus = statusData.status;
     attempts++;
@@ -61,7 +61,7 @@ async function testHarnessApify() {
   console.log(`\n✅ Job ${jobStatus}\n`);
   
   // Get result
-  const jobResponse = await fetch(`http://localhost:9000/jobs/${result.jobId}`);
+  const jobResponse = await fetch(`http://localhost:8787/jobs/${result.jobId}`);
   const jobData = await jobResponse.json();
   const output = jobData.job.output;
   

@@ -121,7 +121,7 @@ async function enrichViaApifyLeadFinder(
   ctx: StepContext,
   url: string,
   businessName?: string
-): Promise<{ owner: ContactPerson | null; contacts: ContactPerson[]; company: CompanyInfo | null } | null> {
+): Promise<{ owner: ContactPerson | null; contacts: ContactPerson[]; company: CompanyInfo | null; cost: number } | null> {
   
   await ctx.log('info', `Enriching via Apify lead-finder (code_crafter/leads-finder) for ${url}`);
   
@@ -157,6 +157,7 @@ async function enrichViaApifyLeadFinder(
         foundedYear: result.company.foundedYear || undefined,
         linkedinUrl: result.company.linkedinUrl || undefined,
       } : null,
+      cost: result.cost,
     };
     
   } catch (error) {
@@ -173,7 +174,7 @@ async function enrichViaLinkedIn(
   ctx: StepContext,
   url: string,
   businessName?: string
-): Promise<{ owner: ContactPerson | null; contacts: ContactPerson[]; company: CompanyInfo | null } | null> {
+): Promise<{ owner: ContactPerson | null; contacts: ContactPerson[]; company: CompanyInfo | null; cost: number } | null> {
   return enrichViaApifyLeadFinder(ctx, url, businessName);
 }
 
@@ -323,7 +324,7 @@ async function enrichContactHandler(
     contacts = apifyData.contacts || [];
     company = apifyData.company || null;
     source = 'linkedin';
-    cost = 0.15;
+    cost = apifyData.cost || 0.15; // Use actual cost from Apify
     
     // Add Perplexity cost if we got it too
     if (perplexityData) {
