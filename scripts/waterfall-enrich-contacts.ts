@@ -43,6 +43,7 @@ interface Contact {
   is_primary: boolean;
   outreach_priority: number;
   confidence_score?: number;
+  verified?: boolean; // TRUE when multiple sources agree on identity
 }
 
 /**
@@ -387,16 +388,18 @@ async function enrichLead(lead: Lead): Promise<void> {
 
   const allContacts: Contact[] = [];
 
-  // Tier 1: Try Perplexity first (fast, gets owner)
+  // Tier 1: Try Perplexity first (fast, gets owner name)
   console.log(`   📡 Tier 1: Perplexity...`);
   const perplexityContacts = await enrichViaPerplexity(lead);
   
   if (perplexityContacts.length > 0) {
     console.log(`   ✅ Perplexity found ${perplexityContacts.length} contact(s)`);
+    // Mark Perplexity contacts as SECONDARY (just names, no verified contact info)
+    perplexityContacts.forEach(c => c.is_primary = false);
     allContacts.push(...perplexityContacts);
   }
 
-  // Tier 2: Also try Apify if enabled (slow, gets multiple decision-makers)
+  // Tier 2: Also try Apify if enabled (slow, gets multiple decision-makers with verified contact info)
   if (USE_APIFY) {
     console.log(`   📡 Tier 2: Apify leads-finder (this may take 2-10 minutes)...`);
     const apifyContacts = await enrichViaApify(lead);
@@ -404,12 +407,30 @@ async function enrichLead(lead: Lead): Promise<void> {
     if (apifyContacts.length > 0) {
       console.log(`   ✅ Apify found ${apifyContacts.length} contact(s)`);
       
-      // Mark first Apify contact as primary if we don't have a primary yet
-      if (allContacts.length === 0 && apifyContacts.length > 0) {
-        apifyContacts[0].is_primary = true;
-      } else {
-        // Perplexity contact is primary, Apify contacts are secondary
-        apifyContacts.forEach(c => c.is_primary = false);
+      // Check if Perplexity and Apify agree on the owner name (verified match)
+      if (perplexityContacts.length > 0 && apifyContacts.length > 0) {
+        const perplexityName = perplexityContacts[0].full_name.toLowerCase().trim();
+        const apifyName = apifyContacts[0].full_name.toLowerCase().trim();
+        
+        // Check for name match (exact or partial - last name match is good enough)
+        const perplexityLastName = perplexityName.split(' ').pop() || '';
+        const apifyLastName = apifyName.split(' ').pop() || '';
+        
+        if (perplexityName === apifyName || perplexityLastName === apifyLastName) {
+          console.log(`   ✅ VERIFIED: Both sources agree on owner: ${apifyContacts[0].full_name}`);
+          // Mark as VERIFIED and merge Perplexity data into Apify contact
+          apifyContacts[0].verified = true;
+          apifyContacts[0].full_name = perplexityContacts[0].full_name; // Use Perplexity's name format
+          // Remove the duplicate Perplexity contact
+          allContacts.pop();
+        }
+      }
+      
+      // Mark FIRST Apify contact as PRIMARY (has verified email/phone)
+      // Rest are secondary
+      apifyContacts[0].is_primary = true;
+      for (let i = 1; i < apifyContacts.length; i++) {
+        apifyContacts[i].is_primary = false;
       }
       
       allContacts.push(...apifyContacts);
