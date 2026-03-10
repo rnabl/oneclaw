@@ -169,6 +169,10 @@ export async function findContacts(params: {
   );
   const finalRunData = await finalRunResponse.json();
   
+  // Debug: log the full usage object
+  console.log(`[Apify Leads] Full run data usage:`, JSON.stringify(finalRunData.data.usage, null, 2));
+  console.log(`[Apify Leads] Full run data stats:`, JSON.stringify(finalRunData.data.stats, null, 2));
+  
   // Extract cost from usage (computeUnits)
   const usage = finalRunData.data.usage;
   const computeUnits = usage?.computeUnits || 0;
