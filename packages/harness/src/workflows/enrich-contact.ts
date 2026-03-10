@@ -274,6 +274,7 @@ async function enrichContactHandler(
   
   // ==========================================================================
   // STEP 1: Try Perplexity first (cheapest and fastest for existing businesses)
+  // Don't return early if method is 'linkedin' - we want both Perplexity AND Apify
   // ==========================================================================
   if (businessName) {
     try {
@@ -288,19 +289,23 @@ async function enrichContactHandler(
         await ctx.log('info', 'Perplexity found owner contact');
         ctx.recordApiCall('perplexity', 'research', 1);
         
-        const timeMs = Date.now() - startTime;
-        return {
-          url,
-          businessName,
-          owner,
-          contacts: [],
-          company: null,
-          method: 'perplexity',
-          source,
-          timeMs,
-          cost,
-          fallbackUsed: false,
-        };
+        // Only return early if method is NOT 'linkedin' (waterfall wants both sources)
+        if (preferredMethod !== 'linkedin' && preferredMethod !== 'auto') {
+          const timeMs = Date.now() - startTime;
+          return {
+            url,
+            businessName,
+            owner,
+            contacts: [],
+            company: null,
+            method: 'perplexity',
+            source,
+            timeMs,
+            cost,
+            fallbackUsed: false,
+          };
+        }
+        // Continue to Apify for additional contacts
       }
     } catch (error) {
       await ctx.log('warn', `Perplexity failed: ${error}`);
@@ -316,12 +321,22 @@ async function enrichContactHandler(
       await ctx.log('info', 'Attempting Apify lead-finder (code_crafter/leads-finder)');
       const apifyResult = await enrichViaApifyLeadFinder(ctx, url, businessName);
       
-      if (apifyResult && apifyResult.owner) {
-        owner = apifyResult.owner;
+      if (apifyResult && (apifyResult.owner || apifyResult.contacts.length > 0)) {
+        // Merge Apify results with Perplexity if we have both
+        if (!owner && apifyResult.owner) {
+          owner = apifyResult.owner;
+        }
         contacts = apifyResult.contacts || [];
         company = apifyResult.company || null;
-        source = 'linkedin';
-        cost = 0.15;
+        
+        // If we got Perplexity + Apify, source is 'linkedin' but keep Perplexity owner
+        if (source === 'perplexity') {
+          source = 'linkedin'; // Mixed sources, Apify is primary
+          cost += 0.15;
+        } else {
+          source = 'linkedin';
+          cost = 0.15;
+        }
         
         await ctx.log('info', 'Apify lead-finder found contact successfully');
         ctx.recordApiCall('apify', 'lead_finder', 1);
@@ -337,7 +352,7 @@ async function enrichContactHandler(
           source,
           timeMs,
           cost,
-          fallbackUsed: true,
+          fallbackUsed: false,
         };
       }
     } catch (error) {

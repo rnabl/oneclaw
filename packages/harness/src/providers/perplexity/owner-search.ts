@@ -155,6 +155,19 @@ function parseOwnerFromText(text: string): OwnerInfo[] {
           continue;
         }
         
+        // Blacklist common non-name phrases that match the pattern
+        const blacklist = [
+          'this husband', 'he serves as', 'she serves as', 'and is listed',
+          'is also listed', 'includes conflicting', 'served as', 'ceo and',
+          'business owner', 'the owner', 'the founder', 'the ceo',
+          'an owner', 'a founder', 'a ceo', 'company owner'
+        ];
+        
+        if (blacklist.some(phrase => name.toLowerCase().includes(phrase))) {
+          console.log(`[Perplexity] Skipped blacklisted phrase: ${name}`);
+          continue;
+        }
+        
         // Avoid duplicates
         if (!owners.find(o => o.name.toLowerCase() === name.toLowerCase())) {
           console.log(`[Perplexity] Extracted owner: ${name} (${role})`);
