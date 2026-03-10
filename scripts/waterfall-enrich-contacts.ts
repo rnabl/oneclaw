@@ -19,7 +19,7 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
-const BATCH_SIZE = 50; // Process 50 leads at a time
+const BATCH_SIZE = 5; // Process 5 leads at a time for testing
 const USE_APIFY = true; // Set to true to use Apify as tier 2 (expensive)
 
 interface Lead {
@@ -39,7 +39,7 @@ interface Contact {
   email?: string;
   phone?: string;
   linkedin_url?: string;
-  source: 'perplexity' | 'apify' | 'website_scrape';
+  source: 'perplexity' | 'apify' | 'apify+perplexity' | 'website_scrape';
   is_primary: boolean;
   outreach_priority: number;
   confidence_score?: number;
@@ -460,7 +460,7 @@ async function enrichLead(lead: Lead): Promise<void> {
         email: owner.email,
         phone: owner.phone,
         linkedin_url: owner.linkedin,
-        source: output.source === 'linkedin' ? 'apify' : output.source,
+        source: output.source || 'apify',
         is_primary: true,
         outreach_priority: 1,
         confidence_score: 0.9,
