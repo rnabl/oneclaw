@@ -23,7 +23,7 @@
   },
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "build": "tsup src/index.ts src/server.ts --format cjs --no-dts --external openai",
+    "build": "tsup src/index.ts src/server.ts --format cjs --no-dts --external openai --external vm2",
     "start": "node dist/server.js",
     "test": "vitest",
     "lint": "eslint src/"
