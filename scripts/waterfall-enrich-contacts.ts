@@ -346,6 +346,13 @@ async function saveContacts(leadId: string, contacts: Contact[], tier: string) {
     return;
   }
 
+  // Delete existing contacts first to avoid duplicates
+  await supabase
+    .schema('crm')
+    .from('lead_contacts')
+    .delete()
+    .eq('lead_id', leadId);
+
   // Mark lead as enriching
   await supabase
     .schema('crm')
