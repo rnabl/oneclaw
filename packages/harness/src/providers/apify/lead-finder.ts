@@ -169,13 +169,12 @@ export async function findContacts(params: {
   );
   const finalRunData = await finalRunResponse.json();
   
-  // Extract cost from stats (not usage - usage is undefined)
-  const stats = finalRunData.data.stats;
-  const computeUnits = stats?.computeUnits || 0;
-  // Apify charges $1.00 per 1000 compute units
-  const actualCost = (computeUnits / 1000);
+  // Extract actual cost - this actor uses PAY_PER_EVENT pricing, not compute units
+  // Cost includes: $0.02 per start + $0.0018 per lead fetched
+  const actualCost = finalRunData.data.usageTotalUsd || 0;
+  const leadsFetched = finalRunData.data.chargedEventCounts?.['lead-fetched'] || 0;
   
-  console.log(`[Apify Leads] Cost: $${actualCost.toFixed(4)} (${computeUnits.toFixed(4)} compute units)`);
+  console.log(`[Apify Leads] Cost: $${actualCost.toFixed(4)} (${leadsFetched} leads fetched)`);
   
   // Fetch results
   const datasetId = runData.data.defaultDatasetId || runData.data.datasetId;
