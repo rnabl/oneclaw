@@ -105,7 +105,7 @@ async function main() {
     .select('id, company_name, website, city, state, industry')
     .eq('enrichment_status', 'pending')
     .not('website', 'is', null)
-    .limit(100); // Start with 100 to test
+    .limit(1000); // Classify all pending leads
 
   if (error) {
     console.error('❌ Error fetching leads:', error);
