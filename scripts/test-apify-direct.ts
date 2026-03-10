@@ -125,11 +125,11 @@ async function testApify() {
   console.log(`📊 Got ${results.length} contacts:\n`);
   
   results.forEach((contact: any, i: number) => {
-    console.log(`${i + 1}. ${contact.name || contact.fullName || 'Unknown'}`);
-    console.log(`   Title: ${contact.title || contact.jobTitle || 'N/A'}`);
+    console.log(`${i + 1}. ${contact.full_name || contact.name || contact.fullName || 'Unknown'}`);
+    console.log(`   Title: ${contact.job_title || contact.title || contact.jobTitle || 'N/A'}`);
     console.log(`   Email: ${contact.email || contact.workEmail || 'N/A'}`);
-    console.log(`   Phone: ${contact.phone || contact.mobileNumber || 'N/A'}`);
-    console.log(`   LinkedIn: ${contact.linkedinUrl || contact.linkedin || 'N/A'}`);
+    console.log(`   Phone: ${contact.mobile_number || contact.phone || contact.mobileNumber || 'N/A'}`);
+    console.log(`   LinkedIn: ${contact.linkedin || contact.linkedinUrl || 'N/A'}`);
     console.log('');
   });
   
