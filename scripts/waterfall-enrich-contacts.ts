@@ -66,6 +66,31 @@ function getSeniorityLevel(title: string | undefined): string {
 }
 
 /**
+ * Validate and normalize seniority level from Apify
+ */
+function validateSeniorityLevel(level: string | undefined): string {
+  if (!level) return 'staff';
+  
+  const lower = level.toLowerCase();
+  const validLevels = ['owner', 'c_suite', 'executive', 'director', 'vp', 'head', 'manager', 'partner', 'staff'];
+  
+  // If it's already valid, return it
+  if (validLevels.includes(lower)) {
+    return lower;
+  }
+  
+  // Map common Apify values to our schema
+  if (lower === 'cxo' || lower === 'c-level') return 'c_suite';
+  if (lower === 'senior' || lower === 'senior management') return 'executive';
+  if (lower === 'vice_president') return 'vp';
+  if (lower === 'mid-senior level') return 'manager';
+  if (lower === 'entry level' || lower === 'junior') return 'staff';
+  
+  // Default fallback
+  return 'staff';
+}
+
+/**
  * Determine outreach priority from seniority
  */
 function getOutreachPriority(seniority: string): number {
@@ -392,6 +417,21 @@ async function saveContacts(leadId: string, contacts: Contact[], tier: string) {
  */
 async function enrichLead(lead: Lead): Promise<void> {
   console.log(`\n🔍 ${lead.company_name}`);
+  
+  // Skip large corporations
+  const corporateNames = [
+    'rollins', 'wrench group', 'leaf home', 'ferguson', 'aaon',
+    'renuity', 'nexstar', 'home depot', 'lowes', 'ace hardware',
+    'servicemaster', 'clockwork home services', 'neighborly',
+    'authority brands', 'frontdoor', 'angi', 'homeadvisor',
+    'mechanical technologies'
+  ];
+  
+  if (corporateNames.some(corp => lead.company_name.toLowerCase().includes(corp))) {
+    console.log(`   ⏭️  Skipping large corporation`);
+    await saveContacts(lead.id, [], 'skipped');
+    return;
+  }
 
   try {
     // Call harness API - it will handle Apify + Perplexity internally
@@ -468,10 +508,17 @@ async function enrichLead(lead: Lead): Promise<void> {
       });
     }
 
-    // Add other contacts
+    // Add other contacts (filtered to decision-makers only)
     if (output.contacts && Array.isArray(output.contacts)) {
       for (const contact of output.contacts) {
         const seniority = getSeniorityLevel(contact.title);
+        
+        // Only save decision-makers (owner, c_suite, vp, director)
+        // Skip managers and staff to keep list focused
+        if (!['owner', 'c_suite', 'vp', 'director', 'partner'].includes(seniority)) {
+          continue;
+        }
+        
         allContacts.push({
           full_name: contact.name,
           first_name: contact.name?.split(' ')[0],
