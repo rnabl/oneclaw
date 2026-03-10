@@ -229,8 +229,8 @@ export async function findContacts(params: {
         return false;
       }
       
-      // Skip contacts with wrong company emails (Yelp, LinkedIn, etc.)
-      const emailBlacklist = ['@yelp.com', '@linkedin.com', '@facebook.com', '@google.com', '@indeed.com'];
+      // Skip contacts with wrong company emails (Yelp, LinkedIn, BBB, etc.)
+      const emailBlacklist = ['@yelp.com', '@linkedin.com', '@facebook.com', '@google.com', '@indeed.com', '@bbb.org', '@akronbbb.org', '@easttexas.bbb.org', '@dayton.bbb.org', '@newyork.bbb.org', '@ms.bbb.org', '@thefirstbbb.org', '@sn.bbb.org', '@bbbsc.org'];
       if (c.email && emailBlacklist.some(domain => c.email.toLowerCase().includes(domain))) {
         console.log(`[Apify Leads] Skipped wrong company email: ${c.email}`);
         return false;
@@ -239,8 +239,24 @@ export async function findContacts(params: {
       return true;
     });
   
+  // Deduplicate contacts by name (case-insensitive)
+  const uniqueContacts: ContactPerson[] = [];
+  const seenNames = new Set<string>();
+  
+  for (const contact of contacts) {
+    const nameLower = contact.fullName.toLowerCase();
+    if (!seenNames.has(nameLower)) {
+      seenNames.add(nameLower);
+      uniqueContacts.push(contact);
+    } else {
+      console.log(`[Apify Leads] Skipped duplicate: ${contact.fullName}`);
+    }
+  }
+  
+  console.log(`[Apify Leads] Filtered to ${uniqueContacts.length} unique contacts (from ${results.length} total)`);
+  
   // Find owner/CEO
-  const owner = contacts.find(c => 
+  const owner = uniqueContacts.find(c => 
     c.seniorityLevel === 'owner' || 
     c.jobTitle?.toLowerCase().includes('owner') ||
     c.jobTitle?.toLowerCase().includes('ceo') ||
@@ -248,7 +264,7 @@ export async function findContacts(params: {
   ) || null;
   
   // Find decision-makers (executives/managers)
-  const decisionMakers = contacts.filter(c => 
+  const decisionMakers = uniqueContacts.filter(c => 
     c.seniorityLevel === 'executive' || 
     c.seniorityLevel === 'owner'
   );
@@ -271,11 +287,11 @@ export async function findContacts(params: {
     url,
     company,
     owner,
-    contacts,
+    contacts: uniqueContacts,
     decisionMakers,
-    totalContactsFound: contacts.length,
-    contactsWithEmail: contacts.filter(c => c.email).length,
-    contactsWithPhone: contacts.filter(c => c.mobileNumber).length,
+    totalContactsFound: uniqueContacts.length,
+    contactsWithEmail: uniqueContacts.filter(c => c.email).length,
+    contactsWithPhone: uniqueContacts.filter(c => c.mobileNumber).length,
     cost: actualCost,
   };
 }
