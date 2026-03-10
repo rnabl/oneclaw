@@ -65,7 +65,7 @@ interface EnrichContactOutput extends Record<string, unknown> {
   contacts: ContactPerson[];
   company: CompanyInfo | null;
   method: string;
-  source: 'perplexity' | 'dataforseo' | 'linkedin' | 'website_scrape';
+  source: 'perplexity' | 'apify' | 'apify+perplexity' | 'website_scrape';
   timeMs: number;
   cost: number;
   fallbackUsed: boolean;
@@ -269,7 +269,7 @@ async function enrichContactHandler(
   let owner: ContactPerson | null = null;
   let contacts: ContactPerson[] = [];
   let company: CompanyInfo | null = null;
-  let source: 'perplexity' | 'dataforseo' | 'linkedin' | 'website_scrape' = 'website_scrape';
+  let source: 'perplexity' | 'apify' | 'apify+perplexity' | 'website_scrape' = 'website_scrape';
   let cost = 0;
   let fallbackUsed = false;
   
@@ -323,12 +323,20 @@ async function enrichContactHandler(
     owner = apifyData.owner || null;
     contacts = apifyData.contacts || [];
     company = apifyData.company || null;
-    source = 'linkedin';
-    cost = apifyData.cost || 0.15; // Use actual cost from Apify
     
-    // Add Perplexity cost if we got it too
-    if (perplexityData) {
-      cost += 0.005;
+    // Determine source based on what actually returned data
+    if (apifyData.owner || apifyData.contacts.length > 0) {
+      source = perplexityData ? 'apify+perplexity' : 'apify';
+      cost = apifyData.cost || 0.02;
+      
+      // Add Perplexity cost if we got it too
+      if (perplexityData) {
+        cost += 0.005;
+      }
+    } else {
+      // Apify ran but returned nothing, fall back to Perplexity
+      source = 'perplexity';
+      cost = 0.005;
     }
   } else if (perplexityData && perplexityData.owner) {
     // Fallback to Perplexity if Apify didn't return anything
