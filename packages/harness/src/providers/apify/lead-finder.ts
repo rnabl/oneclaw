@@ -12,9 +12,14 @@
  * - Email addresses (when available)
  */
 
-const APIFY_API_TOKEN = process.env.APIFY_API_TOKEN || process.env.APIFY_TOKEN;
-const APIFY_LEADS_ACTOR = process.env.APIFY_LEADS_ACTOR || 'apify/linkedin-company-employees-scraper';
-const APIFY_API_BASE = 'https://api.apify.com/v2';
+// Read at runtime, not at module load time
+function getApifyConfig() {
+  return {
+    token: process.env.APIFY_API_TOKEN || process.env.APIFY_TOKEN,
+    actor: process.env.APIFY_LEADS_ACTOR || 'code_crafter/leads-finder',
+    apiBase: 'https://api.apify.com/v2'
+  };
+}
 
 export interface ContactPerson {
   fullName: string | null;
@@ -66,29 +71,51 @@ export async function findContacts(params: {
   maxContacts?: number;
 }): Promise<LeadFinderResult | null> {
   
-  if (!APIFY_API_TOKEN) {
+  const config = getApifyConfig();
+  
+  if (!config.token) {
     throw new Error('APIFY_API_TOKEN is not configured');
   }
   
   const { url, businessName, maxContacts = 10 } = params;
   
-  // Extract domain from URL
+  // Extract domain from URL for the actor
   const domain = url.replace(/^https?:\/\//, '').replace(/^www\./, '').split('/')[0];
   
-  console.log(`[Apify Leads] Enriching contacts for: ${domain}`);
+  // Generate file_name from businessName (preferred) or domain
+  // Convert to lowercase, replace spaces/special chars with underscores
+  let fileName = businessName || domain;
+  fileName = fileName
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '_')  // Replace non-alphanumeric with underscore
+    .replace(/^_+|_+$/g, '');      // Remove leading/trailing underscores
   
-  // Actor input format for LinkedIn company employees scraper
+  console.log(`[Apify Leads] Enriching contacts for: ${url}`);
+  console.log(`[Apify Leads] Domain: ${domain}`);
+  console.log(`[Apify Leads] File name: ${fileName}`);
+  console.log(`[Apify Leads] Using actor: ${config.actor}`);
+  
+  // Actor input format for code_crafter/leads-finder
   const actorInput = {
-    companyUrls: [`https://www.linkedin.com/company/${domain}`],  // LinkedIn company URL
-    maxEmployees: maxContacts,
-    seniorityLevels: ['owner', 'executive', 'manager'],  // Focus on decision-makers
-    // Or if using domain search:
-    // companyDomains: [domain],
+    company_domain: [domain],
+    contact_location: ['united states'],
+    fetch_count: maxContacts,
+    seniority_level: [
+      'manager',
+      'founder',
+      'owner',
+      'c_suite',
+      'director',
+      'partner',
+      'vp',
+      'head'
+    ],
+    file_name: fileName
   };
   
   // Start the actor run
   const runResponse = await fetch(
-    `${APIFY_API_BASE}/acts/${encodeURIComponent(APIFY_LEADS_ACTOR)}/runs?token=${APIFY_API_TOKEN}`,
+    `${config.apiBase}/acts/${encodeURIComponent(config.actor)}/runs?token=${config.token}`,
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -119,7 +146,7 @@ export async function findContacts(params: {
     await new Promise(resolve => setTimeout(resolve, 5000));
     
     const statusResponse = await fetch(
-      `${APIFY_API_BASE}/actor-runs/${runId}?token=${APIFY_API_TOKEN}`
+      `${config.apiBase}/actor-runs/${runId}?token=${config.token}`
     );
     
     const statusData = await statusResponse.json();
@@ -143,7 +170,7 @@ export async function findContacts(params: {
   }
   
   const datasetResponse = await fetch(
-    `${APIFY_API_BASE}/datasets/${datasetId}/items?token=${APIFY_API_TOKEN}&format=json`
+    `${config.apiBase}/datasets/${datasetId}/items?token=${config.token}&format=json`
   );
   
   const results = await datasetResponse.json();

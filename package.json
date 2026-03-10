@@ -19,7 +19,19 @@
     "oneclaw": "pnpm --filter @oneclaw/cli run build && node packages/cli/dist/index.js",
     "node:build": "pnpm --filter @oneclaw/node-runtime build",
     "node:dev": "pnpm --filter @oneclaw/node-runtime dev",
-    "node:test": "pnpm --filter @oneclaw/executor-http test"
+    "node:test": "pnpm --filter @oneclaw/executor-http test",
+    "db:migrate": "tsx scripts/run-home-services-migration.ts",
+    "campaign:status": "tsx scripts/check-home-services-status.ts",
+    "campaign:generate": "tsx scripts/generate-home-services-campaigns.ts",
+    "campaign:test": "tsx scripts/test-email-generation.ts",
+    "campaign:review": "tsx scripts/review-campaigns.ts",
+    "campaign:export": "tsx scripts/export-approved-campaigns.ts",
+    "campaign:sent": "tsx scripts/mark-campaigns-sent.ts",
+    "leads:check": "tsx scripts/check-review-status.ts",
+    "leads:scan": "tsx scripts/scan-websites-for-signals.ts",
+    "leads:bounced": "tsx scripts/manage-bounced-emails.ts",
+    "leads:enrich": "tsx scripts/enrich-contact-info.ts",
+    "leads:waterfall": "tsx scripts/waterfall-enrich-contacts.ts"
   },
   "devDependencies": {
     "@supabase/supabase-js": "^2.43.0",
