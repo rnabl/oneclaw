@@ -169,17 +169,13 @@ export async function findContacts(params: {
   );
   const finalRunData = await finalRunResponse.json();
   
-  // Debug: log the full usage object
-  console.log(`[Apify Leads] Full run data usage:`, JSON.stringify(finalRunData.data.usage, null, 2));
-  console.log(`[Apify Leads] Full run data stats:`, JSON.stringify(finalRunData.data.stats, null, 2));
-  
-  // Extract cost from usage (computeUnits)
-  const usage = finalRunData.data.usage;
-  const computeUnits = usage?.computeUnits || 0;
+  // Extract cost from stats (not usage - usage is undefined)
+  const stats = finalRunData.data.stats;
+  const computeUnits = stats?.computeUnits || 0;
   // Apify charges $1.00 per 1000 compute units
   const actualCost = (computeUnits / 1000);
   
-  console.log(`[Apify Leads] Cost: $${actualCost.toFixed(3)} (${computeUnits} compute units)`);
+  console.log(`[Apify Leads] Cost: $${actualCost.toFixed(4)} (${computeUnits.toFixed(4)} compute units)`);
   
   // Fetch results
   const datasetId = runData.data.defaultDatasetId || runData.data.datasetId;
