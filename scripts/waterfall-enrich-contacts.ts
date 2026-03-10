@@ -19,7 +19,7 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
-const BATCH_SIZE = 5; // Process 5 leads at a time for testing
+const BATCH_SIZE = 50; // Process 50 leads at a time
 const USE_APIFY = true; // Set to true to use Apify as tier 2 (expensive)
 
 interface Lead {

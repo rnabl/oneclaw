@@ -201,7 +201,7 @@ RETURNS TABLE(
 ) AS $$
 BEGIN
   RETURN QUERY
-  SELECT 
+  SELECT DISTINCT ON (l.id)
     l.id,
     l.company_name,
     l.website,
@@ -217,7 +217,7 @@ BEGIN
         AND c.email IS NOT NULL
         AND c.email_status IN ('unverified', 'verified')
     )
-  ORDER BY l.created_at DESC
+  ORDER BY l.id, l.created_at DESC
   LIMIT p_limit;
 END;
 $$ LANGUAGE plpgsql;
