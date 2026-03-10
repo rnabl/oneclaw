@@ -273,57 +273,70 @@ async function enrichContactHandler(
   let fallbackUsed = false;
   
   // ==========================================================================
-  // STEP 1: Try Apify lead-finder FIRST (most comprehensive, verified data)
+  // STEP 1: Call Apify AND Perplexity in PARALLEL for speed
   // ==========================================================================
-  try {
-    await ctx.log('info', 'Attempting Apify lead-finder (code_crafter/leads-finder)');
-    const apifyResult = await enrichViaApifyLeadFinder(ctx, url, businessName);
-    
-    if (apifyResult && (apifyResult.owner || apifyResult.contacts.length > 0)) {
-      owner = apifyResult.owner || null;
-      contacts = apifyResult.contacts || [];
-      company = apifyResult.company || null;
-      source = 'linkedin';
-      cost = 0.15;
-      
-      await ctx.log('info', 'Apify lead-finder found contact successfully');
-      ctx.recordApiCall('apify', 'lead_finder', 1);
-      
-      // Don't return yet - try Perplexity too for verification
-    }
-  } catch (error) {
-    await ctx.log('warn', `Apify lead-finder failed: ${error}`);
-    fallbackUsed = true;
-  }
-  
-  // ==========================================================================
-  // STEP 2: Try Perplexity (fast, cheap owner name verification)
-  // ==========================================================================
-  if (businessName) {
-    try {
-      await ctx.log('info', 'Trying Perplexity AI enrichment');
-      const perplexityResult = await enrichViaPerplexity(ctx, businessName, city, state);
-      
-      if (perplexityResult && perplexityResult.owner) {
-        // If we don't have an owner from Apify, use Perplexity's
-        if (!owner) {
-          owner = perplexityResult.owner;
-          source = 'perplexity';
-          cost = 0.005;
-        } else {
-          // We have both - just add the cost
-          cost += 0.005;
-        }
+  const [apifyResult, perplexityResult] = await Promise.allSettled([
+    // Apify call
+    (async () => {
+      try {
+        await ctx.log('info', 'Attempting Apify lead-finder (code_crafter/leads-finder)');
+        const result = await enrichViaApifyLeadFinder(ctx, url, businessName);
         
-        await ctx.log('info', 'Perplexity found owner contact');
-        ctx.recordApiCall('perplexity', 'research', 1);
+        if (result && (result.owner || result.contacts.length > 0)) {
+          await ctx.log('info', 'Apify lead-finder found contact successfully');
+          ctx.recordApiCall('apify', 'lead_finder', 1);
+          return result;
+        }
+        return null;
+      } catch (error) {
+        await ctx.log('warn', `Apify lead-finder failed: ${error}`);
+        return null;
       }
-    } catch (error) {
-      await ctx.log('warn', `Perplexity failed: ${error}`);
+    })(),
+    
+    // Perplexity call
+    businessName ? (async () => {
+      try {
+        await ctx.log('info', 'Trying Perplexity AI enrichment');
+        const result = await enrichViaPerplexity(ctx, businessName, city, state);
+        
+        if (result && result.owner) {
+          await ctx.log('info', 'Perplexity found owner contact');
+          ctx.recordApiCall('perplexity', 'research', 1);
+          return result;
+        }
+        return null;
+      } catch (error) {
+        await ctx.log('warn', `Perplexity failed: ${error}`);
+        return null;
+      }
+    })() : Promise.resolve(null)
+  ]);
+  
+  // Extract results
+  const apifyData = apifyResult.status === 'fulfilled' ? apifyResult.value : null;
+  const perplexityData = perplexityResult.status === 'fulfilled' ? perplexityResult.value : null;
+  
+  // Prioritize Apify data (most comprehensive)
+  if (apifyData) {
+    owner = apifyData.owner || null;
+    contacts = apifyData.contacts || [];
+    company = apifyData.company || null;
+    source = 'linkedin';
+    cost = 0.15;
+    
+    // Add Perplexity cost if we got it too
+    if (perplexityData) {
+      cost += 0.005;
     }
+  } else if (perplexityData && perplexityData.owner) {
+    // Fallback to Perplexity if Apify didn't return anything
+    owner = perplexityData.owner;
+    source = 'perplexity';
+    cost = 0.005;
   }
   
-  // Return if we have data from Apify or Perplexity
+  // Return if we have data
   if (owner || contacts.length > 0) {
     const timeMs = Date.now() - startTime;
     return {
@@ -336,7 +349,7 @@ async function enrichContactHandler(
       source,
       timeMs,
       cost,
-      fallbackUsed,
+      fallbackUsed: false,
     };
   }
   

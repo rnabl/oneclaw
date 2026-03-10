@@ -74,20 +74,23 @@ async function testHarnessApify() {
   
   if (output.owner) {
     console.log('👤 Owner:');
-    console.log(`   Name: ${output.owner.name}`);
-    console.log(`   Title: ${output.owner.title || 'N/A'}`);
-    console.log(`   Email: ${output.owner.email || 'N/A'}`);
-    console.log(`   Phone: ${output.owner.phone || 'N/A'}`);
-    console.log(`   LinkedIn: ${output.owner.linkedin || 'N/A'}`);
+    console.log(`   Name: ${output.owner.name || output.owner.full_name || output.owner.fullName || 'N/A'}`);
+    console.log(`   Title: ${output.owner.title || output.owner.job_title || output.owner.jobTitle || 'N/A'}`);
+    console.log(`   Email: ${output.owner.email || output.owner.workEmail || 'N/A'}`);
+    console.log(`   Phone: ${output.owner.phone || output.owner.mobile_number || output.owner.mobileNumber || 'N/A'}`);
+    console.log(`   LinkedIn: ${output.owner.linkedin || output.owner.linkedinUrl || output.owner.linkedin_url || 'N/A'}`);
+    console.log(`   Seniority: ${output.owner.seniorityLevel || output.owner.seniority_level || 'N/A'}`);
   }
   
   if (output.contacts && output.contacts.length > 0) {
     console.log(`\n👥 ${output.contacts.length} Contact(s):`);
     output.contacts.forEach((c: any, i: number) => {
-      console.log(`\n${i + 1}. ${c.name}`);
-      console.log(`   Title: ${c.title || 'N/A'}`);
-      console.log(`   Email: ${c.email || 'N/A'}`);
-      console.log(`   Phone: ${c.phone || 'N/A'}`);
+      console.log(`\n${i + 1}. ${c.name || c.full_name || c.fullName || 'Unknown'}`);
+      console.log(`   Title: ${c.title || c.job_title || c.jobTitle || 'N/A'}`);
+      console.log(`   Email: ${c.email || c.workEmail || 'N/A'}`);
+      console.log(`   Phone: ${c.phone || c.mobile_number || c.mobileNumber || 'N/A'}`);
+      console.log(`   LinkedIn: ${c.linkedin || c.linkedinUrl || c.linkedin_url || 'N/A'}`);
+      console.log(`   Seniority: ${c.seniorityLevel || c.seniority_level || 'N/A'}`);
     });
   }
   
